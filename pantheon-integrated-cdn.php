@@ -11,3 +11,7 @@
  *
  * @package         Pantheon_Integrated_Cdn
  */
+
+require_once dirname( __FILE__ ) . '/inc/class-emitter.php';
+
+add_filter( 'wp', array( 'Pantheon_Integrated_CDN\Emitter', 'action_wp' ) );

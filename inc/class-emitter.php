@@ -1,0 +1,47 @@
+<?php
+
+namespace Pantheon_Integrated_CDN;
+
+/**
+ * Generates and emits surrogate keys based on the current request.
+ */
+class Emitter {
+
+	/**
+	 * Render surrogate keys after the main query has run
+	 */
+	public static function action_wp() {
+
+		$keys = self::get_surrogate_keys();
+		if ( ! empty( $keys ) ) {
+			@header( 'Surrogate-Keys: ' . implode( ' ', $keys ) );
+		}
+	}
+
+	public static function get_surrogate_keys() {
+		global $wp_query;
+
+		$keys = array();
+		if ( is_front_page() ) {
+			$keys[] = 'home';
+		}
+		if ( is_home() ) {
+			$keys[] = 'blog';
+		}
+		if ( is_single() ) {
+			$keys[] = 'single';
+		}
+		if ( is_page() ) {
+			$keys[] = 'page';
+		}
+
+		if ( ! empty( $wp_query->posts ) ) {
+			foreach( $wp_query->posts as $p ) {
+				$keys[] = 'post-' . $p->ID;
+			}
+		}
+
+		return array_unique( $keys );
+	}
+
+}
