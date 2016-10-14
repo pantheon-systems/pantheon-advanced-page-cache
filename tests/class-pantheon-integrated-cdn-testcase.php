@@ -2,6 +2,8 @@
 
 class Pantheon_Integrated_CDN_Testcase extends WP_UnitTestCase {
 
+	protected $cleared_keys = array();
+
 	public function setUp() {
 		parent::setUp();
 
@@ -27,6 +29,28 @@ class Pantheon_Integrated_CDN_Testcase extends WP_UnitTestCase {
 			'post_type' => 'page',
 			'post_author' => $this->user_id1,
 		) );
+		$this->cleared_keys = array();
+		add_action( 'pantheon_integrated_cdn_clear_keys', array( $this, 'action_pantheon_integrated_cdn_clear_keys' ) );
+	}
+
+	public function action_pantheon_integrated_cdn_clear_keys( $keys ) {
+		$this->cleared_keys = $keys;
+	}
+
+	protected function assertClearedKeys( $expected ) {
+		$this->assertArrayValues( $expected, $this->cleared_keys );
+	}
+
+	protected function assertArrayValues( $expected, $actual ) {
+		sort( $expected );
+		sort( $actual );
+		$this->assertEquals( $expected, $actual );
+	}
+
+	public function tearDown() {
+		$this->cleared_keys = array();
+		remove_action( 'pantheon_integrated_cdn_clear_keys', array( $this, 'action_pantheon_integrated_cdn_clear_keys' ) );
+		parent::tearDown();
 	}
 
 }

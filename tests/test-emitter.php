@@ -76,10 +76,4 @@ class Test_Emitter extends Pantheon_Integrated_CDN_Testcase {
 		), Emitter::get_surrogate_keys() );
 	}
 
-	protected function assertArrayValues( $expected, $actual ) {
-		sort( $expected );
-		sort( $actual );
-		$this->assertEquals( $expected, $actual );
-	}
-
 }

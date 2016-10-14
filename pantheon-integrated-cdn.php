@@ -32,4 +32,14 @@ spl_autoload_register( function( $class ) {
 	}
 });
 
+/**
+ * Emit the appropriate surrogate tags per view.
+ */
 add_filter( 'wp', array( 'Pantheon_Integrated_CDN\Emitter', 'action_wp' ) );
+
+/**
+ * Clear surrogate tags when object caches are cleared.
+ */
+add_action( 'clean_post_cache', array( 'Pantheon_Integrated_CDN\Purger', 'action_clean_post_cache' ) );
+add_action( 'clean_term_cache', array( 'Pantheon_Integrated_CDN\Purger', 'action_clean_term_cache' ) );
+add_action( 'clean_user_cache', array( 'Pantheon_Integrated_CDN\Purger', 'action_clean_user_cache' ) );
