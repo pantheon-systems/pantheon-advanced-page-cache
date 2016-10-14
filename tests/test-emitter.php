@@ -45,6 +45,13 @@ class Test_Emitter extends WP_UnitTestCase {
 		), Emitter::get_surrogate_keys() );
 	}
 
+	public function test_search() {
+		$this->go_to( home_url( '/?s=foo' ) );
+		$this->assertArrayValues( array(
+			'search'
+		), Emitter::get_surrogate_keys() );
+	}
+
 	protected function assertArrayValues( $expected, $actual ) {
 		sort( $expected );
 		sort( $actual );

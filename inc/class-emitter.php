@@ -47,6 +47,10 @@ class Emitter {
 			$keys[] = 'attachment';
 		}
 
+		if ( is_search() ) {
+			$keys[] = 'search';
+		}
+
 		if ( ! empty( $wp_query->posts ) ) {
 			foreach( $wp_query->posts as $p ) {
 				$keys[] = 'post-' . $p->ID;
