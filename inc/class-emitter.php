@@ -50,6 +50,9 @@ class Emitter {
 		if ( ! empty( $wp_query->posts ) ) {
 			foreach( $wp_query->posts as $p ) {
 				$keys[] = 'post-' . $p->ID;
+				if ( post_type_supports( $p->post_type, 'author' ) ) {
+					$keys[] = 'user-' . $p->post_author;
+				}
 			}
 		}
 

@@ -7,9 +7,12 @@ class Test_Emitter extends WP_UnitTestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$this->post_id1 = $this->factory->post->create( array( 'post_status' => 'publish' ) );
-		$this->post_id2 = $this->factory->post->create( array( 'post_status' => 'publish' ) );
-		$this->page_id1 = $this->factory->post->create( array( 'post_status' => 'publish', 'post_type' => 'page' ) );
+		$this->user_id1 = $this->factory->user->create( array( 'user_role' => 'author' ) );
+		$this->user_id2 = $this->factory->user->create( array( 'user_role' => 'author' ) );
+
+		$this->post_id1 = $this->factory->post->create( array( 'post_status' => 'publish', 'post_author' => $this->user_id1 ) );
+		$this->post_id2 = $this->factory->post->create( array( 'post_status' => 'publish', 'post_author' => $this->user_id2 ) );
+		$this->page_id1 = $this->factory->post->create( array( 'post_status' => 'publish', 'post_type' => 'page', 'post_author' => $this->user_id1 ) );
 	}
 
 	public function test_homepage_default() {
@@ -19,6 +22,8 @@ class Test_Emitter extends WP_UnitTestCase {
 			'home',
 			'post-' . $this->post_id1,
 			'post-' . $this->post_id2,
+			'user-' . $this->user_id1,
+			'user-' . $this->user_id2,
 		), Emitter::get_surrogate_keys() );
 	}
 
@@ -27,6 +32,7 @@ class Test_Emitter extends WP_UnitTestCase {
 		$this->assertArrayValues( array(
 			'single',
 			'post-' . $this->post_id2,
+			'user-' . $this->user_id2,
 		), Emitter::get_surrogate_keys() );
 	}
 
@@ -35,6 +41,7 @@ class Test_Emitter extends WP_UnitTestCase {
 		$this->assertArrayValues( array(
 			'page',
 			'post-' . $this->page_id1,
+			'user-' . $this->user_id1,
 		), Emitter::get_surrogate_keys() );
 	}
 
