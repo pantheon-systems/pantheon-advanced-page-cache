@@ -28,25 +28,12 @@ class Emitter {
 		if ( is_home() ) {
 			$keys[] = 'home';
 		}
-		if ( is_single() ) {
-			$keys[] = 'single';
-		}
-		if ( is_page() ) {
-			$keys[] = 'page';
-		}
-		if ( is_archive() ) {
-			$keys[] = 'archive';
-		}
 		if ( is_date() ) {
 			$keys[] = 'date';
 		}
 		if ( is_paged() ) {
 			$keys[] = 'paged';
 		}
-		if ( is_attachment() ) {
-			$keys[] = 'attachment';
-		}
-
 		if ( is_search() ) {
 			$keys[] = 'search';
 		}
@@ -60,7 +47,30 @@ class Emitter {
 			}
 		}
 
-		return array_unique( $keys );
+		if ( is_single() ) {
+			$keys[] = 'single';
+			if ( is_attachment() ) {
+				$keys[] = 'attachment';
+			}
+		} else if ( is_archive() ) {
+			$keys[] = 'archive';
+			if ( is_post_type_archive() ) {
+				$keys[] = 'post-type-archive';
+			} else if ( is_author() ) {
+				if ( $user_id = get_queried_object_id() ) {
+					$keys[] = 'user-' . $user_id;
+				}
+			} else if ( is_category() || is_tag() || is_tax() ) {
+				if ( $term_id = get_queried_object_id() ) {
+					$keys[] = 'term-' . $term_id;
+				}
+			}
+		} else if ( is_page() ) {
+			$keys[] = 'page';
+		}
+
+		$keys = array_unique( $keys );
+		return $keys;
 	}
 
 }
