@@ -34,6 +34,18 @@ class Emitter {
 		if ( is_page() ) {
 			$keys[] = 'page';
 		}
+		if ( is_archive() ) {
+			$keys[] = 'archive';
+		}
+		if ( is_date() ) {
+			$keys[] = 'date';
+		}
+		if ( is_paged() ) {
+			$keys[] = 'paged';
+		}
+		if ( is_attachment() ) {
+			$keys[] = 'attachment';
+		}
 
 		if ( ! empty( $wp_query->posts ) ) {
 			foreach( $wp_query->posts as $p ) {
