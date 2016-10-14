@@ -23,10 +23,10 @@ class Emitter {
 
 		$keys = array();
 		if ( is_front_page() ) {
-			$keys[] = 'home';
+			$keys[] = 'front';
 		}
 		if ( is_home() ) {
-			$keys[] = 'blog';
+			$keys[] = 'home';
 		}
 		if ( is_single() ) {
 			$keys[] = 'single';

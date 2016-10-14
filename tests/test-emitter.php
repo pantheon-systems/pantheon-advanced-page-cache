@@ -15,8 +15,8 @@ class Test_Emitter extends WP_UnitTestCase {
 	public function test_homepage_default() {
 		$this->go_to( home_url( '/' ) );
 		$this->assertArrayValues( array(
+			'front',
 			'home',
-			'blog',
 			'post-' . $this->post_id1,
 			'post-' . $this->post_id2,
 		), Emitter::get_surrogate_keys() );
