@@ -14,7 +14,9 @@ class Emitter {
 
 		$keys = self::get_surrogate_keys();
 		if ( ! empty( $keys ) ) {
+			// @codingStandardsIgnoreStart
 			@header( 'Surrogate-Keys: ' . implode( ' ', $keys ) );
+			// @codingStandardsIgnoreEnd
 		}
 	}
 
@@ -39,7 +41,7 @@ class Emitter {
 		}
 
 		if ( ! empty( $wp_query->posts ) ) {
-			foreach( $wp_query->posts as $p ) {
+			foreach ( $wp_query->posts as $p ) {
 				$keys[] = 'post-' . $p->ID;
 				if ( post_type_supports( $p->post_type, 'author' ) ) {
 					$keys[] = 'user-' . $p->post_author;
@@ -52,20 +54,20 @@ class Emitter {
 			if ( is_attachment() ) {
 				$keys[] = 'attachment';
 			}
-		} else if ( is_archive() ) {
+		} elseif ( is_archive() ) {
 			$keys[] = 'archive';
 			if ( is_post_type_archive() ) {
 				$keys[] = 'post-type-archive';
-			} else if ( is_author() ) {
+			} elseif ( is_author() ) {
 				if ( $user_id = get_queried_object_id() ) {
 					$keys[] = 'user-' . $user_id;
 				}
-			} else if ( is_category() || is_tag() || is_tax() ) {
+			} elseif ( is_category() || is_tag() || is_tax() ) {
 				if ( $term_id = get_queried_object_id() ) {
 					$keys[] = 'term-' . $term_id;
 				}
 			}
-		} else if ( is_page() ) {
+		} elseif ( is_page() ) {
 			$keys[] = 'page';
 		}
 

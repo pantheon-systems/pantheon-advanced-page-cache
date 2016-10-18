@@ -32,7 +32,7 @@ class Purger {
 	public static function action_clean_term_cache( $term_ids ) {
 		$keys = array();
 		$term_ids = is_array( $term_ids ) ? $term_ids : array( $term_id );
-		foreach( $term_ids as $term_id ) {
+		foreach ( $term_ids as $term_id ) {
 			$keys[] = 'term-' . $term_id;
 		}
 		self::clear_keys( $keys );

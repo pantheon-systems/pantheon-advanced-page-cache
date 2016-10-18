@@ -22,7 +22,7 @@ class Pantheon_Integrated_CDN_Testcase extends WP_UnitTestCase {
 		wp_set_object_terms( $this->post_id1, array( $this->tag_id2 ), 'post_tag' );
 		$this->post_id2 = $this->factory->post->create( array(
 			'post_status' => 'publish',
-			'post_author' => $this->user_id2
+			'post_author' => $this->user_id2,
 		) );
 		$this->page_id1 = $this->factory->post->create( array(
 			'post_status' => 'publish',
