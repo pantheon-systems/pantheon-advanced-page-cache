@@ -7,6 +7,8 @@ class Pantheon_Integrated_CDN_Testcase extends WP_UnitTestCase {
 	public function setUp() {
 		parent::setUp();
 
+		$this->setup_permalink_structure();
+
 		$this->user_id1 = $this->factory->user->create( array( 'user_role' => 'author' ) );
 		$this->user_id2 = $this->factory->user->create( array( 'user_role' => 'author' ) );
 		$this->user_id3 = $this->factory->user->create( array( 'user_role' => 'author' ) );
@@ -45,6 +47,23 @@ class Pantheon_Integrated_CDN_Testcase extends WP_UnitTestCase {
 
 	public function action_pantheon_integrated_cdn_clear_keys( $keys ) {
 		$this->cleared_keys = $keys;
+	}
+
+	/**
+	 * Set up permalink structure
+	 */
+	private function setup_permalink_structure() {
+		global $wp_rewrite;
+
+		$structure = '%year%/%monthnum%/%day%/%postname%';
+		update_option( 'permalink_structure', $structure );
+
+		$wp_rewrite->init();
+		$wp_rewrite->set_permalink_structure( $structure );
+
+		create_initial_taxonomies();
+
+		$wp_rewrite->flush_rules();
 	}
 
 	protected function assertClearedKeys( $expected ) {

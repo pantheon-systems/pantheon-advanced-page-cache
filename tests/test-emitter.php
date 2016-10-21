@@ -71,7 +71,7 @@ class Test_Emitter extends Pantheon_Integrated_CDN_Testcase {
 	}
 
 	public function test_year_date_archive_with_posts() {
-		$this->go_to( home_url( '?year=2016' ) );
+		$this->go_to( home_url( '2016/' ) );
 		$this->assertArrayValues( array(
 			'archive',
 			'date',
@@ -84,12 +84,12 @@ class Test_Emitter extends Pantheon_Integrated_CDN_Testcase {
 	}
 
 	public function test_year_date_archive_without_posts() {
-		$this->go_to( home_url( '?year=2015' ) );
+		$this->go_to( home_url( '2015/' ) );
 		$this->assertArrayValues( array(), Emitter::get_surrogate_keys() );
 	}
 
 	public function test_month_date_archive_with_posts() {
-		$this->go_to( home_url( '?year=2016&monthnum=10' ) );
+		$this->go_to( home_url( '2016/10/' ) );
 		$this->assertArrayValues( array(
 			'archive',
 			'date',
@@ -102,12 +102,12 @@ class Test_Emitter extends Pantheon_Integrated_CDN_Testcase {
 	}
 
 	public function test_month_date_archive_without_posts() {
-		$this->go_to( home_url( '?year=2015&monthnum=10' ) );
+		$this->go_to( home_url( '2015/10/' ) );
 		$this->assertArrayValues( array(), Emitter::get_surrogate_keys() );
 	}
 
 	public function test_day_date_archive_with_posts() {
-		$this->go_to( home_url( '?year=2016&monthnum=10&day=15' ) );
+		$this->go_to( home_url( '2016/10/15/' ) );
 		$this->assertArrayValues( array(
 			'archive',
 			'date',
@@ -117,7 +117,7 @@ class Test_Emitter extends Pantheon_Integrated_CDN_Testcase {
 	}
 
 	public function test_day_date_archive_without_posts() {
-		$this->go_to( home_url( '?year=2015&monthnum=10&day=15' ) );
+		$this->go_to( home_url( '2015/10/15/' ) );
 		$this->assertArrayValues( array(), Emitter::get_surrogate_keys() );
 	}
 
