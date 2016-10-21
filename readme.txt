@@ -9,4 +9,4 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-[![Travis CI](https://travis-ci.org/danielbachhuber/pantheon-integrated-cdn.svg?branch=master)](https://travis-ci.org/danielbachhuber/pantheon-integrated-cdn)
+[![Travis CI](https://travis-ci.org/danielbachhuber/pantheon-integrated-cdn.svg?branch=master)](https://travis-ci.org/danielbachhuber/pantheon-integrated-cdn) [![CircleCI](https://circleci.com/gh/pantheon-systems/pantheon-integrated-cdn.svg?style=svg)](https://circleci.com/gh/pantheon-systems/pantheon-integrated-cdn)
