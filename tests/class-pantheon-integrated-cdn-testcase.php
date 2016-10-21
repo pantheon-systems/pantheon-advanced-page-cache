@@ -16,13 +16,23 @@ class Pantheon_Integrated_CDN_Testcase extends WP_UnitTestCase {
 		$this->category_id2 = $this->factory->category->create();
 
 		$this->post_id1 = $this->factory->post->create( array(
-			'post_status' => 'publish',
-			'post_author' => $this->user_id1,
+			'post_status'   => 'publish',
+			'post_author'   => $this->user_id1,
+			'post_date'     => '2016-10-14 12:00',
+			'post_date_gmt' => '2016-10-14 12:00',
 		) );
 		wp_set_object_terms( $this->post_id1, array( $this->tag_id2 ), 'post_tag' );
 		$this->post_id2 = $this->factory->post->create( array(
-			'post_status' => 'publish',
-			'post_author' => $this->user_id2,
+			'post_status'   => 'publish',
+			'post_author'   => $this->user_id2,
+			'post_date'     => '2016-10-14 11:00',
+			'post_date_gmt' => '2016-10-14 11:00',
+		) );
+		$this->post_id3 = $this->factory->post->create( array(
+			'post_status'   => 'publish',
+			'post_author'   => $this->user_id2,
+			'post_date'     => '2016-10-15 11:00',
+			'post_date_gmt' => '2016-10-15 11:00',
 		) );
 		$this->page_id1 = $this->factory->post->create( array(
 			'post_status' => 'publish',
