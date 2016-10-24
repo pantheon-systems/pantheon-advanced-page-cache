@@ -38,6 +38,8 @@ Surrogate keys enable responses to be "tagged" with identifiers that can then la
 * When a post is updated, clear the cache for the post's URL, the homepage, and any index view the post appears on.
 * When an author changes their name, clear the cache for the author's archive and any post they've authored.
 
+Keys emitted are optimized based on a user's expectation of a normal WordPress site because there's a limit on the total number of keys that can be included in a response. For instance, it doesn't make sense to include a `term-<id>` surrogate key for every category or tag on an archive view.
+
 = Emitted Keys =
 
 **Home `/`**
@@ -46,7 +48,7 @@ Surrogate keys enable responses to be "tagged" with identifiers that can then la
 
 **Single post `/2016/10/14/surrogate-keys/`**
 
-* Emits surrogate keys: `single`, `post-<id>`, `user-<id>`, `term-<id>` (all assigned terms)
+* Emits surrogate keys: `single`, `post-<id>`, `user-<id>`, `term-<id>` (all terms assigned to post)
 
 **Author archive `/author/pantheon/`**
 
