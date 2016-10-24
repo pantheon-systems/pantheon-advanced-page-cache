@@ -33,34 +33,45 @@ To install Pantheon Integrated CDN in one line with WP-CLI:
 
 == Surrogate Keys ==
 
+Surrogate keys enable responses to be "tagged" with identifiers that can then later be used in purge requests. This flexibility enables behaviors like:
+
+* When a post is updated, clear the cache for the post's URL, the homepage, and any index view the post appears on.
+* When an author changes their name, clear the cache for the author's archive and any post they've authored.
+
 = Emitted Keys =
 
 **Home `/`**
 
-* Emits surrogate keys: 'home', 'front', 'post-<id>' (for all posts in main query)
+* Emits surrogate keys: 'home', 'front', 'post-<id>' (all posts in main query)
 
 **Single post `/2016/10/14/surrogate-keys/`**
 
-* Emits surrogate keys: 'single', 'post-<id>', 'user-<id>'
+* Emits surrogate keys: `single`, `post-<id>`, `user-<id>`
 
 **Author archive `/author/pantheon/`**
 
-* Emits surrogate keys: 'archive', 'user-<id>', 'post-<id>' (for all posts in main query)
+* Emits surrogate keys: `archive`, `user-<id>`, `post-<id>` (all posts in main query)
+
+**Term archive `/tag/cdn/`**
+
+* Emits surrogate keys: 'archive', 'term-<id>', 'post-<id>' (all posts in main query)
 
 = Purge Events =
 
 **clean_post_cache**
 
-* Purges surrogate keys: 'home', 'front', 'post-<id>', 'user-<id>'
-* Affected views: homepage, single post, any archive where post displays, author archive.
+* Purges surrogate keys: `home`, `front`, `post-<id>`, `user-<id>`
+* Affected views: homepage, single post, any archive where post displays, author archive
 
 **clean_term_cache**
 
-* Purges surrogate keys: 'term-<id>'
+* Purges surrogate keys: `term-<id>`
+* Affected views: term archive, any post where the term is assigned
 
 **clean_user_cache**
 
-* Purges surrogate keys: 'user-<id>'
+* Purges surrogate keys: `user-<id>`
+* Affected views: author archive, any post where the user is the author
 
 == Changelog ==
 
