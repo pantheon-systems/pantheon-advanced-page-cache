@@ -42,11 +42,11 @@ Surrogate keys enable responses to be "tagged" with identifiers that can then la
 
 **Home `/`**
 
-* Emits surrogate keys: 'home', 'front', 'post-<id>' (all posts in main query)
+* Emits surrogate keys: `home`, `front`, `post-<id>` (all posts in main query)
 
 **Single post `/2016/10/14/surrogate-keys/`**
 
-* Emits surrogate keys: `single`, `post-<id>`, `user-<id>`
+* Emits surrogate keys: `single`, `post-<id>`, `user-<id>`, `term-<id>` (all assigned terms)
 
 **Author archive `/author/pantheon/`**
 
@@ -54,7 +54,11 @@ Surrogate keys enable responses to be "tagged" with identifiers that can then la
 
 **Term archive `/tag/cdn/`**
 
-* Emits surrogate keys: 'archive', 'term-<id>', 'post-<id>' (all posts in main query)
+* Emits surrogate keys: `archive`, `term-<id>`, `post-<id>` (all posts in main query)
+
+**Search `/?s=<search>`**
+
+* Emits surrogate keys: `search`, `post-<id>` (all posts in main query)
 
 = Purge Events =
 
