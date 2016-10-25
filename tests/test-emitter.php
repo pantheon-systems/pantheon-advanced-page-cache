@@ -29,7 +29,7 @@ class Test_Emitter extends Pantheon_Integrated_CDN_Testcase {
 	public function test_single_page() {
 		$this->go_to( get_permalink( $this->page_id1 ) );
 		$this->assertArrayValues( array(
-			'page',
+			'single',
 			'post-' . $this->page_id1,
 			'user-' . $this->user_id1,
 		), Emitter::get_surrogate_keys() );

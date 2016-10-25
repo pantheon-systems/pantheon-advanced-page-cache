@@ -49,7 +49,7 @@ class Emitter {
 			}
 		}
 
-		if ( is_single() ) {
+		if ( is_single() || is_page() ) {
 			$keys[] = 'single';
 			if ( is_attachment() ) {
 				$keys[] = 'attachment';
@@ -67,8 +67,6 @@ class Emitter {
 					$keys[] = 'term-' . $term_id;
 				}
 			}
-		} elseif ( is_page() ) {
-			$keys[] = 'page';
 		}
 
 		$keys = array_unique( $keys );
