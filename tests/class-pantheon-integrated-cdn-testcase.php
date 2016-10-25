@@ -15,6 +15,7 @@ class Pantheon_Integrated_CDN_Testcase extends WP_UnitTestCase {
 
 		$this->tag_id1 = $this->factory->tag->create();
 		$this->tag_id2 = $this->factory->tag->create();
+		$this->category_id1 = 1; // default 'uncategorized'
 		$this->category_id2 = $this->factory->category->create();
 
 		$this->post_id1 = $this->factory->post->create( array(
