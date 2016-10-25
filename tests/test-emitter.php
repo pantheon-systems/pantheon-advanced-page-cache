@@ -23,6 +23,7 @@ class Test_Emitter extends Pantheon_Integrated_CDN_Testcase {
 			'single',
 			'post-' . $this->post_id2,
 			'user-' . $this->user_id2,
+			'term-' . $this->category_id1,
 		), Emitter::get_surrogate_keys() );
 	}
 

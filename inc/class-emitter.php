@@ -46,10 +46,20 @@ class Emitter {
 				if ( post_type_supports( $p->post_type, 'author' ) ) {
 					$keys[] = 'user-' . $p->post_author;
 				}
+				if ( $wp_query->is_singular() || $wp_query->is_page() ) {
+					foreach ( get_object_taxonomies( $p ) as $tax ) {
+						$terms = get_the_terms( $p->ID, $tax );
+						if ( $terms && ! is_wp_error( $terms ) ) {
+							foreach ( $terms as $t ) {
+								$keys[] = 'term-' . $t->term_id;
+							}
+						}
+					}
+				}
 			}
 		}
 
-		if ( is_single() || is_page() ) {
+		if ( is_singular() || is_page() ) {
 			$keys[] = 'single';
 			if ( is_attachment() ) {
 				$keys[] = 'attachment';
