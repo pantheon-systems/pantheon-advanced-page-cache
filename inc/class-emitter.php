@@ -15,7 +15,7 @@ class Emitter {
 		$keys = self::get_surrogate_keys();
 		if ( ! empty( $keys ) ) {
 			// @codingStandardsIgnoreStart
-			@header( 'Surrogate-Keys: ' . implode( ' ', $keys ) );
+			@header( 'Surrogate-Key: ' . implode( ' ', $keys ) );
 			// @codingStandardsIgnoreEnd
 		}
 	}
