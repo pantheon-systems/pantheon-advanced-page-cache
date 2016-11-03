@@ -36,7 +36,7 @@ git clone -b $TERMINUS_ENV $PANTHEON_GIT_URL $PREPARE_DIR
 ###
 rm -rf $PREPARE_DIR/wp-content/plugins/pantheon-integrated-cdn
 cd $BASH_DIR/..
-rsync -av --exclude='node_modules/' --exclude='tests/' ./* $PREPARE_DIR/wp-content/plugins/pantheon-integrated-cdn
+rsync -av --exclude='node_modules/' --exclude='vendor/' --exclude='tests/' ./* $PREPARE_DIR/wp-content/plugins/pantheon-integrated-cdn
 rm -rf $PREPARE_DIR/wp-content/plugins/pantheon-integrated-cdn/.git
 
 ###
