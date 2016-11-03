@@ -1,4 +1,9 @@
 <?php
+/**
+ * Generates and emits surrogate keys based on the current request.
+ *
+ * @package Pantheon_Integrated_CDN
+ */
 
 namespace Pantheon_Integrated_CDN;
 
@@ -20,6 +25,13 @@ class Emitter {
 		}
 	}
 
+	/**
+	 * Get the surrogate keys to be included in this view.
+	 *
+	 * Surrogate keys are generated based on the main WP_Query.
+	 *
+	 * @return array
+	 */
 	public static function get_surrogate_keys() {
 		global $wp_query;
 
