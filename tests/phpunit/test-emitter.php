@@ -54,6 +54,18 @@ class Test_Emitter extends Pantheon_Integrated_CDN_Testcase {
 	}
 
 	/**
+	 * Assert expected surrogate keys for a single product.
+	 */
+	public function test_single_product() {
+		$this->go_to( get_permalink( $this->product_id1 ) );
+		$this->assertArrayValues( array(
+			'single',
+			'post-' . $this->product_id1,
+			'term-' . $this->product_category_id2,
+		), Emitter::get_surrogate_keys() );
+	}
+
+	/**
 	 * Assert expected surrogate keys for an author archive who has posts.
 	 */
 	public function test_single_author_with_posts() {
@@ -90,13 +102,49 @@ class Test_Emitter extends Pantheon_Integrated_CDN_Testcase {
 	}
 
 	/**
-	 * Assert expected surrogate keys for an author archive which doesn't have posts.
+	 * Assert expected surrogate keys for a tag archive which doesn't have posts.
 	 */
 	public function test_single_tag_without_posts() {
 		$this->go_to( get_term_link( $this->tag_id1 ) );
 		$this->assertArrayValues( array(
 			'archive',
 			'term-' . $this->tag_id1,
+		), Emitter::get_surrogate_keys() );
+	}
+
+	/**
+	 * Assert expected surrogate keys for a product category archive which has posts.
+	 */
+	public function test_single_product_category_with_posts() {
+		$this->go_to( get_term_link( $this->product_category_id1 ) );
+		$this->assertArrayValues( array(
+			'archive',
+			'term-' . $this->product_category_id1,
+			'post-' . $this->product_id2,
+		), Emitter::get_surrogate_keys() );
+	}
+
+	/**
+	 * Assert expected surrogate keys for a product category archive which doesn't have posts.
+	 */
+	public function test_single_product_category_without_posts() {
+		$this->go_to( get_term_link( $this->product_category_id3 ) );
+		$this->assertArrayValues( array(
+			'archive',
+			'term-' . $this->product_category_id3,
+		), Emitter::get_surrogate_keys() );
+	}
+
+	/**
+	 * Assert expected surrogate keys for custom post type archive.
+	 */
+	public function test_product_archive_with_posts() {
+		$this->go_to( home_url( 'products/' ) );
+		$this->assertArrayValues( array(
+			'archive',
+			'post-type-archive',
+			'post-' . $this->product_id1,
+			'post-' . $this->product_id2,
 		), Emitter::get_surrogate_keys() );
 	}
 
