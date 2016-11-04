@@ -11,7 +11,7 @@
 class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 
 	/**
-	 * Verify calling clean_post_cache() clears expected keys.
+	 * Verify calling clean_post_cache() on a post clears expected keys.
 	 */
 	public function test_clean_post_cache() {
 		clean_post_cache( $this->post_id1 );
@@ -31,6 +31,57 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 			'/first-page/',
 			'/category/uncategorized/',
 			'/tag/second-tag/',
+		) );
+	}
+
+	/**
+	 * Verify calling clean_post_cache() on a page clears expected keys.
+	 */
+	public function test_clean_post_cache_page() {
+		clean_post_cache( $this->page_id1 );
+		$this->assertClearedKeys( array(
+			'home',
+			'front',
+			'post-' . $this->page_id1,
+			'user-' . $this->user_id1,
+		) );
+		$this->assertPurgedURIs( array(
+			'/',
+			'/2016/',
+			'/2016/10/',
+			'/2016/10/14/',
+			'/2016/10/14/first-post/',
+			'/author/first-user/',
+			'/first-page/',
+			'/category/uncategorized/',
+			'/tag/second-tag/',
+		) );
+	}
+
+	/**
+	 * Verify calling clean_post_cache() on a product clears expected keys.
+	 */
+	public function test_clean_post_cache_product() {
+		clean_post_cache( $this->product_id1 );
+		$this->assertClearedKeys( array(
+			'home',
+			'front',
+			'post-' . $this->product_id1,
+			'user-' . $this->user_id1,
+		) );
+		$this->assertPurgedURIs( array(
+			'/',
+			'/2016/',
+			'/2016/10/',
+			'/2016/10/14/',
+			'/2016/10/14/first-post/',
+			'/author/first-user/',
+			'/first-page/',
+			'/category/uncategorized/',
+			'/tag/second-tag/',
+			'/product-category/second-product-category/',
+			'/product/first-product/',
+			'/products/',
 		) );
 	}
 
@@ -66,6 +117,20 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 		) );
 		$this->assertPurgedURIs( array(
 			'/tag/first-tag/',
+		) );
+	}
+
+	/**
+	 * Verify calling clean_term_cache() on a product category clears expected keys.
+	 */
+	public function test_clean_term_cache_product_category() {
+		clean_term_cache( $this->product_category_id1 );
+		$this->assertClearedKeys( array(
+			'term-' . $this->product_category_id1,
+		) );
+		$this->assertPurgedURIs( array(
+			'/product-category/first-product-category/',
+			'/product/second-product/',
 		) );
 	}
 

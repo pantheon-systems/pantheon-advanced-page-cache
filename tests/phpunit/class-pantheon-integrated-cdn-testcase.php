@@ -32,6 +32,8 @@ class Pantheon_Integrated_CDN_Testcase extends WP_UnitTestCase {
 	public function setUp() {
 		parent::setUp();
 
+		$this->factory->product_category = new WP_UnitTest_Factory_For_Term( $this->factory, 'product_category' );
+
 		$this->setup_permalink_structure();
 
 		$this->user_id1 = $this->factory->user->create( array( 'user_role' => 'author', 'user_nicename' => 'first-user' ) );
@@ -41,7 +43,19 @@ class Pantheon_Integrated_CDN_Testcase extends WP_UnitTestCase {
 		$this->tag_id1 = $this->factory->tag->create( array( 'slug' => 'first-tag' ) );
 		$this->tag_id2 = $this->factory->tag->create( array( 'slug' => 'second-tag' ) );
 		$this->category_id1 = 1; // This is the default 'uncategorized' category.
-		$this->category_id2 = $this->factory->category->create( array( 'slug' => 'second-category' ) );
+		$this->category_id2 = $this->factory->category->create( array(
+			'slug' => 'second-category',
+		) );
+
+		$this->product_category_id1 = $this->factory->product_category->create( array(
+			'slug' => 'first-product-category',
+		) );
+		$this->product_category_id2 = $this->factory->product_category->create( array(
+			'slug' => 'second-product-category',
+		) );
+		$this->product_category_id3 = $this->factory->product_category->create( array(
+			'slug' => 'third-product-category',
+		) );
 
 		$this->post_id1 = $this->factory->post->create( array(
 			'post_status'   => 'publish',
@@ -71,6 +85,25 @@ class Pantheon_Integrated_CDN_Testcase extends WP_UnitTestCase {
 			'post_author'   => $this->user_id1,
 			'post_name'     => 'first-page',
 		) );
+		$this->product_id1 = $this->factory->post->create( array(
+			'post_status'   => 'publish',
+			'post_type'     => 'product',
+			'post_author'   => $this->user_id1,
+			'post_date'     => '2016-10-14 12:00',
+			'post_date_gmt' => '2016-10-14 12:00',
+			'post_name'     => 'first-product',
+		) );
+		wp_set_object_terms( $this->product_id1, array( $this->product_category_id2 ), 'product_category' );
+		$this->product_id2 = $this->factory->post->create( array(
+			'post_status'   => 'publish',
+			'post_type'     => 'product',
+			'post_author'   => $this->user_id2,
+			'post_date'     => '2016-10-14 11:00',
+			'post_date_gmt' => '2016-10-14 11:00',
+			'post_name'     => 'second-product',
+		) );
+		wp_set_object_terms( $this->product_id2, array( $this->product_category_id1 ), 'product_category' );
+
 		$this->cleared_keys = array();
 
 		// Primes the mapping of views to their surrogate keys.
@@ -80,14 +113,20 @@ class Pantheon_Integrated_CDN_Testcase extends WP_UnitTestCase {
 			get_permalink( $this->post_id2 ), // Single post.
 			get_permalink( $this->post_id3 ), // Single post.
 			get_permalink( $this->page_id1 ), // Single page.
+			get_permalink( $this->product_id1 ), // Single product.
+			get_permalink( $this->product_id2 ), // Single product.
 			get_term_link( $this->tag_id1 ), // Single term.
 			get_term_link( $this->tag_id2 ), // Single term.
 			get_term_link( $this->category_id1 ), // Single term.
+			get_term_link( $this->product_category_id1 ), // Single product category.
+			get_term_link( $this->product_category_id2 ), // Single product category.
+			get_term_link( $this->product_category_id3 ), // Single product category.
 			get_author_posts_url( $this->user_id1 ), // Single author.
 			get_author_posts_url( $this->user_id2 ), // Single author.
 			get_author_posts_url( $this->user_id3 ), // Single author.
+			'/products/', // Product post type archive.
 			'/2016/10/14/', // Day archive with posts.
-			'2015/10/15/', // Day archive without posts.
+			'/2015/10/15/', // Day archive without posts.
 			'/2016/10/', // Month archive with posts.
 			'/2015/10/', // Month archive without posts.
 			'/2016/', // Year archive with posts.
@@ -95,6 +134,9 @@ class Pantheon_Integrated_CDN_Testcase extends WP_UnitTestCase {
 		);
 		foreach ( $views as $view ) {
 			$path = parse_url( $view, PHP_URL_PATH );
+			if ( $query = parse_url( $view, PHP_URL_QUERY ) ) {
+				$path .= '?' . $query;
+			}
 			$this->go_to( $view );
 			$this->view_surrogate_keys[ $path ] = Emitter::get_surrogate_keys();
 		}
@@ -124,8 +166,25 @@ class Pantheon_Integrated_CDN_Testcase extends WP_UnitTestCase {
 		$wp_rewrite->set_permalink_structure( $structure );
 
 		create_initial_taxonomies();
+		$this->register_custom_types();
 
 		$wp_rewrite->flush_rules();
+	}
+
+	/**
+	 * Register custom post types and taxonomies.
+	 */
+	private function register_custom_types() {
+		register_post_type( 'product', array(
+			'public'      => true,
+			'has_archive' => 'products',
+		) );
+		register_taxonomy( 'product_category', array( 'product' ), array(
+			'public'  => true,
+			'rewrite' => array(
+				'slug'    => 'product-category',
+			),
+		) );
 	}
 
 	/**
@@ -172,6 +231,8 @@ class Pantheon_Integrated_CDN_Testcase extends WP_UnitTestCase {
 	public function tearDown() {
 		$this->cleared_keys = array();
 		remove_action( 'pantheon_integrated_cdn_clear_keys', array( $this, 'action_pantheon_integrated_cdn_clear_keys' ) );
+		_unregister_post_type( 'product' );
+		_unregister_taxonomy( 'product_category' );
 		parent::tearDown();
 	}
 
