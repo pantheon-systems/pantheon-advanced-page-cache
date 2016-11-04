@@ -82,10 +82,12 @@ class Emitter {
 				$keys[] = 'post-type-archive';
 			} elseif ( is_author() ) {
 				if ( $user_id = get_queried_object_id() ) {
+					$keys[] = 'archive-user-' . $user_id;
 					$keys[] = 'user-' . $user_id;
 				}
 			} elseif ( is_category() || is_tag() || is_tax() ) {
 				if ( $term_id = get_queried_object_id() ) {
+					$keys[] = 'archive-term-' . $term_id;
 					$keys[] = 'term-' . $term_id;
 				}
 			}

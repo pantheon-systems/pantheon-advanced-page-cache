@@ -19,7 +19,7 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 			'home',
 			'front',
 			'post-' . $this->post_id1,
-			'user-' . $this->user_id1,
+			'archive-user-' . $this->user_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -28,7 +28,6 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 			'/2016/10/14/',
 			'/2016/10/14/first-post/',
 			'/author/first-user/',
-			'/first-page/',
 			'/category/uncategorized/',
 			'/tag/second-tag/',
 		) );
@@ -43,18 +42,12 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 			'home',
 			'front',
 			'post-' . $this->page_id1,
-			'user-' . $this->user_id1,
+			'archive-user-' . $this->user_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
-			'/2016/',
-			'/2016/10/',
-			'/2016/10/14/',
-			'/2016/10/14/first-post/',
 			'/author/first-user/',
 			'/first-page/',
-			'/category/uncategorized/',
-			'/tag/second-tag/',
 		) );
 	}
 
@@ -67,18 +60,9 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 			'home',
 			'front',
 			'post-' . $this->product_id1,
-			'user-' . $this->user_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
-			'/2016/',
-			'/2016/10/',
-			'/2016/10/14/',
-			'/2016/10/14/first-post/',
-			'/author/first-user/',
-			'/first-page/',
-			'/category/uncategorized/',
-			'/tag/second-tag/',
 			'/product-category/second-product-category/',
 			'/product/first-product/',
 			'/products/',

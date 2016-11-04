@@ -38,8 +38,8 @@ class Purger {
 			'post-' . $post_id,
 		);
 		$post = get_post( $post_id );
-		if ( $post ) {
-			$keys[] = 'user-' . $post->post_author;
+		if ( $post && post_type_supports( $post->post_type, 'author' ) ) {
+			$keys[] = 'archive-user-' . $post->post_author;
 		}
 		self::clear_keys( $keys );
 	}
