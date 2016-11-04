@@ -13,20 +13,6 @@ namespace Pantheon_Integrated_CDN;
 class Purger {
 
 	/**
-	 * Purge the cache for specific surrogate keys.
-	 *
-	 * @param array $keys Surrogate keys to purge.
-	 */
-	public static function clear_keys( $keys = array() ) {
-
-		do_action( 'pantheon_integrated_cdn_clear_keys', $keys );
-
-		if ( function_exists( 'pantheon_clear_edge_keys' ) ) {
-			pantheon_clear_edge_keys( $keys );
-		}
-	}
-
-	/**
 	 * Purge a variety of surrogate keys when a post is modified.
 	 *
 	 * @param integer $post_id ID for the modified post.
@@ -41,7 +27,7 @@ class Purger {
 		if ( $post && post_type_supports( $post->post_type, 'author' ) ) {
 			$keys[] = 'archive-user-' . $post->post_author;
 		}
-		self::clear_keys( $keys );
+		pantheon_wp_clear_edge_keys( $keys );
 	}
 
 	/**
@@ -55,7 +41,7 @@ class Purger {
 		foreach ( $term_ids as $term_id ) {
 			$keys[] = 'term-' . $term_id;
 		}
-		self::clear_keys( $keys );
+		pantheon_wp_clear_edge_keys( $keys );
 	}
 
 	/**
@@ -67,7 +53,7 @@ class Purger {
 		$keys = array(
 			'user-' . $user_id,
 		);
-		self::clear_keys( $keys );
+		pantheon_wp_clear_edge_keys( $keys );
 	}
 
 }
