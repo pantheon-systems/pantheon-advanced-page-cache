@@ -141,15 +141,15 @@ class Pantheon_Integrated_CDN_Testcase extends WP_UnitTestCase {
 			$this->view_surrogate_keys[ $path ] = Emitter::get_surrogate_keys();
 		}
 
-		add_action( 'pantheon_integrated_cdn_clear_keys', array( $this, 'action_pantheon_integrated_cdn_clear_keys' ) );
+		add_action( 'pantheon_wp_clear_edge_keys', array( $this, 'action_pantheon_wp_clear_edge_keys' ) );
 	}
 
 	/**
-	 * Hooks into the 'pantheon_integrated_cdn_clear_keys' to listen to cleared keys.
+	 * Hooks into the 'pantheon_wp_clear_edge_keys' to listen to cleared keys.
 	 *
 	 * @param array $keys Surrogate keys being cleared.
 	 */
-	public function action_pantheon_integrated_cdn_clear_keys( $keys ) {
+	public function action_pantheon_wp_clear_edge_keys( $keys ) {
 		$this->cleared_keys = $keys;
 	}
 
@@ -230,7 +230,7 @@ class Pantheon_Integrated_CDN_Testcase extends WP_UnitTestCase {
 	 */
 	public function tearDown() {
 		$this->cleared_keys = array();
-		remove_action( 'pantheon_integrated_cdn_clear_keys', array( $this, 'action_pantheon_integrated_cdn_clear_keys' ) );
+		remove_action( 'pantheon_wp_clear_edge_keys', array( $this, 'action_pantheon_wp_clear_edge_keys' ) );
 		_unregister_post_type( 'product' );
 		_unregister_taxonomy( 'product_category' );
 		parent::tearDown();

@@ -13,6 +13,59 @@
  */
 
 /**
+ * Purge the cache for specific surrogate keys.
+ *
+ * @param array $keys Surrogate keys to purge.
+ */
+function pantheon_wp_clear_edge_keys( $keys ) {
+
+	/**
+	 * Fires when purging specific surrogate keys.
+	 *
+	 * @param array $keys Surrogate keys to purge.
+	 */
+	do_action( 'pantheon_wp_clear_edge_keys', $keys );
+
+	if ( function_exists( 'pantheon_clear_edge_keys' ) ) {
+		pantheon_clear_edge_keys( $keys );
+	}
+}
+
+/**
+ * Purge the cache for specific paths.
+ *
+ * @param array $paths URI paths to purge.
+ */
+function pantheon_wp_clear_edge_paths( $paths ) {
+
+	/**
+	 * Fires when purging specific URI paths.
+	 *
+	 * @param array $paths URI paths to purge.
+	 */
+	do_action( 'pantheon_wp_clear_edge_paths', $paths );
+
+	if ( function_exists( 'pantheon_clear_edge_paths' ) ) {
+		pantheon_clear_edge_paths( $paths );
+	}
+}
+
+/**
+ * Purge the entire cache.
+ */
+function pantheon_wp_clear_edge_all() {
+
+	/**
+	 * Fires when purging the entire cache.
+	 */
+	do_action( 'pantheon_wp_clear_edge_all' );
+
+	if ( function_exists( 'pantheon_clear_edge_all' ) ) {
+		pantheon_clear_edge_all();
+	}
+}
+
+/**
  * Registers the class autoloader.
  */
 spl_autoload_register( function( $class ) {
