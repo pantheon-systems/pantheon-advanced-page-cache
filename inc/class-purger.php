@@ -46,7 +46,7 @@ class Purger {
 			foreach ( $taxonomies as $taxonomy ) {
 				$terms = get_the_terms( $post, $taxonomy->name );
 				if ( $terms ) {
-					foreach( $terms as $term ) {
+					foreach ( $terms as $term ) {
 						$keys[] = 'archive-term-' . $term->term_id;
 					}
 				}
