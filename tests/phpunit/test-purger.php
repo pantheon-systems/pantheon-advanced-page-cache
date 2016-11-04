@@ -21,6 +21,17 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 			'post-' . $this->post_id1,
 			'user-' . $this->user_id1,
 		) );
+		$this->assertPurgedURIs( array(
+			'/',
+			'/2016/',
+			'/2016/10/',
+			'/2016/10/14/',
+			'/2016/10/14/first-post/',
+			'/author/first-user/',
+			'/first-page/',
+			'/category/uncategorized/',
+			'/tag/second-tag/',
+		) );
 	}
 
 	/**
@@ -33,6 +44,16 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 			'front',
 			'post-' . $this->post_id1,
 		) );
+		$this->assertPurgedURIs( array(
+			'/',
+			'/2016/',
+			'/2016/10/',
+			'/2016/10/14/',
+			'/2016/10/14/first-post/',
+			'/author/first-user/',
+			'/category/uncategorized/',
+			'/tag/second-tag/',
+		) );
 	}
 
 	/**
@@ -43,6 +64,9 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 		$this->assertClearedKeys( array(
 			'term-' . $this->tag_id1,
 		) );
+		$this->assertPurgedURIs( array(
+			'/tag/first-tag/',
+		) );
 	}
 
 	/**
@@ -52,6 +76,17 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 		clean_user_cache( $this->user_id1 );
 		$this->assertClearedKeys( array(
 			'user-' . $this->user_id1,
+		) );
+		$this->assertPurgedURIs( array(
+			'/',
+			'/2016/',
+			'/2016/10/',
+			'/2016/10/14/',
+			'/2016/10/14/first-post/',
+			'/category/uncategorized/',
+			'/first-page/',
+			'/author/first-user/',
+			'/tag/second-tag/',
 		) );
 	}
 
