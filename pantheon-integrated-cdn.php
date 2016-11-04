@@ -33,6 +33,11 @@ spl_autoload_register( function( $class ) {
 });
 
 /**
+ * Registers relevant admin UI
+ */
+add_action( 'pantheon_cache_settings_page_bottom', array( 'Pantheon_Integrated_CDN\Admin', 'action_pantheon_cache_settings_page_bottom' ) );
+
+/**
  * Emits the appropriate surrogate tags per view.
  */
 add_filter( 'wp', array( 'Pantheon_Integrated_CDN\Emitter', 'action_wp' ) );
