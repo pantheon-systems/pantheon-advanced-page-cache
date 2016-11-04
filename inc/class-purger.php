@@ -38,8 +38,19 @@ class Purger {
 			'post-' . $post_id,
 		);
 		$post = get_post( $post_id );
-		if ( $post && post_type_supports( $post->post_type, 'author' ) ) {
-			$keys[] = 'archive-user-' . $post->post_author;
+		if ( $post ) {
+			if ( post_type_supports( $post->post_type, 'author' ) ) {
+				$keys[] = 'archive-user-' . $post->post_author;
+			}
+			$taxonomies = wp_list_filter( get_object_taxonomies( $post->post_type, 'objects' ), array( 'public' => true ) );
+			foreach ( $taxonomies as $taxonomy ) {
+				$terms = get_the_terms( $post, $taxonomy->name );
+				if ( $terms ) {
+					foreach( $terms as $term ) {
+						$keys[] = 'archive-term-' . $term->term_id;
+					}
+				}
+			}
 		}
 		self::clear_keys( $keys );
 	}

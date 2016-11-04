@@ -20,6 +20,8 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 			'front',
 			'post-' . $this->post_id1,
 			'archive-user-' . $this->user_id1,
+			'archive-term-' . $this->category_id1,
+			'archive-term-' . $this->tag_id2,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -60,6 +62,7 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 			'home',
 			'front',
 			'post-' . $this->product_id1,
+			'archive-term-' . $this->product_category_id2,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
