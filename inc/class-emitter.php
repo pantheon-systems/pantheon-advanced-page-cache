@@ -50,6 +50,11 @@ class Emitter {
 		}
 		if ( is_search() ) {
 			$keys[] = 'search';
+			if ( $wp_query->found_posts ) {
+				$keys[] = 'search-results';
+			} else {
+				$keys[] = 'search-no-results';
+			}
 		}
 
 		if ( ! empty( $wp_query->posts ) ) {

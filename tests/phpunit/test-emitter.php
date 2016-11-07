@@ -224,12 +224,32 @@ class Test_Emitter extends Pantheon_Integrated_CDN_Testcase {
 	}
 
 	/**
-	 * Assert expected surrogate keys for a year date archive with posts.
+	 * Assert expected surrogate keys for a search with posts
 	 */
-	public function test_search() {
+	public function test_search_with_posts() {
+		$this->go_to( home_url( '/?s=post' ) );
+		$this->assertArrayValues( array(
+			'search',
+			'search-results',
+			'post-' . $this->post_id1,
+			'post-' . $this->post_id2,
+			'post-' . $this->post_id3,
+			'post-' . $this->page_id1,
+			'post-' . $this->product_id1,
+			'post-' . $this->product_id2,
+			'user-' . $this->user_id1,
+			'user-' . $this->user_id2,
+		), Emitter::get_surrogate_keys() );
+	}
+
+	/**
+	 * Assert expected surrogate keys for a search without posts
+	 */
+	public function test_search_without_posts() {
 		$this->go_to( home_url( '/?s=foo' ) );
 		$this->assertArrayValues( array(
-			'search'
+			'search',
+			'search-no-results',
 		), Emitter::get_surrogate_keys() );
 	}
 
