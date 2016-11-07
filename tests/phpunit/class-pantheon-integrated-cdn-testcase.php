@@ -141,6 +141,7 @@ class Pantheon_Integrated_CDN_Testcase extends WP_UnitTestCase {
 	 * Primes the mapping of views to their surrogate keys.
 	 */
 	protected function setup_view_surrogate_keys() {
+		$this->view_surrogate_keys = array();
 		// Primes the mapping of views to their surrogate keys.
 		$views = array(
 			home_url( '/' ), // Homepage.
