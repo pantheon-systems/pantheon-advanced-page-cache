@@ -81,6 +81,8 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 			'home',
 			'front',
 			'post-' . $this->post_id1,
+			'term-' . $this->category_id1,
+			'term-' . $this->tag_id2,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -88,6 +90,8 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 			'/2016/10/',
 			'/2016/10/14/',
 			'/2016/10/14/first-post/',
+			'/2016/10/14/second-post/',
+			'/2016/10/15/third-post/',
 			'/author/first-user/',
 			'/category/uncategorized/',
 			'/tag/second-tag/',

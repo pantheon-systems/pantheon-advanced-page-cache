@@ -150,7 +150,7 @@ class Pantheon_Integrated_CDN_Testcase extends WP_UnitTestCase {
 	 * @param array $keys Surrogate keys being cleared.
 	 */
 	public function action_pantheon_wp_clear_edge_keys( $keys ) {
-		$this->cleared_keys = $keys;
+		$this->cleared_keys = array_merge( $this->cleared_keys, $keys );
 	}
 
 	/**
