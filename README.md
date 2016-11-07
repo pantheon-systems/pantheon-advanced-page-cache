@@ -33,12 +33,42 @@ To install Pantheon Integrated CDN in one line with WP-CLI:
 
 ## Surrogate Keys ##
 
-Surrogate keys enable responses to be "tagged" with identifiers that can then later be used in purge requests. This flexibility enables behaviors like:
+Surrogate keys enable responses to be "tagged" with identifiers that can then later be used in purge requests. For instance, a home page response might include the header:
+
+    Surrogate-Key: front home post-43 user-4 post-41 post-9 post-7 post-1 user-1
+
+Because cached responses include metadata describing the data therein, surrogate keys enable more flexible purging behavior like:
 
 * When a post is updated, clear the cache for the post's URL, the homepage, and any index view the post appears on.
 * When an author changes their name, clear the cache for the author's archive and any post they've authored.
 
-Keys emitted are optimized based on a user's expectation of a normal WordPress site because there's a limit on the total number of keys that can be included in a response. For instance, it doesn't make sense to include a `term-<id>` surrogate key for every category or tag on an archive view.
+There is a limit to the number of surrogate keys in a response, so we've optimized them based on a user's expectation of a normal WordPress site. See the "Emitted Keys" section for full details.
+
+Use the `pantheon_wp_surrogate_keys` filter to customize surrogate keys in a response. For example, to include a surrogate key for a sidebar rendered on the homepage, you can filter the keys included in the response:
+
+    /**
+     * Add surrogate key for the featured content sidebar rendered on the homepage.
+     */
+    add_filter( 'pantheon_wp_surrogate_keys', function( $keys ){
+	    if ( is_home() ) {
+            $keys[] = 'sidebar-home-featured';
+        }
+        return $keys;
+    });
+
+Then, when sidebars are updated, you can use the `pantheon_wp_clear_edge_keys()` helper function to emit a purge event specific to the surrogate key:
+
+    /**
+     * Trigger a purge event for the featured content sidebar when widgets are updated.
+     */
+    add_action( 'update_option_sidebars_widgets', function() {
+        pantheon_wp_clear_edge_keys( array( 'sidebar-home-featured' ) );
+    });
+
+Need a bit more power? Here are two additional helper functions you can use:
+
+* `pantheon_wp_clear_edge_paths( $paths = array() )` - Purge cache for one or more paths.
+* `pantheon_wp_clear_edge_all()` - Warning! With great power comes great responsibility. Purge the entire cache, but do so wisely.
 
 ### Emitted Keys ###
 
