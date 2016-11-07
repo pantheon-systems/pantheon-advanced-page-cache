@@ -207,7 +207,7 @@ class Pantheon_Integrated_CDN_Testcase extends WP_UnitTestCase {
 	 * @param array $expected Surrogate keys expected to be cleared.
 	 */
 	protected function assertClearedKeys( $expected ) {
-		$this->assertArrayValues( $expected, $this->cleared_keys );
+		$this->assertArrayValues( $expected, array_unique( $this->cleared_keys ) );
 	}
 
 	/**
