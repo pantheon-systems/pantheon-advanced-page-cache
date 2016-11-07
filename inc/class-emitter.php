@@ -93,6 +93,12 @@ class Emitter {
 			}
 		}
 
+		/**
+		 * Customize surrogate keys sent in the header.
+		 *
+		 * @param array $keys Existing surrogate keys generate by the plugin.
+		 */
+		$keys = apply_filters( 'pantheon_wp_surrogate_keys', $keys );
 		$keys = array_unique( $keys );
 		return $keys;
 	}
