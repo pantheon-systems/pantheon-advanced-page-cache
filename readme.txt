@@ -44,7 +44,7 @@ Keys emitted are optimized based on a user's expectation of a normal WordPress s
 
 **Home `/`**
 
-* Emits surrogate keys: `home`, `front`, `post-<id>` (all posts in main query)
+* Emits surrogate keys: `home`, `front`, `post-<id>` (all posts in main query), `user-<id>` (all authors of posts in the main query)
 
 **Single post `/2016/10/14/surrogate-keys/`**
 
@@ -52,22 +52,34 @@ Keys emitted are optimized based on a user's expectation of a normal WordPress s
 
 **Author archive `/author/pantheon/`**
 
-* Emits surrogate keys: `archive`, `user-<id>`, `post-<id>` (all posts in main query)
+* Emits surrogate keys: `archive`, `archive-user-<id>`, `user-<id>`, `post-<id>` (all posts in main query)
 
 **Term archive `/tag/cdn/`**
 
-* Emits surrogate keys: `archive`, `term-<id>`, `post-<id>` (all posts in main query)
+* Emits surrogate keys: `archive`, `archive-term-<id>`, `term-<id>`, `post-<id>` (all posts in main query), `user-<id>` (all authors of posts in the main query)
+
+**Day archive `/2016/10/14/`**
+
+* Emits surrogate keys: `archive`, `date`, `post-<id>` (all posts in main query), `user-<id>` (all authors of posts in the main query)
+
+**Month archive `/2016/10/`**
+
+* Emits surrogate keys: `archive`, `date`, `post-<id>` (all posts in main query), `user-<id>` (all authors of posts in the main query)
+
+**Year archive `/2016/`**
+
+* Emits surrogate keys: `archive`, `date`, `post-<id>` (all posts in main query), `user-<id>` (all authors of posts in the main query)
 
 **Search `/?s=<search>`**
 
-* Emits surrogate keys: `search`, `post-<id>` (all posts in main query)
+* Emits surrogate keys: `search`, either `search-results` or `search-no-results`, `post-<id>` (all posts in main query), `user-<id>` (all authors of posts in the main query)
 
 = Purge Events =
 
 **clean_post_cache**
 
-* Purges surrogate keys: `home`, `front`, `post-<id>`, `user-<id>`
-* Affected views: homepage, single post, any archive where post displays, author archive
+* Purges surrogate keys: `home`, `front`, `post-<id>`, `archive-user-<id>`, `archive-term-<id>`
+* Affected views: homepage, single post, any archive where post displays, author archive, term archive
 
 **clean_term_cache**
 
