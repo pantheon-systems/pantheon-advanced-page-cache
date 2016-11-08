@@ -105,41 +105,7 @@ class Pantheon_Integrated_CDN_Testcase extends WP_UnitTestCase {
 		wp_set_object_terms( $this->product_id2, array( $this->product_category_id1 ), 'product_category' );
 
 		$this->cleared_keys = array();
-
-		// Primes the mapping of views to their surrogate keys.
-		$views = array(
-			home_url( '/' ), // Homepage.
-			get_permalink( $this->post_id1 ), // Single post.
-			get_permalink( $this->post_id2 ), // Single post.
-			get_permalink( $this->post_id3 ), // Single post.
-			get_permalink( $this->page_id1 ), // Single page.
-			get_permalink( $this->product_id1 ), // Single product.
-			get_permalink( $this->product_id2 ), // Single product.
-			get_term_link( $this->tag_id1 ), // Single term.
-			get_term_link( $this->tag_id2 ), // Single term.
-			get_term_link( $this->category_id1 ), // Single term.
-			get_term_link( $this->product_category_id1 ), // Single product category.
-			get_term_link( $this->product_category_id2 ), // Single product category.
-			get_term_link( $this->product_category_id3 ), // Single product category.
-			get_author_posts_url( $this->user_id1 ), // Single author.
-			get_author_posts_url( $this->user_id2 ), // Single author.
-			get_author_posts_url( $this->user_id3 ), // Single author.
-			'/products/', // Product post type archive.
-			'/2016/10/14/', // Day archive with posts.
-			'/2015/10/15/', // Day archive without posts.
-			'/2016/10/', // Month archive with posts.
-			'/2015/10/', // Month archive without posts.
-			'/2016/', // Year archive with posts.
-			'/2015/', // Year archive without posts.
-		);
-		foreach ( $views as $view ) {
-			$path = parse_url( $view, PHP_URL_PATH );
-			if ( $query = parse_url( $view, PHP_URL_QUERY ) ) {
-				$path .= '?' . $query;
-			}
-			$this->go_to( $view );
-			$this->view_surrogate_keys[ $path ] = Emitter::get_surrogate_keys();
-		}
+		$this->setup_view_surrogate_keys();
 
 		add_action( 'pantheon_wp_clear_edge_keys', array( $this, 'action_pantheon_wp_clear_edge_keys' ) );
 	}
@@ -172,6 +138,54 @@ class Pantheon_Integrated_CDN_Testcase extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Primes the mapping of views to their surrogate keys.
+	 */
+	protected function setup_view_surrogate_keys() {
+		$this->view_surrogate_keys = array();
+		// Primes the mapping of views to their surrogate keys.
+		$views = array(
+			home_url( '/' ), // Homepage.
+			'/products/', // Product post type archive.
+			'/2016/10/14/', // Day archive with posts.
+			'/2015/10/15/', // Day archive without posts.
+			'/2016/10/', // Month archive with posts.
+			'/2015/10/', // Month archive without posts.
+			'/2016/', // Year archive with posts.
+			'/2015/', // Year archive without posts.
+		);
+		$posts = get_posts( array(
+			'fields'         => 'ids',
+			'post_type'      => 'any',
+			'post_status'    => 'any',
+			'posts_per_page' => -1,
+		) );
+		foreach ( $posts as $post_id ) {
+			$views[] = get_permalink( $post_id );
+		}
+		$users = get_users( array(
+			'fields'         => 'ids',
+		) );
+		foreach ( $users as $user_id ) {
+			$views[] = get_author_posts_url( $user_id );
+		}
+		$terms = get_terms( array( 'post_tag', 'category', 'product_category' ), array(
+			'hide_empty'     => false,
+		) );
+		foreach ( $terms as $term ) {
+			$views[] = get_term_link( $term );
+		}
+		$views = array_unique( $views );
+		foreach ( $views as $view ) {
+			$path = parse_url( $view, PHP_URL_PATH );
+			if ( $query = parse_url( $view, PHP_URL_QUERY ) ) {
+				$path .= '?' . $query;
+			}
+			$this->go_to( $view );
+			$this->view_surrogate_keys[ $path ] = Emitter::get_surrogate_keys();
+		}
+	}
+
+	/**
 	 * Register custom post types and taxonomies.
 	 */
 	private function register_custom_types() {
@@ -193,7 +207,7 @@ class Pantheon_Integrated_CDN_Testcase extends WP_UnitTestCase {
 	 * @param array $expected Surrogate keys expected to be cleared.
 	 */
 	protected function assertClearedKeys( $expected ) {
-		$this->assertArrayValues( $expected, $this->cleared_keys );
+		$this->assertArrayValues( $expected, array_unique( $this->cleared_keys ) );
 	}
 
 	/**

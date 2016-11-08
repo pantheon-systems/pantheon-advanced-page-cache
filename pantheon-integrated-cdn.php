@@ -96,8 +96,14 @@ add_action( 'pantheon_cache_settings_page_bottom', array( 'Pantheon_Integrated_C
 add_filter( 'wp', array( 'Pantheon_Integrated_CDN\Emitter', 'action_wp' ) );
 
 /**
- * Clears surrogate tags when object caches are cleared.
+ * Clears surrogate tags when various modification behaviors are performed.
  */
+add_action( 'wp_insert_post', array( 'Pantheon_Integrated_CDN\Purger', 'action_wp_insert_post' ) );
+add_action( 'before_delete_post', array( 'Pantheon_Integrated_CDN\Purger', 'action_before_delete_post' ) );
+add_action( 'delete_attachment', array( 'Pantheon_Integrated_CDN\Purger', 'action_delete_attachment' ) );
 add_action( 'clean_post_cache', array( 'Pantheon_Integrated_CDN\Purger', 'action_clean_post_cache' ) );
+add_action( 'created_term', array( 'Pantheon_Integrated_CDN\Purger', 'action_created_term' ) );
+add_action( 'edited_term', array( 'Pantheon_Integrated_CDN\Purger', 'action_edited_term' ) );
+add_action( 'delete_term', array( 'Pantheon_Integrated_CDN\Purger', 'action_delete_term' ) );
 add_action( 'clean_term_cache', array( 'Pantheon_Integrated_CDN\Purger', 'action_clean_term_cache' ) );
 add_action( 'clean_user_cache', array( 'Pantheon_Integrated_CDN\Purger', 'action_clean_user_cache' ) );
