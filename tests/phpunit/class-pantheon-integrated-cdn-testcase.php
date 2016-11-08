@@ -168,12 +168,11 @@ class Pantheon_Integrated_CDN_Testcase extends WP_UnitTestCase {
 		foreach ( $users as $user_id ) {
 			$views[] = get_author_posts_url( $user_id );
 		}
-		$terms = get_terms( array(
-			'taxonomy'       => array( 'post_tag', 'category', 'product_category' ),
+		$terms = get_terms( array( 'post_tag', 'category', 'product_category' ), array(
 			'hide_empty'     => false,
 		) );
-		foreach ( $terms as $term_id ) {
-			$views[] = get_term_link( $term_id );
+		foreach ( $terms as $term ) {
+			$views[] = get_term_link( $term );
 		}
 		$views = array_unique( $views );
 		foreach ( $views as $view ) {
