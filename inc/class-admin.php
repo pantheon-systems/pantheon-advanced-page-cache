@@ -19,7 +19,7 @@ class Admin {
 		?>
 		<hr />
 
-		<h3><?php _e( 'Pantheon Advanced Cache', 'pantheon-integrated-cdn' ); ?></h3>
+		<h3><?php _e( 'Pantheon Advanced Page Cache', 'pantheon-integrated-cdn' ); ?></h3>
 
 		<p><?php _e( 'Pantheon Advanced Page Cache is enabled, which automatically purges related content from the Pantheon Edge.', 'pantheon-integrated-cdn' ); ?></p>
 
