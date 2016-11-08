@@ -11,10 +11,38 @@
 class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 
 	/**
-	 * Verify calling clean_post_cache() on a post clears expected keys.
+	 * Verify publishing a new post purges the homepage and associated archive pages.
 	 */
-	public function test_clean_post_cache() {
-		clean_post_cache( $this->post_id1 );
+	public function test_publish_post() {
+		$this->post_id4 = $this->factory->post->create( array(
+			'post_status'   => 'publish',
+			'post_author'   => $this->user_id1,
+			'post_date'     => '2016-10-21 12:00',
+			'post_date_gmt' => '2016-10-21 12:00',
+			'post_name'     => 'fourth-post',
+		) );
+		$this->assertClearedKeys( array(
+			'home',
+			'front',
+			'post-' . $this->post_id4,
+			'archive-user-' . $this->user_id1,
+			'archive-term-' . $this->category_id1,
+		) );
+		$this->assertPurgedURIs( array(
+			'/',
+			'/author/first-user/',
+			'/category/uncategorized/',
+		) );
+	}
+
+	/**
+	 * Verify updating an existing post clears the expected keys.
+	 */
+	public function test_update_post() {
+		wp_update_post( array(
+			'ID'           => $this->post_id1,
+			'post_content' => 'Test content',
+		) );
 		$this->assertClearedKeys( array(
 			'home',
 			'front',
@@ -36,10 +64,88 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 	}
 
 	/**
-	 * Verify calling clean_post_cache() on a page clears expected keys.
+	 * Verify trashing a post clears the expected keys.
 	 */
-	public function test_clean_post_cache_page() {
-		clean_post_cache( $this->page_id1 );
+	public function test_trash_post() {
+		wp_trash_post( $this->post_id1 );
+		$this->assertClearedKeys( array(
+			'home',
+			'front',
+			'post-' . $this->post_id1,
+			'archive-user-' . $this->user_id1,
+			'archive-term-' . $this->category_id1,
+			'archive-term-' . $this->tag_id2,
+		) );
+		$this->assertPurgedURIs( array(
+			'/',
+			'/2016/',
+			'/2016/10/',
+			'/2016/10/14/',
+			'/2016/10/14/first-post/',
+			'/author/first-user/',
+			'/category/uncategorized/',
+			'/tag/second-tag/',
+		) );
+	}
+
+	/**
+	 * Verify deleting a post clears the expected keys.
+	 */
+	public function test_delete_post() {
+		wp_delete_post( $this->post_id1, true );
+		$this->assertClearedKeys( array(
+			'home',
+			'front',
+			'post-' . $this->post_id1,
+			'archive-user-' . $this->user_id1,
+			'archive-term-' . $this->category_id1,
+			'archive-term-' . $this->tag_id2,
+		) );
+		$this->assertPurgedURIs( array(
+			'/',
+			'/2016/',
+			'/2016/10/',
+			'/2016/10/14/',
+			'/2016/10/14/first-post/',
+			'/author/first-user/',
+			'/category/uncategorized/',
+			'/tag/second-tag/',
+		) );
+	}
+
+	/**
+	 * Verify creating a new page purges the homepage.
+	 */
+	public function test_publish_page() {
+		$this->page_id2 = $this->factory->post->create( array(
+			'post_status'   => 'publish',
+			'post_author'   => $this->user_id1,
+			'post_date'     => '2016-10-21 12:00',
+			'post_date_gmt' => '2016-10-21 12:00',
+			'post_name'     => 'second-page',
+		) );
+		$this->assertClearedKeys( array(
+			'home',
+			'front',
+			'post-' . $this->page_id2,
+			'archive-user-' . $this->user_id1,
+			'archive-term-' . $this->category_id1,
+		) );
+		$this->assertPurgedURIs( array(
+			'/',
+			'/author/first-user/',
+			'/category/uncategorized/',
+		) );
+	}
+
+	/**
+	 * Verify updating a page clears the expected keys.
+	 */
+	public function test_update_page() {
+		wp_update_post( array(
+			'ID'           => $this->page_id1,
+			'post_content' => 'Test content',
+		) );
 		$this->assertClearedKeys( array(
 			'home',
 			'front',
@@ -54,18 +160,148 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 	}
 
 	/**
+	 * Verify trashing a page clears the expected keys.
+	 */
+	public function test_trash_page() {
+		wp_trash_post( $this->page_id1 );
+		$this->assertClearedKeys( array(
+			'home',
+			'front',
+			'post-' . $this->page_id1,
+			'archive-user-' . $this->user_id1,
+		) );
+		$this->assertPurgedURIs( array(
+			'/',
+			'/author/first-user/',
+			'/first-page/',
+		) );
+	}
+
+	/**
+	 * Verify deleting a page clears the expected keys.
+	 */
+	public function test_delete_page() {
+		wp_delete_post( $this->page_id1, true );
+		$this->assertClearedKeys( array(
+			'home',
+			'front',
+			'post-' . $this->page_id1,
+			'archive-user-' . $this->user_id1,
+		) );
+		$this->assertPurgedURIs( array(
+			'/',
+			'/author/first-user/',
+			'/first-page/',
+		) );
+	}
+
+	/**
+	 * Verify calling clean_post_cache() on a page clears expected keys.
+	 */
+	public function test_clean_post_cache_page() {
+		clean_post_cache( $this->page_id1 );
+		$this->assertClearedKeys( array(
+			'post-' . $this->page_id1,
+		) );
+		$this->assertPurgedURIs( array(
+			'/first-page/',
+		) );
+	}
+
+	/**
+	 * Verify publishing a new product clears expected keys.
+	 */
+	public function test_publish_product() {
+		$this->product_id3 = $this->factory->post->create( array(
+			'post_status'   => 'publish',
+			'post_type'     => 'product',
+			'post_author'   => $this->user_id2,
+			'post_date'     => '2016-10-21 11:00',
+			'post_date_gmt' => '2016-10-21 11:00',
+			'post_name'     => 'third-product',
+		) );
+		wp_set_object_terms( $this->product_id3, array( $this->product_category_id1 ), 'product_category' );
+		$this->assertClearedKeys( array(
+			'home',
+			'front',
+			'post-' . $this->product_id3,
+			'archive-term-' . $this->product_category_id1,
+		) );
+		$this->assertPurgedURIs( array(
+			'/',
+			'/product-category/first-product-category/',
+		) );
+	}
+
+	/**
+	 * Verify updating a product clears the expected keys.
+	 */
+	public function test_update_product() {
+		wp_update_post( array(
+			'ID'           => $this->product_id2,
+			'post_content' => 'Test content',
+		) );
+		$this->assertClearedKeys( array(
+			'home',
+			'front',
+			'post-' . $this->product_id2,
+			'archive-term-' . $this->product_category_id1,
+		) );
+		$this->assertPurgedURIs( array(
+			'/',
+			'/products/',
+			'/product/second-product/',
+			'/product-category/first-product-category/',
+		) );
+	}
+
+	/**
+	 * Verify trashing a product clears the expected keys.
+	 */
+	public function test_trash_product() {
+		wp_trash_post( $this->product_id2 );
+		$this->assertClearedKeys( array(
+			'home',
+			'front',
+			'post-' . $this->product_id2,
+			'archive-term-' . $this->product_category_id1,
+		) );
+		$this->assertPurgedURIs( array(
+			'/',
+			'/products/',
+			'/product/second-product/',
+			'/product-category/first-product-category/',
+		) );
+	}
+
+	/**
+	 * Verify deleting a product clears the expected keys.
+	 */
+	public function test_delete_product() {
+		wp_delete_post( $this->product_id2, true );
+		$this->assertClearedKeys( array(
+			'home',
+			'front',
+			'post-' . $this->product_id2,
+			'archive-term-' . $this->product_category_id1,
+		) );
+		$this->assertPurgedURIs( array(
+			'/',
+			'/products/',
+			'/product/second-product/',
+			'/product-category/first-product-category/',
+		) );
+	}
+
+	/**
 	 * Verify calling clean_post_cache() on a product clears expected keys.
 	 */
 	public function test_clean_post_cache_product() {
 		clean_post_cache( $this->product_id1 );
 		$this->assertClearedKeys( array(
-			'home',
-			'front',
 			'post-' . $this->product_id1,
-			'archive-term-' . $this->product_category_id2,
 		) );
 		$this->assertPurgedURIs( array(
-			'/',
 			'/product-category/second-product-category/',
 			'/product/first-product/',
 			'/products/',
@@ -73,27 +309,70 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 	}
 
 	/**
-	 * Verify calling wp_delete_post() clears expected keys.
+	 * Verify deleting an attachment clears expected keys.
 	 */
-	public function test_wp_delete_post_force() {
-		wp_delete_post( $this->post_id1, true );
+	public function test_delete_attachment() {
+		$attachment_id = $this->factory->post->create( array(
+			'post_mime_type' => 'image/jpeg',
+			'post_type'      => 'attachment',
+			'post_author'    => $this->user_id1,
+		) );
+		// Ignore the original insert event.
+		$this->cleared_keys = array();
+		wp_delete_attachment( $attachment_id );
 		$this->assertClearedKeys( array(
 			'home',
 			'front',
-			'post-' . $this->post_id1,
-			'term-' . $this->category_id1,
-			'term-' . $this->tag_id2,
+			'post-' . $attachment_id,
+			'archive-user-' . $this->user_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
-			'/2016/',
-			'/2016/10/',
-			'/2016/10/14/',
-			'/2016/10/14/first-post/',
-			'/2016/10/14/second-post/',
-			'/2016/10/15/third-post/',
 			'/author/first-user/',
-			'/category/uncategorized/',
+		) );
+	}
+
+	/**
+	 * Verify creating a new term clears expected keys.
+	 */
+	public function test_create_term() {
+		$this->tag_id3 = $this->factory->tag->create( array( 'slug' => 'third-tag' ) );
+		$this->assertClearedKeys( array(
+			'archive-term-' . $this->tag_id3,
+			'term-' . $this->tag_id3,
+		) );
+		// Hasn't appeared on any views yet.
+		$this->assertPurgedURIs( array() );
+	}
+
+	/**
+	 * Verify updating an existing term clears expected keys.
+	 */
+	public function test_update_term() {
+		wp_update_term( $this->tag_id2, 'post_tag', array(
+			'description' => 'Test description',
+		) );
+		$this->assertClearedKeys( array(
+			'archive-term-' . $this->tag_id2,
+			'term-' . $this->tag_id2,
+		) );
+		$this->assertPurgedURIs( array(
+			'/2016/10/14/first-post/',
+			'/tag/second-tag/',
+		) );
+	}
+
+	/**
+	 * Verify deleting an existing term clears expected keys.
+	 */
+	public function test_delete_term() {
+		wp_delete_term( $this->tag_id2, 'post_tag' );
+		$this->assertClearedKeys( array(
+			'archive-term-' . $this->tag_id2,
+			'term-' . $this->tag_id2,
+		) );
+		$this->assertPurgedURIs( array(
+			'/2016/10/14/first-post/',
 			'/tag/second-tag/',
 		) );
 	}
@@ -104,10 +383,23 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 	public function test_clean_term_cache() {
 		clean_term_cache( $this->tag_id1 );
 		$this->assertClearedKeys( array(
-			'term-' . $this->tag_id1,
+			'archive-term-' . $this->tag_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/tag/first-tag/',
+		) );
+	}
+
+	/**
+	 * Verify calling clean_term_cache() on a category clears expected keys.
+	 */
+	public function test_clean_term_cache_category() {
+		clean_term_cache( $this->category_id1 );
+		$this->assertClearedKeys( array(
+			'archive-term-' . $this->category_id1,
+		) );
+		$this->assertPurgedURIs( array(
+			'/category/uncategorized/',
 		) );
 	}
 
@@ -117,11 +409,10 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 	public function test_clean_term_cache_product_category() {
 		clean_term_cache( $this->product_category_id1 );
 		$this->assertClearedKeys( array(
-			'term-' . $this->product_category_id1,
+			'archive-term-' . $this->product_category_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/product-category/first-product-category/',
-			'/product/second-product/',
 		) );
 	}
 
@@ -131,18 +422,10 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 	public function test_clean_user_cache() {
 		clean_user_cache( $this->user_id1 );
 		$this->assertClearedKeys( array(
-			'user-' . $this->user_id1,
+			'archive-user-' . $this->user_id1,
 		) );
 		$this->assertPurgedURIs( array(
-			'/',
-			'/2016/',
-			'/2016/10/',
-			'/2016/10/14/',
-			'/2016/10/14/first-post/',
-			'/category/uncategorized/',
-			'/first-page/',
 			'/author/first-user/',
-			'/tag/second-tag/',
 		) );
 	}
 
