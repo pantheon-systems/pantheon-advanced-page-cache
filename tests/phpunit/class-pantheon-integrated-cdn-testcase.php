@@ -172,8 +172,8 @@ class Pantheon_Integrated_CDN_Testcase extends WP_UnitTestCase {
 			'taxonomy'       => array( 'post_tag', 'category', 'product_category' ),
 			'hide_empty'     => false,
 		) );
-		foreach ( $terms as $term_id ) {
-			$views[] = get_term_link( $term_id );
+		foreach ( $terms as $term ) {
+			$views[] = get_term_link( $term->term_id, $term->taxonomy );
 		}
 		$views = array_unique( $views );
 		foreach ( $views as $view ) {
