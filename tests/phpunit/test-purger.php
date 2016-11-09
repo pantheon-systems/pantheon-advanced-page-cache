@@ -2,13 +2,13 @@
 /**
  * Tests for the Purger class.
  *
- * @package Pantheon_Integrated_CDN
+ * @package Pantheon_Advanced_Page_Cache
  */
 
 /**
  * Tests for the Purger class.
  */
-class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
+class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 
 	/**
 	 * Verify publishing a new post purges the homepage and associated archive pages.

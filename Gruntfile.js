@@ -9,7 +9,7 @@ module.exports = function( grunt ) {
 
 		addtextdomain: {
 			options: {
-				textdomain: 'pantheon-integrated-cdn',
+				textdomain: 'pantheon-advanced-page-cache',
 			},
 			target: {
 				files: {
@@ -30,8 +30,8 @@ module.exports = function( grunt ) {
 			target: {
 				options: {
 					domainPath: '/languages',
-					mainFile: 'pantheon-integrated-cdn.php',
-					potFilename: 'pantheon-integrated-cdn.pot',
+					mainFile: 'pantheon-advanced-page-cache.php',
+					potFilename: 'pantheon-advanced-page-cache.pot',
 					potHeaders: {
 						poedit: true,
 						'x-poedit-keywordslist': true

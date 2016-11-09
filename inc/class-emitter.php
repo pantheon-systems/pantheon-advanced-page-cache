@@ -2,10 +2,10 @@
 /**
  * Generates and emits surrogate keys based on the current request.
  *
- * @package Pantheon_Integrated_CDN
+ * @package Pantheon_Advanced_Page_Cache
  */
 
-namespace Pantheon_Integrated_CDN;
+namespace Pantheon_Advanced_Page_Cache;
 
 /**
  * Generates and emits surrogate keys based on the current request.

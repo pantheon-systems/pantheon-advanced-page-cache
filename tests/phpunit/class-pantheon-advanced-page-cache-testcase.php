@@ -2,15 +2,15 @@
 /**
  * Common testcase abstractions.
  *
- * @package Pantheon_Integrated_CDN
+ * @package Pantheon_Advanced_Page_Cache
  */
 
-use Pantheon_Integrated_CDN\Emitter;
+use Pantheon_Advanced_Page_Cache\Emitter;
 
 /**
  * Class from which all tests inherit.
  */
-class Pantheon_Integrated_CDN_Testcase extends WP_UnitTestCase {
+class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 
 	/**
 	 * Surrogate keys cleared by the Purger (reported on an action).

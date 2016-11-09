@@ -2,15 +2,15 @@
 /**
  * Tests for the Emitter class.
  *
- * @package Pantheon_Integrated_CDN
+ * @package Pantheon_Advanced_Page_Cache
  */
 
-use Pantheon_Integrated_CDN\Emitter;
+use Pantheon_Advanced_Page_Cache\Emitter;
 
 /**
  * Tests for the Emitter class.
  */
-class Test_Emitter extends Pantheon_Integrated_CDN_Testcase {
+class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 
 	/**
 	 * Assert expected surrogate keys for the homepage.
