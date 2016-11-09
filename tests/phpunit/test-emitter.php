@@ -23,8 +23,6 @@ class Test_Emitter extends Pantheon_Integrated_CDN_Testcase {
 			'post-' . $this->post_id1,
 			'post-' . $this->post_id2,
 			'post-' . $this->post_id3,
-			'user-' . $this->user_id1,
-			'user-' . $this->user_id2,
 		), Emitter::get_surrogate_keys() );
 	}
 
@@ -36,8 +34,8 @@ class Test_Emitter extends Pantheon_Integrated_CDN_Testcase {
 		$this->assertArrayValues( array(
 			'single',
 			'post-' . $this->post_id2,
-			'user-' . $this->user_id2,
-			'term-' . $this->category_id1,
+			'post-user-' . $this->user_id2,
+			'post-term-' . $this->category_id1,
 		), Emitter::get_surrogate_keys() );
 	}
 
@@ -49,7 +47,7 @@ class Test_Emitter extends Pantheon_Integrated_CDN_Testcase {
 		$this->assertArrayValues( array(
 			'single',
 			'post-' . $this->page_id1,
-			'user-' . $this->user_id1,
+			'post-user-' . $this->user_id1,
 		), Emitter::get_surrogate_keys() );
 	}
 
@@ -61,7 +59,7 @@ class Test_Emitter extends Pantheon_Integrated_CDN_Testcase {
 		$this->assertArrayValues( array(
 			'single',
 			'post-' . $this->product_id1,
-			'term-' . $this->product_category_id2,
+			'post-term-' . $this->product_category_id2,
 		), Emitter::get_surrogate_keys() );
 	}
 
@@ -72,7 +70,6 @@ class Test_Emitter extends Pantheon_Integrated_CDN_Testcase {
 		$this->go_to( get_author_posts_url( $this->user_id1 ) );
 		$this->assertArrayValues( array(
 			'archive',
-			'archive-user-' . $this->user_id1,
 			'user-' . $this->user_id1,
 			'post-' . $this->post_id1,
 		), Emitter::get_surrogate_keys() );
@@ -85,7 +82,6 @@ class Test_Emitter extends Pantheon_Integrated_CDN_Testcase {
 		$this->go_to( get_author_posts_url( $this->user_id3 ) );
 		$this->assertArrayValues( array(
 			'archive',
-			'archive-user-' . $this->user_id3,
 			'user-' . $this->user_id3,
 		), Emitter::get_surrogate_keys() );
 	}
@@ -97,10 +93,8 @@ class Test_Emitter extends Pantheon_Integrated_CDN_Testcase {
 		$this->go_to( get_term_link( $this->tag_id2 ) );
 		$this->assertArrayValues( array(
 			'archive',
-			'archive-term-' . $this->tag_id2,
 			'term-' . $this->tag_id2,
 			'post-' . $this->post_id1,
-			'user-' . $this->user_id1,
 		), Emitter::get_surrogate_keys() );
 	}
 
@@ -111,7 +105,6 @@ class Test_Emitter extends Pantheon_Integrated_CDN_Testcase {
 		$this->go_to( get_term_link( $this->tag_id1 ) );
 		$this->assertArrayValues( array(
 			'archive',
-			'archive-term-' . $this->tag_id1,
 			'term-' . $this->tag_id1,
 		), Emitter::get_surrogate_keys() );
 	}
@@ -123,7 +116,6 @@ class Test_Emitter extends Pantheon_Integrated_CDN_Testcase {
 		$this->go_to( get_term_link( $this->product_category_id1 ) );
 		$this->assertArrayValues( array(
 			'archive',
-			'archive-term-' . $this->product_category_id1,
 			'term-' . $this->product_category_id1,
 			'post-' . $this->product_id2,
 		), Emitter::get_surrogate_keys() );
@@ -136,7 +128,6 @@ class Test_Emitter extends Pantheon_Integrated_CDN_Testcase {
 		$this->go_to( get_term_link( $this->product_category_id3 ) );
 		$this->assertArrayValues( array(
 			'archive',
-			'archive-term-' . $this->product_category_id3,
 			'term-' . $this->product_category_id3,
 		), Emitter::get_surrogate_keys() );
 	}
@@ -165,8 +156,6 @@ class Test_Emitter extends Pantheon_Integrated_CDN_Testcase {
 			'post-' . $this->post_id1,
 			'post-' . $this->post_id2,
 			'post-' . $this->post_id3,
-			'user-' . $this->user_id1,
-			'user-' . $this->user_id2,
 		), Emitter::get_surrogate_keys() );
 	}
 
@@ -189,8 +178,6 @@ class Test_Emitter extends Pantheon_Integrated_CDN_Testcase {
 			'post-' . $this->post_id1,
 			'post-' . $this->post_id2,
 			'post-' . $this->post_id3,
-			'user-' . $this->user_id1,
-			'user-' . $this->user_id2,
 		), Emitter::get_surrogate_keys() );
 	}
 
@@ -211,7 +198,6 @@ class Test_Emitter extends Pantheon_Integrated_CDN_Testcase {
 			'archive',
 			'date',
 			'post-' . $this->post_id3,
-			'user-' . $this->user_id2,
 		), Emitter::get_surrogate_keys() );
 	}
 
@@ -237,8 +223,6 @@ class Test_Emitter extends Pantheon_Integrated_CDN_Testcase {
 			'post-' . $this->page_id1,
 			'post-' . $this->product_id1,
 			'post-' . $this->product_id2,
-			'user-' . $this->user_id1,
-			'user-' . $this->user_id2,
 		), Emitter::get_surrogate_keys() );
 	}
 

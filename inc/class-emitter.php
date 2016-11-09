@@ -60,15 +60,15 @@ class Emitter {
 		if ( ! empty( $wp_query->posts ) ) {
 			foreach ( $wp_query->posts as $p ) {
 				$keys[] = 'post-' . $p->ID;
-				if ( post_type_supports( $p->post_type, 'author' ) ) {
-					$keys[] = 'user-' . $p->post_author;
-				}
 				if ( $wp_query->is_singular() || $wp_query->is_page() ) {
+					if ( post_type_supports( $p->post_type, 'author' ) ) {
+						$keys[] = 'post-user-' . $p->post_author;
+					}
 					foreach ( get_object_taxonomies( $p ) as $tax ) {
 						$terms = get_the_terms( $p->ID, $tax );
 						if ( $terms && ! is_wp_error( $terms ) ) {
 							foreach ( $terms as $t ) {
-								$keys[] = 'term-' . $t->term_id;
+								$keys[] = 'post-term-' . $t->term_id;
 							}
 						}
 					}
@@ -87,12 +87,10 @@ class Emitter {
 				$keys[] = 'post-type-archive';
 			} elseif ( is_author() ) {
 				if ( $user_id = get_queried_object_id() ) {
-					$keys[] = 'archive-user-' . $user_id;
 					$keys[] = 'user-' . $user_id;
 				}
 			} elseif ( is_category() || is_tag() || is_tax() ) {
 				if ( $term_id = get_queried_object_id() ) {
-					$keys[] = 'archive-term-' . $term_id;
 					$keys[] = 'term-' . $term_id;
 				}
 			}

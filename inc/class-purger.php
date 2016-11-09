@@ -89,7 +89,7 @@ class Purger {
 		$keys = array();
 		$term_ids = is_array( $term_ids ) ? $term_ids : array( $term_id );
 		foreach ( $term_ids as $term_id ) {
-			$keys[] = 'archive-term-' . $term_id;
+			$keys[] = 'term-' . $term_id;
 		}
 		pantheon_wp_clear_edge_keys( $keys );
 	}
@@ -113,14 +113,14 @@ class Purger {
 		$post = get_post( $post_id );
 		if ( $post ) {
 			if ( post_type_supports( $post->post_type, 'author' ) ) {
-				$keys[] = 'archive-user-' . $post->post_author;
+				$keys[] = 'user-' . $post->post_author;
 			}
 			$taxonomies = wp_list_filter( get_object_taxonomies( $post->post_type, 'objects' ), array( 'public' => true ) );
 			foreach ( $taxonomies as $taxonomy ) {
 				$terms = get_the_terms( $post, $taxonomy->name );
 				if ( $terms ) {
 					foreach ( $terms as $term ) {
-						$keys[] = 'archive-term-' . $term->term_id;
+						$keys[] = 'term-' . $term->term_id;
 					}
 				}
 			}
@@ -134,7 +134,7 @@ class Purger {
 	 * @param integer $term_id ID for the modified term.
 	 */
 	private static function purge_term( $term_id ) {
-		pantheon_wp_clear_edge_keys( array( 'term-' . $term_id ) );
+		pantheon_wp_clear_edge_keys( array( 'term-' . $term_id, 'post-term-' . $term_id ) );
 	}
 
 
@@ -145,7 +145,7 @@ class Purger {
 	 */
 	public static function action_clean_user_cache( $user_id ) {
 		$keys = array(
-			'archive-user-' . $user_id,
+			'user-' . $user_id,
 		);
 		pantheon_wp_clear_edge_keys( $keys );
 	}

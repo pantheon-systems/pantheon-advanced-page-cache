@@ -25,8 +25,8 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 			'home',
 			'front',
 			'post-' . $this->post_id4,
-			'archive-user-' . $this->user_id1,
-			'archive-term-' . $this->category_id1,
+			'user-' . $this->user_id1,
+			'term-' . $this->category_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -47,9 +47,9 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 			'home',
 			'front',
 			'post-' . $this->post_id1,
-			'archive-user-' . $this->user_id1,
-			'archive-term-' . $this->category_id1,
-			'archive-term-' . $this->tag_id2,
+			'user-' . $this->user_id1,
+			'term-' . $this->category_id1,
+			'term-' . $this->tag_id2,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -72,9 +72,9 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 			'home',
 			'front',
 			'post-' . $this->post_id1,
-			'archive-user-' . $this->user_id1,
-			'archive-term-' . $this->category_id1,
-			'archive-term-' . $this->tag_id2,
+			'user-' . $this->user_id1,
+			'term-' . $this->category_id1,
+			'term-' . $this->tag_id2,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -97,9 +97,9 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 			'home',
 			'front',
 			'post-' . $this->post_id1,
-			'archive-user-' . $this->user_id1,
-			'archive-term-' . $this->category_id1,
-			'archive-term-' . $this->tag_id2,
+			'user-' . $this->user_id1,
+			'term-' . $this->category_id1,
+			'term-' . $this->tag_id2,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -128,8 +128,8 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 			'home',
 			'front',
 			'post-' . $this->page_id2,
-			'archive-user-' . $this->user_id1,
-			'archive-term-' . $this->category_id1,
+			'user-' . $this->user_id1,
+			'term-' . $this->category_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -150,7 +150,7 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 			'home',
 			'front',
 			'post-' . $this->page_id1,
-			'archive-user-' . $this->user_id1,
+			'user-' . $this->user_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -168,7 +168,7 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 			'home',
 			'front',
 			'post-' . $this->page_id1,
-			'archive-user-' . $this->user_id1,
+			'user-' . $this->user_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -186,7 +186,7 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 			'home',
 			'front',
 			'post-' . $this->page_id1,
-			'archive-user-' . $this->user_id1,
+			'user-' . $this->user_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -225,7 +225,7 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 			'home',
 			'front',
 			'post-' . $this->product_id3,
-			'archive-term-' . $this->product_category_id1,
+			'term-' . $this->product_category_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -245,7 +245,7 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 			'home',
 			'front',
 			'post-' . $this->product_id2,
-			'archive-term-' . $this->product_category_id1,
+			'term-' . $this->product_category_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -264,7 +264,7 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 			'home',
 			'front',
 			'post-' . $this->product_id2,
-			'archive-term-' . $this->product_category_id1,
+			'term-' . $this->product_category_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -283,7 +283,7 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 			'home',
 			'front',
 			'post-' . $this->product_id2,
-			'archive-term-' . $this->product_category_id1,
+			'term-' . $this->product_category_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -324,7 +324,7 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 			'home',
 			'front',
 			'post-' . $attachment_id,
-			'archive-user-' . $this->user_id1,
+			'user-' . $this->user_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -338,8 +338,8 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 	public function test_create_term() {
 		$this->tag_id3 = $this->factory->tag->create( array( 'slug' => 'third-tag' ) );
 		$this->assertClearedKeys( array(
-			'archive-term-' . $this->tag_id3,
 			'term-' . $this->tag_id3,
+			'post-term-' . $this->tag_id3,
 		) );
 		// Hasn't appeared on any views yet.
 		$this->assertPurgedURIs( array() );
@@ -353,8 +353,8 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 			'description' => 'Test description',
 		) );
 		$this->assertClearedKeys( array(
-			'archive-term-' . $this->tag_id2,
 			'term-' . $this->tag_id2,
+			'post-term-' . $this->tag_id2,
 		) );
 		$this->assertPurgedURIs( array(
 			'/2016/10/14/first-post/',
@@ -368,8 +368,8 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 	public function test_delete_term() {
 		wp_delete_term( $this->tag_id2, 'post_tag' );
 		$this->assertClearedKeys( array(
-			'archive-term-' . $this->tag_id2,
 			'term-' . $this->tag_id2,
+			'post-term-' . $this->tag_id2,
 		) );
 		$this->assertPurgedURIs( array(
 			'/2016/10/14/first-post/',
@@ -383,7 +383,7 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 	public function test_clean_term_cache() {
 		clean_term_cache( $this->tag_id1 );
 		$this->assertClearedKeys( array(
-			'archive-term-' . $this->tag_id1,
+			'term-' . $this->tag_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/tag/first-tag/',
@@ -396,7 +396,7 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 	public function test_clean_term_cache_category() {
 		clean_term_cache( $this->category_id1 );
 		$this->assertClearedKeys( array(
-			'archive-term-' . $this->category_id1,
+			'term-' . $this->category_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/category/uncategorized/',
@@ -409,7 +409,7 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 	public function test_clean_term_cache_product_category() {
 		clean_term_cache( $this->product_category_id1 );
 		$this->assertClearedKeys( array(
-			'archive-term-' . $this->product_category_id1,
+			'term-' . $this->product_category_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/product-category/first-product-category/',
@@ -422,7 +422,7 @@ class Test_Purger extends Pantheon_Integrated_CDN_Testcase {
 	public function test_clean_user_cache() {
 		clean_user_cache( $this->user_id1 );
 		$this->assertClearedKeys( array(
-			'archive-user-' . $this->user_id1,
+			'user-' . $this->user_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/author/first-user/',

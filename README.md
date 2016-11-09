@@ -74,47 +74,57 @@ Need a bit more power? Here are two additional helper functions you can use:
 
 **Home `/`**
 
-* Emits surrogate keys: `home`, `front`, `post-<id>` (all posts in main query), `user-<id>` (all authors of posts in the main query)
+* Emits surrogate keys: `home`, `front`, `post-<id>` (all posts in main query)
 
 **Single post `/2016/10/14/surrogate-keys/`**
 
-* Emits surrogate keys: `single`, `post-<id>`, `user-<id>`, `term-<id>` (all terms assigned to post)
+* Emits surrogate keys: `single`, `post-<id>`, `post-user-<id>`, `post-term-<id>` (all terms assigned to post)
 
 **Author archive `/author/pantheon/`**
 
-* Emits surrogate keys: `archive`, `archive-user-<id>`, `user-<id>`, `post-<id>` (all posts in main query)
+* Emits surrogate keys: `archive`, `user-<id>`, `post-<id>` (all posts in main query)
 
 **Term archive `/tag/cdn/`**
 
-* Emits surrogate keys: `archive`, `archive-term-<id>`, `term-<id>`, `post-<id>` (all posts in main query), `user-<id>` (all authors of posts in the main query)
+* Emits surrogate keys: `archive`, `term-<id>`, `post-<id>` (all posts in main query)
 
 **Day archive `/2016/10/14/`**
 
-* Emits surrogate keys: `archive`, `date`, `post-<id>` (all posts in main query), `user-<id>` (all authors of posts in the main query)
+* Emits surrogate keys: `archive`, `date`, `post-<id>` (all posts in main query)
 
 **Month archive `/2016/10/`**
 
-* Emits surrogate keys: `archive`, `date`, `post-<id>` (all posts in main query), `user-<id>` (all authors of posts in the main query)
+* Emits surrogate keys: `archive`, `date`, `post-<id>` (all posts in main query)
 
 **Year archive `/2016/`**
 
-* Emits surrogate keys: `archive`, `date`, `post-<id>` (all posts in main query), `user-<id>` (all authors of posts in the main query)
+* Emits surrogate keys: `archive`, `date`, `post-<id>` (all posts in main query)
 
 **Search `/?s=<search>`**
 
-* Emits surrogate keys: `search`, either `search-results` or `search-no-results`, `post-<id>` (all posts in main query), `user-<id>` (all authors of posts in the main query)
+* Emits surrogate keys: `search`, either `search-results` or `search-no-results`, `post-<id>` (all posts in main query)
 
 ### Purge Events ###
 
+**wp_insert_post / before_delete_post / delete_attachment**
+
+* Purges surrogate keys: `home`, `front`, `post-<id>`, `user-<id>`, `term-<id>`
+* Affected views: homepage, single post, any archive where post displays, author archive, term archive
+
 **clean_post_cache**
 
-* Purges surrogate keys: `home`, `front`, `post-<id>`, `archive-user-<id>`, `archive-term-<id>`
-* Affected views: homepage, single post, any archive where post displays, author archive, term archive
+* Purges surrogate keys: `post-<id>`
+* Affected views: single post
+
+**created_term / edited_term / delete_term**
+
+* Purges surrogate keys: `term-<id>`, `post-term-<id>`
+* Affected views: term archive, any post where the term is assigned
 
 **clean_term_cache**
 
 * Purges surrogate keys: `term-<id>`
-* Affected views: term archive, any post where the term is assigned
+* Affected views: term archive
 
 **clean_user_cache**
 
