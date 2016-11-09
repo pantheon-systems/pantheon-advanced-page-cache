@@ -1,6 +1,6 @@
 
 {
-  "name": "pantheon-integrated-cdn",
+  "name": "pantheon-advanced-page-cache",
   "version": "0.1.0",
   "main": "Gruntfile.js",
   "author": "Pantheon",

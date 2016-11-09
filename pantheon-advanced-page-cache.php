@@ -1,15 +1,15 @@
 <?php
 /**
- * Plugin Name:     Pantheon Integrated CDN
+ * Plugin Name:     Pantheon Advanced Page Cache
  * Plugin URI:      PLUGIN SITE HERE
  * Description:     PLUGIN DESCRIPTION HERE
  * Author:          Pantheon
  * Author URI:      https://pantheon.io
- * Text Domain:     pantheon-integrated-cdn
+ * Text Domain:     pantheon-advanced-page-cache
  * Domain Path:     /languages
  * Version:         0.1.0
  *
- * @package         Pantheon_Integrated_Cdn
+ * @package         Pantheon_Advanced_Page_Cache
  */
 
 /**
@@ -70,12 +70,12 @@ function pantheon_wp_clear_edge_all() {
  */
 spl_autoload_register( function( $class ) {
 	$class = ltrim( $class, '\\' );
-	if ( 0 !== stripos( $class, 'Pantheon_Integrated_CDN\\' ) ) {
+	if ( 0 !== stripos( $class, 'Pantheon_Advanced_Page_Cache\\' ) ) {
 		return;
 	}
 
 	$parts = explode( '\\', $class );
-	array_shift( $parts ); // Don't need "Pantheon_Integrated_CDN".
+	array_shift( $parts ); // Don't need "Pantheon_Advanced_Page_Cache".
 	$last = array_pop( $parts ); // File should be 'class-[...].php'.
 	$last = 'class-' . $last . '.php';
 	$parts[] = $last;
@@ -88,22 +88,22 @@ spl_autoload_register( function( $class ) {
 /**
  * Registers relevant admin UI
  */
-add_action( 'pantheon_cache_settings_page_bottom', array( 'Pantheon_Integrated_CDN\Admin', 'action_pantheon_cache_settings_page_bottom' ) );
+add_action( 'pantheon_cache_settings_page_bottom', array( 'Pantheon_Advanced_Page_Cache\Admin', 'action_pantheon_cache_settings_page_bottom' ) );
 
 /**
  * Emits the appropriate surrogate tags per view.
  */
-add_filter( 'wp', array( 'Pantheon_Integrated_CDN\Emitter', 'action_wp' ) );
+add_filter( 'wp', array( 'Pantheon_Advanced_Page_Cache\Emitter', 'action_wp' ) );
 
 /**
  * Clears surrogate tags when various modification behaviors are performed.
  */
-add_action( 'wp_insert_post', array( 'Pantheon_Integrated_CDN\Purger', 'action_wp_insert_post' ) );
-add_action( 'before_delete_post', array( 'Pantheon_Integrated_CDN\Purger', 'action_before_delete_post' ) );
-add_action( 'delete_attachment', array( 'Pantheon_Integrated_CDN\Purger', 'action_delete_attachment' ) );
-add_action( 'clean_post_cache', array( 'Pantheon_Integrated_CDN\Purger', 'action_clean_post_cache' ) );
-add_action( 'created_term', array( 'Pantheon_Integrated_CDN\Purger', 'action_created_term' ) );
-add_action( 'edited_term', array( 'Pantheon_Integrated_CDN\Purger', 'action_edited_term' ) );
-add_action( 'delete_term', array( 'Pantheon_Integrated_CDN\Purger', 'action_delete_term' ) );
-add_action( 'clean_term_cache', array( 'Pantheon_Integrated_CDN\Purger', 'action_clean_term_cache' ) );
-add_action( 'clean_user_cache', array( 'Pantheon_Integrated_CDN\Purger', 'action_clean_user_cache' ) );
+add_action( 'wp_insert_post', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_wp_insert_post' ) );
+add_action( 'before_delete_post', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_before_delete_post' ) );
+add_action( 'delete_attachment', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_delete_attachment' ) );
+add_action( 'clean_post_cache', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_clean_post_cache' ) );
+add_action( 'created_term', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_created_term' ) );
+add_action( 'edited_term', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_edited_term' ) );
+add_action( 'delete_term', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_delete_term' ) );
+add_action( 'clean_term_cache', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_clean_term_cache' ) );
+add_action( 'clean_user_cache', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_clean_user_cache' ) );

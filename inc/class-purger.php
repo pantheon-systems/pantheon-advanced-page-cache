@@ -2,10 +2,10 @@
 /**
  * Purges the cache based on a variety of WordPress events.
  *
- * @package Pantheon_Integrated_CDN
+ * @package Pantheon_Advanced_Page_Cache
  */
 
-namespace Pantheon_Integrated_CDN;
+namespace Pantheon_Advanced_Page_Cache;
 
 /**
  * Purges the appropriate surrogate key based on the event.
