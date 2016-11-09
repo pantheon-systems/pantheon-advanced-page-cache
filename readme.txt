@@ -1,4 +1,4 @@
-=== Pantheon Advanced Page Cache ===
+testnig === Pantheon Advanced Page Cache ===
 Contributors: (this should be a list of wordpress.org userid's)
 Tags: pantheon
 Requires at least: 4.4
