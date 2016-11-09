@@ -4,7 +4,7 @@ machine:
     version: 7.0.7
   environment:
     TERMINUS_ENV: ci-$CIRCLE_BUILD_NUM
-    TERMINUS_SITE: wp-lcache
+    TERMINUS_SITE: pantheon-advanced-page-cache
     WORDPRESS_ADMIN_USERNAME: pantheon
     # A random password is set in the dependencies:pre stage as a text file.
     # This line reads the same file repeatedly. If the openssl call were used
