@@ -26,9 +26,14 @@ function pantheon_wp_clear_edge_keys( $keys ) {
 	 */
 	do_action( 'pantheon_wp_clear_edge_keys', $keys );
 
-	if ( function_exists( 'pantheon_clear_edge_keys' ) ) {
-		pantheon_clear_edge_keys( $keys );
+	try {
+		if ( function_exists( 'pantheon_clear_edge_keys' ) ) {
+			pantheon_clear_edge_keys( $keys );
+		}
+	} catch ( Exception $e ) {
+		return new WP_Error( 'pantheon_clear_edge_keys', $e->getMessage() );
 	}
+	return true;
 }
 
 /**
@@ -45,9 +50,14 @@ function pantheon_wp_clear_edge_paths( $paths ) {
 	 */
 	do_action( 'pantheon_wp_clear_edge_paths', $paths );
 
-	if ( function_exists( 'pantheon_clear_edge_paths' ) ) {
-		pantheon_clear_edge_paths( $paths );
+	try {
+		if ( function_exists( 'pantheon_clear_edge_paths' ) ) {
+			pantheon_clear_edge_paths( $paths );
+		}
+	} catch ( Exception $e ) {
+		return new WP_Error( 'pantheon_clear_edge_paths', $e->getMessage() );
 	}
+	return true;
 }
 
 /**
@@ -60,9 +70,14 @@ function pantheon_wp_clear_edge_all() {
 	 */
 	do_action( 'pantheon_wp_clear_edge_all' );
 
-	if ( function_exists( 'pantheon_clear_edge_all' ) ) {
-		pantheon_clear_edge_all();
+	try {
+		if ( function_exists( 'pantheon_clear_edge_all' ) ) {
+			pantheon_clear_edge_all();
+		}
+	} catch ( Exception $e ) {
+		return new WP_Error( 'pantheon_clear_edge_all', $e->getMessage() );
 	}
+	return true;
 }
 
 /**
