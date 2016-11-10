@@ -122,3 +122,10 @@ add_action( 'edited_term', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action
 add_action( 'delete_term', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_delete_term' ) );
 add_action( 'clean_term_cache', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_clean_term_cache' ) );
 add_action( 'clean_user_cache', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_clean_user_cache' ) );
+
+/**
+ * Registers the WP-CLI commands.
+ */
+if ( defined( 'WP_CLI' ) && WP_CLI ) {
+	WP_CLI::add_command( 'pantheon cache', 'Pantheon_Advanced_Page_Cache\CLI' );
+}

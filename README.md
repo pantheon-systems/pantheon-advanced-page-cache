@@ -31,9 +31,9 @@ To install Pantheon Advanced Page Cache in one line with WP-CLI:
 
     wp plugin install pantheon-advanced-page-cache --activate
 
-## Surrogate Keys ##
+## How It Works ##
 
-Surrogate keys enable responses to be "tagged" with identifiers that can then later be used in purge requests. For instance, a home page response might include the header:
+Pantheon Advanced Page Cache makes heavy use of surrogate keys, which enable responses to be "tagged" with identifiers that can then later be used in purge requests. For instance, a home page response might include the `Surrogate-Key` header:
 
     Surrogate-Key: front home post-43 user-4 post-41 post-9 post-7 post-1 user-1
 
@@ -69,6 +69,34 @@ Need a bit more power? Here are two additional helper functions you can use:
 
 * `pantheon_wp_clear_edge_paths( $paths = array() )` - Purge cache for one or more paths.
 * `pantheon_wp_clear_edge_all()` - Warning! With great power comes great responsibility. Purge the entire cache, but do so wisely.
+
+## WP-CLI Commands ##
+
+This plugin implements a variety of [WP-CLI](https://wp-cli.org) commands. All commands are grouped into the `wp pantheon cache` namespace.
+
+    $ wp help pantheon cache
+    
+    NAME
+    
+      wp pantheon cache
+    
+    DESCRIPTION
+    
+      Manage the Pantheon Advanced Page Cache.
+    
+    SYNOPSIS
+    
+      wp pantheon cache <command>
+    
+    SUBCOMMANDS
+    
+      purge-all       Purge the entire page cache.
+      purge-key       Purge one or more surrogate keys from cache.
+      purge-path      Purge one or more paths from cache.
+
+Use `wp help pantheon cache <command>` to learn more about each command.
+
+## Emitted Keys and Purge Events ##
 
 ### Emitted Keys ###
 
