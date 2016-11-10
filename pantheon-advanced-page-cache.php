@@ -103,7 +103,7 @@ spl_autoload_register( function( $class ) {
 /**
  * Registers relevant admin UI
  */
-add_action( 'pantheon_cache_settings_page_bottom', array( 'Pantheon_Advanced_Page_Cache\Admin', 'action_pantheon_cache_settings_page_bottom' ) );
+add_action( 'pantheon_cache_settings_page_bottom', array( 'Pantheon_Advanced_Page_Cache\User_Interface', 'action_pantheon_cache_settings_page_bottom' ) );
 
 /**
  * Emits the appropriate surrogate tags per view.

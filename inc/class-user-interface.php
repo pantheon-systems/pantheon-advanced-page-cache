@@ -1,6 +1,6 @@
 <?php
 /**
- * Controller for a variety of admin UI.
+ * Controller for a variety of user interfaces
  *
  * @package Pantheon_Advanced_Page_Cache
  */
@@ -10,7 +10,7 @@ namespace Pantheon_Advanced_Page_Cache;
 /**
  * Controller for a variety of admin UI.
  */
-class Admin {
+class User_Interface {
 
 	/**
 	 * Render a notice about this plugin at the bottom of the cache settings page.
