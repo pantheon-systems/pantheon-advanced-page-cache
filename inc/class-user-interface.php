@@ -65,7 +65,10 @@ class User_Interface {
 			wp_die( __( "You shouldn't be doing this.", 'pantheon-advanced-page-cache' ) );
 		}
 
-		pantheon_wp_clear_edge_paths( array( $_GET['path'] ) );
+		$ret = pantheon_wp_clear_edge_paths( array( $_GET['path'] ) );
+		if ( is_wp_error( $ret ) ) {
+			wp_die( $ret->get_error_message() );
+		}
 		wp_safe_redirect( add_query_arg( 'message', 'pantheon-cleared-page-cache', preg_replace( '/[ <>\'\"\r\n\t\(\)]/', '', $_GET['path'] ) ) );
 		exit;
 	}
