@@ -39,28 +39,28 @@ class User_Interface {
 			return;
 		}
 
-		if ( ! empty( $_GET['message'] ) && 'pantheon-cleared-page-cache' === $_GET['message'] ) {
-			$title = __( 'Page Cache Cleared', 'pantheon-advanced-page-cache' );
+		if ( ! empty( $_GET['message'] ) && 'pantheon-cleared-url-cache' === $_GET['message'] ) {
+			$title = __( 'URL Cache Cleared', 'pantheon-advanced-page-cache' );
 		} else {
-			$title = __( 'Clear Page Cache', 'pantheon-advanced-page-cache' );
+			$title = __( 'Clear URL Cache', 'pantheon-advanced-page-cache' );
 		}
 
 		$wp_admin_bar->add_menu( array(
 			'parent'   => '',
 			'id'       => 'clear-page-cache',
 			'title'    => $title,
-			'meta'     => array( 'title' => __( 'Delete cache of the current page.', 'pantheon-advanced-page-cache' ) ),
-			'href'     => wp_nonce_url( admin_url( 'admin-ajax.php?action=pantheon_clear_page_cache&path=' . urlencode( preg_replace( '/[ <>\'\"\r\n\t\(\)]/', '', $_SERVER['REQUEST_URI'] ) ) ), 'clear-page-cache' ),
+			'meta'     => array( 'title' => __( 'Delete cache of the current URL.', 'pantheon-advanced-page-cache' ) ),
+			'href'     => wp_nonce_url( admin_url( 'admin-ajax.php?action=pantheon_clear_url_cache&path=' . urlencode( preg_replace( '/[ <>\'\"\r\n\t\(\)]/', '', $_SERVER['REQUEST_URI'] ) ) ), 'clear-url-cache' ),
 		) );
 	}
 
 	/**
-	 * Handle an admin-ajax request to clear the page cache.
+	 * Handle an admin-ajax request to clear the URL cache.
 	 */
-	public static function handle_ajax_clear_page_cache() {
+	public static function handle_ajax_clear_url_cache() {
 
 		if ( empty( $_GET['_wpnonce'] )
-			|| ! wp_verify_nonce( $_GET['_wpnonce'], 'clear-page-cache' )
+			|| ! wp_verify_nonce( $_GET['_wpnonce'], 'clear-url-cache' )
 			|| ! current_user_can( 'delete_others_posts' ) ) {
 			wp_die( __( "You shouldn't be doing this.", 'pantheon-advanced-page-cache' ) );
 		}
@@ -69,7 +69,7 @@ class User_Interface {
 		if ( is_wp_error( $ret ) ) {
 			wp_die( $ret->get_error_message() );
 		}
-		wp_safe_redirect( add_query_arg( 'message', 'pantheon-cleared-page-cache', preg_replace( '/[ <>\'\"\r\n\t\(\)]/', '', $_GET['path'] ) ) );
+		wp_safe_redirect( add_query_arg( 'message', 'pantheon-cleared-url-cache', preg_replace( '/[ <>\'\"\r\n\t\(\)]/', '', $_GET['path'] ) ) );
 		exit;
 	}
 }
