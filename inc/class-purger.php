@@ -18,7 +18,24 @@ class Purger {
 	 * @param integer $post_id ID for the modified post.
 	 */
 	public static function action_wp_insert_post( $post_id ) {
+		if ( 'publish' !== get_post_status( $post_id ) ) {
+			return;
+		}
 		self::purge_post_with_related( $post_id );
+	}
+
+	/**
+	 * Purge surrogate keys associated with a post being published or unpublished.
+	 *
+	 * @param string  $new_status New status for the post.
+	 * @param string  $old_status Old status for the post.
+	 * @param WP_Post $post Post object.
+	 */
+	public static function action_transition_post_status( $new_status, $old_status, $post ) {
+		if ( 'publish' !== $new_status && 'publish' !== $old_status ) {
+			return;
+		}
+		self::purge_post_with_related( $post->ID );
 	}
 
 	/**
