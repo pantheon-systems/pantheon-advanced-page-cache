@@ -14,17 +14,17 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 	 * Verify publishing a new post purges the homepage and associated archive pages.
 	 */
 	public function test_publish_post() {
-		$this->post_id4 = $this->factory->post->create( array(
+		$this->post_id5 = $this->factory->post->create( array(
 			'post_status'   => 'publish',
 			'post_author'   => $this->user_id1,
 			'post_date'     => '2016-10-21 12:00',
 			'post_date_gmt' => '2016-10-21 12:00',
-			'post_name'     => 'fourth-post',
+			'post_name'     => 'fifth-post',
 		) );
 		$this->assertClearedKeys( array(
 			'home',
 			'front',
-			'post-' . $this->post_id4,
+			'post-' . $this->post_id5,
 			'user-' . $this->user_id1,
 			'term-' . $this->category_id1,
 		) );
@@ -42,6 +42,51 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		wp_update_post( array(
 			'ID'           => $this->post_id1,
 			'post_content' => 'Test content',
+		) );
+		$this->assertClearedKeys( array(
+			'home',
+			'front',
+			'post-' . $this->post_id1,
+			'user-' . $this->user_id1,
+			'term-' . $this->category_id1,
+			'term-' . $this->tag_id2,
+		) );
+		$this->assertPurgedURIs( array(
+			'/',
+			'/2016/',
+			'/2016/10/',
+			'/2016/10/14/',
+			'/2016/10/14/first-post/',
+			'/author/first-user/',
+			'/category/uncategorized/',
+			'/tag/second-tag/',
+		) );
+	}
+
+	/**
+	 * Verify updating a draft doesn't clear any keys
+	 */
+	public function test_update_post_draft() {
+		wp_update_post( array(
+			'ID'           => $this->post_id4,
+			'post_content' => 'Test content',
+		) );
+		$this->assertClearedKeys( array(
+			'post-' . $this->post_id4,
+			'term-' . $this->category_id1,
+		) );
+		$this->assertPurgedURIs( array(
+			'/category/uncategorized/',
+		) );
+	}
+
+	/**
+	 * Verify unpublishing a post clears the expected keys
+	 */
+	public function test_unpublish_post() {
+		wp_update_post( array(
+			'ID'           => $this->post_id1,
+			'post_status'  => 'draft',
 		) );
 		$this->assertClearedKeys( array(
 			'home',
@@ -145,6 +190,27 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		wp_update_post( array(
 			'ID'           => $this->page_id1,
 			'post_content' => 'Test content',
+		) );
+		$this->assertClearedKeys( array(
+			'home',
+			'front',
+			'post-' . $this->page_id1,
+			'user-' . $this->user_id1,
+		) );
+		$this->assertPurgedURIs( array(
+			'/',
+			'/author/first-user/',
+			'/first-page/',
+		) );
+	}
+
+	/**
+	 * Verify unpublishing a page clears the expected keys.
+	 */
+	public function test_unpublish_page() {
+		wp_update_post( array(
+			'ID'           => $this->page_id1,
+			'post_status'  => 'draft',
 		) );
 		$this->assertClearedKeys( array(
 			'home',

@@ -79,6 +79,13 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 			'post_date_gmt' => '2016-10-15 11:00',
 			'post_name'     => 'third-post',
 		) );
+		$this->post_id4 = $this->factory->post->create( array(
+			'post_status'   => 'draft',
+			'post_author'   => $this->user_id2,
+			'post_date'     => '2016-10-15 11:00',
+			'post_date_gmt' => '2016-10-15 11:00',
+			'post_name'     => 'fourth-post',
+		) );
 		$this->page_id1 = $this->factory->post->create( array(
 			'post_status'   => 'publish',
 			'post_type'     => 'page',
