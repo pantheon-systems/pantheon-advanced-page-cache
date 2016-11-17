@@ -27,6 +27,13 @@ class Emitter {
 	private $rest_api_surrogate_keys = array();
 
 	/**
+	 * Header key.
+	 *
+	 * @var string
+	 */
+	const HEADER_KEY = 'Surrogate-Key';
+
+	/**
 	 * Get a copy of the current instance.
 	 *
 	 * @return Emitter
@@ -46,7 +53,7 @@ class Emitter {
 		$keys = self::get_main_query_surrogate_keys();
 		if ( ! empty( $keys ) ) {
 			// @codingStandardsIgnoreStart
-			@header( 'Surrogate-Key: ' . implode( ' ', $keys ) );
+			@header( self::HEADER_KEY . ': ' . implode( ' ', $keys ) );
 			// @codingStandardsIgnoreEnd
 		}
 	}
@@ -75,7 +82,7 @@ class Emitter {
 
 		$keys = self::get_rest_api_surrogate_keys();
 		if ( ! empty( $keys ) ) {
-			$server->send_header( 'Surrogate-Key', implode( ' ', $keys ) );
+			$server->send_header( self::HEADER_KEY, implode( ' ', $keys ) );
 		}
 		return $result;
 	}
