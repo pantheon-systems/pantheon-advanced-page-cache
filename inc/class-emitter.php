@@ -27,6 +27,13 @@ class Emitter {
 	private $rest_api_surrogate_keys = array();
 
 	/**
+	 * Header key.
+	 *
+	 * @var string
+	 */
+	const HEADER_KEY = 'Surrogate-Key';
+
+	/**
 	 * Get a copy of the current instance.
 	 *
 	 * @return Emitter
@@ -46,7 +53,7 @@ class Emitter {
 		$keys = self::get_main_query_surrogate_keys();
 		if ( ! empty( $keys ) ) {
 			// @codingStandardsIgnoreStart
-			@header( 'Surrogate-Key: ' . implode( ' ', $keys ) );
+			@header( self::HEADER_KEY . ': ' . implode( ' ', $keys ) );
 			// @codingStandardsIgnoreEnd
 		}
 	}
@@ -55,7 +62,6 @@ class Emitter {
 	 * Register filters to sniff surrogate keys out of REST API responses.
 	 */
 	public static function action_rest_api_init() {
-		self::get_instance()->rest_api_surrogate_keys = array();
 		foreach ( get_post_types( array( 'show_in_rest' => true ), 'names' ) as $post_type ) {
 			add_filter( "rest_prepare_{$post_type}", array( __CLASS__, 'filter_rest_prepare_post' ), 10, 3 );
 		}
@@ -63,6 +69,16 @@ class Emitter {
 			add_filter( "rest_prepare_{$taxonomy}", array( __CLASS__, 'filter_rest_prepare_term' ), 10, 3 );
 		}
 		add_filter( 'rest_prepare_user', array( __CLASS__, 'filter_rest_prepare_user' ), 10, 3 );
+	}
+
+	/**
+	 * Reset surrogate keys before a REST API response is generated.
+	 *
+	 * @param mixed $result Response to replace the requested version with.
+	 */
+	public static function filter_rest_pre_dispatch( $result ) {
+		self::get_instance()->rest_api_surrogate_keys = array();
+		return $result;
 	}
 
 	/**
@@ -75,7 +91,7 @@ class Emitter {
 
 		$keys = self::get_rest_api_surrogate_keys();
 		if ( ! empty( $keys ) ) {
-			$server->send_header( 'Surrogate-Key', implode( ' ', $keys ) );
+			$server->send_header( self::HEADER_KEY, implode( ' ', $keys ) );
 		}
 		return $result;
 	}

@@ -145,6 +145,14 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Sets up the REST API server object
+	 */
+	protected function setup_rest_api_server() {
+		$this->server = $GLOBALS['wp_rest_server'] = new Spy_REST_Server;
+		do_action( 'rest_api_init' );
+	}
+
+	/**
 	 * Primes the mapping of views to their surrogate keys.
 	 */
 	protected function setup_view_surrogate_keys() {
@@ -160,26 +168,38 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 			'/2016/', // Year archive with posts.
 			'/2015/', // Year archive without posts.
 		);
+		$rest_api_routes = array();
 		$posts = get_posts( array(
-			'fields'         => 'ids',
 			'post_type'      => 'any',
 			'post_status'    => 'any',
 			'posts_per_page' => -1,
 		) );
-		foreach ( $posts as $post_id ) {
-			$views[] = get_permalink( $post_id );
+		foreach ( $posts as $post ) {
+			$views[] = get_permalink( $post->ID );
+			$post_type_object = get_post_type_object( $post->post_type );
+			if ( ! empty( $post_type_object->show_in_rest ) ) {
+				$rest_api_routes[] = '/wp/v2/' . $post_type_object->rest_base;
+				$rest_api_routes[] = '/wp/v2/' . $post_type_object->rest_base . '/' . $post->ID;
+			}
 		}
 		$users = get_users( array(
 			'fields'         => 'ids',
 		) );
 		foreach ( $users as $user_id ) {
 			$views[] = get_author_posts_url( $user_id );
+			$rest_api_routes[] = '/wp/v2/users';
+			$rest_api_routes[] = '/wp/v2/users/' . $user_id;
 		}
 		$terms = get_terms( array( 'post_tag', 'category', 'product_category' ), array(
 			'hide_empty'     => false,
 		) );
 		foreach ( $terms as $term ) {
 			$views[] = get_term_link( $term );
+			$taxonomy_object = get_taxonomy( $term->taxonomy );
+			if ( ! empty( $taxonomy_object->show_in_rest ) ) {
+				$rest_api_routes[] = '/wp/v2/' . $taxonomy_object->rest_base;
+				$rest_api_routes[] = '/wp/v2/' . $taxonomy_object->rest_base . '/' . $term->term_id;
+			}
 		}
 		$views = array_unique( $views );
 		foreach ( $views as $view ) {
@@ -189,6 +209,16 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 			}
 			$this->go_to( $view );
 			$this->view_surrogate_keys[ $path ] = Emitter::get_main_query_surrogate_keys();
+		}
+		if ( version_compare( $GLOBALS['wp_version'], '4.7-alpha', '<' ) ) {
+			return;
+		}
+		$this->setup_rest_api_server();
+		$rest_api_routes = array_unique( $rest_api_routes );
+		foreach ( $rest_api_routes as $rest_api_route ) {
+			$request = new WP_REST_Request( 'GET', $rest_api_route );
+			$this->server->dispatch( $request );
+			$this->view_surrogate_keys[ '/wp-json' . $rest_api_route ] = Emitter::get_rest_api_surrogate_keys();
 		}
 	}
 
@@ -227,6 +257,14 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 		foreach ( $this->view_surrogate_keys as $view => $keys ) {
 			if ( array_intersect( $keys, $this->cleared_keys ) ) {
 				$actual[] = $view;
+			}
+		}
+		// Drop /wp-json/ URLs when <WP 4.7.
+		if ( version_compare( $GLOBALS['wp_version'], '4.7-alpha', '<' ) ) {
+			foreach ( $expected as $k => $v ) {
+				if ( 0 === stripos( $v, '/wp-json/' ) ) {
+					unset( $expected[ $k ] );
+				}
 			}
 		}
 		$this->assertArrayValues( $expected, $actual );

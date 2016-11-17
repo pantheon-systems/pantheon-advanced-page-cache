@@ -14,6 +14,7 @@ package.json
 phpunit.xml
 multisite.xml
 phpunit.xml.dist
+multisite.xml.dist
 phpcs.ruleset.xml
 README.md
 wp-cli.local.yml
