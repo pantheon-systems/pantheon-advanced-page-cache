@@ -188,7 +188,7 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 				$path .= '?' . $query;
 			}
 			$this->go_to( $view );
-			$this->view_surrogate_keys[ $path ] = Emitter::get_surrogate_keys();
+			$this->view_surrogate_keys[ $path ] = Emitter::get_main_query_surrogate_keys();
 		}
 	}
 
