@@ -32,10 +32,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/',
 			'/author/first-user/',
 			'/category/uncategorized/',
-			'/wp/v2/users',
-			'/wp/v2/users/' . $this->user_id1,
-			'/wp/v2/categories',
-			'/wp/v2/categories/' . $this->category_id1,
+			'/wp-json/wp/v2/users',
+			'/wp-json/wp/v2/users/' . $this->user_id1,
+			'/wp-json/wp/v2/categories',
+			'/wp-json/wp/v2/categories/' . $this->category_id1,
 		) );
 	}
 
@@ -64,14 +64,14 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/author/first-user/',
 			'/category/uncategorized/',
 			'/tag/second-tag/',
-			'/wp/v2/categories',
-			'/wp/v2/categories/' . $this->category_id1,
-			'/wp/v2/tags',
-			'/wp/v2/tags/' . $this->tag_id2,
-			'/wp/v2/users',
-			'/wp/v2/users/' . $this->user_id1,
-			'/wp/v2/posts',
-			'/wp/v2/posts/' . $this->post_id1,
+			'/wp-json/wp/v2/categories',
+			'/wp-json/wp/v2/categories/' . $this->category_id1,
+			'/wp-json/wp/v2/tags',
+			'/wp-json/wp/v2/tags/' . $this->tag_id2,
+			'/wp-json/wp/v2/users',
+			'/wp-json/wp/v2/users/' . $this->user_id1,
+			'/wp-json/wp/v2/posts',
+			'/wp-json/wp/v2/posts/' . $this->post_id1,
 		) );
 	}
 
@@ -89,8 +89,8 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		) );
 		$this->assertPurgedURIs( array(
 			'/category/uncategorized/',
-			'/wp/v2/categories',
-			'/wp/v2/categories/' . $this->category_id1,
+			'/wp-json/wp/v2/categories',
+			'/wp-json/wp/v2/categories/' . $this->category_id1,
 		) );
 	}
 
@@ -119,14 +119,14 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/author/first-user/',
 			'/category/uncategorized/',
 			'/tag/second-tag/',
-			'/wp/v2/categories',
-			'/wp/v2/categories/' . $this->category_id1,
-			'/wp/v2/tags',
-			'/wp/v2/tags/' . $this->tag_id2,
-			'/wp/v2/users',
-			'/wp/v2/users/' . $this->user_id1,
-			'/wp/v2/posts',
-			'/wp/v2/posts/' . $this->post_id1,
+			'/wp-json/wp/v2/categories',
+			'/wp-json/wp/v2/categories/' . $this->category_id1,
+			'/wp-json/wp/v2/tags',
+			'/wp-json/wp/v2/tags/' . $this->tag_id2,
+			'/wp-json/wp/v2/users',
+			'/wp-json/wp/v2/users/' . $this->user_id1,
+			'/wp-json/wp/v2/posts',
+			'/wp-json/wp/v2/posts/' . $this->post_id1,
 		) );
 	}
 
@@ -152,14 +152,14 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/author/first-user/',
 			'/category/uncategorized/',
 			'/tag/second-tag/',
-			'/wp/v2/categories',
-			'/wp/v2/categories/' . $this->category_id1,
-			'/wp/v2/tags',
-			'/wp/v2/tags/' . $this->tag_id2,
-			'/wp/v2/users',
-			'/wp/v2/users/' . $this->user_id1,
-			'/wp/v2/posts',
-			'/wp/v2/posts/' . $this->post_id1,
+			'/wp-json/wp/v2/categories',
+			'/wp-json/wp/v2/categories/' . $this->category_id1,
+			'/wp-json/wp/v2/tags',
+			'/wp-json/wp/v2/tags/' . $this->tag_id2,
+			'/wp-json/wp/v2/users',
+			'/wp-json/wp/v2/users/' . $this->user_id1,
+			'/wp-json/wp/v2/posts',
+			'/wp-json/wp/v2/posts/' . $this->post_id1,
 		) );
 	}
 
@@ -185,14 +185,14 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/author/first-user/',
 			'/category/uncategorized/',
 			'/tag/second-tag/',
-			'/wp/v2/categories',
-			'/wp/v2/categories/' . $this->category_id1,
-			'/wp/v2/tags',
-			'/wp/v2/tags/' . $this->tag_id2,
-			'/wp/v2/users',
-			'/wp/v2/users/' . $this->user_id1,
-			'/wp/v2/posts',
-			'/wp/v2/posts/' . $this->post_id1,
+			'/wp-json/wp/v2/categories',
+			'/wp-json/wp/v2/categories/' . $this->category_id1,
+			'/wp-json/wp/v2/tags',
+			'/wp-json/wp/v2/tags/' . $this->tag_id2,
+			'/wp-json/wp/v2/users',
+			'/wp-json/wp/v2/users/' . $this->user_id1,
+			'/wp-json/wp/v2/posts',
+			'/wp-json/wp/v2/posts/' . $this->post_id1,
 		) );
 	}
 
@@ -218,10 +218,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/',
 			'/author/first-user/',
 			'/category/uncategorized/',
-			'/wp/v2/categories',
-			'/wp/v2/categories/' . $this->category_id1,
-			'/wp/v2/users',
-			'/wp/v2/users/' . $this->user_id1,
+			'/wp-json/wp/v2/categories',
+			'/wp-json/wp/v2/categories/' . $this->category_id1,
+			'/wp-json/wp/v2/users',
+			'/wp-json/wp/v2/users/' . $this->user_id1,
 		) );
 	}
 
@@ -243,10 +243,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/',
 			'/author/first-user/',
 			'/first-page/',
-			'/wp/v2/pages',
-			'/wp/v2/pages/' . $this->page_id1,
-			'/wp/v2/users',
-			'/wp/v2/users/' . $this->user_id1,
+			'/wp-json/wp/v2/pages',
+			'/wp-json/wp/v2/pages/' . $this->page_id1,
+			'/wp-json/wp/v2/users',
+			'/wp-json/wp/v2/users/' . $this->user_id1,
 		) );
 	}
 
@@ -268,10 +268,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/',
 			'/author/first-user/',
 			'/first-page/',
-			'/wp/v2/pages',
-			'/wp/v2/pages/' . $this->page_id1,
-			'/wp/v2/users',
-			'/wp/v2/users/' . $this->user_id1,
+			'/wp-json/wp/v2/pages',
+			'/wp-json/wp/v2/pages/' . $this->page_id1,
+			'/wp-json/wp/v2/users',
+			'/wp-json/wp/v2/users/' . $this->user_id1,
 		) );
 	}
 
@@ -290,10 +290,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/',
 			'/author/first-user/',
 			'/first-page/',
-			'/wp/v2/pages',
-			'/wp/v2/pages/' . $this->page_id1,
-			'/wp/v2/users',
-			'/wp/v2/users/' . $this->user_id1,
+			'/wp-json/wp/v2/pages',
+			'/wp-json/wp/v2/pages/' . $this->page_id1,
+			'/wp-json/wp/v2/users',
+			'/wp-json/wp/v2/users/' . $this->user_id1,
 		) );
 	}
 
@@ -312,10 +312,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/',
 			'/author/first-user/',
 			'/first-page/',
-			'/wp/v2/pages',
-			'/wp/v2/pages/' . $this->page_id1,
-			'/wp/v2/users',
-			'/wp/v2/users/' . $this->user_id1,
+			'/wp-json/wp/v2/pages',
+			'/wp-json/wp/v2/pages/' . $this->page_id1,
+			'/wp-json/wp/v2/users',
+			'/wp-json/wp/v2/users/' . $this->user_id1,
 		) );
 	}
 
@@ -329,8 +329,8 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		) );
 		$this->assertPurgedURIs( array(
 			'/first-page/',
-			'/wp/v2/pages',
-			'/wp/v2/pages/' . $this->page_id1,
+			'/wp-json/wp/v2/pages',
+			'/wp-json/wp/v2/pages/' . $this->page_id1,
 		) );
 	}
 
@@ -455,8 +455,8 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs( array(
 			'/',
 			'/author/first-user/',
-			'/wp/v2/users',
-			'/wp/v2/users/' . $this->user_id1,
+			'/wp-json/wp/v2/users',
+			'/wp-json/wp/v2/users/' . $this->user_id1,
 		) );
 	}
 
@@ -487,8 +487,8 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs( array(
 			'/2016/10/14/first-post/',
 			'/tag/second-tag/',
-			'/wp/v2/tags',
-			'/wp/v2/tags/' . $this->tag_id2,
+			'/wp-json/wp/v2/tags',
+			'/wp-json/wp/v2/tags/' . $this->tag_id2,
 		) );
 	}
 
@@ -504,8 +504,8 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs( array(
 			'/2016/10/14/first-post/',
 			'/tag/second-tag/',
-			'/wp/v2/tags',
-			'/wp/v2/tags/' . $this->tag_id2,
+			'/wp-json/wp/v2/tags',
+			'/wp-json/wp/v2/tags/' . $this->tag_id2,
 		) );
 	}
 
@@ -519,8 +519,8 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		) );
 		$this->assertPurgedURIs( array(
 			'/tag/first-tag/',
-			'/wp/v2/tags',
-			'/wp/v2/tags/' . $this->tag_id1,
+			'/wp-json/wp/v2/tags',
+			'/wp-json/wp/v2/tags/' . $this->tag_id1,
 		) );
 	}
 
@@ -534,8 +534,8 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		) );
 		$this->assertPurgedURIs( array(
 			'/category/uncategorized/',
-			'/wp/v2/categories',
-			'/wp/v2/categories/' . $this->category_id1,
+			'/wp-json/wp/v2/categories',
+			'/wp-json/wp/v2/categories/' . $this->category_id1,
 		) );
 	}
 
@@ -562,8 +562,8 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		) );
 		$this->assertPurgedURIs( array(
 			'/author/first-user/',
-			'/wp/v2/users',
-			'/wp/v2/users/' . $this->user_id1,
+			'/wp-json/wp/v2/users',
+			'/wp-json/wp/v2/users/' . $this->user_id1,
 		) );
 	}
 

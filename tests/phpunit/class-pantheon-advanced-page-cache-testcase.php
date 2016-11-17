@@ -218,7 +218,7 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 		foreach ( $rest_api_routes as $rest_api_route ) {
 			$request = new WP_REST_Request( 'GET', $rest_api_route );
 			$this->server->dispatch( $request );
-			$this->view_surrogate_keys[ $rest_api_route ] = Emitter::get_rest_api_surrogate_keys();
+			$this->view_surrogate_keys[ '/wp-json' . $rest_api_route ] = Emitter::get_rest_api_surrogate_keys();
 		}
 	}
 
@@ -257,6 +257,14 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 		foreach ( $this->view_surrogate_keys as $view => $keys ) {
 			if ( array_intersect( $keys, $this->cleared_keys ) ) {
 				$actual[] = $view;
+			}
+		}
+		// Drop /wp-json/ URLs when <WP 4.7
+		if ( version_compare( $GLOBALS['wp_version'], '4.7-alpha', '<' ) ) {
+			foreach ( $expected as $k => $v ) {
+				if ( 0 === stripos( $v, '/wp-json/' ) ) {
+					unset( $expected[ $k ] );
+				}
 			}
 		}
 		$this->assertArrayValues( $expected, $actual );
