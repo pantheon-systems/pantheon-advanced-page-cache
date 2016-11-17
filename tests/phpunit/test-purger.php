@@ -25,15 +25,15 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'home',
 			'front',
 			'post-' . $this->post_id5,
+			'rest-post-' . $this->post_id5,
 			'user-' . $this->user_id1,
 			'term-' . $this->category_id1,
+			'rest-term-' . $this->category_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
 			'/author/first-user/',
 			'/category/uncategorized/',
-			'/wp-json/wp/v2/users',
-			'/wp-json/wp/v2/users/' . $this->user_id1,
 			'/wp-json/wp/v2/categories',
 			'/wp-json/wp/v2/categories/' . $this->category_id1,
 		) );
@@ -51,9 +51,12 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'home',
 			'front',
 			'post-' . $this->post_id1,
+			'rest-post-' . $this->post_id1,
 			'user-' . $this->user_id1,
 			'term-' . $this->category_id1,
+			'rest-term-' . $this->category_id1,
 			'term-' . $this->tag_id2,
+			'rest-term-' . $this->tag_id2,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -68,8 +71,6 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/wp-json/wp/v2/categories/' . $this->category_id1,
 			'/wp-json/wp/v2/tags',
 			'/wp-json/wp/v2/tags/' . $this->tag_id2,
-			'/wp-json/wp/v2/users',
-			'/wp-json/wp/v2/users/' . $this->user_id1,
 			'/wp-json/wp/v2/posts',
 			'/wp-json/wp/v2/posts/' . $this->post_id1,
 		) );
@@ -85,7 +86,9 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		) );
 		$this->assertClearedKeys( array(
 			'post-' . $this->post_id4,
+			'rest-post-' . $this->post_id4,
 			'term-' . $this->category_id1,
+			'rest-term-' . $this->category_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/category/uncategorized/',
@@ -106,9 +109,12 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'home',
 			'front',
 			'post-' . $this->post_id1,
+			'rest-post-' . $this->post_id1,
 			'user-' . $this->user_id1,
 			'term-' . $this->category_id1,
+			'rest-term-' . $this->category_id1,
 			'term-' . $this->tag_id2,
+			'rest-term-' . $this->tag_id2,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -123,8 +129,6 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/wp-json/wp/v2/categories/' . $this->category_id1,
 			'/wp-json/wp/v2/tags',
 			'/wp-json/wp/v2/tags/' . $this->tag_id2,
-			'/wp-json/wp/v2/users',
-			'/wp-json/wp/v2/users/' . $this->user_id1,
 			'/wp-json/wp/v2/posts',
 			'/wp-json/wp/v2/posts/' . $this->post_id1,
 		) );
@@ -139,9 +143,12 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'home',
 			'front',
 			'post-' . $this->post_id1,
+			'rest-post-' . $this->post_id1,
 			'user-' . $this->user_id1,
 			'term-' . $this->category_id1,
+			'rest-term-' . $this->category_id1,
 			'term-' . $this->tag_id2,
+			'rest-term-' . $this->tag_id2,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -156,8 +163,6 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/wp-json/wp/v2/categories/' . $this->category_id1,
 			'/wp-json/wp/v2/tags',
 			'/wp-json/wp/v2/tags/' . $this->tag_id2,
-			'/wp-json/wp/v2/users',
-			'/wp-json/wp/v2/users/' . $this->user_id1,
 			'/wp-json/wp/v2/posts',
 			'/wp-json/wp/v2/posts/' . $this->post_id1,
 		) );
@@ -172,9 +177,12 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'home',
 			'front',
 			'post-' . $this->post_id1,
+			'rest-post-' . $this->post_id1,
 			'user-' . $this->user_id1,
 			'term-' . $this->category_id1,
+			'rest-term-' . $this->category_id1,
 			'term-' . $this->tag_id2,
+			'rest-term-' . $this->tag_id2,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -189,8 +197,6 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/wp-json/wp/v2/categories/' . $this->category_id1,
 			'/wp-json/wp/v2/tags',
 			'/wp-json/wp/v2/tags/' . $this->tag_id2,
-			'/wp-json/wp/v2/users',
-			'/wp-json/wp/v2/users/' . $this->user_id1,
 			'/wp-json/wp/v2/posts',
 			'/wp-json/wp/v2/posts/' . $this->post_id1,
 		) );
@@ -211,8 +217,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'home',
 			'front',
 			'post-' . $this->page_id2,
+			'rest-post-' . $this->page_id2,
 			'user-' . $this->user_id1,
 			'term-' . $this->category_id1,
+			'rest-term-' . $this->category_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -220,8 +228,6 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/category/uncategorized/',
 			'/wp-json/wp/v2/categories',
 			'/wp-json/wp/v2/categories/' . $this->category_id1,
-			'/wp-json/wp/v2/users',
-			'/wp-json/wp/v2/users/' . $this->user_id1,
 		) );
 	}
 
@@ -237,6 +243,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'home',
 			'front',
 			'post-' . $this->page_id1,
+			'rest-post-' . $this->page_id1,
 			'user-' . $this->user_id1,
 		) );
 		$this->assertPurgedURIs( array(
@@ -245,8 +252,6 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/first-page/',
 			'/wp-json/wp/v2/pages',
 			'/wp-json/wp/v2/pages/' . $this->page_id1,
-			'/wp-json/wp/v2/users',
-			'/wp-json/wp/v2/users/' . $this->user_id1,
 		) );
 	}
 
@@ -262,6 +267,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'home',
 			'front',
 			'post-' . $this->page_id1,
+			'rest-post-' . $this->page_id1,
 			'user-' . $this->user_id1,
 		) );
 		$this->assertPurgedURIs( array(
@@ -270,8 +276,6 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/first-page/',
 			'/wp-json/wp/v2/pages',
 			'/wp-json/wp/v2/pages/' . $this->page_id1,
-			'/wp-json/wp/v2/users',
-			'/wp-json/wp/v2/users/' . $this->user_id1,
 		) );
 	}
 
@@ -284,6 +288,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'home',
 			'front',
 			'post-' . $this->page_id1,
+			'rest-post-' . $this->page_id1,
 			'user-' . $this->user_id1,
 		) );
 		$this->assertPurgedURIs( array(
@@ -292,8 +297,6 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/first-page/',
 			'/wp-json/wp/v2/pages',
 			'/wp-json/wp/v2/pages/' . $this->page_id1,
-			'/wp-json/wp/v2/users',
-			'/wp-json/wp/v2/users/' . $this->user_id1,
 		) );
 	}
 
@@ -306,6 +309,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'home',
 			'front',
 			'post-' . $this->page_id1,
+			'rest-post-' . $this->page_id1,
 			'user-' . $this->user_id1,
 		) );
 		$this->assertPurgedURIs( array(
@@ -314,8 +318,6 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/first-page/',
 			'/wp-json/wp/v2/pages',
 			'/wp-json/wp/v2/pages/' . $this->page_id1,
-			'/wp-json/wp/v2/users',
-			'/wp-json/wp/v2/users/' . $this->user_id1,
 		) );
 	}
 
@@ -326,6 +328,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		clean_post_cache( $this->page_id1 );
 		$this->assertClearedKeys( array(
 			'post-' . $this->page_id1,
+			'rest-post-' . $this->page_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/first-page/',
@@ -351,7 +354,9 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'home',
 			'front',
 			'post-' . $this->product_id3,
+			'rest-post-' . $this->product_id3,
 			'term-' . $this->product_category_id1,
+			'rest-term-' . $this->product_category_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -371,7 +376,9 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'home',
 			'front',
 			'post-' . $this->product_id2,
+			'rest-post-' . $this->product_id2,
 			'term-' . $this->product_category_id1,
+			'rest-term-' . $this->product_category_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -390,7 +397,9 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'home',
 			'front',
 			'post-' . $this->product_id2,
+			'rest-post-' . $this->product_id2,
 			'term-' . $this->product_category_id1,
+			'rest-term-' . $this->product_category_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -409,7 +418,9 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'home',
 			'front',
 			'post-' . $this->product_id2,
+			'rest-post-' . $this->product_id2,
 			'term-' . $this->product_category_id1,
+			'rest-term-' . $this->product_category_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -426,6 +437,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		clean_post_cache( $this->product_id1 );
 		$this->assertClearedKeys( array(
 			'post-' . $this->product_id1,
+			'rest-post-' . $this->product_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/product-category/second-product-category/',
@@ -450,13 +462,12 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'home',
 			'front',
 			'post-' . $attachment_id,
+			'rest-post-' . $attachment_id,
 			'user-' . $this->user_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
 			'/author/first-user/',
-			'/wp-json/wp/v2/users',
-			'/wp-json/wp/v2/users/' . $this->user_id1,
 		) );
 	}
 
@@ -467,6 +478,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->tag_id3 = $this->factory->tag->create( array( 'slug' => 'third-tag' ) );
 		$this->assertClearedKeys( array(
 			'term-' . $this->tag_id3,
+			'rest-term-' . $this->tag_id3,
 			'post-term-' . $this->tag_id3,
 		) );
 		// Hasn't appeared on any views yet.
@@ -482,6 +494,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		) );
 		$this->assertClearedKeys( array(
 			'term-' . $this->tag_id2,
+			'rest-term-' . $this->tag_id2,
 			'post-term-' . $this->tag_id2,
 		) );
 		$this->assertPurgedURIs( array(
@@ -499,6 +512,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		wp_delete_term( $this->tag_id2, 'post_tag' );
 		$this->assertClearedKeys( array(
 			'term-' . $this->tag_id2,
+			'rest-term-' . $this->tag_id2,
 			'post-term-' . $this->tag_id2,
 		) );
 		$this->assertPurgedURIs( array(
@@ -516,6 +530,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		clean_term_cache( $this->tag_id1 );
 		$this->assertClearedKeys( array(
 			'term-' . $this->tag_id1,
+			'rest-term-' . $this->tag_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/tag/first-tag/',
@@ -531,6 +546,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		clean_term_cache( $this->category_id1 );
 		$this->assertClearedKeys( array(
 			'term-' . $this->category_id1,
+			'rest-term-' . $this->category_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/category/uncategorized/',
@@ -546,6 +562,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		clean_term_cache( $this->product_category_id1 );
 		$this->assertClearedKeys( array(
 			'term-' . $this->product_category_id1,
+			'rest-term-' . $this->product_category_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/product-category/first-product-category/',
@@ -559,6 +576,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		clean_user_cache( $this->user_id1 );
 		$this->assertClearedKeys( array(
 			'user-' . $this->user_id1,
+			'rest-user-' . $this->user_id1,
 		) );
 		$this->assertPurgedURIs( array(
 			'/author/first-user/',
