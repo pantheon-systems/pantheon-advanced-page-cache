@@ -20,8 +20,6 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		if ( version_compare( $GLOBALS['wp_version'], '4.7-alpha', '<' ) ) {
 			return $this->markTestSkipped( 'WordPress version not supported.' );
 		}
-		$this->server = $GLOBALS['wp_rest_server'] = new Spy_REST_Server;
-		do_action( 'rest_api_init' );
 	}
 
 	/**
