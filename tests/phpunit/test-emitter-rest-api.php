@@ -30,9 +30,9 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$response = $this->server->dispatch( $request );
 		$this->assertCount( 3, $response->get_data() );
 		$this->assertArrayValues( array(
-			'post-' . $this->post_id1,
-			'post-' . $this->post_id2,
-			'post-' . $this->post_id3,
+			'rest-post-' . $this->post_id1,
+			'rest-post-' . $this->post_id2,
+			'rest-post-' . $this->post_id3,
 		), Emitter::get_rest_api_surrogate_keys() );
 	}
 
@@ -45,7 +45,7 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$data = $response->get_data();
 		$this->assertEquals( $this->post_id2, $data['id'] );
 		$this->assertArrayValues( array(
-			'post-' . $this->post_id2,
+			'rest-post-' . $this->post_id2,
 		), Emitter::get_rest_api_surrogate_keys() );
 	}
 
@@ -57,7 +57,7 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$response = $this->server->dispatch( $request );
 		$this->assertCount( 1, $response->get_data() );
 		$this->assertArrayValues( array(
-			'post-' . $this->page_id1,
+			'rest-post-' . $this->page_id1,
 		), Emitter::get_rest_api_surrogate_keys() );
 	}
 
@@ -70,7 +70,7 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$data = $response->get_data();
 		$this->assertEquals( $this->page_id1, $data['id'] );
 		$this->assertArrayValues( array(
-			'post-' . $this->page_id1,
+			'rest-post-' . $this->page_id1,
 		), Emitter::get_rest_api_surrogate_keys() );
 	}
 
@@ -82,8 +82,8 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$response = $this->server->dispatch( $request );
 		$this->assertCount( 2, $response->get_data() );
 		$this->assertArrayValues( array(
-			'term-' . $this->category_id1,
-			'term-' . $this->category_id2,
+			'rest-term-' . $this->category_id1,
+			'rest-term-' . $this->category_id2,
 		), Emitter::get_rest_api_surrogate_keys() );
 	}
 
@@ -96,7 +96,7 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$data = $response->get_data();
 		$this->assertEquals( $this->category_id2, $data['id'] );
 		$this->assertArrayValues( array(
-			'term-' . $this->category_id2,
+			'rest-term-' . $this->category_id2,
 		), Emitter::get_rest_api_surrogate_keys() );
 	}
 
@@ -108,8 +108,8 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$response = $this->server->dispatch( $request );
 		$this->assertCount( 2, $response->get_data() );
 		$this->assertArrayValues( array(
-			'term-' . $this->tag_id1,
-			'term-' . $this->tag_id2,
+			'rest-term-' . $this->tag_id1,
+			'rest-term-' . $this->tag_id2,
 		), Emitter::get_rest_api_surrogate_keys() );
 	}
 
@@ -122,7 +122,7 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$data = $response->get_data();
 		$this->assertEquals( $this->tag_id1, $data['id'] );
 		$this->assertArrayValues( array(
-			'term-' . $this->tag_id1,
+			'rest-term-' . $this->tag_id1,
 		), Emitter::get_rest_api_surrogate_keys() );
 	}
 
@@ -134,8 +134,8 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$response = $this->server->dispatch( $request );
 		$this->assertCount( 2, $response->get_data() );
 		$this->assertArrayValues( array(
-			'user-' . $this->user_id1,
-			'user-' . $this->user_id2,
+			'rest-user-' . $this->user_id1,
+			'rest-user-' . $this->user_id2,
 		), Emitter::get_rest_api_surrogate_keys() );
 	}
 
@@ -148,7 +148,7 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$data = $response->get_data();
 		$this->assertEquals( $this->user_id2, $data['id'] );
 		$this->assertArrayValues( array(
-			'user-' . $this->user_id2,
+			'rest-user-' . $this->user_id2,
 		), Emitter::get_rest_api_surrogate_keys() );
 	}
 

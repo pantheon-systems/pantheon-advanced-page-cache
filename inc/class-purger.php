@@ -67,7 +67,7 @@ class Purger {
 		if ( $type && 'revision' === $type ) {
 			return;
 		}
-		pantheon_wp_clear_edge_keys( array( 'post-' . $post_id ) );
+		pantheon_wp_clear_edge_keys( array( 'post-' . $post_id, 'rest-post-' . $post_id ) );
 	}
 
 	/**
@@ -107,6 +107,7 @@ class Purger {
 		$term_ids = is_array( $term_ids ) ? $term_ids : array( $term_id );
 		foreach ( $term_ids as $term_id ) {
 			$keys[] = 'term-' . $term_id;
+			$keys[] = 'rest-term-' . $term_id;
 		}
 		pantheon_wp_clear_edge_keys( $keys );
 	}
@@ -151,7 +152,7 @@ class Purger {
 	 * @param integer $term_id ID for the modified term.
 	 */
 	private static function purge_term( $term_id ) {
-		pantheon_wp_clear_edge_keys( array( 'term-' . $term_id, 'post-term-' . $term_id ) );
+		pantheon_wp_clear_edge_keys( array( 'term-' . $term_id, 'rest-term-' . $term_id, 'post-term-' . $term_id ) );
 	}
 
 
@@ -163,6 +164,7 @@ class Purger {
 	public static function action_clean_user_cache( $user_id ) {
 		$keys = array(
 			'user-' . $user_id,
+			'rest-user-' . $user_id,
 		);
 		pantheon_wp_clear_edge_keys( $keys );
 	}

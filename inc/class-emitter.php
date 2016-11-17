@@ -104,7 +104,7 @@ class Emitter {
 	 * @param WP_REST_Request  $request  Request object.
 	 */
 	public static function filter_rest_prepare_post( $response, $post, $request ) {
-		self::get_instance()->rest_api_surrogate_keys[] = 'post-' . $post->ID;
+		self::get_instance()->rest_api_surrogate_keys[] = 'rest-post-' . $post->ID;
 		return $response;
 	}
 
@@ -116,7 +116,7 @@ class Emitter {
 	 * @param WP_REST_Request  $request  Request object.
 	 */
 	public static function filter_rest_prepare_term( $response, $term, $request ) {
-		self::get_instance()->rest_api_surrogate_keys[] = 'term-' . $term->term_id;
+		self::get_instance()->rest_api_surrogate_keys[] = 'rest-term-' . $term->term_id;
 		return $response;
 	}
 
@@ -128,7 +128,7 @@ class Emitter {
 	 * @param WP_REST_Request  $request  Request object.
 	 */
 	public static function filter_rest_prepare_user( $response, $user, $request ) {
-		self::get_instance()->rest_api_surrogate_keys[] = 'user-' . $user->ID;
+		self::get_instance()->rest_api_surrogate_keys[] = 'rest-user-' . $user->ID;
 		return $response;
 	}
 
