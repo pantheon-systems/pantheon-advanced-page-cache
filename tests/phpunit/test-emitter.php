@@ -23,7 +23,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 			'post-' . $this->post_id1,
 			'post-' . $this->post_id2,
 			'post-' . $this->post_id3,
-		), Emitter::get_surrogate_keys() );
+		), Emitter::get_main_query_surrogate_keys() );
 	}
 
 	/**
@@ -36,7 +36,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 			'post-' . $this->post_id2,
 			'post-user-' . $this->user_id2,
 			'post-term-' . $this->category_id1,
-		), Emitter::get_surrogate_keys() );
+		), Emitter::get_main_query_surrogate_keys() );
 	}
 
 	/**
@@ -48,7 +48,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 			'single',
 			'post-' . $this->page_id1,
 			'post-user-' . $this->user_id1,
-		), Emitter::get_surrogate_keys() );
+		), Emitter::get_main_query_surrogate_keys() );
 	}
 
 	/**
@@ -60,7 +60,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 			'single',
 			'post-' . $this->product_id1,
 			'post-term-' . $this->product_category_id2,
-		), Emitter::get_surrogate_keys() );
+		), Emitter::get_main_query_surrogate_keys() );
 	}
 
 	/**
@@ -72,7 +72,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 			'archive',
 			'user-' . $this->user_id1,
 			'post-' . $this->post_id1,
-		), Emitter::get_surrogate_keys() );
+		), Emitter::get_main_query_surrogate_keys() );
 	}
 
 	/**
@@ -83,7 +83,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertArrayValues( array(
 			'archive',
 			'user-' . $this->user_id3,
-		), Emitter::get_surrogate_keys() );
+		), Emitter::get_main_query_surrogate_keys() );
 	}
 
 	/**
@@ -95,7 +95,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 			'archive',
 			'term-' . $this->tag_id2,
 			'post-' . $this->post_id1,
-		), Emitter::get_surrogate_keys() );
+		), Emitter::get_main_query_surrogate_keys() );
 	}
 
 	/**
@@ -106,7 +106,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertArrayValues( array(
 			'archive',
 			'term-' . $this->tag_id1,
-		), Emitter::get_surrogate_keys() );
+		), Emitter::get_main_query_surrogate_keys() );
 	}
 
 	/**
@@ -118,7 +118,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 			'archive',
 			'term-' . $this->product_category_id1,
 			'post-' . $this->product_id2,
-		), Emitter::get_surrogate_keys() );
+		), Emitter::get_main_query_surrogate_keys() );
 	}
 
 	/**
@@ -129,7 +129,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertArrayValues( array(
 			'archive',
 			'term-' . $this->product_category_id3,
-		), Emitter::get_surrogate_keys() );
+		), Emitter::get_main_query_surrogate_keys() );
 	}
 
 	/**
@@ -142,7 +142,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 			'post-type-archive',
 			'post-' . $this->product_id1,
 			'post-' . $this->product_id2,
-		), Emitter::get_surrogate_keys() );
+		), Emitter::get_main_query_surrogate_keys() );
 	}
 
 	/**
@@ -156,7 +156,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 			'post-' . $this->post_id1,
 			'post-' . $this->post_id2,
 			'post-' . $this->post_id3,
-		), Emitter::get_surrogate_keys() );
+		), Emitter::get_main_query_surrogate_keys() );
 	}
 
 	/**
@@ -164,7 +164,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function test_year_date_archive_without_posts() {
 		$this->go_to( home_url( '2015/' ) );
-		$this->assertArrayValues( array(), Emitter::get_surrogate_keys() );
+		$this->assertArrayValues( array(), Emitter::get_main_query_surrogate_keys() );
 	}
 
 	/**
@@ -178,7 +178,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 			'post-' . $this->post_id1,
 			'post-' . $this->post_id2,
 			'post-' . $this->post_id3,
-		), Emitter::get_surrogate_keys() );
+		), Emitter::get_main_query_surrogate_keys() );
 	}
 
 	/**
@@ -186,7 +186,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function test_month_date_archive_without_posts() {
 		$this->go_to( home_url( '2015/10/' ) );
-		$this->assertArrayValues( array(), Emitter::get_surrogate_keys() );
+		$this->assertArrayValues( array(), Emitter::get_main_query_surrogate_keys() );
 	}
 
 	/**
@@ -198,7 +198,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 			'archive',
 			'date',
 			'post-' . $this->post_id3,
-		), Emitter::get_surrogate_keys() );
+		), Emitter::get_main_query_surrogate_keys() );
 	}
 
 	/**
@@ -206,7 +206,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function test_day_date_archive_without_posts() {
 		$this->go_to( home_url( '2015/10/15/' ) );
-		$this->assertArrayValues( array(), Emitter::get_surrogate_keys() );
+		$this->assertArrayValues( array(), Emitter::get_main_query_surrogate_keys() );
 	}
 
 	/**
@@ -223,7 +223,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 			'post-' . $this->page_id1,
 			'post-' . $this->product_id1,
 			'post-' . $this->product_id2,
-		), Emitter::get_surrogate_keys() );
+		), Emitter::get_main_query_surrogate_keys() );
 	}
 
 	/**
@@ -234,7 +234,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertArrayValues( array(
 			'search',
 			'search-no-results',
-		), Emitter::get_surrogate_keys() );
+		), Emitter::get_main_query_surrogate_keys() );
 	}
 
 }

@@ -17,7 +17,7 @@ class Emitter {
 	 */
 	public static function action_wp() {
 
-		$keys = self::get_surrogate_keys();
+		$keys = self::get_main_query_surrogate_keys();
 		if ( ! empty( $keys ) ) {
 			// @codingStandardsIgnoreStart
 			@header( 'Surrogate-Key: ' . implode( ' ', $keys ) );
@@ -32,7 +32,7 @@ class Emitter {
 	 *
 	 * @return array
 	 */
-	public static function get_surrogate_keys() {
+	public static function get_main_query_surrogate_keys() {
 		global $wp_query;
 
 		$keys = array();
@@ -101,7 +101,7 @@ class Emitter {
 		 *
 		 * @param array $keys Existing surrogate keys generate by the plugin.
 		 */
-		$keys = apply_filters( 'pantheon_wp_surrogate_keys', $keys );
+		$keys = apply_filters( 'pantheon_wp_main_query_surrogate_keys', $keys );
 		$keys = array_unique( $keys );
 		return $keys;
 	}

@@ -44,12 +44,12 @@ Because cached responses include metadata describing the data therein, surrogate
 
 There is a limit to the number of surrogate keys in a response, so we've optimized them based on a user's expectation of a normal WordPress site. See the "Emitted Keys" section for full details.
 
-Use the `pantheon_wp_surrogate_keys` filter to customize surrogate keys in a response. For example, to include a surrogate key for a sidebar rendered on the homepage, you can filter the keys included in the response:
+Use the `pantheon_wp_main_query_surrogate_keys` filter to customize surrogate keys in a response. For example, to include a surrogate key for a sidebar rendered on the homepage, you can filter the keys included in the response:
 
     /**
      * Add surrogate key for the featured content sidebar rendered on the homepage.
      */
-    add_filter( 'pantheon_wp_surrogate_keys', function( $keys ){
+    add_filter( 'pantheon_wp_main_query_surrogate_keys', function( $keys ){
 	    if ( is_home() ) {
             $keys[] = 'sidebar-home-featured';
         }
