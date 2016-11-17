@@ -46,5 +46,6 @@ test:
     # - ./bin/behat-prepare.sh
   override:
     # - ./bin/behat-test.sh
+    - echo 'Disabled'
   post:
     # - ./bin/behat-cleanup.sh
