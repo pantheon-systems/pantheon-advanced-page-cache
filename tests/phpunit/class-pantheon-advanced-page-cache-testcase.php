@@ -259,7 +259,7 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 				$actual[] = $view;
 			}
 		}
-		// Drop /wp-json/ URLs when <WP 4.7
+		// Drop /wp-json/ URLs when <WP 4.7.
 		if ( version_compare( $GLOBALS['wp_version'], '4.7-alpha', '<' ) ) {
 			foreach ( $expected as $k => $v ) {
 				if ( 0 === stripos( $v, '/wp-json/' ) ) {
