@@ -123,7 +123,7 @@ add_action( 'transition_post_status', array( 'Pantheon_Advanced_Page_Cache\Purge
 add_action( 'before_delete_post', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_before_delete_post' ) );
 add_action( 'delete_attachment', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_delete_attachment' ) );
 add_action( 'clean_post_cache', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_clean_post_cache' ) );
-add_action( 'created_term', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_created_term' ) );
+add_action( 'created_term', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_created_term' ), 10, 3 );
 add_action( 'edited_term', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_edited_term' ) );
 add_action( 'delete_term', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_delete_term' ) );
 add_action( 'clean_term_cache', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_clean_term_cache' ) );

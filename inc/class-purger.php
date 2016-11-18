@@ -36,6 +36,10 @@ class Purger {
 			return;
 		}
 		self::purge_post_with_related( $post->ID );
+		// Clear the REST API collection endpoint when a new post is published.
+		if ( 'publish' !== $old_status && 'publish' === $new_status ) {
+			pantheon_wp_clear_edge_keys( array( 'rest-' . $post->post_type . '-collection' ) );
+		}
 	}
 
 	/**
@@ -73,10 +77,13 @@ class Purger {
 	/**
 	 * Purge surrogate keys associated with a term being created.
 	 *
-	 * @param integer $term_id ID for the created term.
+	 * @param integer $term_id  ID for the created term.
+	 * @param int     $tt_id    Term taxonomy ID.
+	 * @param string  $taxonomy Taxonomy slug.
 	 */
-	public static function action_created_term( $term_id ) {
+	public static function action_created_term( $term_id, $tt_id, $taxonomy ) {
 		self::purge_term( $term_id );
+		pantheon_wp_clear_edge_keys( array( 'rest-' . $taxonomy . '-collection' ) );
 	}
 
 	/**
