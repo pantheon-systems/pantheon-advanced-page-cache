@@ -589,4 +589,26 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		) );
 	}
 
+	/**
+	 * Verify updating an option clears expected keys.
+	 */
+	public function test_update_option() {
+		update_option( 'date_format', 'Y-m-d' );
+		$this->assertClearedKeys( array(
+			'rest-setting-date_format',
+		) );
+		$this->assertPurgedURIs( array(
+			'/wp-json/wp/v2/settings',
+		) );
+	}
+
+	/**
+	 * Verify updating an option not in the REST API doesn't clear keys.
+	 */
+	public function test_update_option_not_in_rest() {
+		update_option( 'papc_secret_email', 'foo@example.org' );
+		$this->assertClearedKeys( array() );
+		$this->assertPurgedURIs( array() );
+	}
+
 }
