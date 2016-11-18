@@ -78,6 +78,7 @@ class Emitter {
 			self::get_instance()->rest_api_collection_endpoints[ $taxonomy->name ] = '/wp/v2/' . $taxonomy->rest_base;
 		}
 		add_filter( 'rest_prepare_user', array( __CLASS__, 'filter_rest_prepare_user' ), 10, 3 );
+		add_filter( 'rest_pre_get_setting', array( __CLASS__, 'filter_rest_pre_get_setting' ), 10, 2 );
 		self::get_instance()->rest_api_collection_endpoints['user'] = '/wp/v2/users';
 	}
 
@@ -151,6 +152,19 @@ class Emitter {
 			self::get_instance()->rest_api_surrogate_keys[] = 'rest-user-collection';
 		}
 		return $response;
+	}
+
+	/**
+	 * Determine which settings are present in a REST API request
+	 *
+	 * @param mixed  $result Value to use for the requested setting. Can be a scalar
+	 *                       matching the registered schema for the setting, or null to
+	 *                       follow the default get_option() behavior.
+	 * @param string $name   Setting name (as shown in REST API responses).
+	 */
+	public static function filter_rest_pre_get_setting( $result, $name ) {
+		self::get_instance()->rest_api_surrogate_keys[] = 'rest-setting-' . $name;
+		return $result;
 	}
 
 	/**

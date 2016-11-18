@@ -36,9 +36,10 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 
 		$this->setup_permalink_structure();
 
-		$this->user_id1 = $this->factory->user->create( array( 'user_role' => 'author', 'user_nicename' => 'first-user' ) );
-		$this->user_id2 = $this->factory->user->create( array( 'user_role' => 'author', 'user_nicename' => 'second-user' ) );
-		$this->user_id3 = $this->factory->user->create( array( 'user_role' => 'author', 'user_nicename' => 'third-user' ) );
+		$this->user_id1 = $this->factory->user->create( array( 'role' => 'author', 'user_nicename' => 'first-user' ) );
+		$this->user_id2 = $this->factory->user->create( array( 'role' => 'author', 'user_nicename' => 'second-user' ) );
+		$this->user_id3 = $this->factory->user->create( array( 'role' => 'author', 'user_nicename' => 'third-user' ) );
+		$this->admin_id1 = $this->factory->user->create( array( 'role' => 'administrator', 'user_nicename' => 'first-admin' ) );
 
 		$this->tag_id1 = $this->factory->tag->create( array( 'slug' => 'first-tag' ) );
 		$this->tag_id2 = $this->factory->tag->create( array( 'slug' => 'second-tag' ) );
@@ -220,6 +221,14 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 			$this->server->dispatch( $request );
 			$this->view_surrogate_keys[ '/wp-json' . $rest_api_route ] = Emitter::get_rest_api_surrogate_keys();
 		}
+		$current_user_id = get_current_user_id();
+		// Settings route needs an authenticated request.
+		wp_set_current_user( $this->admin_id1 );
+		$rest_api_route = '/wp/v2/settings';
+		$request = new WP_REST_Request( 'GET', $rest_api_route );
+		$this->server->dispatch( $request );
+		$this->view_surrogate_keys[ '/wp-json' . $rest_api_route ] = Emitter::get_rest_api_surrogate_keys();
+		wp_set_current_user( $current_user_id );
 	}
 
 	/**

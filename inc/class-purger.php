@@ -176,4 +176,21 @@ class Purger {
 		pantheon_wp_clear_edge_keys( $keys );
 	}
 
+	/**
+	 * Purge a variety of surrogate keys when an option is modified.
+	 *
+	 * @param string $option Name of the updated option.
+	 */
+	public static function action_updated_option( $option ) {
+		if ( ! function_exists( 'get_registered_settings' ) ) {
+			return;
+		}
+		$settings = get_registered_settings();
+		if ( empty( $settings[ $option ] ) || empty( $settings[ $option ]['show_in_rest'] ) ) {
+			return;
+		}
+		$rest_name = ! empty( $settings[ $option ]['show_in_rest']['name'] ) ? $settings[ $option ]['show_in_rest']['name'] : $option;
+		pantheon_wp_clear_edge_keys( array( 'rest-setting-' . $rest_name ) );
+	}
+
 }

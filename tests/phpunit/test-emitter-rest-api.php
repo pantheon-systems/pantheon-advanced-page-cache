@@ -157,4 +157,31 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		), Emitter::get_rest_api_surrogate_keys() );
 	}
 
+	/**
+	 * Ensure GET /wp/v2/settings emits the expected surrogate keys
+	 */
+	public function test_get_settings() {
+		wp_set_current_user( $this->admin_id1 );
+		$request = new WP_REST_Request( 'GET', '/wp/v2/settings' );
+		$response = $this->server->dispatch( $request );
+		$this->assertCount( 15, $response->get_data() );
+		$this->assertArrayValues( array(
+			'rest-setting-date_format',
+			'rest-setting-default_category',
+			'rest-setting-default_comment_status',
+			'rest-setting-default_ping_status',
+			'rest-setting-default_post_format',
+			'rest-setting-description',
+			'rest-setting-email',
+			'rest-setting-language',
+			'rest-setting-posts_per_page',
+			'rest-setting-start_of_week',
+			'rest-setting-time_format',
+			'rest-setting-timezone',
+			'rest-setting-title',
+			'rest-setting-url',
+			'rest-setting-use_smilies',
+		), Emitter::get_rest_api_surrogate_keys() );
+	}
+
 }
