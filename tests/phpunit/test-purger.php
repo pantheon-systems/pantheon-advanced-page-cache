@@ -29,11 +29,13 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'user-' . $this->user_id1,
 			'term-' . $this->category_id1,
 			'rest-term-' . $this->category_id1,
+			'rest-post-collection',
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
 			'/author/first-user/',
 			'/category/uncategorized/',
+			'/wp-json/wp/v2/posts',
 			'/wp-json/wp/v2/categories',
 			'/wp-json/wp/v2/categories/' . $this->category_id1,
 		) );
@@ -212,6 +214,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'post_date'     => '2016-10-21 12:00',
 			'post_date_gmt' => '2016-10-21 12:00',
 			'post_name'     => 'second-page',
+			'post_type'     => 'page',
 		) );
 		$this->assertClearedKeys( array(
 			'home',
@@ -219,15 +222,12 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'post-' . $this->page_id2,
 			'rest-post-' . $this->page_id2,
 			'user-' . $this->user_id1,
-			'term-' . $this->category_id1,
-			'rest-term-' . $this->category_id1,
+			'rest-page-collection',
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
 			'/author/first-user/',
-			'/category/uncategorized/',
-			'/wp-json/wp/v2/categories',
-			'/wp-json/wp/v2/categories/' . $this->category_id1,
+			'/wp-json/wp/v2/pages',
 		) );
 	}
 
@@ -357,6 +357,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'rest-post-' . $this->product_id3,
 			'term-' . $this->product_category_id1,
 			'rest-term-' . $this->product_category_id1,
+			'rest-product-collection',
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -480,9 +481,12 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'term-' . $this->tag_id3,
 			'rest-term-' . $this->tag_id3,
 			'post-term-' . $this->tag_id3,
+			'rest-post_tag-collection',
 		) );
 		// Hasn't appeared on any views yet.
-		$this->assertPurgedURIs( array() );
+		$this->assertPurgedURIs( array(
+			'/wp-json/wp/v2/tags',
+		) );
 	}
 
 	/**
