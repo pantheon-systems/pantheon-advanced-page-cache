@@ -36,10 +36,7 @@ class Purger {
 			return;
 		}
 		self::purge_post_with_related( $post->ID );
-		// Clear the REST API collection endpoint when a new post is published.
-		if ( 'publish' !== $old_status && 'publish' === $new_status ) {
-			pantheon_wp_clear_edge_keys( array( 'rest-' . $post->post_type . '-collection' ) );
-		}
+		pantheon_wp_clear_edge_keys( array( 'rest-' . $post->post_type . '-collection' ) );
 	}
 
 	/**
@@ -49,6 +46,7 @@ class Purger {
 	 */
 	public static function action_before_delete_post( $post_id ) {
 		self::purge_post_with_related( $post_id );
+		pantheon_wp_clear_edge_keys( array( 'rest-' . get_post_type( $post_id ) . '-collection' ) );
 	}
 
 	/**
@@ -58,6 +56,7 @@ class Purger {
 	 */
 	public static function action_delete_attachment( $post_id ) {
 		self::purge_post_with_related( $post_id );
+		pantheon_wp_clear_edge_keys( array( 'rest-attachment-collection' ) );
 	}
 
 	/**

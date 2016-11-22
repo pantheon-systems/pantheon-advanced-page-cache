@@ -38,6 +38,19 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 	}
 
 	/**
+	 * Ensure GET /wp/v2/posts with no items emits the expected surrogate keys
+	 */
+	public function test_get_posts_no_results() {
+		$request = new WP_REST_Request( 'GET', '/wp/v2/posts' );
+		$request->set_param( 'author', REST_TESTS_IMPOSSIBLY_HIGH_NUMBER );
+		$response = $this->server->dispatch( $request );
+		$this->assertCount( 0, $response->get_data() );
+		$this->assertArrayValues( array(
+			'rest-post-collection',
+		), Emitter::get_rest_api_surrogate_keys() );
+	}
+
+	/**
 	 * Ensure GET /wp/v2/post/<id> emits the expected surrogate keys
 	 */
 	public function test_get_post() {
@@ -73,6 +86,32 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertEquals( $this->page_id1, $data['id'] );
 		$this->assertArrayValues( array(
 			'rest-post-' . $this->page_id1,
+		), Emitter::get_rest_api_surrogate_keys() );
+	}
+
+	/**
+	 * Ensure GET /wp/v2/media emits the expected surrogate keys
+	 */
+	public function test_get_media() {
+		$request = new WP_REST_Request( 'GET', '/wp/v2/media' );
+		$response = $this->server->dispatch( $request );
+		$this->assertCount( 1, $response->get_data() );
+		$this->assertArrayValues( array(
+			'rest-attachment-collection',
+			'rest-post-' . $this->attachment_id1,
+		), Emitter::get_rest_api_surrogate_keys() );
+	}
+
+	/**
+	 * Ensure GET /wp/v2/media emits the expected surrogate keys
+	 */
+	public function test_get_medii() {
+		$request = new WP_REST_Request( 'GET', '/wp/v2/media/' . $this->attachment_id1 );
+		$response = $this->server->dispatch( $request );
+		$data = $response->get_data();
+		$this->assertEquals( $this->attachment_id1, $data['id'] );
+		$this->assertArrayValues( array(
+			'rest-post-' . $this->attachment_id1,
 		), Emitter::get_rest_api_surrogate_keys() );
 	}
 

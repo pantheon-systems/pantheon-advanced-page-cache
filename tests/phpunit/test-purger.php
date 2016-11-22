@@ -38,6 +38,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/wp-json/wp/v2/posts',
 			'/wp-json/wp/v2/categories',
 			'/wp-json/wp/v2/categories/' . $this->category_id1,
+			'/wp-json/wp/v2/posts?author=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER,
 		) );
 	}
 
@@ -59,6 +60,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'rest-term-' . $this->category_id1,
 			'term-' . $this->tag_id2,
 			'rest-term-' . $this->tag_id2,
+			'rest-post-collection',
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -75,6 +77,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/wp-json/wp/v2/tags/' . $this->tag_id2,
 			'/wp-json/wp/v2/posts',
 			'/wp-json/wp/v2/posts/' . $this->post_id1,
+			'/wp-json/wp/v2/posts?author=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER,
 		) );
 	}
 
@@ -117,6 +120,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'rest-term-' . $this->category_id1,
 			'term-' . $this->tag_id2,
 			'rest-term-' . $this->tag_id2,
+			'rest-post-collection',
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -133,6 +137,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/wp-json/wp/v2/tags/' . $this->tag_id2,
 			'/wp-json/wp/v2/posts',
 			'/wp-json/wp/v2/posts/' . $this->post_id1,
+			'/wp-json/wp/v2/posts?author=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER,
 		) );
 	}
 
@@ -151,6 +156,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'rest-term-' . $this->category_id1,
 			'term-' . $this->tag_id2,
 			'rest-term-' . $this->tag_id2,
+			'rest-post-collection',
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -167,6 +173,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/wp-json/wp/v2/tags/' . $this->tag_id2,
 			'/wp-json/wp/v2/posts',
 			'/wp-json/wp/v2/posts/' . $this->post_id1,
+			'/wp-json/wp/v2/posts?author=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER,
 		) );
 	}
 
@@ -185,6 +192,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'rest-term-' . $this->category_id1,
 			'term-' . $this->tag_id2,
 			'rest-term-' . $this->tag_id2,
+			'rest-post-collection',
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -201,6 +209,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/wp-json/wp/v2/tags/' . $this->tag_id2,
 			'/wp-json/wp/v2/posts',
 			'/wp-json/wp/v2/posts/' . $this->post_id1,
+			'/wp-json/wp/v2/posts?author=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER,
 		) );
 	}
 
@@ -228,6 +237,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/',
 			'/author/first-user/',
 			'/wp-json/wp/v2/pages',
+			'/wp-json/wp/v2/pages?parent=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER,
 		) );
 	}
 
@@ -245,6 +255,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'post-' . $this->page_id1,
 			'rest-post-' . $this->page_id1,
 			'user-' . $this->user_id1,
+			'rest-page-collection',
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -252,6 +263,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/first-page/',
 			'/wp-json/wp/v2/pages',
 			'/wp-json/wp/v2/pages/' . $this->page_id1,
+			'/wp-json/wp/v2/pages?parent=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER,
 		) );
 	}
 
@@ -269,6 +281,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'post-' . $this->page_id1,
 			'rest-post-' . $this->page_id1,
 			'user-' . $this->user_id1,
+			'rest-page-collection',
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -276,6 +289,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/first-page/',
 			'/wp-json/wp/v2/pages',
 			'/wp-json/wp/v2/pages/' . $this->page_id1,
+			'/wp-json/wp/v2/pages?parent=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER,
 		) );
 	}
 
@@ -290,6 +304,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'post-' . $this->page_id1,
 			'rest-post-' . $this->page_id1,
 			'user-' . $this->user_id1,
+			'rest-page-collection',
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -297,6 +312,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/first-page/',
 			'/wp-json/wp/v2/pages',
 			'/wp-json/wp/v2/pages/' . $this->page_id1,
+			'/wp-json/wp/v2/pages?parent=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER,
 		) );
 	}
 
@@ -311,6 +327,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'post-' . $this->page_id1,
 			'rest-post-' . $this->page_id1,
 			'user-' . $this->user_id1,
+			'rest-page-collection',
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -318,6 +335,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/first-page/',
 			'/wp-json/wp/v2/pages',
 			'/wp-json/wp/v2/pages/' . $this->page_id1,
+			'/wp-json/wp/v2/pages?parent=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER,
 		) );
 	}
 
@@ -380,6 +398,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'rest-post-' . $this->product_id2,
 			'term-' . $this->product_category_id1,
 			'rest-term-' . $this->product_category_id1,
+			'rest-product-collection',
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -401,6 +420,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'rest-post-' . $this->product_id2,
 			'term-' . $this->product_category_id1,
 			'rest-term-' . $this->product_category_id1,
+			'rest-product-collection',
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -422,6 +442,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'rest-post-' . $this->product_id2,
 			'term-' . $this->product_category_id1,
 			'rest-term-' . $this->product_category_id1,
+			'rest-product-collection',
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -451,24 +472,23 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 	 * Verify deleting an attachment clears expected keys.
 	 */
 	public function test_delete_attachment() {
-		$attachment_id = $this->factory->post->create( array(
-			'post_mime_type' => 'image/jpeg',
-			'post_type'      => 'attachment',
-			'post_author'    => $this->user_id1,
-		) );
-		// Ignore the original insert event.
-		$this->cleared_keys = array();
-		wp_delete_attachment( $attachment_id );
+		$post_name = get_post_field( 'post_name', $this->attachment_id1 );
+		wp_delete_attachment( $this->attachment_id1, true );
 		$this->assertClearedKeys( array(
 			'home',
 			'front',
-			'post-' . $attachment_id,
-			'rest-post-' . $attachment_id,
+			'post-' . $this->attachment_id1,
+			'rest-post-' . $this->attachment_id1,
 			'user-' . $this->user_id1,
+			'rest-attachment-collection',
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
 			'/author/first-user/',
+			'/' . $post_name . '/',
+			'/wp-json/wp/v2/media',
+			'/wp-json/wp/v2/media/' . $this->attachment_id1,
+			'/wp-json/wp/v2/media?parent=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER,
 		) );
 	}
 
