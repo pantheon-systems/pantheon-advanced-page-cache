@@ -112,6 +112,14 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 		) );
 		wp_set_object_terms( $this->product_id2, array( $this->product_category_id1 ), 'product_category' );
 
+		$this->attachment_id1 = $this->factory->post->create( array(
+			'post_mime_type' => 'image/jpeg',
+			'post_type'      => 'attachment',
+			'post_author'    => $this->user_id1,
+			'post_status'    => 'publish',
+			'post_parent'    => 0,
+		) );
+
 		$this->cleared_keys = array();
 		$this->setup_view_surrogate_keys();
 
@@ -202,6 +210,8 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 				$rest_api_routes[] = '/wp/v2/' . $taxonomy_object->rest_base . '/' . $term->term_id;
 			}
 		}
+		$rest_api_routes[] = '/wp/v2/media';
+		$rest_api_routes[] = '/wp/v2/media/' . $this->attachment_id1;
 		$views = array_unique( $views );
 		foreach ( $views as $view ) {
 			$path = parse_url( $view, PHP_URL_PATH );
@@ -221,8 +231,21 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 			$this->server->dispatch( $request );
 			$this->view_surrogate_keys[ '/wp-json' . $rest_api_route ] = Emitter::get_rest_api_surrogate_keys();
 		}
-		$current_user_id = get_current_user_id();
+		// Routes with no items present.
+		$request = new WP_REST_Request( 'GET', '/wp/v2/posts' );
+		$request->set_param( 'author', REST_TESTS_IMPOSSIBLY_HIGH_NUMBER );
+		$this->server->dispatch( $request );
+		$this->view_surrogate_keys[ '/wp-json/wp/v2/posts?author=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER ] = Emitter::get_rest_api_surrogate_keys();
+		$request = new WP_REST_Request( 'GET', '/wp/v2/pages' );
+		$request->set_param( 'parent', REST_TESTS_IMPOSSIBLY_HIGH_NUMBER );
+		$this->server->dispatch( $request );
+		$this->view_surrogate_keys[ '/wp-json/wp/v2/pages?parent=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER ] = Emitter::get_rest_api_surrogate_keys();
+		$request = new WP_REST_Request( 'GET', '/wp/v2/media' );
+		$request->set_param( 'parent', REST_TESTS_IMPOSSIBLY_HIGH_NUMBER );
+		$this->server->dispatch( $request );
+		$this->view_surrogate_keys[ '/wp-json/wp/v2/media?parent=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER ] = Emitter::get_rest_api_surrogate_keys();
 		// Settings route needs an authenticated request.
+		$current_user_id = get_current_user_id();
 		wp_set_current_user( $this->admin_id1 );
 		$rest_api_route = '/wp/v2/settings';
 		$request = new WP_REST_Request( 'GET', $rest_api_route );

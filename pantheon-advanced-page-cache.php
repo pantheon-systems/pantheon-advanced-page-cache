@@ -112,7 +112,7 @@ add_action( 'wp_ajax_pantheon_clear_url_cache', array( 'Pantheon_Advanced_Page_C
  */
 add_filter( 'wp', array( 'Pantheon_Advanced_Page_Cache\Emitter', 'action_wp' ) );
 add_action( 'rest_api_init', array( 'Pantheon_Advanced_Page_Cache\Emitter', 'action_rest_api_init' ) );
-add_filter( 'rest_pre_dispatch', array( 'Pantheon_Advanced_Page_Cache\Emitter', 'filter_rest_pre_dispatch' ) );
+add_filter( 'rest_pre_dispatch', array( 'Pantheon_Advanced_Page_Cache\Emitter', 'filter_rest_pre_dispatch' ), 10, 3 );
 add_filter( 'rest_post_dispatch', array( 'Pantheon_Advanced_Page_Cache\Emitter', 'filter_rest_post_dispatch' ), 10, 2 );
 
 /**

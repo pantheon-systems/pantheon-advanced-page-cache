@@ -71,24 +71,29 @@ class Emitter {
 	public static function action_rest_api_init() {
 		foreach ( get_post_types( array( 'show_in_rest' => true ), 'objects' ) as $post_type ) {
 			add_filter( "rest_prepare_{$post_type->name}", array( __CLASS__, 'filter_rest_prepare_post' ), 10, 3 );
-			self::get_instance()->rest_api_collection_endpoints[ $post_type->name ] = '/wp/v2/' . $post_type->rest_base;
+			self::get_instance()->rest_api_collection_endpoints[ '/wp/v2/' . $post_type->rest_base ] = $post_type->name;
 		}
 		foreach ( get_taxonomies( array( 'show_in_rest' => true ), 'objects' ) as $taxonomy ) {
 			add_filter( "rest_prepare_{$taxonomy->name}", array( __CLASS__, 'filter_rest_prepare_term' ), 10, 3 );
-			self::get_instance()->rest_api_collection_endpoints[ $taxonomy->name ] = '/wp/v2/' . $taxonomy->rest_base;
+			self::get_instance()->rest_api_collection_endpoints[ '/wp/v2/' . $taxonomy->rest_base ] = $taxonomy->name;
 		}
 		add_filter( 'rest_prepare_user', array( __CLASS__, 'filter_rest_prepare_user' ), 10, 3 );
 		add_filter( 'rest_pre_get_setting', array( __CLASS__, 'filter_rest_pre_get_setting' ), 10, 2 );
-		self::get_instance()->rest_api_collection_endpoints['user'] = '/wp/v2/users';
+		self::get_instance()->rest_api_collection_endpoints['/wp/v2/users'] = 'user';
 	}
 
 	/**
 	 * Reset surrogate keys before a REST API response is generated.
 	 *
-	 * @param mixed $result Response to replace the requested version with.
+	 * @param mixed           $result  Response to replace the requested version with.
+	 * @param WP_REST_Server  $server  Server instance.
+	 * @param WP_REST_Request $request Request used to generate the response.
 	 */
-	public static function filter_rest_pre_dispatch( $result ) {
+	public static function filter_rest_pre_dispatch( $result, $server, $request ) {
 		self::get_instance()->rest_api_surrogate_keys = array();
+		if ( isset( self::get_instance()->rest_api_collection_endpoints[ $request->get_route() ] ) ) {
+			self::get_instance()->rest_api_surrogate_keys[] = 'rest-' . self::get_instance()->rest_api_collection_endpoints[ $request->get_route() ] . '-collection';
+		}
 		return $result;
 	}
 
@@ -116,10 +121,6 @@ class Emitter {
 	 */
 	public static function filter_rest_prepare_post( $response, $post, $request ) {
 		self::get_instance()->rest_api_surrogate_keys[] = 'rest-post-' . $post->ID;
-		if ( isset( self::get_instance()->rest_api_collection_endpoints[ $post->post_type ] )
-			&& self::get_instance()->rest_api_collection_endpoints[ $post->post_type ] === $request->get_route() ) {
-			self::get_instance()->rest_api_surrogate_keys[] = 'rest-' . $post->post_type . '-collection';
-		}
 		return $response;
 	}
 
@@ -132,10 +133,6 @@ class Emitter {
 	 */
 	public static function filter_rest_prepare_term( $response, $term, $request ) {
 		self::get_instance()->rest_api_surrogate_keys[] = 'rest-term-' . $term->term_id;
-		if ( isset( self::get_instance()->rest_api_collection_endpoints[ $term->taxonomy ] )
-			&& self::get_instance()->rest_api_collection_endpoints[ $term->taxonomy ] === $request->get_route() ) {
-			self::get_instance()->rest_api_surrogate_keys[] = 'rest-' . $term->taxonomy . '-collection';
-		}
 		return $response;
 	}
 
@@ -148,9 +145,6 @@ class Emitter {
 	 */
 	public static function filter_rest_prepare_user( $response, $user, $request ) {
 		self::get_instance()->rest_api_surrogate_keys[] = 'rest-user-' . $user->ID;
-		if ( self::get_instance()->rest_api_collection_endpoints['user'] === $request->get_route() ) {
-			self::get_instance()->rest_api_surrogate_keys[] = 'rest-user-collection';
-		}
 		return $response;
 	}
 
