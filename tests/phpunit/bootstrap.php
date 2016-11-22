@@ -24,5 +24,9 @@ tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 // Start up the WP testing environment.
 require $_tests_dir . '/includes/bootstrap.php';
 
+if ( ! defined( 'REST_TESTS_IMPOSSIBLY_HIGH_NUMBER' ) ) {
+	define( 'REST_TESTS_IMPOSSIBLY_HIGH_NUMBER', 99999999 );
+}
+
 require dirname( __FILE__ ) . '/class-pantheon-advanced-page-cache-testcase.php';
 require dirname( __FILE__ ) . '/pantheon-edge-functions.php';
