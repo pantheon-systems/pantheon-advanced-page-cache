@@ -112,6 +112,12 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 		) );
 		wp_set_object_terms( $this->product_id2, array( $this->product_category_id1 ), 'product_category' );
 
+		$this->comment_id1 = $this->factory->comment->create( array(
+			'comment_post_ID'  => $this->post_id1,
+			'comment_approved' => 1,
+			'user_id'          => 0,
+		) );
+
 		$this->attachment_id1 = $this->factory->post->create( array(
 			'post_mime_type' => 'image/jpeg',
 			'post_type'      => 'attachment',

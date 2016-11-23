@@ -77,6 +77,8 @@ class Emitter {
 			add_filter( "rest_prepare_{$taxonomy->name}", array( __CLASS__, 'filter_rest_prepare_term' ), 10, 3 );
 			self::get_instance()->rest_api_collection_endpoints[ '/wp/v2/' . $taxonomy->rest_base ] = $taxonomy->name;
 		}
+		add_filter( 'rest_prepare_comment', array( __CLASS__, 'filter_rest_prepare_comment' ), 10, 3 );
+		self::get_instance()->rest_api_collection_endpoints['/wp/v2/comments'] = 'comment';
 		add_filter( 'rest_prepare_user', array( __CLASS__, 'filter_rest_prepare_user' ), 10, 3 );
 		add_filter( 'rest_pre_get_setting', array( __CLASS__, 'filter_rest_pre_get_setting' ), 10, 2 );
 		self::get_instance()->rest_api_collection_endpoints['/wp/v2/users'] = 'user';
@@ -133,6 +135,18 @@ class Emitter {
 	 */
 	public static function filter_rest_prepare_term( $response, $term, $request ) {
 		self::get_instance()->rest_api_surrogate_keys[] = 'rest-term-' . $term->term_id;
+		return $response;
+	}
+
+	/**
+	 * Determine which comments are present in a REST API response.
+	 *
+	 * @param WP_REST_Response $response The response object.
+	 * @param WP_Comment       $comment  The original comment object.
+	 * @param WP_REST_Request  $request  Request used to generate the response.
+	 */
+	public static function filter_rest_prepare_comment( $response, $comment, $request ) {
+		self::get_instance()->rest_api_surrogate_keys[] = 'rest-comment-' . $comment->comment_ID;
 		return $response;
 	}
 

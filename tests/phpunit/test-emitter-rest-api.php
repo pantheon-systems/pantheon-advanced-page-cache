@@ -170,6 +170,45 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 	}
 
 	/**
+	 * Ensure GET /wp/v2/comments emits the expected surrogate keys
+	 */
+	public function test_get_comments() {
+		$request = new WP_REST_Request( 'GET', '/wp/v2/comments' );
+		$response = $this->server->dispatch( $request );
+		$this->assertCount( 1, $response->get_data() );
+		$this->assertArrayValues( array(
+			'rest-comment-collection',
+			'rest-comment-' . $this->comment_id1,
+		), Emitter::get_rest_api_surrogate_keys() );
+	}
+
+	/**
+	 * Ensure GET /wp/v2/comments without results emits the expected surrogate keys
+	 */
+	public function test_get_comments_no_results() {
+		$request = new WP_REST_Request( 'GET', '/wp/v2/comments' );
+		$request->set_param( 'post', REST_TESTS_IMPOSSIBLY_HIGH_NUMBER );
+		$response = $this->server->dispatch( $request );
+		$this->assertCount( 0, $response->get_data() );
+		$this->assertArrayValues( array(
+			'rest-comment-collection',
+		), Emitter::get_rest_api_surrogate_keys() );
+	}
+
+	/**
+	 * Ensure GET /wp/v2/comments/<id> emits the expected surrogate keys
+	 */
+	public function test_get_comment() {
+		$request = new WP_REST_Request( 'GET', '/wp/v2/comments/' . $this->comment_id1 );
+		$response = $this->server->dispatch( $request );
+		$data = $response->get_data();
+		$this->assertEquals( $this->comment_id1, $data['id'] );
+		$this->assertArrayValues( array(
+			'rest-comment-' . $this->comment_id1,
+		), Emitter::get_rest_api_surrogate_keys() );
+	}
+
+	/**
 	 * Ensure GET /wp/v2/users emits the expected surrogate keys
 	 */
 	public function test_get_users() {
