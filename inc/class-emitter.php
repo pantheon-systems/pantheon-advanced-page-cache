@@ -147,6 +147,7 @@ class Emitter {
 	 */
 	public static function filter_rest_prepare_comment( $response, $comment, $request ) {
 		self::get_instance()->rest_api_surrogate_keys[] = 'rest-comment-' . $comment->comment_ID;
+		self::get_instance()->rest_api_surrogate_keys[] = 'rest-comment-post-' . $comment->comment_post_ID;
 		return $response;
 	}
 

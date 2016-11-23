@@ -118,7 +118,7 @@ add_filter( 'rest_post_dispatch', array( 'Pantheon_Advanced_Page_Cache\Emitter',
 /**
  * Clears surrogate tags when various modification behaviors are performed.
  */
-add_action( 'wp_insert_post', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_wp_insert_post' ) );
+add_action( 'wp_insert_post', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_wp_insert_post' ), 10, 2 );
 add_action( 'transition_post_status', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_transition_post_status' ), 10, 3 );
 add_action( 'before_delete_post', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_before_delete_post' ) );
 add_action( 'delete_attachment', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_delete_attachment' ) );

@@ -26,6 +26,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'front',
 			'post-' . $this->post_id5,
 			'rest-post-' . $this->post_id5,
+			'rest-comment-post-' . $this->post_id5,
 			'user-' . $this->user_id1,
 			'term-' . $this->category_id1,
 			'rest-term-' . $this->category_id1,
@@ -55,6 +56,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'front',
 			'post-' . $this->post_id1,
 			'rest-post-' . $this->post_id1,
+			'rest-comment-post-' . $this->post_id1,
 			'user-' . $this->user_id1,
 			'term-' . $this->category_id1,
 			'rest-term-' . $this->category_id1,
@@ -77,6 +79,8 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/wp-json/wp/v2/tags/' . $this->tag_id2,
 			'/wp-json/wp/v2/posts',
 			'/wp-json/wp/v2/posts/' . $this->post_id1,
+			'/wp-json/wp/v2/comments',
+			'/wp-json/wp/v2/comments/' . $this->comment_id1,
 			'/wp-json/wp/v2/posts?author=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER,
 		) );
 	}
@@ -115,6 +119,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'front',
 			'post-' . $this->post_id1,
 			'rest-post-' . $this->post_id1,
+			'rest-comment-post-' . $this->post_id1,
 			'user-' . $this->user_id1,
 			'term-' . $this->category_id1,
 			'rest-term-' . $this->category_id1,
@@ -137,6 +142,8 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/wp-json/wp/v2/tags/' . $this->tag_id2,
 			'/wp-json/wp/v2/posts',
 			'/wp-json/wp/v2/posts/' . $this->post_id1,
+			'/wp-json/wp/v2/comments',
+			'/wp-json/wp/v2/comments/' . $this->comment_id1,
 			'/wp-json/wp/v2/posts?author=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER,
 		) );
 	}
@@ -151,6 +158,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'front',
 			'post-' . $this->post_id1,
 			'rest-post-' . $this->post_id1,
+			'rest-comment-post-' . $this->post_id1,
 			'user-' . $this->user_id1,
 			'term-' . $this->category_id1,
 			'rest-term-' . $this->category_id1,
@@ -173,6 +181,8 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/wp-json/wp/v2/tags/' . $this->tag_id2,
 			'/wp-json/wp/v2/posts',
 			'/wp-json/wp/v2/posts/' . $this->post_id1,
+			'/wp-json/wp/v2/comments',
+			'/wp-json/wp/v2/comments/' . $this->comment_id1,
 			'/wp-json/wp/v2/posts?author=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER,
 		) );
 	}
@@ -187,6 +197,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'front',
 			'post-' . $this->post_id1,
 			'rest-post-' . $this->post_id1,
+			'rest-comment-post-' . $this->post_id1,
 			'user-' . $this->user_id1,
 			'term-' . $this->category_id1,
 			'rest-term-' . $this->category_id1,
@@ -209,6 +220,8 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/wp-json/wp/v2/tags/' . $this->tag_id2,
 			'/wp-json/wp/v2/posts',
 			'/wp-json/wp/v2/posts/' . $this->post_id1,
+			'/wp-json/wp/v2/comments',
+			'/wp-json/wp/v2/comments/' . $this->comment_id1,
 			'/wp-json/wp/v2/posts?author=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER,
 		) );
 	}
@@ -230,6 +243,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'front',
 			'post-' . $this->page_id2,
 			'rest-post-' . $this->page_id2,
+			'rest-comment-post-' . $this->page_id2,
 			'user-' . $this->user_id1,
 			'rest-page-collection',
 		) );
@@ -254,6 +268,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'front',
 			'post-' . $this->page_id1,
 			'rest-post-' . $this->page_id1,
+			'rest-comment-post-' . $this->page_id1,
 			'user-' . $this->user_id1,
 			'rest-page-collection',
 		) );
@@ -280,6 +295,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'front',
 			'post-' . $this->page_id1,
 			'rest-post-' . $this->page_id1,
+			'rest-comment-post-' . $this->page_id1,
 			'user-' . $this->user_id1,
 			'rest-page-collection',
 		) );
@@ -303,6 +319,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'front',
 			'post-' . $this->page_id1,
 			'rest-post-' . $this->page_id1,
+			'rest-comment-post-' . $this->page_id1,
 			'user-' . $this->user_id1,
 			'rest-page-collection',
 		) );
@@ -326,6 +343,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'front',
 			'post-' . $this->page_id1,
 			'rest-post-' . $this->page_id1,
+			'rest-comment-post-' . $this->page_id1,
 			'user-' . $this->user_id1,
 			'rest-page-collection',
 		) );
@@ -479,6 +497,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'front',
 			'post-' . $this->attachment_id1,
 			'rest-post-' . $this->attachment_id1,
+			'rest-comment-post-' . $this->attachment_id1,
 			'user-' . $this->user_id1,
 			'rest-attachment-collection',
 		) );
