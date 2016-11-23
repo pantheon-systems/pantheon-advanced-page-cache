@@ -127,6 +127,7 @@ add_action( 'created_term', array( 'Pantheon_Advanced_Page_Cache\Purger', 'actio
 add_action( 'edited_term', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_edited_term' ) );
 add_action( 'delete_term', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_delete_term' ) );
 add_action( 'clean_term_cache', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_clean_term_cache' ) );
+add_action( 'wp_insert_comment', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_wp_insert_comment' ), 10, 2 );
 add_action( 'transition_comment_status', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_transition_comment_status' ), 10, 3 );
 add_action( 'clean_comment_cache', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_clean_comment_cache' ) );
 add_action( 'clean_user_cache', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_clean_user_cache' ) );

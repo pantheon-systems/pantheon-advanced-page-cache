@@ -119,6 +119,19 @@ class Purger {
 	}
 
 	/**
+	 * Purge surrogate keys when an approved comment is updated.
+	 *
+	 * @param integer    $id      The comment ID.
+	 * @param WP_Comment $comment Comment object.
+	 */
+	public static function action_wp_insert_comment( $id, $comment ) {
+		if ( 1 != $comment->comment_approved ) {
+			return;
+		}
+		pantheon_wp_clear_edge_keys( array( 'rest-comment-' . $comment->comment_ID, 'rest-comment-collection' ) );
+	}
+
+	/**
 	 * Purge surrogate keys when a comment is approved or unapproved.
 	 *
 	 * @param int|string $new_status The new comment status.

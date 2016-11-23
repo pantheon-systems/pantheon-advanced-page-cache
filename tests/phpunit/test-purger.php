@@ -643,6 +643,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		) );
 		$this->assertClearedKeys( array(
 			'rest-comment-' . $this->comment_id2,
+			'rest-comment-collection',
 			'post-' . $this->post_id2,
 			'rest-post-' . $this->post_id2,
 		) );
@@ -656,6 +657,8 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/category/uncategorized/',
 			'/wp-json/wp/v2/posts',
 			'/wp-json/wp/v2/posts/' . $this->post_id2,
+			'/wp-json/wp/v2/comments',
+			'/wp-json/wp/v2/comments?post=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER,
 		) );
 	}
 
