@@ -158,6 +158,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'front',
 			'post-' . $this->post_id1,
 			'rest-post-' . $this->post_id1,
+			'rest-comment-' . $this->comment_id1,
 			'rest-comment-post-' . $this->post_id1,
 			'user-' . $this->user_id1,
 			'term-' . $this->category_id1,
@@ -197,6 +198,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'front',
 			'post-' . $this->post_id1,
 			'rest-post-' . $this->post_id1,
+			'rest-comment-' . $this->comment_id1,
 			'rest-comment-post-' . $this->post_id1,
 			'user-' . $this->user_id1,
 			'term-' . $this->category_id1,
@@ -625,6 +627,128 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/author/first-user/',
 			'/wp-json/wp/v2/users',
 			'/wp-json/wp/v2/users/' . $this->user_id1,
+		) );
+	}
+
+	/**
+	 * Verify creating a comment clears expected keys.
+	 */
+	public function test_create_comment() {
+		$this->comment_id2 = $this->factory->comment->create( array(
+			'comment_post_ID'  => $this->post_id2,
+			'comment_approved' => 1,
+			'user_id'          => 0,
+		) );
+		$this->assertClearedKeys( array(
+			'rest-comment-' . $this->comment_id2,
+			'post-' . $this->post_id2,
+			'rest-post-' . $this->post_id2,
+		) );
+		$this->assertPurgedURIs( array(
+			'/',
+			'/2016/',
+			'/2016/10/',
+			'/2016/10/14/',
+			'/2016/10/14/second-post/',
+			'/author/second-user/',
+			'/category/uncategorized/',
+			'/wp-json/wp/v2/posts',
+			'/wp-json/wp/v2/posts/' . $this->post_id2,
+		) );
+	}
+
+	/**
+	 * Verify updating a comment clears expected keys.
+	 */
+	public function test_update_comment() {
+		wp_update_comment( array(
+			'comment_ID'       => $this->comment_id1,
+			'comment_content'  => 'Pantheon!',
+		) );
+		$this->assertClearedKeys( array(
+			'rest-comment-' . $this->comment_id1,
+			'post-' . $this->post_id1,
+			'rest-post-' . $this->post_id1,
+		) );
+		$this->assertPurgedURIs( array(
+			'/',
+			'/2016/',
+			'/2016/10/',
+			'/2016/10/14/',
+			'/2016/10/14/first-post/',
+			'/author/first-user/',
+			'/category/uncategorized/',
+			'/tag/second-tag/',
+			'/wp-json/wp/v2/posts',
+			'/wp-json/wp/v2/posts/' . $this->post_id1,
+			'/wp-json/wp/v2/comments',
+			'/wp-json/wp/v2/comments/' . $this->comment_id1,
+		) );
+	}
+
+	/**
+	 * Verify trashing a comment clears expected keys
+	 */
+	public function test_trash_comment() {
+		wp_delete_comment( $this->comment_id1, false );
+		$this->assertClearedKeys( array(
+			'rest-comment-' . $this->comment_id1,
+			'post-' . $this->post_id1,
+			'rest-post-' . $this->post_id1,
+		) );
+		$this->assertPurgedURIs( array(
+			'/',
+			'/2016/',
+			'/2016/10/',
+			'/2016/10/14/',
+			'/2016/10/14/first-post/',
+			'/author/first-user/',
+			'/category/uncategorized/',
+			'/tag/second-tag/',
+			'/wp-json/wp/v2/posts',
+			'/wp-json/wp/v2/posts/' . $this->post_id1,
+			'/wp-json/wp/v2/comments',
+			'/wp-json/wp/v2/comments/' . $this->comment_id1,
+		) );
+	}
+
+	/**
+	 * Deleting a comment clears expected keys
+	 */
+	public function test_delete_comment() {
+		wp_delete_comment( $this->comment_id1, true );
+		$this->assertClearedKeys( array(
+			'rest-comment-' . $this->comment_id1,
+			'post-' . $this->post_id1,
+			'rest-post-' . $this->post_id1,
+		) );
+		$this->assertPurgedURIs( array(
+			'/',
+			'/2016/',
+			'/2016/10/',
+			'/2016/10/14/',
+			'/2016/10/14/first-post/',
+			'/author/first-user/',
+			'/category/uncategorized/',
+			'/tag/second-tag/',
+			'/wp-json/wp/v2/posts',
+			'/wp-json/wp/v2/posts/' . $this->post_id1,
+			'/wp-json/wp/v2/comments',
+			'/wp-json/wp/v2/comments/' . $this->comment_id1,
+		) );
+	}
+
+	/**
+	 * Verify calling clean_comment_cache() on a comment clears expected keys.
+	 */
+	public function test_clean_comment_cache() {
+		clean_comment_cache( $this->comment_id1 );
+		$this->assertClearedKeys( array(
+			'rest-comment-' . $this->comment_id1,
+		) );
+		$this->assertPurgedURIs( array(
+			'/wp-json/wp/v2/comments',
+			'/wp-json/wp/v2/comments/' . $this->comment_id1,
 		) );
 	}
 
