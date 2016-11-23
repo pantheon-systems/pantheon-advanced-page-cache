@@ -16,12 +16,13 @@ class Purger {
 	 * Purge surrogate keys associated with a post being updated.
 	 *
 	 * @param integer $post_id ID for the modified post.
+	 * @param object  $post    The post object.
 	 */
-	public static function action_wp_insert_post( $post_id ) {
-		if ( 'publish' !== get_post_status( $post_id ) ) {
+	public static function action_wp_insert_post( $post_id, $post ) {
+		if ( 'publish' !== $post->post_status ) {
 			return;
 		}
-		self::purge_post_with_related( $post_id );
+		self::purge_post_with_related( $post );
 	}
 
 	/**
@@ -35,8 +36,7 @@ class Purger {
 		if ( 'publish' !== $new_status && 'publish' !== $old_status ) {
 			return;
 		}
-		self::purge_post_with_related( $post->ID );
-		pantheon_wp_clear_edge_keys( array( 'rest-' . $post->post_type . '-collection' ) );
+		self::purge_post_with_related( $post );
 	}
 
 	/**
@@ -45,8 +45,8 @@ class Purger {
 	 * @param integer $post_id ID for the post to be deleted.
 	 */
 	public static function action_before_delete_post( $post_id ) {
-		self::purge_post_with_related( $post_id );
-		pantheon_wp_clear_edge_keys( array( 'rest-' . get_post_type( $post_id ) . '-collection' ) );
+		$post = get_post( $post_id );
+		self::purge_post_with_related( $post );
 	}
 
 	/**
@@ -55,8 +55,8 @@ class Purger {
 	 * @param integer $post_id ID for the modified attachment.
 	 */
 	public static function action_delete_attachment( $post_id ) {
-		self::purge_post_with_related( $post_id );
-		pantheon_wp_clear_edge_keys( array( 'rest-attachment-collection' ) );
+		$post = get_post( $post_id );
+		self::purge_post_with_related( $post );
 	}
 
 	/**
@@ -121,31 +121,31 @@ class Purger {
 	/**
 	 * Purge the surrogate keys associated with a post being modified.
 	 *
-	 * @param integer $post_id ID for the modified post.
+	 * @param object $post Object representing the modified post.
 	 */
-	private static function purge_post_with_related( $post_id ) {
-		$type = get_post_type( $post_id );
+	private static function purge_post_with_related( $post ) {
 		// Ignore revisions, which aren't ever displayed on the site.
-		if ( $type && 'revision' === $type ) {
+		if ( 'revision' === $post->post_type ) {
 			return;
 		}
 		$keys = array(
 			'home',
 			'front',
-			'post-' . $post_id,
+			'post-' . $post->ID,
 		);
-		$post = get_post( $post_id );
-		if ( $post ) {
-			if ( post_type_supports( $post->post_type, 'author' ) ) {
-				$keys[] = 'user-' . $post->post_author;
-			}
-			$taxonomies = wp_list_filter( get_object_taxonomies( $post->post_type, 'objects' ), array( 'public' => true ) );
-			foreach ( $taxonomies as $taxonomy ) {
-				$terms = get_the_terms( $post, $taxonomy->name );
-				if ( $terms ) {
-					foreach ( $terms as $term ) {
-						$keys[] = 'term-' . $term->term_id;
-					}
+		$keys[] = 'rest-' . $post->post_type . '-collection';
+		if ( post_type_supports( $post->post_type, 'author' ) ) {
+			$keys[] = 'user-' . $post->post_author;
+		}
+		if ( post_type_supports( $post->post_type, 'comments' ) ) {
+			$keys[] = 'rest-comment-post-' . $post->ID;
+		}
+		$taxonomies = wp_list_filter( get_object_taxonomies( $post->post_type, 'objects' ), array( 'public' => true ) );
+		foreach ( $taxonomies as $taxonomy ) {
+			$terms = get_the_terms( $post, $taxonomy->name );
+			if ( $terms ) {
+				foreach ( $terms as $term ) {
+					$keys[] = 'term-' . $term->term_id;
 				}
 			}
 		}

@@ -218,6 +218,8 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 		}
 		$rest_api_routes[] = '/wp/v2/media';
 		$rest_api_routes[] = '/wp/v2/media/' . $this->attachment_id1;
+		$rest_api_routes[] = '/wp/v2/comments';
+		$rest_api_routes[] = '/wp/v2/comments/' . $this->comment_id1;
 		$views = array_unique( $views );
 		foreach ( $views as $view ) {
 			$path = parse_url( $view, PHP_URL_PATH );
@@ -250,6 +252,10 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 		$request->set_param( 'parent', REST_TESTS_IMPOSSIBLY_HIGH_NUMBER );
 		$this->server->dispatch( $request );
 		$this->view_surrogate_keys[ '/wp-json/wp/v2/media?parent=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER ] = Emitter::get_rest_api_surrogate_keys();
+		$request = new WP_REST_Request( 'GET', '/wp/v2/comments' );
+		$request->set_param( 'post', REST_TESTS_IMPOSSIBLY_HIGH_NUMBER );
+		$this->server->dispatch( $request );
+		$this->view_surrogate_keys[ '/wp-json/wp/v2/comments?post=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER ] = Emitter::get_rest_api_surrogate_keys();
 		// Settings route needs an authenticated request.
 		$current_user_id = get_current_user_id();
 		wp_set_current_user( $this->admin_id1 );

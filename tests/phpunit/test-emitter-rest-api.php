@@ -174,11 +174,13 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function test_get_comments() {
 		$request = new WP_REST_Request( 'GET', '/wp/v2/comments' );
+		$comment = get_comment( $this->comment_id1 );
 		$response = $this->server->dispatch( $request );
 		$this->assertCount( 1, $response->get_data() );
 		$this->assertArrayValues( array(
 			'rest-comment-collection',
 			'rest-comment-' . $this->comment_id1,
+			'rest-comment-post-' . $comment->comment_post_ID,
 		), Emitter::get_rest_api_surrogate_keys() );
 	}
 
@@ -199,12 +201,14 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 	 * Ensure GET /wp/v2/comments/<id> emits the expected surrogate keys
 	 */
 	public function test_get_comment() {
+		$comment = get_comment( $this->comment_id1 );
 		$request = new WP_REST_Request( 'GET', '/wp/v2/comments/' . $this->comment_id1 );
 		$response = $this->server->dispatch( $request );
 		$data = $response->get_data();
 		$this->assertEquals( $this->comment_id1, $data['id'] );
 		$this->assertArrayValues( array(
 			'rest-comment-' . $this->comment_id1,
+			'rest-comment-post-' . $comment->comment_post_ID,
 		), Emitter::get_rest_api_surrogate_keys() );
 	}
 
