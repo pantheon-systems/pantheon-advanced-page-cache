@@ -206,6 +206,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'term-' . $this->tag_id2,
 			'rest-term-' . $this->tag_id2,
 			'rest-post-collection',
+			'rest-comment-collection',
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -224,6 +225,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/wp-json/wp/v2/posts/' . $this->post_id1,
 			'/wp-json/wp/v2/comments',
 			'/wp-json/wp/v2/comments/' . $this->comment_id1,
+			'/wp-json/wp/v2/comments?post=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER,
 			'/wp-json/wp/v2/posts?author=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER,
 		) );
 	}
@@ -695,6 +697,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'rest-comment-' . $this->comment_id1,
 			'post-' . $this->post_id1,
 			'rest-post-' . $this->post_id1,
+			'rest-comment-collection',
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -709,6 +712,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/wp-json/wp/v2/posts/' . $this->post_id1,
 			'/wp-json/wp/v2/comments',
 			'/wp-json/wp/v2/comments/' . $this->comment_id1,
+			'/wp-json/wp/v2/comments?post=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER,
 		) );
 	}
 
@@ -721,6 +725,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'rest-comment-' . $this->comment_id1,
 			'post-' . $this->post_id1,
 			'rest-post-' . $this->post_id1,
+			'rest-comment-collection',
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
@@ -735,6 +740,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/wp-json/wp/v2/posts/' . $this->post_id1,
 			'/wp-json/wp/v2/comments',
 			'/wp-json/wp/v2/comments/' . $this->comment_id1,
+			'/wp-json/wp/v2/comments?post=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER,
 		) );
 	}
 
