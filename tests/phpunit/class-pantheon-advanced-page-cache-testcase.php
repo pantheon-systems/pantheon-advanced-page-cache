@@ -288,7 +288,21 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 	 * @param array $expected Surrogate keys expected to be cleared.
 	 */
 	protected function assertClearedKeys( $expected ) {
-		$this->assertArrayValues( $expected, array_unique( $this->cleared_keys ) );
+		$actual = array_unique( $this->cleared_keys );
+		// Drop rest- surrogate keys when <WP 4.7.
+		if ( version_compare( $GLOBALS['wp_version'], '4.7-alpha', '<' ) ) {
+			foreach ( $expected as $k => $v ) {
+				if ( 0 === stripos( $v, 'rest-' ) ) {
+					unset( $expected[ $k ] );
+				}
+			}
+			foreach ( $actual as $k => $v ) {
+				if ( 0 === stripos( $v, 'rest-' ) ) {
+					unset( $actual[ $k ] );
+				}
+			}
+		}
+		$this->assertArrayValues( $expected, $actual );
 	}
 
 	/**

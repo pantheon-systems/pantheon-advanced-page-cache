@@ -119,6 +119,39 @@ class Purger {
 	}
 
 	/**
+	 * Purge surrogate keys when an approved comment is updated.
+	 *
+	 * @param integer    $id      The comment ID.
+	 * @param WP_Comment $comment Comment object.
+	 */
+	public static function action_wp_insert_comment( $id, $comment ) {
+		if ( 1 != $comment->comment_approved ) {
+			return;
+		}
+		pantheon_wp_clear_edge_keys( array( 'rest-comment-' . $comment->comment_ID, 'rest-comment-collection' ) );
+	}
+
+	/**
+	 * Purge surrogate keys when a comment is approved or unapproved.
+	 *
+	 * @param int|string $new_status The new comment status.
+	 * @param int|string $old_status The old comment status.
+	 * @param object     $comment    The comment data.
+	 */
+	public static function action_transition_comment_status( $new_status, $old_status, $comment ) {
+		pantheon_wp_clear_edge_keys( array( 'rest-comment-' . $comment->comment_ID, 'rest-comment-collection' ) );
+	}
+
+	/**
+	 * Purge the comment's surrogate key when the comment is modified.
+	 *
+	 * @param integer $comment_id Modified comment id.
+	 */
+	public static function action_clean_comment_cache( $comment_id ) {
+		pantheon_wp_clear_edge_keys( array( 'rest-comment-' . $comment_id ) );
+	}
+
+	/**
 	 * Purge the surrogate keys associated with a post being modified.
 	 *
 	 * @param object $post Object representing the modified post.
