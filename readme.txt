@@ -1,11 +1,13 @@
 === Pantheon Advanced Page Cache ===
-Contributors: (this should be a list of wordpress.org userid's)
-Tags: pantheon
+Contributors: getpantheon, danielbachhuber
+Tags: pantheon, cdn, cache
 Requires at least: 4.4
-Tested up to: 4.6.1
-Stable tag: 0.0.0
+Tested up to: 4.7
+Stable tag: 0.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+Automatically clear related pages from Pantheon's Edge when you update content. High TTL. Fresh content. Visitors never wait.
 
 == Description ==
 
@@ -16,7 +18,7 @@ For sites wanting fine-grained control over how their responses are represented 
 1. When a response is generated, the plugin uses surrogate keys to "tag" the response with identifers for the data used in the response.
 2. When WordPress data is modified, the plugin triggers a purge request for the data's corresponding surrogate keys.
 
-Because of its surrogate key technology, Pantheon Advanced Page Cache empowers WordPress sites with a significantly more accurate cache purge mechanism, and generally higher cache hit rate.
+Because of its surrogate key technology, Pantheon Advanced Page Cache empowers WordPress sites with a significantly more accurate cache purge mechanism, and generally higher cache hit rate. It even works with the WordPress REST API.
 
 Go forth and make awesome! And, once you've built something great, [send us feature requests (or bug reports)](https://github.com/pantheon-systems/pantheon-advanced-page-cache/issues).
 
@@ -220,5 +222,5 @@ Different WordPress actions cause different surrogate keys to be purged, documen
 
 == Changelog ==
 
-= 0.1.0 (??? ??, ????) =
+= 0.1.0 (November 23rd, 2016) =
 * Initial release.
