@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name:     Pantheon Advanced Page Cache
- * Plugin URI:      PLUGIN SITE HERE
- * Description:     PLUGIN DESCRIPTION HERE
+ * Plugin URI:      https://wordpress.org/plugins/pantheon-advanced-page-cache/
+ * Description:     Automatically clear related pages from Pantheon's Edge when you update content. High TTL. Fresh content. Visitors never wait.
  * Author:          Pantheon
  * Author URI:      https://pantheon.io
  * Text Domain:     pantheon-advanced-page-cache
