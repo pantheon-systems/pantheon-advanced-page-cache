@@ -103,7 +103,6 @@ spl_autoload_register( function( $class ) {
 /**
  * Registers relevant UI
  */
-add_action( 'pantheon_cache_settings_page_bottom', array( 'Pantheon_Advanced_Page_Cache\User_Interface', 'action_pantheon_cache_settings_page_bottom' ) );
 add_action( 'admin_bar_menu', array( 'Pantheon_Advanced_Page_Cache\User_Interface', 'action_admin_bar_menu' ), 99 ); // End of the stack.
 add_action( 'wp_ajax_pantheon_clear_url_cache', array( 'Pantheon_Advanced_Page_Cache\User_Interface', 'handle_ajax_clear_url_cache' ) );
 
