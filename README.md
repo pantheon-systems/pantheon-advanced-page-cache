@@ -3,7 +3,7 @@
 **Tags:** pantheon, cdn, cache  
 **Requires at least:** 4.4  
 **Tested up to:** 4.7  
-**Stable tag:** 0.1.0  
+**Stable tag:** 0.1.1  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -221,6 +221,9 @@ Different WordPress actions cause different surrogate keys to be purged, documen
 * Affected views: REST API resource endpoint
 
 ## Changelog ##
+
+### 0.1.1 (November 30th, 2016) ###
+* Drops settings UI in favor of including it in Pantheon's WordPress upstream.
 
 ### 0.1.0 (November 23rd, 2016) ###
 * Initial release.
