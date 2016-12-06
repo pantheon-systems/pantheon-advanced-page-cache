@@ -18,7 +18,7 @@ class User_Interface {
 	 * @param object $wp_admin_bar Instance of WP_Admin_Bar.
 	 */
 	public static function action_admin_bar_menu( $wp_admin_bar ) {
-		if ( is_admin() || ! is_user_logged_in() || ! current_user_can( 'delete_others_posts' ) ) {
+		if ( is_admin() || ! is_user_logged_in() || ! ( current_user_can( 'delete_others_posts' ) || current_user_can( 'manage_options' ) ) ) {
 			return;
 		}
 

@@ -243,6 +243,9 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 	 * Ensure GET /wp/v2/settings emits the expected surrogate keys
 	 */
 	public function test_get_settings() {
+		if ( is_multisite() ) {
+			$this->markTestSkipped( 'Test only applicable on single site.' );
+		}
 		wp_set_current_user( $this->admin_id1 );
 		$request = new WP_REST_Request( 'GET', '/wp/v2/settings' );
 		$response = $this->server->dispatch( $request );
