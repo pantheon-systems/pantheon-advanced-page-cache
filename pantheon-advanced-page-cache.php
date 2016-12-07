@@ -7,7 +7,7 @@
  * Author URI:      https://pantheon.io
  * Text Domain:     pantheon-advanced-page-cache
  * Domain Path:     /languages
- * Version:         0.1.1
+ * Version:         0.1.2
  *
  * @package         Pantheon_Advanced_Page_Cache
  */
