@@ -271,14 +271,16 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 	 */
 	private function register_custom_types() {
 		register_post_type( 'product', array(
-			'public'      => true,
-			'has_archive' => 'products',
+			'public'       => true,
+			'has_archive'  => 'products',
+			'show_in_rest' => true,
 		) );
 		register_taxonomy( 'product_category', array( 'product' ), array(
 			'public'  => true,
 			'rewrite' => array(
 				'slug'    => 'product-category',
 			),
+			'show_in_rest' => true,
 		) );
 	}
 
