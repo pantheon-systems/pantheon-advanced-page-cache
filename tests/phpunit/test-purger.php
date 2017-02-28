@@ -402,6 +402,9 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs( array(
 			'/',
 			'/product-category/first-product-category/',
+			'/wp-json/wp/v2/product',
+			'/wp-json/wp/v2/product_category',
+			'/wp-json/wp/v2/product_category/' . $this->product_category_id1,
 		) );
 	}
 
@@ -427,6 +430,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/products/',
 			'/product/second-product/',
 			'/product-category/first-product-category/',
+			'/wp-json/wp/v2/product',
+			'/wp-json/wp/v2/product/' . $this->product_id2,
+			'/wp-json/wp/v2/product_category',
+			'/wp-json/wp/v2/product_category/' . $this->product_category_id1,
 		) );
 	}
 
@@ -449,6 +456,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/products/',
 			'/product/second-product/',
 			'/product-category/first-product-category/',
+			'/wp-json/wp/v2/product',
+			'/wp-json/wp/v2/product/' . $this->product_id2,
+			'/wp-json/wp/v2/product_category',
+			'/wp-json/wp/v2/product_category/' . $this->product_category_id1,
 		) );
 	}
 
@@ -471,6 +482,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/products/',
 			'/product/second-product/',
 			'/product-category/first-product-category/',
+			'/wp-json/wp/v2/product',
+			'/wp-json/wp/v2/product/' . $this->product_id2,
+			'/wp-json/wp/v2/product_category',
+			'/wp-json/wp/v2/product_category/' . $this->product_category_id1,
 		) );
 	}
 
@@ -487,6 +502,8 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'/product-category/second-product-category/',
 			'/product/first-product/',
 			'/products/',
+			'/wp-json/wp/v2/product',
+			'/wp-json/wp/v2/product/' . $this->product_id1,
 		) );
 	}
 
@@ -613,6 +630,8 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		) );
 		$this->assertPurgedURIs( array(
 			'/product-category/first-product-category/',
+			'/wp-json/wp/v2/product_category',
+			'/wp-json/wp/v2/product_category/' . $this->product_category_id1,
 		) );
 	}
 
