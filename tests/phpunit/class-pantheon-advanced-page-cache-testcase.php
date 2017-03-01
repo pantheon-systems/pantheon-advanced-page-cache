@@ -193,8 +193,9 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 			$views[] = get_permalink( $post->ID );
 			$post_type_object = get_post_type_object( $post->post_type );
 			if ( ! empty( $post_type_object->show_in_rest ) ) {
-				$rest_api_routes[] = '/wp/v2/' . $post_type_object->rest_base;
-				$rest_api_routes[] = '/wp/v2/' . $post_type_object->rest_base . '/' . $post->ID;
+				$base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
+				$rest_api_routes[] = '/wp/v2/' . $base;
+				$rest_api_routes[] = '/wp/v2/' . $base . '/' . $post->ID;
 			}
 		}
 		$users = get_users( array(
@@ -212,8 +213,9 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 			$views[] = get_term_link( $term );
 			$taxonomy_object = get_taxonomy( $term->taxonomy );
 			if ( ! empty( $taxonomy_object->show_in_rest ) ) {
-				$rest_api_routes[] = '/wp/v2/' . $taxonomy_object->rest_base;
-				$rest_api_routes[] = '/wp/v2/' . $taxonomy_object->rest_base . '/' . $term->term_id;
+				$base = ! empty( $taxonomy_object->rest_base ) ? $taxonomy_object->rest_base : $taxonomy_object->name;
+				$rest_api_routes[] = '/wp/v2/' . $base;
+				$rest_api_routes[] = '/wp/v2/' . $base . '/' . $term->term_id;
 			}
 		}
 		$rest_api_routes[] = '/wp/v2/media';
@@ -271,14 +273,16 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 	 */
 	private function register_custom_types() {
 		register_post_type( 'product', array(
-			'public'      => true,
-			'has_archive' => 'products',
+			'public'       => true,
+			'has_archive'  => 'products',
+			'show_in_rest' => true,
 		) );
 		register_taxonomy( 'product_category', array( 'product' ), array(
 			'public'  => true,
 			'rewrite' => array(
 				'slug'    => 'product-category',
 			),
+			'show_in_rest' => true,
 		) );
 	}
 
