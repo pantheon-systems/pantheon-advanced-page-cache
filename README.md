@@ -2,8 +2,8 @@
 **Contributors:** getpantheon, danielbachhuber  
 **Tags:** pantheon, cdn, cache  
 **Requires at least:** 4.7  
-**Tested up to:** 4.7  
-**Stable tag:** 0.1.2  
+**Tested up to:** 4.7.4  
+**Stable tag:** 0.1.3  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -221,6 +221,9 @@ Different WordPress actions cause different surrogate keys to be purged, documen
 * Affected views: REST API resource endpoint
 
 ## Changelog ##
+
+### 0.1.3 (March 1st, 2017) ###
+* Prevents error notices by only accessing `$rest_base` property of post types and taxonomies when set.
 
 ### 0.1.2 (December 6th, 2016) ###
 * Permits admins to flush cache for a specific page if the `delete_others_posts` capability has been deleted.
