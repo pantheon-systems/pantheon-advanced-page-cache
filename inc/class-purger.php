@@ -164,6 +164,7 @@ class Purger {
 		$keys = array(
 			'home',
 			'front',
+			'feed',
 			'post-' . $post->ID,
 		);
 		$keys[] = 'rest-' . $post->post_type . '-collection';

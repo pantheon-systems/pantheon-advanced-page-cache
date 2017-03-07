@@ -195,6 +195,9 @@ class Emitter {
 		if ( is_home() ) {
 			$keys[] = 'home';
 		}
+		if ( is_feed() ) {
+			$keys[] = 'feed';
+		}
 		if ( is_date() ) {
 			$keys[] = 'date';
 		}

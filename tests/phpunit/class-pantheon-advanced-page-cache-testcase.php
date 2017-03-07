@@ -182,6 +182,7 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 			'/2015/10/', // Month archive without posts.
 			'/2016/', // Year archive with posts.
 			'/2015/', // Year archive without posts.
+			'/feed/', // Basic RSS feed.
 		);
 		$rest_api_routes = array();
 		$posts = get_posts( array(
