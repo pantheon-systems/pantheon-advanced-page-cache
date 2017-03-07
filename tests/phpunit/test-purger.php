@@ -698,6 +698,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
+			'/feed/',
 			'/2016/',
 			'/2016/10/',
 			'/2016/10/14/',
@@ -726,6 +727,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
+			'/feed/',
 			'/2016/',
 			'/2016/10/',
 			'/2016/10/14/',
@@ -753,6 +755,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
+			'/feed/',
 			'/2016/',
 			'/2016/10/',
 			'/2016/10/14/',
@@ -781,6 +784,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		) );
 		$this->assertPurgedURIs( array(
 			'/',
+			'/feed/',
 			'/2016/',
 			'/2016/10/',
 			'/2016/10/14/',
