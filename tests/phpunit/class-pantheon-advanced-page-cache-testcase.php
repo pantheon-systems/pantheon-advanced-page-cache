@@ -36,13 +36,29 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 
 		$this->setup_permalink_structure();
 
-		$this->user_id1 = $this->factory->user->create( array( 'role' => 'author', 'user_nicename' => 'first-user' ) );
-		$this->user_id2 = $this->factory->user->create( array( 'role' => 'author', 'user_nicename' => 'second-user' ) );
-		$this->user_id3 = $this->factory->user->create( array( 'role' => 'author', 'user_nicename' => 'third-user' ) );
-		$this->admin_id1 = $this->factory->user->create( array( 'role' => 'administrator', 'user_nicename' => 'first-admin' ) );
+		$this->user_id1 = $this->factory->user->create( array(
+			'role' => 'author',
+			'user_nicename' => 'first-user',
+		) );
+		$this->user_id2 = $this->factory->user->create( array(
+			'role' => 'author',
+			'user_nicename' => 'second-user',
+		) );
+		$this->user_id3 = $this->factory->user->create( array(
+			'role' => 'author',
+			'user_nicename' => 'third-user',
+		) );
+		$this->admin_id1 = $this->factory->user->create( array(
+			'role' => 'administrator',
+			'user_nicename' => 'first-admin',
+		) );
 
-		$this->tag_id1 = $this->factory->tag->create( array( 'slug' => 'first-tag' ) );
-		$this->tag_id2 = $this->factory->tag->create( array( 'slug' => 'second-tag' ) );
+		$this->tag_id1 = $this->factory->tag->create( array(
+			'slug' => 'first-tag',
+		) );
+		$this->tag_id2 = $this->factory->tag->create( array(
+			'slug' => 'second-tag',
+		) );
 		$this->category_id1 = 1; // This is the default 'uncategorized' category.
 		$this->category_id2 = $this->factory->category->create( array(
 			'slug' => 'second-category',
@@ -163,7 +179,8 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 	 * Sets up the REST API server object
 	 */
 	protected function setup_rest_api_server() {
-		$this->server = $GLOBALS['wp_rest_server'] = new Spy_REST_Server;
+		$GLOBALS['wp_rest_server'] = new Spy_REST_Server;
+		$this->server = $GLOBALS['wp_rest_server'];
 		do_action( 'rest_api_init' );
 	}
 
@@ -226,7 +243,8 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 		$views = array_unique( $views );
 		foreach ( $views as $view ) {
 			$path = parse_url( $view, PHP_URL_PATH );
-			if ( $query = parse_url( $view, PHP_URL_QUERY ) ) {
+			$query = parse_url( $view, PHP_URL_QUERY )
+			if ( $query ) {
 				$path .= '?' . $query;
 			}
 			$this->go_to( $view );

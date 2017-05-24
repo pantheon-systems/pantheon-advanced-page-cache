@@ -69,12 +69,16 @@ class Emitter {
 	 * Register filters to sniff surrogate keys out of REST API responses.
 	 */
 	public static function action_rest_api_init() {
-		foreach ( get_post_types( array( 'show_in_rest' => true ), 'objects' ) as $post_type ) {
+		foreach ( get_post_types( array(
+			'show_in_rest' => true,
+		), 'objects' ) as $post_type ) {
 			add_filter( "rest_prepare_{$post_type->name}", array( __CLASS__, 'filter_rest_prepare_post' ), 10, 3 );
 			$base = ! empty( $post_type->rest_base ) ? $post_type->rest_base : $post_type->name;
 			self::get_instance()->rest_api_collection_endpoints[ '/wp/v2/' . $base ] = $post_type->name;
 		}
-		foreach ( get_taxonomies( array( 'show_in_rest' => true ), 'objects' ) as $taxonomy ) {
+		foreach ( get_taxonomies( array(
+			'show_in_rest' => true,
+		), 'objects' ) as $taxonomy ) {
 			add_filter( "rest_prepare_{$taxonomy->name}", array( __CLASS__, 'filter_rest_prepare_term' ), 10, 3 );
 			$base = ! empty( $taxonomy->rest_base ) ? $taxonomy->rest_base : $taxonomy->name;
 			self::get_instance()->rest_api_collection_endpoints[ '/wp/v2/' . $base ] = $taxonomy->name;
@@ -242,11 +246,13 @@ class Emitter {
 			if ( is_post_type_archive() ) {
 				$keys[] = 'post-type-archive';
 			} elseif ( is_author() ) {
-				if ( $user_id = get_queried_object_id() ) {
+				$user_id = get_queried_object_id();
+				if ( $user_id ) {
 					$keys[] = 'user-' . $user_id;
 				}
 			} elseif ( is_category() || is_tag() || is_tax() ) {
-				if ( $term_id = get_queried_object_id() ) {
+				$term_id = get_queried_object_id();
+				if ( $term_id ) {
 					$keys[] = 'term-' . $term_id;
 				}
 			}

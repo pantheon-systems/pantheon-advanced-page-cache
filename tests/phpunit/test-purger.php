@@ -566,7 +566,9 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 	 * Verify creating a new term clears expected keys.
 	 */
 	public function test_create_term() {
-		$this->tag_id3 = $this->factory->tag->create( array( 'slug' => 'third-tag' ) );
+		$this->tag_id3 = $this->factory->tag->create( array(
+			'slug' => 'third-tag',
+		) );
 		$this->assertClearedKeys( array(
 			'term-' . $this->tag_id3,
 			'rest-term-' . $this->tag_id3,
