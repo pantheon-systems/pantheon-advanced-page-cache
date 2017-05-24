@@ -258,6 +258,11 @@ class Emitter {
 			}
 		}
 
+		// Don't emit surrogate keys in the admin, unless defined by the filter.
+		if ( is_admin() ) {
+			$keys = array();
+		}
+
 		/**
 		 * Customize surrogate keys sent in the header.
 		 *
