@@ -243,7 +243,7 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 		$views = array_unique( $views );
 		foreach ( $views as $view ) {
 			$path = parse_url( $view, PHP_URL_PATH );
-			$query = parse_url( $view, PHP_URL_QUERY )
+			$query = parse_url( $view, PHP_URL_QUERY );
 			if ( $query ) {
 				$path .= '?' . $query;
 			}
