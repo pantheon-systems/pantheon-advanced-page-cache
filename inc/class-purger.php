@@ -174,7 +174,9 @@ class Purger {
 		if ( post_type_supports( $post->post_type, 'comments' ) ) {
 			$keys[] = 'rest-comment-post-' . $post->ID;
 		}
-		$taxonomies = wp_list_filter( get_object_taxonomies( $post->post_type, 'objects' ), array( 'public' => true ) );
+		$taxonomies = wp_list_filter( get_object_taxonomies( $post->post_type, 'objects' ), array(
+			'public' => true,
+		) );
 		foreach ( $taxonomies as $taxonomy ) {
 			$terms = get_the_terms( $post, $taxonomy->name );
 			if ( $terms ) {
