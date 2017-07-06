@@ -82,7 +82,7 @@ class Purger {
 	 */
 	public static function action_created_term( $term_id, $tt_id, $taxonomy ) {
 		self::purge_term( $term_id );
-		pantheon_wp_clear_edge_keys( array( 'rest-' . $taxonomy . '-collection', 'rest-' . $taxonomy . '-huge' ) );
+		pantheon_wp_clear_edge_keys( array( 'rest-' . $taxonomy . '-collection' ) );
 	}
 
 	/**
