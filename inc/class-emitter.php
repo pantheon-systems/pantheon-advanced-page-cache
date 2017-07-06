@@ -39,7 +39,7 @@ class Emitter {
 	 * @var string
 	 */
 	const HEADER_KEY = 'Surrogate-Key';
-	
+
 	/**
 	 * Maximum header length.
 	 *
@@ -303,7 +303,7 @@ class Emitter {
 		$keys = self::filter_huge_surrogate_keys_list( $keys );
 		return $keys;
 	}
-	
+
 	/**
 	 * Filter the surrogate keys to ensure that the length doesn't exceed what nginx can handle.
 	 *
@@ -316,15 +316,15 @@ class Emitter {
 		if ( strlen( $output ) <= self::HEADER_MAX_LENGTH ) {
 			return $keys;
 		}
-		
+
 		$keycats = array();
 		foreach ( $keys as $k ) {
 			$cat = substr( $k, 0, strrpos( $k, '-' ) + 1 );
-			$keycats[$cat][] = $k;
+			$keycats[ $cat ][] = $k;
 		}
-		
-		// Sort by how long the keyset is
-		uasort( $keycats, function( $a, $b ) { 
+
+		// Sort by the output length of the key category.
+		uasort( $keycats, function( $a, $b ) {
 			$ca = strlen( implode( ' ', $a ) );
 			$cb = strlen( implode( ' ', $b ) );
 			if ( $ca === $cb ) {
@@ -332,10 +332,10 @@ class Emitter {
 			}
 			return $ca > $cb ? -1 : 1;
 		});
-		
+
 		$cats = array_keys( $keycats );
 		foreach ( $cats as $c ) {
-			$keycats[$c] = array( $c . 'huge' );
+			$keycats[ $c ] = array( $c . 'huge' );
 			$keyout = array();
 			foreach ( $keycats as $v ) {
 				$keyout = array_merge( $keyout, $v );
@@ -345,7 +345,7 @@ class Emitter {
 				return $keyout;
 			}
 		}
-		
+
 		return $keyout;
 	}
 }
