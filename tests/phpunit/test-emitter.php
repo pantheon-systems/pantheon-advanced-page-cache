@@ -261,7 +261,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 			'post-term-1',
 			'post-term-5',
 		);
-		for ( $i = 1000; $i < 2000 ; $i++ ) {
+		for ( $i = 1; $i < ( Pantheon_Advanced_Page_Cache\Emitter::HEADER_MAX_LENGTH / 6) ; $i++ ) {
 			$keys[] = 'post-' . $i;
 		}
 		$this->assertArrayValues( array( 'post-huge', 'post-term-1', 'post-term-5', 'post' ), Pantheon_Advanced_Page_Cache\Emitter::filter_huge_surrogate_keys_list( $keys ) );

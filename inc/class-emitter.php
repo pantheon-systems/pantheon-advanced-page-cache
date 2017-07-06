@@ -45,7 +45,7 @@ class Emitter {
 	 *
 	 * @var integer
 	 */
-	const HEADER_MAX_LENGTH = 4096;
+	const HEADER_MAX_LENGTH = 32512;  // 32k output buffer default on nginx, minus 256 for header name.
 
 	/**
 	 * Get a copy of the current instance.
@@ -321,7 +321,7 @@ class Emitter {
 		foreach ( $keys as $k ) {
 			$p = strrpos( $k, '-' );
 			if ( false === $p ) {
-				$keyscats[ $k ][] = $k;
+				$keycats[ $k ][] = $k;
 				continue;
 			}
 			$cat = substr( $k, 0, $p + 1 );
