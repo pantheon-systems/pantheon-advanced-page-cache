@@ -319,7 +319,12 @@ class Emitter {
 
 		$keycats = array();
 		foreach ( $keys as $k ) {
-			$cat = substr( $k, 0, strrpos( $k, '-' ) + 1 );
+			$p = strrpos( $k, '-' );
+			if ( false === $p ) {
+				$keyscats[ $k ][] = $k;
+				continue;
+			}
+			$cat = substr( $k, 0, $p + 1 );
 			$keycats[ $cat ][] = $k;
 		}
 
