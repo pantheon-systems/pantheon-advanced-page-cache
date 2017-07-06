@@ -70,7 +70,7 @@ class Purger {
 		if ( $type && 'revision' === $type ) {
 			return;
 		}
-		pantheon_wp_clear_edge_keys( array( 'post-' . $post_id, 'rest-post-' . $post_id ) );
+		pantheon_wp_clear_edge_keys( array( 'post-' . $post_id, 'rest-post-' . $post_id, 'post-huge', 'rest-post-huge' ) );
 	}
 
 	/**
@@ -82,7 +82,7 @@ class Purger {
 	 */
 	public static function action_created_term( $term_id, $tt_id, $taxonomy ) {
 		self::purge_term( $term_id );
-		pantheon_wp_clear_edge_keys( array( 'rest-' . $taxonomy . '-collection' ) );
+		pantheon_wp_clear_edge_keys( array( 'rest-' . $taxonomy . '-collection', 'rest-' . $taxonomy . '-huge' ) );
 	}
 
 	/**
@@ -115,6 +115,8 @@ class Purger {
 			$keys[] = 'term-' . $term_id;
 			$keys[] = 'rest-term-' . $term_id;
 		}
+		$keys[] = 'term-huge';
+		$keys[] = 'rest-term-huge';
 		pantheon_wp_clear_edge_keys( $keys );
 	}
 
@@ -128,7 +130,7 @@ class Purger {
 		if ( 1 != $comment->comment_approved ) {
 			return;
 		}
-		pantheon_wp_clear_edge_keys( array( 'rest-comment-' . $comment->comment_ID, 'rest-comment-collection' ) );
+		pantheon_wp_clear_edge_keys( array( 'rest-comment-' . $comment->comment_ID, 'rest-comment-collection', 'rest-comment-huge' ) );
 	}
 
 	/**
@@ -139,7 +141,7 @@ class Purger {
 	 * @param object     $comment    The comment data.
 	 */
 	public static function action_transition_comment_status( $new_status, $old_status, $comment ) {
-		pantheon_wp_clear_edge_keys( array( 'rest-comment-' . $comment->comment_ID, 'rest-comment-collection' ) );
+		pantheon_wp_clear_edge_keys( array( 'rest-comment-' . $comment->comment_ID, 'rest-comment-collection', 'rest-comment-huge' ) );
 	}
 
 	/**
@@ -148,7 +150,7 @@ class Purger {
 	 * @param integer $comment_id Modified comment id.
 	 */
 	public static function action_clean_comment_cache( $comment_id ) {
-		pantheon_wp_clear_edge_keys( array( 'rest-comment-' . $comment_id ) );
+		pantheon_wp_clear_edge_keys( array( 'rest-comment-' . $comment_id, 'rest-comment-huge' ) );
 	}
 
 	/**
@@ -166,13 +168,16 @@ class Purger {
 			'front',
 			'feed',
 			'post-' . $post->ID,
+			'post-huge',
 		);
 		$keys[] = 'rest-' . $post->post_type . '-collection';
 		if ( post_type_supports( $post->post_type, 'author' ) ) {
 			$keys[] = 'user-' . $post->post_author;
+			$keys[] = 'user-huge';
 		}
 		if ( post_type_supports( $post->post_type, 'comments' ) ) {
 			$keys[] = 'rest-comment-post-' . $post->ID;
+			$keys[] = 'rest-comment-post-huge';
 		}
 		$taxonomies = wp_list_filter( get_object_taxonomies( $post->post_type, 'objects' ), array(
 			'public' => true,
@@ -183,6 +188,7 @@ class Purger {
 				foreach ( $terms as $term ) {
 					$keys[] = 'term-' . $term->term_id;
 				}
+				$keys[] = 'term-huge';
 			}
 		}
 		pantheon_wp_clear_edge_keys( $keys );
@@ -194,7 +200,7 @@ class Purger {
 	 * @param integer $term_id ID for the modified term.
 	 */
 	private static function purge_term( $term_id ) {
-		pantheon_wp_clear_edge_keys( array( 'term-' . $term_id, 'rest-term-' . $term_id, 'post-term-' . $term_id ) );
+		pantheon_wp_clear_edge_keys( array( 'term-' . $term_id, 'rest-term-' . $term_id, 'post-term-' . $term_id, 'term-huge', 'rest-term-huge', 'post-term-huge' ) );
 	}
 
 
@@ -207,6 +213,8 @@ class Purger {
 		$keys = array(
 			'user-' . $user_id,
 			'rest-user-' . $user_id,
+			'user-huge',
+			'rest-user-huge',
 		);
 		pantheon_wp_clear_edge_keys( $keys );
 	}
@@ -225,7 +233,7 @@ class Purger {
 			return;
 		}
 		$rest_name = ! empty( $settings[ $option ]['show_in_rest']['name'] ) ? $settings[ $option ]['show_in_rest']['name'] : $option;
-		pantheon_wp_clear_edge_keys( array( 'rest-setting-' . $rest_name ) );
+		pantheon_wp_clear_edge_keys( array( 'rest-setting-' . $rest_name, 'rest-setting-huge' ) );
 	}
 
 }
