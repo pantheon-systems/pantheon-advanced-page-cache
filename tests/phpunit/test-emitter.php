@@ -237,4 +237,34 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		), Emitter::get_main_query_surrogate_keys() );
 	}
 
+	/**
+	 * Assert expected surrogate keys for filtering a small list of keys
+	 */
+	public function test_filter_huge_surrogate_keys_list_smalllist() {
+		$keys = array(
+			'post',
+			'post-term-1',
+			'post-term-5',
+		);
+		for ( $i = 1000; $i < 25 ; $i++ ) {
+			$keys[] = 'post-' . $i;
+		}
+		$this->assertArrayValues( $keys, Pantheon_Advanced_Page_Cache\Emitter::filter_huge_surrogate_keys_list( $keys ) );
+	}
+
+	/**
+	 * Assert expected surrogate keys for filtering a huge list of keys
+	 */
+	public function test_filter_huge_surrogate_keys_list_largelist() {
+		$keys = array(
+			'post',
+			'post-term-1',
+			'post-term-5',
+		);
+		for ( $i = 1; $i < ( Pantheon_Advanced_Page_Cache\Emitter::HEADER_MAX_LENGTH / 6) ; $i++ ) {
+			$keys[] = 'post-' . $i;
+		}
+		$this->assertArrayValues( array( 'post-huge', 'post-term-1', 'post-term-5', 'post' ), Pantheon_Advanced_Page_Cache\Emitter::filter_huge_surrogate_keys_list( $keys ) );
+	}
+
 }
