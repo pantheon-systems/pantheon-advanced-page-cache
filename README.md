@@ -3,7 +3,7 @@
 **Tags:** pantheon, cdn, cache  
 **Requires at least:** 4.7  
 **Tested up to:** 4.8  
-**Stable tag:** 0.1.5  
+**Stable tag:** 0.2.0  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -221,6 +221,9 @@ Different WordPress actions cause different surrogate keys to be purged, documen
 * Affected views: REST API resource endpoint
 
 ## Changelog ##
+
+### 0.2.0 (August 10th, 2017) ###
+* Automatically trims large lists of surrogate keys that break Nginx and Varnish limits for header size.
 
 ### 0.1.5 (May 24th, 2017) ###
 * Disables emitting surrogate keys for the admin, unless explicitly added by filter.
