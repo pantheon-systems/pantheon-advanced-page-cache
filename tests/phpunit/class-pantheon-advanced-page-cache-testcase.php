@@ -144,7 +144,7 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 
 		$this->cleared_keys = array();
 		$this->setup_view_surrogate_keys();
-		Pantheon_Advanced_Page_Cache\Emitter::reset_rest_api_surrogate_keys();
+		Emitter::reset_rest_api_surrogate_keys();
 
 		add_action( 'pantheon_wp_clear_edge_keys', array( $this, 'action_pantheon_wp_clear_edge_keys' ) );
 	}
@@ -260,24 +260,29 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 			$request = new WP_REST_Request( 'GET', $rest_api_route );
 			$this->server->dispatch( $request );
 			$this->view_surrogate_keys[ '/wp-json' . $rest_api_route ] = Emitter::get_rest_api_surrogate_keys();
+			Emitter::reset_rest_api_surrogate_keys();
 		}
 		// Routes with no items present.
 		$request = new WP_REST_Request( 'GET', '/wp/v2/posts' );
 		$request->set_param( 'author', REST_TESTS_IMPOSSIBLY_HIGH_NUMBER );
 		$this->server->dispatch( $request );
 		$this->view_surrogate_keys[ '/wp-json/wp/v2/posts?author=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER ] = Emitter::get_rest_api_surrogate_keys();
+		Emitter::reset_rest_api_surrogate_keys();
 		$request = new WP_REST_Request( 'GET', '/wp/v2/pages' );
 		$request->set_param( 'parent', REST_TESTS_IMPOSSIBLY_HIGH_NUMBER );
 		$this->server->dispatch( $request );
 		$this->view_surrogate_keys[ '/wp-json/wp/v2/pages?parent=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER ] = Emitter::get_rest_api_surrogate_keys();
+		Emitter::reset_rest_api_surrogate_keys();
 		$request = new WP_REST_Request( 'GET', '/wp/v2/media' );
 		$request->set_param( 'parent', REST_TESTS_IMPOSSIBLY_HIGH_NUMBER );
 		$this->server->dispatch( $request );
 		$this->view_surrogate_keys[ '/wp-json/wp/v2/media?parent=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER ] = Emitter::get_rest_api_surrogate_keys();
+		Emitter::reset_rest_api_surrogate_keys();
 		$request = new WP_REST_Request( 'GET', '/wp/v2/comments' );
 		$request->set_param( 'post', REST_TESTS_IMPOSSIBLY_HIGH_NUMBER );
 		$this->server->dispatch( $request );
 		$this->view_surrogate_keys[ '/wp-json/wp/v2/comments?post=' . REST_TESTS_IMPOSSIBLY_HIGH_NUMBER ] = Emitter::get_rest_api_surrogate_keys();
+		Emitter::reset_rest_api_surrogate_keys();
 		// Settings route needs an authenticated request.
 		$current_user_id = get_current_user_id();
 		wp_set_current_user( $this->admin_id1 );
@@ -285,6 +290,7 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 		$request = new WP_REST_Request( 'GET', $rest_api_route );
 		$this->server->dispatch( $request );
 		$this->view_surrogate_keys[ '/wp-json' . $rest_api_route ] = Emitter::get_rest_api_surrogate_keys();
+		Emitter::reset_rest_api_surrogate_keys();
 		wp_set_current_user( $current_user_id );
 	}
 
