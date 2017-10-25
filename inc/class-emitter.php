@@ -105,7 +105,6 @@ class Emitter {
 	 * @param WP_REST_Request $request Request used to generate the response.
 	 */
 	public static function filter_rest_pre_dispatch( $result, $server, $request ) {
-		self::get_instance()->rest_api_surrogate_keys = array();
 		if ( isset( self::get_instance()->rest_api_collection_endpoints[ $request->get_route() ] ) ) {
 			self::get_instance()->rest_api_surrogate_keys[] = 'rest-' . self::get_instance()->rest_api_collection_endpoints[ $request->get_route() ] . '-collection';
 		}
@@ -302,6 +301,13 @@ class Emitter {
 		$keys = array_unique( $keys );
 		$keys = self::filter_huge_surrogate_keys_list( $keys );
 		return $keys;
+	}
+
+	/**
+	 * Reset surrogate keys stored on the instance.
+	 */
+	public static function reset_rest_api_surrogate_keys() {
+		self::get_instance()->rest_api_surrogate_keys = array();
 	}
 
 	/**

@@ -38,6 +38,31 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 	}
 
 	/**
+	 * Ensure GET /wp/v2/posts?_embed emits the expected surrogate keys
+	 */
+	public function test_get_posts_embed() {
+		$request = new WP_REST_Request( 'GET', '/wp/v2/posts' );
+		$response = $this->server->dispatch( $request );
+		$data = $this->server->response_to_data( $response, true );
+		$this->assertCount( 3, $data );
+		$this->assertArrayValues( array(
+			'rest-post-collection',
+			'rest-post-' . $this->post_id1,
+			'rest-post-' . $this->post_id2,
+			'rest-post-' . $this->post_id3,
+			'rest-comment-collection',
+			'rest-comment-' . $this->comment_id1,
+			'rest-comment-post-' . $this->post_id1,
+			'rest-category-collection',
+			'rest-term-1',
+			'rest-post_tag-collection',
+			'rest-term-' . $this->tag_id2,
+			'rest-user-' . $this->user_id1,
+			'rest-user-' . $this->user_id2,
+		), Emitter::get_rest_api_surrogate_keys() );
+	}
+
+	/**
 	 * Ensure GET /wp/v2/posts with no items emits the expected surrogate keys
 	 */
 	public function test_get_posts_no_results() {
