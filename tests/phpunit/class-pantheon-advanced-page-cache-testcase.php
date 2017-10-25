@@ -144,6 +144,7 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 
 		$this->cleared_keys = array();
 		$this->setup_view_surrogate_keys();
+		Pantheon_Advanced_Page_Cache\Emitter::reset_rest_api_surrogate_keys();
 
 		add_action( 'pantheon_wp_clear_edge_keys', array( $this, 'action_pantheon_wp_clear_edge_keys' ) );
 	}
