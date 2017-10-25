@@ -3,7 +3,7 @@ Contributors: getpantheon, danielbachhuber
 Tags: pantheon, cdn, cache
 Requires at least: 4.7
 Tested up to: 4.8
-Stable tag: 0.2.0
+Stable tag: 0.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -274,6 +274,9 @@ Different WordPress actions cause different surrogate keys to be purged, documen
 * Affected views: REST API resource endpoint
 
 == Changelog ==
+
+= 0.2.1 (October 25th, 2017) =
+* Ensures use of `?_embed` emits correct surrogate keys [[#103](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/103)].
 
 = 0.2.0 (August 10th, 2017) =
 * Automatically trims large lists of surrogate keys that break Nginx and Varnish limits for header size.
