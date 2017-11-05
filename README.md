@@ -229,13 +229,17 @@ Use `wp help pantheon cache <command>` to learn more about each command.
 
 * `/wp-json/wp/v2/settings` emits surrogate keys: `rest-setting-<name>`
 
+**Not Found (404)**
+
+* `/nothinghere` emits surrogate keys: `404`
+
 ### Purge Events ###
 
 Different WordPress actions cause different surrogate keys to be purged, documented here.
 
 **wp_insert_post / transition_post_status / before_delete_post / delete_attachment**
 
-* Purges surrogate keys: `home`, `front`, `post-<id>`, `user-<id>`, `term-<id>`, `rest-<type>-collection`, `rest-comment-post-<id>`
+* Purges surrogate keys: `home`, `front`, `404`, `post-<id>`, `user-<id>`, `term-<id>`, `rest-<type>-collection`, `rest-comment-post-<id>`
 * Affected views: homepage, single post, any archive where post displays, author archive, term archive, REST API collection and resource endpoints
 
 **clean_post_cache**

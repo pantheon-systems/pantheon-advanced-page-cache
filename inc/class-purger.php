@@ -166,6 +166,7 @@ class Purger {
 		$keys = array(
 			'home',
 			'front',
+			'404',
 			'feed',
 			'post-' . $post->ID,
 			'post-huge',
