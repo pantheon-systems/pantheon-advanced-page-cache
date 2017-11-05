@@ -70,7 +70,8 @@ class Purger {
 		if ( $type && 'revision' === $type ) {
 			return;
 		}
-		pantheon_wp_clear_edge_keys( array( 'post-' . $post_id, 'rest-post-' . $post_id, 'post-huge', 'rest-post-huge' ) );
+    $keys = apply_filters( 'pantheon_purge_clean_post_cache', array( 'post-' . $post_id, 'rest-post-' . $post_id, 'post-huge', 'rest-post-huge' ), $post_id );
+		pantheon_wp_clear_edge_keys( $keys );
 	}
 
 	/**
@@ -82,7 +83,8 @@ class Purger {
 	 */
 	public static function action_created_term( $term_id, $tt_id, $taxonomy ) {
 		self::purge_term( $term_id );
-		pantheon_wp_clear_edge_keys( array( 'rest-' . $taxonomy . '-collection' ) );
+    $keys = apply_filters( 'pantheon_purge_create_term', array( 'rest-' . $taxonomy . '-collection' ), $term_id, $tt_id, $taxonomy );
+		pantheon_wp_clear_edge_keys( $keys );
 	}
 
 	/**
@@ -110,13 +112,14 @@ class Purger {
 	 */
 	public static function action_clean_term_cache( $term_ids ) {
 		$keys = array();
-		$term_ids = is_array( $term_ids ) ? $term_ids : array( $term_id );
+		$term_ids = is_array( $term_ids ) ? $term_ids : array( $term_ids );
 		foreach ( $term_ids as $term_id ) {
 			$keys[] = 'term-' . $term_id;
 			$keys[] = 'rest-term-' . $term_id;
 		}
 		$keys[] = 'term-huge';
 		$keys[] = 'rest-term-huge';
+    $keys = apply_filters( 'pantheon_purge_clean_term_cache', $keys, $term_ids );
 		pantheon_wp_clear_edge_keys( $keys );
 	}
 
@@ -130,7 +133,8 @@ class Purger {
 		if ( 1 != $comment->comment_approved ) {
 			return;
 		}
-		pantheon_wp_clear_edge_keys( array( 'rest-comment-' . $comment->comment_ID, 'rest-comment-collection', 'rest-comment-huge' ) );
+    $keys = apply_filters( 'pantheon_purge_insert_comment', array( 'rest-comment-' . $comment->comment_ID, 'rest-comment-collection', 'rest-comment-huge' ), $id, $comment );
+		pantheon_wp_clear_edge_keys( $keys );
 	}
 
 	/**
@@ -141,6 +145,7 @@ class Purger {
 	 * @param object     $comment    The comment data.
 	 */
 	public static function action_transition_comment_status( $new_status, $old_status, $comment ) {
+    $keys = apply_filters( 'pantheon_purge_transition_comment_status', array( 'rest-comment-' . $comment->comment_ID, 'rest-comment-collection', 'rest-comment-huge' ), $new_status, $old_status, $comment );
 		pantheon_wp_clear_edge_keys( array( 'rest-comment-' . $comment->comment_ID, 'rest-comment-collection', 'rest-comment-huge' ) );
 	}
 
@@ -150,6 +155,7 @@ class Purger {
 	 * @param integer $comment_id Modified comment id.
 	 */
 	public static function action_clean_comment_cache( $comment_id ) {
+    $keys = apply_filters( 'pantheon_purge_clean_comment_cach', array( 'rest-comment-' . $comment_id, 'rest-comment-huge' ), $comment_id );
 		pantheon_wp_clear_edge_keys( array( 'rest-comment-' . $comment_id, 'rest-comment-huge' ) );
 	}
 
@@ -166,6 +172,7 @@ class Purger {
 		$keys = array(
 			'home',
 			'front',
+			'404',
 			'feed',
 			'post-' . $post->ID,
 			'post-huge',
@@ -191,6 +198,7 @@ class Purger {
 				$keys[] = 'term-huge';
 			}
 		}
+    $keys = apply_filters( 'pantheon_purge_post_with_related', $keys, $post );
 		pantheon_wp_clear_edge_keys( $keys );
 	}
 
@@ -200,7 +208,8 @@ class Purger {
 	 * @param integer $term_id ID for the modified term.
 	 */
 	private static function purge_term( $term_id ) {
-		pantheon_wp_clear_edge_keys( array( 'term-' . $term_id, 'rest-term-' . $term_id, 'post-term-' . $term_id, 'term-huge', 'rest-term-huge', 'post-term-huge' ) );
+    $keys = apply_filters( 'pantheon_purge_term', array( 'term-' . $term_id, 'rest-term-' . $term_id, 'post-term-' . $term_id, 'term-huge', 'rest-term-huge', 'post-term-huge' ), $term_id );
+		pantheon_wp_clear_edge_keys( $keys );
 	}
 
 
@@ -216,6 +225,7 @@ class Purger {
 			'user-huge',
 			'rest-user-huge',
 		);
+    $keys = apply_filters( 'pantheon_purge_clean_user_cache', $keys, $user_id );
 		pantheon_wp_clear_edge_keys( $keys );
 	}
 
@@ -233,7 +243,8 @@ class Purger {
 			return;
 		}
 		$rest_name = ! empty( $settings[ $option ]['show_in_rest']['name'] ) ? $settings[ $option ]['show_in_rest']['name'] : $option;
-		pantheon_wp_clear_edge_keys( array( 'rest-setting-' . $rest_name, 'rest-setting-huge' ) );
+    $keys = apply_filters( 'pantheon_purge_updated_option', array( 'rest-setting-' . $rest_name, 'rest-setting-huge' ), $option );
+		pantheon_wp_clear_edge_keys( $keys );
 	}
 
 }
