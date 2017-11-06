@@ -83,22 +83,24 @@ function pantheon_wp_clear_edge_all() {
 /**
  * Registers the class autoloader.
  */
-spl_autoload_register( function( $class ) {
-	$class = ltrim( $class, '\\' );
-	if ( 0 !== stripos( $class, 'Pantheon_Advanced_Page_Cache\\' ) ) {
-		return;
-	}
+spl_autoload_register(
+	function( $class ) {
+			$class = ltrim( $class, '\\' );
+		if ( 0 !== stripos( $class, 'Pantheon_Advanced_Page_Cache\\' ) ) {
+			return;
+		}
 
-	$parts = explode( '\\', $class );
-	array_shift( $parts ); // Don't need "Pantheon_Advanced_Page_Cache".
-	$last = array_pop( $parts ); // File should be 'class-[...].php'.
-	$last = 'class-' . $last . '.php';
-	$parts[] = $last;
-	$file = dirname( __FILE__ ) . '/inc/' . str_replace( '_', '-', strtolower( implode( $parts, '/' ) ) );
-	if ( file_exists( $file ) ) {
-		require $file;
+			$parts = explode( '\\', $class );
+			array_shift( $parts ); // Don't need "Pantheon_Advanced_Page_Cache".
+			$last    = array_pop( $parts ); // File should be 'class-[...].php'.
+			$last    = 'class-' . $last . '.php';
+			$parts[] = $last;
+			$file    = dirname( __FILE__ ) . '/inc/' . str_replace( '_', '-', strtolower( implode( $parts, '/' ) ) );
+		if ( file_exists( $file ) ) {
+			require $file;
+		}
 	}
-});
+);
 
 /**
  * Registers relevant UI

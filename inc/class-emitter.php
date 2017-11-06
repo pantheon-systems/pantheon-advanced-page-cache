@@ -76,16 +76,20 @@ class Emitter {
 	 * Register filters to sniff surrogate keys out of REST API responses.
 	 */
 	public static function action_rest_api_init() {
-		foreach ( get_post_types( array(
-			'show_in_rest' => true,
-		), 'objects' ) as $post_type ) {
+		foreach ( get_post_types(
+			array(
+				'show_in_rest' => true,
+			), 'objects'
+		) as $post_type ) {
 			add_filter( "rest_prepare_{$post_type->name}", array( __CLASS__, 'filter_rest_prepare_post' ), 10, 3 );
 			$base = ! empty( $post_type->rest_base ) ? $post_type->rest_base : $post_type->name;
 			self::get_instance()->rest_api_collection_endpoints[ '/wp/v2/' . $base ] = $post_type->name;
 		}
-		foreach ( get_taxonomies( array(
-			'show_in_rest' => true,
-		), 'objects' ) as $taxonomy ) {
+		foreach ( get_taxonomies(
+			array(
+				'show_in_rest' => true,
+			), 'objects'
+		) as $taxonomy ) {
 			add_filter( "rest_prepare_{$taxonomy->name}", array( __CLASS__, 'filter_rest_prepare_term' ), 10, 3 );
 			$base = ! empty( $taxonomy->rest_base ) ? $taxonomy->rest_base : $taxonomy->name;
 			self::get_instance()->rest_api_collection_endpoints[ '/wp/v2/' . $base ] = $taxonomy->name;
@@ -330,24 +334,26 @@ class Emitter {
 				$keycats[ $k ][] = $k;
 				continue;
 			}
-			$cat = substr( $k, 0, $p + 1 );
+			$cat               = substr( $k, 0, $p + 1 );
 			$keycats[ $cat ][] = $k;
 		}
 
 		// Sort by the output length of the key category.
-		uasort( $keycats, function( $a, $b ) {
-			$ca = strlen( implode( ' ', $a ) );
-			$cb = strlen( implode( ' ', $b ) );
-			if ( $ca === $cb ) {
-				return 0;
+		uasort(
+			$keycats, function( $a, $b ) {
+				$ca = strlen( implode( ' ', $a ) );
+				$cb = strlen( implode( ' ', $b ) );
+				if ( $ca === $cb ) {
+					return 0;
+				}
+				return $ca > $cb ? -1 : 1;
 			}
-			return $ca > $cb ? -1 : 1;
-		});
+		);
 
 		$cats = array_keys( $keycats );
 		foreach ( $cats as $c ) {
 			$keycats[ $c ] = array( $c . 'huge' );
-			$keyout = array();
+			$keyout        = array();
 			foreach ( $keycats as $v ) {
 				$keyout = array_merge( $keyout, $v );
 			}
