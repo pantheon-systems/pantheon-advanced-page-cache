@@ -146,7 +146,7 @@ class Purger {
 	 */
 	public static function action_transition_comment_status( $new_status, $old_status, $comment ) {
     $keys = apply_filters( 'pantheon_purge_transition_comment_status', array( 'rest-comment-' . $comment->comment_ID, 'rest-comment-collection', 'rest-comment-huge' ), $new_status, $old_status, $comment );
-		pantheon_wp_clear_edge_keys( array( 'rest-comment-' . $comment->comment_ID, 'rest-comment-collection', 'rest-comment-huge' ) );
+    pantheon_wp_clear_edge_keys( $keys );;
 	}
 
 	/**
@@ -156,7 +156,7 @@ class Purger {
 	 */
 	public static function action_clean_comment_cache( $comment_id ) {
     $keys = apply_filters( 'pantheon_purge_clean_comment_cach', array( 'rest-comment-' . $comment_id, 'rest-comment-huge' ), $comment_id );
-		pantheon_wp_clear_edge_keys( array( 'rest-comment-' . $comment_id, 'rest-comment-huge' ) );
+    pantheon_wp_clear_edge_keys( $keys );
 	}
 
 	/**
@@ -172,7 +172,6 @@ class Purger {
 		$keys = array(
 			'home',
 			'front',
-			'404',
 			'feed',
 			'post-' . $post->ID,
 			'post-huge',
