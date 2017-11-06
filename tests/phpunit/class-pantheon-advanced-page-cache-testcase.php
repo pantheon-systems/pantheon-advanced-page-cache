@@ -36,111 +36,149 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 
 		$this->setup_permalink_structure();
 
-		$this->user_id1 = $this->factory->user->create( array(
-			'role' => 'author',
-			'user_nicename' => 'first-user',
-		) );
-		$this->user_id2 = $this->factory->user->create( array(
-			'role' => 'author',
-			'user_nicename' => 'second-user',
-		) );
-		$this->user_id3 = $this->factory->user->create( array(
-			'role' => 'author',
-			'user_nicename' => 'third-user',
-		) );
-		$this->admin_id1 = $this->factory->user->create( array(
-			'role' => 'administrator',
-			'user_nicename' => 'first-admin',
-		) );
+		$this->user_id1  = $this->factory->user->create(
+			array(
+				'role'          => 'author',
+				'user_nicename' => 'first-user',
+			)
+		);
+		$this->user_id2  = $this->factory->user->create(
+			array(
+				'role'          => 'author',
+				'user_nicename' => 'second-user',
+			)
+		);
+		$this->user_id3  = $this->factory->user->create(
+			array(
+				'role'          => 'author',
+				'user_nicename' => 'third-user',
+			)
+		);
+		$this->admin_id1 = $this->factory->user->create(
+			array(
+				'role'          => 'administrator',
+				'user_nicename' => 'first-admin',
+			)
+		);
 
-		$this->tag_id1 = $this->factory->tag->create( array(
-			'slug' => 'first-tag',
-		) );
-		$this->tag_id2 = $this->factory->tag->create( array(
-			'slug' => 'second-tag',
-		) );
+		$this->tag_id1      = $this->factory->tag->create(
+			array(
+				'slug' => 'first-tag',
+			)
+		);
+		$this->tag_id2      = $this->factory->tag->create(
+			array(
+				'slug' => 'second-tag',
+			)
+		);
 		$this->category_id1 = 1; // This is the default 'uncategorized' category.
-		$this->category_id2 = $this->factory->category->create( array(
-			'slug' => 'second-category',
-		) );
+		$this->category_id2 = $this->factory->category->create(
+			array(
+				'slug' => 'second-category',
+			)
+		);
 
-		$this->product_category_id1 = $this->factory->product_category->create( array(
-			'slug' => 'first-product-category',
-		) );
-		$this->product_category_id2 = $this->factory->product_category->create( array(
-			'slug' => 'second-product-category',
-		) );
-		$this->product_category_id3 = $this->factory->product_category->create( array(
-			'slug' => 'third-product-category',
-		) );
+		$this->product_category_id1 = $this->factory->product_category->create(
+			array(
+				'slug' => 'first-product-category',
+			)
+		);
+		$this->product_category_id2 = $this->factory->product_category->create(
+			array(
+				'slug' => 'second-product-category',
+			)
+		);
+		$this->product_category_id3 = $this->factory->product_category->create(
+			array(
+				'slug' => 'third-product-category',
+			)
+		);
 
-		$this->post_id1 = $this->factory->post->create( array(
-			'post_status'   => 'publish',
-			'post_author'   => $this->user_id1,
-			'post_date'     => '2016-10-14 12:00',
-			'post_date_gmt' => '2016-10-14 12:00',
-			'post_name'     => 'first-post',
-		) );
+		$this->post_id1 = $this->factory->post->create(
+			array(
+				'post_status'   => 'publish',
+				'post_author'   => $this->user_id1,
+				'post_date'     => '2016-10-14 12:00',
+				'post_date_gmt' => '2016-10-14 12:00',
+				'post_name'     => 'first-post',
+			)
+		);
 		wp_set_object_terms( $this->post_id1, array( $this->tag_id2 ), 'post_tag' );
-		$this->post_id2 = $this->factory->post->create( array(
-			'post_status'   => 'publish',
-			'post_author'   => $this->user_id2,
-			'post_date'     => '2016-10-14 11:00',
-			'post_date_gmt' => '2016-10-14 11:00',
-			'post_name'     => 'second-post',
-		) );
-		$this->post_id3 = $this->factory->post->create( array(
-			'post_status'   => 'publish',
-			'post_author'   => $this->user_id2,
-			'post_date'     => '2016-10-15 11:00',
-			'post_date_gmt' => '2016-10-15 11:00',
-			'post_name'     => 'third-post',
-		) );
-		$this->post_id4 = $this->factory->post->create( array(
-			'post_status'   => 'draft',
-			'post_author'   => $this->user_id2,
-			'post_date'     => '2016-10-15 11:00',
-			'post_date_gmt' => '2016-10-15 11:00',
-			'post_name'     => 'fourth-post',
-		) );
-		$this->page_id1 = $this->factory->post->create( array(
-			'post_status'   => 'publish',
-			'post_type'     => 'page',
-			'post_author'   => $this->user_id1,
-			'post_name'     => 'first-page',
-		) );
-		$this->product_id1 = $this->factory->post->create( array(
-			'post_status'   => 'publish',
-			'post_type'     => 'product',
-			'post_author'   => $this->user_id1,
-			'post_date'     => '2016-10-14 12:00',
-			'post_date_gmt' => '2016-10-14 12:00',
-			'post_name'     => 'first-product',
-		) );
+		$this->post_id2    = $this->factory->post->create(
+			array(
+				'post_status'   => 'publish',
+				'post_author'   => $this->user_id2,
+				'post_date'     => '2016-10-14 11:00',
+				'post_date_gmt' => '2016-10-14 11:00',
+				'post_name'     => 'second-post',
+			)
+		);
+		$this->post_id3    = $this->factory->post->create(
+			array(
+				'post_status'   => 'publish',
+				'post_author'   => $this->user_id2,
+				'post_date'     => '2016-10-15 11:00',
+				'post_date_gmt' => '2016-10-15 11:00',
+				'post_name'     => 'third-post',
+			)
+		);
+		$this->post_id4    = $this->factory->post->create(
+			array(
+				'post_status'   => 'draft',
+				'post_author'   => $this->user_id2,
+				'post_date'     => '2016-10-15 11:00',
+				'post_date_gmt' => '2016-10-15 11:00',
+				'post_name'     => 'fourth-post',
+			)
+		);
+		$this->page_id1    = $this->factory->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_type'   => 'page',
+				'post_author' => $this->user_id1,
+				'post_name'   => 'first-page',
+			)
+		);
+		$this->product_id1 = $this->factory->post->create(
+			array(
+				'post_status'   => 'publish',
+				'post_type'     => 'product',
+				'post_author'   => $this->user_id1,
+				'post_date'     => '2016-10-14 12:00',
+				'post_date_gmt' => '2016-10-14 12:00',
+				'post_name'     => 'first-product',
+			)
+		);
 		wp_set_object_terms( $this->product_id1, array( $this->product_category_id2 ), 'product_category' );
-		$this->product_id2 = $this->factory->post->create( array(
-			'post_status'   => 'publish',
-			'post_type'     => 'product',
-			'post_author'   => $this->user_id2,
-			'post_date'     => '2016-10-14 11:00',
-			'post_date_gmt' => '2016-10-14 11:00',
-			'post_name'     => 'second-product',
-		) );
+		$this->product_id2 = $this->factory->post->create(
+			array(
+				'post_status'   => 'publish',
+				'post_type'     => 'product',
+				'post_author'   => $this->user_id2,
+				'post_date'     => '2016-10-14 11:00',
+				'post_date_gmt' => '2016-10-14 11:00',
+				'post_name'     => 'second-product',
+			)
+		);
 		wp_set_object_terms( $this->product_id2, array( $this->product_category_id1 ), 'product_category' );
 
-		$this->comment_id1 = $this->factory->comment->create( array(
-			'comment_post_ID'  => $this->post_id1,
-			'comment_approved' => 1,
-			'user_id'          => 0,
-		) );
+		$this->comment_id1 = $this->factory->comment->create(
+			array(
+				'comment_post_ID'  => $this->post_id1,
+				'comment_approved' => 1,
+				'user_id'          => 0,
+			)
+		);
 
-		$this->attachment_id1 = $this->factory->post->create( array(
-			'post_mime_type' => 'image/jpeg',
-			'post_type'      => 'attachment',
-			'post_author'    => $this->user_id1,
-			'post_status'    => 'publish',
-			'post_parent'    => 0,
-		) );
+		$this->attachment_id1 = $this->factory->post->create(
+			array(
+				'post_mime_type' => 'image/jpeg',
+				'post_type'      => 'attachment',
+				'post_author'    => $this->user_id1,
+				'post_status'    => 'publish',
+				'post_parent'    => 0,
+			)
+		);
 
 		$this->cleared_keys = array();
 		$this->setup_view_surrogate_keys();
@@ -181,7 +219,7 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 	 */
 	protected function setup_rest_api_server() {
 		$GLOBALS['wp_rest_server'] = new Spy_REST_Server;
-		$this->server = $GLOBALS['wp_rest_server'];
+		$this->server              = $GLOBALS['wp_rest_server'];
 		do_action( 'rest_api_init' );
 	}
 
@@ -191,7 +229,7 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 	protected function setup_view_surrogate_keys() {
 		$this->view_surrogate_keys = array();
 		// Primes the mapping of views to their surrogate keys.
-		$views = array(
+		$views           = array(
 			home_url( '/' ), // Homepage.
 			'/products/', // Product post type archive.
 			'/2016/10/14/', // Day archive with posts.
@@ -203,36 +241,42 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 			'/feed/', // Basic RSS feed.
 		);
 		$rest_api_routes = array();
-		$posts = get_posts( array(
-			'post_type'      => 'any',
-			'post_status'    => 'any',
-			'posts_per_page' => -1,
-		) );
+		$posts           = get_posts(
+			array(
+				'post_type'      => 'any',
+				'post_status'    => 'any',
+				'posts_per_page' => -1,
+			)
+		);
 		foreach ( $posts as $post ) {
-			$views[] = get_permalink( $post->ID );
+			$views[]          = get_permalink( $post->ID );
 			$post_type_object = get_post_type_object( $post->post_type );
 			if ( ! empty( $post_type_object->show_in_rest ) ) {
-				$base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
+				$base              = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
 				$rest_api_routes[] = '/wp/v2/' . $base;
 				$rest_api_routes[] = '/wp/v2/' . $base . '/' . $post->ID;
 			}
 		}
-		$users = get_users( array(
-			'fields'         => 'ids',
-		) );
+		$users = get_users(
+			array(
+				'fields' => 'ids',
+			)
+		);
 		foreach ( $users as $user_id ) {
-			$views[] = get_author_posts_url( $user_id );
+			$views[]           = get_author_posts_url( $user_id );
 			$rest_api_routes[] = '/wp/v2/users';
 			$rest_api_routes[] = '/wp/v2/users/' . $user_id;
 		}
-		$terms = get_terms( array( 'post_tag', 'category', 'product_category' ), array(
-			'hide_empty'     => false,
-		) );
+		$terms = get_terms(
+			array( 'post_tag', 'category', 'product_category' ), array(
+				'hide_empty' => false,
+			)
+		);
 		foreach ( $terms as $term ) {
-			$views[] = get_term_link( $term );
+			$views[]         = get_term_link( $term );
 			$taxonomy_object = get_taxonomy( $term->taxonomy );
 			if ( ! empty( $taxonomy_object->show_in_rest ) ) {
-				$base = ! empty( $taxonomy_object->rest_base ) ? $taxonomy_object->rest_base : $taxonomy_object->name;
+				$base              = ! empty( $taxonomy_object->rest_base ) ? $taxonomy_object->rest_base : $taxonomy_object->name;
 				$rest_api_routes[] = '/wp/v2/' . $base;
 				$rest_api_routes[] = '/wp/v2/' . $base . '/' . $term->term_id;
 			}
@@ -241,9 +285,9 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 		$rest_api_routes[] = '/wp/v2/media/' . $this->attachment_id1;
 		$rest_api_routes[] = '/wp/v2/comments';
 		$rest_api_routes[] = '/wp/v2/comments/' . $this->comment_id1;
-		$views = array_unique( $views );
+		$views             = array_unique( $views );
 		foreach ( $views as $view ) {
-			$path = parse_url( $view, PHP_URL_PATH );
+			$path  = parse_url( $view, PHP_URL_PATH );
 			$query = parse_url( $view, PHP_URL_QUERY );
 			if ( $query ) {
 				$path .= '?' . $query;
@@ -287,7 +331,7 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 		$current_user_id = get_current_user_id();
 		wp_set_current_user( $this->admin_id1 );
 		$rest_api_route = '/wp/v2/settings';
-		$request = new WP_REST_Request( 'GET', $rest_api_route );
+		$request        = new WP_REST_Request( 'GET', $rest_api_route );
 		$this->server->dispatch( $request );
 		$this->view_surrogate_keys[ '/wp-json' . $rest_api_route ] = Emitter::get_rest_api_surrogate_keys();
 		Emitter::reset_rest_api_surrogate_keys();
@@ -298,18 +342,22 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 	 * Register custom post types and taxonomies.
 	 */
 	private function register_custom_types() {
-		register_post_type( 'product', array(
-			'public'       => true,
-			'has_archive'  => 'products',
-			'show_in_rest' => true,
-		) );
-		register_taxonomy( 'product_category', array( 'product' ), array(
-			'public'  => true,
-			'rewrite' => array(
-				'slug'    => 'product-category',
-			),
-			'show_in_rest' => true,
-		) );
+		register_post_type(
+			'product', array(
+				'public'       => true,
+				'has_archive'  => 'products',
+				'show_in_rest' => true,
+			)
+		);
+		register_taxonomy(
+			'product_category', array( 'product' ), array(
+				'public'       => true,
+				'rewrite'      => array(
+					'slug' => 'product-category',
+				),
+				'show_in_rest' => true,
+			)
+		);
 	}
 
 	/**
