@@ -18,6 +18,8 @@
  * @param array $keys Surrogate keys to purge.
  */
 function pantheon_wp_clear_edge_keys( $keys ) {
+  $keys = array_unique( $keys );
+  $keys = \Pantheon_Advanced_Page_Cache\Emitter::filter_huge_surrogate_keys_list( $keys );
 
 	/**
 	 * Fires when purging specific surrogate keys.
