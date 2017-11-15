@@ -70,6 +70,9 @@ class Purger {
 		if ( $type && 'revision' === $type ) {
 			return;
 		}
+    if ( $type && 'nav_menu_item' === $type ) {
+      return;
+    }
 		pantheon_wp_clear_edge_keys( array( 'post-' . $post_id, 'rest-post-' . $post_id, 'post-huge', 'rest-post-huge' ) );
 	}
 
@@ -163,6 +166,10 @@ class Purger {
 		if ( 'revision' === $post->post_type ) {
 			return;
 		}
+    if ( 'nav_menu_item' === $post->post_type ) {
+      pantheon_clear_edge_all();
+      return;
+    }
 		$keys   = array(
 			'home',
 			'front',
