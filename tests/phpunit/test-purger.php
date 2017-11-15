@@ -47,6 +47,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/author/first-user/',
 				'/category/uncategorized/',
@@ -94,6 +98,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/2016/',
 				'/2016/10/',
@@ -182,6 +190,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/2016/',
 				'/2016/10/',
@@ -236,6 +248,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/2016/',
 				'/2016/10/',
@@ -291,6 +307,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/2016/',
 				'/2016/10/',
@@ -347,6 +367,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/author/first-user/',
 				'/wp-json/wp/v2/pages',
@@ -385,6 +409,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/author/first-user/',
 				'/first-page/',
@@ -425,6 +453,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/author/first-user/',
 				'/first-page/',
@@ -460,6 +492,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/author/first-user/',
 				'/first-page/',
@@ -495,6 +531,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/author/first-user/',
 				'/first-page/',
@@ -562,6 +602,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/product-category/first-product-category/',
 				'/wp-json/wp/v2/product',
@@ -601,6 +645,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/products/',
 				'/product/second-product/',
@@ -638,6 +686,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/products/',
 				'/product/second-product/',
@@ -675,6 +727,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/products/',
 				'/product/second-product/',
@@ -737,6 +793,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/author/first-user/',
 				'/' . $post_name . '/',
