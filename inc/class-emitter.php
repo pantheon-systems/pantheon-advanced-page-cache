@@ -210,8 +210,8 @@ class Emitter {
 			$keys[] = 'home';
 		}
 		if ( is_404() ) {
-		  $keys[] = '404';
-    }
+			$keys[] = '404';
+		}
 		if ( is_feed() ) {
 			$keys[] = 'feed';
 		}
