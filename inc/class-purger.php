@@ -238,4 +238,18 @@ class Purger {
 		pantheon_wp_clear_edge_keys( array( 'rest-setting-' . $rest_name, 'rest-setting-huge' ) );
 	}
 
+  /**
+   * Purge everything when a widget is modified
+   *
+   * @param array $instance settings of current widget.
+   * @param array $new_instance settings of new widget.
+   * @param array $old_instance settings of old widget.
+   * @param \WP_Widget $widget Current widget instance.
+   * @return array|false $instance settings of current widget
+   *
+   */
+  public static function filter_widget_update( $instance, $new_instance, $old_instance, $widget ) {
+    pantheon_wp_clear_edge_all();
+    return $instance;
+  }
 }

@@ -133,7 +133,7 @@ add_action( 'transition_comment_status', array( 'Pantheon_Advanced_Page_Cache\Pu
 add_action( 'clean_comment_cache', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_clean_comment_cache' ) );
 add_action( 'clean_user_cache', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_clean_user_cache' ) );
 add_action( 'updated_option', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_updated_option' ) );
-
+add_filter( 'widget_update_callback', array( 'Pantheon_Advanced_Page_Cache\Purger', 'filter_widget_update' ), 10, 4 );
 /**
  * Registers the WP-CLI commands.
  */
