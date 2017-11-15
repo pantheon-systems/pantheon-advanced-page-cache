@@ -193,6 +193,10 @@ Use `wp help pantheon cache <command>` to learn more about each command.
 
 * Emits surrogate keys: `search`, either `search-results` or `search-no-results`, `post-<id>` (all posts in main query)
 
+**Not found (404)**
+
+* Emits surrogate keys: `404`
+
 ### Emitted Keys on REST API Endpoints ###
 
 **Posts**
@@ -229,10 +233,6 @@ Use `wp help pantheon cache <command>` to learn more about each command.
 
 * `/wp-json/wp/v2/settings` emits surrogate keys: `rest-setting-<name>`
 
-**Not Found (404)**
-
-* `/nothinghere` emits surrogate keys: `404`
-
 ### Purge Events ###
 
 Different WordPress actions cause different surrogate keys to be purged, documented here.
@@ -240,7 +240,7 @@ Different WordPress actions cause different surrogate keys to be purged, documen
 **wp_insert_post / transition_post_status / before_delete_post / delete_attachment**
 
 * Purges surrogate keys: `home`, `front`, `404`, `post-<id>`, `user-<id>`, `term-<id>`, `rest-<type>-collection`, `rest-comment-post-<id>`
-* Affected views: homepage, single post, any archive where post displays, author archive, term archive, REST API collection and resource endpoints
+* Affected views: homepage, single post, any page with 404 header, any archive where post displays, author archive, term archive, REST API collection and resource endpoints
 
 **clean_post_cache**
 
