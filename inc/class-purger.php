@@ -109,7 +109,7 @@ class Purger {
 	 * @param integer $term_ids One or more IDs of modified terms.
 	 */
 	public static function action_clean_term_cache( $term_ids ) {
-		$keys = array();
+		$keys     = array();
 		$term_ids = is_array( $term_ids ) ? $term_ids : array( $term_id );
 		foreach ( $term_ids as $term_id ) {
 			$keys[] = 'term-' . $term_id;
@@ -163,7 +163,7 @@ class Purger {
 		if ( 'revision' === $post->post_type ) {
 			return;
 		}
-		$keys = array(
+		$keys   = array(
 			'home',
 			'front',
 			'404',
@@ -180,9 +180,11 @@ class Purger {
 			$keys[] = 'rest-comment-post-' . $post->ID;
 			$keys[] = 'rest-comment-post-huge';
 		}
-		$taxonomies = wp_list_filter( get_object_taxonomies( $post->post_type, 'objects' ), array(
-			'public' => true,
-		) );
+		$taxonomies = wp_list_filter(
+			get_object_taxonomies( $post->post_type, 'objects' ), array(
+				'public' => true,
+			)
+		);
 		foreach ( $taxonomies as $taxonomy ) {
 			$terms = get_the_terms( $post, $taxonomy->name );
 			if ( $terms ) {

@@ -28,15 +28,17 @@ class User_Interface {
 			$title = __( 'Clear URL Cache', 'pantheon-advanced-page-cache' );
 		}
 
-		$wp_admin_bar->add_menu( array(
-			'parent'   => '',
-			'id'       => 'clear-page-cache',
-			'title'    => $title,
-			'meta'     => array(
-				'title' => __( 'Delete cache of the current URL.', 'pantheon-advanced-page-cache' ),
-			),
-			'href'     => wp_nonce_url( admin_url( 'admin-ajax.php?action=pantheon_clear_url_cache&path=' . urlencode( preg_replace( '/[ <>\'\"\r\n\t\(\)]/', '', $_SERVER['REQUEST_URI'] ) ) ), 'clear-url-cache' ),
-		) );
+		$wp_admin_bar->add_menu(
+			array(
+				'parent' => '',
+				'id'     => 'clear-page-cache',
+				'title'  => $title,
+				'meta'   => array(
+					'title' => __( 'Delete cache of the current URL.', 'pantheon-advanced-page-cache' ),
+				),
+				'href'   => wp_nonce_url( admin_url( 'admin-ajax.php?action=pantheon_clear_url_cache&path=' . urlencode( preg_replace( '/[ <>\'\"\r\n\t\(\)]/', '', $_SERVER['REQUEST_URI'] ) ) ), 'clear-url-cache' ),
+			)
+		);
 	}
 
 	/**
