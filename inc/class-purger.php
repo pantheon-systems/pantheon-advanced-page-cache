@@ -119,7 +119,13 @@ class Purger {
 		}
 		$keys[] = 'term-huge';
 		$keys[] = 'rest-term-huge';
-		$keys   = apply_filters( 'pantheon_purge_clean_term_cache', $keys, $term_ids );
+		/**
+		 * Surrogate keys purged when clearing term cache.
+		 *
+		 * @param array $keys     Surrogate keys.
+		 * @param array $term_ids IDs for purged terms.
+		 */
+		$keys = apply_filters( 'pantheon_purge_clean_term_cache', $keys, $term_ids );
 		pantheon_wp_clear_edge_keys( $keys );
 	}
 
@@ -133,7 +139,19 @@ class Purger {
 		if ( 1 != $comment->comment_approved ) {
 			return;
 		}
-		$keys = apply_filters( 'pantheon_purge_insert_comment', array( 'rest-comment-' . $comment->comment_ID, 'rest-comment-collection', 'rest-comment-huge' ), $id, $comment );
+		$keys = array(
+			'rest-comment-' . $comment->comment_ID,
+			'rest-comment-collection',
+			'rest-comment-huge',
+		);
+		/**
+		 * Surrogate keys purged when inserting a new comment.
+		 *
+		 * @param array      $keys    Surrogate keys.
+		 * @param integer    $id      Comment ID.
+		 * @param WP_Comment $comment Comment to be inserted.
+		 */
+		$keys = apply_filters( 'pantheon_purge_insert_comment', $keys, $id, $comment );
 		pantheon_wp_clear_edge_keys( $keys );
 	}
 
@@ -145,7 +163,20 @@ class Purger {
 	 * @param object     $comment    The comment data.
 	 */
 	public static function action_transition_comment_status( $new_status, $old_status, $comment ) {
-		$keys = apply_filters( 'pantheon_purge_transition_comment_status', array( 'rest-comment-' . $comment->comment_ID, 'rest-comment-collection', 'rest-comment-huge' ), $new_status, $old_status, $comment );
+		$keys = array(
+			'rest-comment-' . $comment->comment_ID,
+			'rest-comment-collection',
+			'rest-comment-huge',
+		);
+		/**
+		 * Surrogate keys purged when transitioning a comment status.
+		 *
+		 * @param array      $keys       Surrogate keys.
+		 * @param string     $new_status New comment status.
+		 * @param string     $old_status Old comment status.
+		 * @param WP_Comment $comment    Comment being transitioned.
+		 */
+		$keys = apply_filters( 'pantheon_purge_transition_comment_status', $keys, $new_status, $old_status, $comment );
 		pantheon_wp_clear_edge_keys( $keys );
 		;
 	}
@@ -156,7 +187,17 @@ class Purger {
 	 * @param integer $comment_id Modified comment id.
 	 */
 	public static function action_clean_comment_cache( $comment_id ) {
-		$keys = apply_filters( 'pantheon_purge_clean_comment_cach', array( 'rest-comment-' . $comment_id, 'rest-comment-huge' ), $comment_id );
+		$keys = array(
+			'rest-comment-' . $comment_id,
+			'rest-comment-huge',
+		);
+		/**
+		 * Surrogate keys purged when cleaning comment cache.
+		 *
+		 * @param array   $keys Surrogate keys.
+		 * @param integer $id   Comment ID.
+		 */
+		$keys = apply_filters( 'pantheon_purge_clean_comment_cach', $keys, $comment_id );
 		pantheon_wp_clear_edge_keys( $keys );
 	}
 
