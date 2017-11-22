@@ -188,7 +188,9 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function test_year_date_archive_without_posts() {
 		$this->go_to( home_url( '2015/' ) );
-		$this->assertArrayValues( array(), Emitter::get_main_query_surrogate_keys() );
+		$this->assertArrayValues( array(
+			'404',
+		), Emitter::get_main_query_surrogate_keys() );
 	}
 
 	/**
@@ -212,7 +214,9 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function test_month_date_archive_without_posts() {
 		$this->go_to( home_url( '2015/10/' ) );
-		$this->assertArrayValues( array(), Emitter::get_main_query_surrogate_keys() );
+		$this->assertArrayValues( array(
+			'404',
+		), Emitter::get_main_query_surrogate_keys() );
 	}
 
 	/**
@@ -234,7 +238,9 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function test_day_date_archive_without_posts() {
 		$this->go_to( home_url( '2015/10/15/' ) );
-		$this->assertArrayValues( array(), Emitter::get_main_query_surrogate_keys() );
+		$this->assertArrayValues( array(
+			'404',
+		), Emitter::get_main_query_surrogate_keys() );
 	}
 
 	/**

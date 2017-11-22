@@ -28,6 +28,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 				'home',
 				'front',
 				'feed',
+				'404',
 				'post-' . $this->post_id5,
 				'post-huge',
 				'rest-post-' . $this->post_id5,
@@ -46,6 +47,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/author/first-user/',
 				'/category/uncategorized/',
@@ -72,6 +77,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 				'home',
 				'front',
 				'feed',
+				'404',
 				'post-' . $this->post_id1,
 				'post-huge',
 				'rest-post-' . $this->post_id1,
@@ -92,6 +98,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/2016/',
 				'/2016/10/',
@@ -159,6 +169,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 				'home',
 				'front',
 				'feed',
+				'404',
 				'post-' . $this->post_id1,
 				'post-huge',
 				'rest-post-' . $this->post_id1,
@@ -179,6 +190,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/2016/',
 				'/2016/10/',
@@ -210,6 +225,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 				'home',
 				'front',
 				'feed',
+				'404',
 				'post-' . $this->post_id1,
 				'post-huge',
 				'rest-post-' . $this->post_id1,
@@ -232,6 +248,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/2016/',
 				'/2016/10/',
@@ -263,6 +283,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 				'home',
 				'front',
 				'feed',
+				'404',
 				'post-' . $this->post_id1,
 				'post-huge',
 				'rest-post-' . $this->post_id1,
@@ -286,6 +307,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/2016/',
 				'/2016/10/',
@@ -327,6 +352,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 				'home',
 				'front',
 				'feed',
+				'404',
 				'post-' . $this->page_id2,
 				'post-huge',
 				'rest-post-' . $this->page_id2,
@@ -341,6 +367,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/author/first-user/',
 				'/wp-json/wp/v2/pages',
@@ -364,6 +394,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 				'home',
 				'front',
 				'feed',
+				'404',
 				'post-' . $this->page_id1,
 				'post-huge',
 				'rest-post-' . $this->page_id1,
@@ -378,6 +409,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/author/first-user/',
 				'/first-page/',
@@ -403,6 +438,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 				'home',
 				'front',
 				'feed',
+				'404',
 				'post-' . $this->page_id1,
 				'post-huge',
 				'rest-post-' . $this->page_id1,
@@ -417,6 +453,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/author/first-user/',
 				'/first-page/',
@@ -437,6 +477,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 				'home',
 				'front',
 				'feed',
+				'404',
 				'post-' . $this->page_id1,
 				'post-huge',
 				'rest-post-' . $this->page_id1,
@@ -451,6 +492,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/author/first-user/',
 				'/first-page/',
@@ -471,6 +516,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 				'home',
 				'front',
 				'feed',
+				'404',
 				'post-' . $this->page_id1,
 				'post-huge',
 				'rest-post-' . $this->page_id1,
@@ -485,6 +531,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/author/first-user/',
 				'/first-page/',
@@ -537,6 +587,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 				'home',
 				'front',
 				'feed',
+				'404',
 				'post-' . $this->product_id3,
 				'post-huge',
 				'rest-post-' . $this->product_id3,
@@ -551,6 +602,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/product-category/first-product-category/',
 				'/wp-json/wp/v2/product',
@@ -575,6 +630,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 				'home',
 				'front',
 				'feed',
+				'404',
 				'post-' . $this->product_id2,
 				'post-huge',
 				'rest-post-' . $this->product_id2,
@@ -589,6 +645,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/products/',
 				'/product/second-product/',
@@ -611,6 +671,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 				'home',
 				'front',
 				'feed',
+				'404',
 				'post-' . $this->product_id2,
 				'post-huge',
 				'rest-post-' . $this->product_id2,
@@ -625,6 +686,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/products/',
 				'/product/second-product/',
@@ -647,6 +712,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 				'home',
 				'front',
 				'feed',
+				'404',
 				'post-' . $this->product_id2,
 				'post-huge',
 				'rest-post-' . $this->product_id2,
@@ -661,6 +727,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/products/',
 				'/product/second-product/',
@@ -707,6 +777,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			array(
 				'home',
 				'front',
+				'404',
 				'feed',
 				'post-' . $this->attachment_id1,
 				'post-huge',
@@ -722,6 +793,10 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertPurgedURIs(
 			array(
 				'/',
+				'/2015/',
+				'/2015/10/',
+				'/2015/10/15/',
+				'/?p=' . $this->post_id4,
 				'/feed/',
 				'/author/first-user/',
 				'/' . $post_name . '/',
