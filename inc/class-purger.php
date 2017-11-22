@@ -70,7 +70,19 @@ class Purger {
 		if ( $type && 'revision' === $type ) {
 			return;
 		}
-		$keys = apply_filters( 'pantheon_purge_clean_post_cache', array( 'post-' . $post_id, 'rest-post-' . $post_id, 'post-huge', 'rest-post-huge' ), $post_id );
+		$keys = array(
+			'post-' . $post_id,
+			'rest-post-' . $post_id,
+			'post-huge',
+			'rest-post-huge',
+		);
+		/**
+		 * Surrogate keys purged when clearing post cache.
+		 *
+		 * @param array $keys    Surrogate keys.
+		 * @param array $post_id ID for purged post.
+		 */
+		$keys = apply_filters( 'pantheon_purge_clean_post_cache', $keys, $post_id );
 		pantheon_wp_clear_edge_keys( $keys );
 	}
 
@@ -83,7 +95,18 @@ class Purger {
 	 */
 	public static function action_created_term( $term_id, $tt_id, $taxonomy ) {
 		self::purge_term( $term_id );
-		$keys = apply_filters( 'pantheon_purge_create_term', array( 'rest-' . $taxonomy . '-collection' ), $term_id, $tt_id, $taxonomy );
+		$keys = array(
+			'rest-' . $taxonomy . '-collection',
+		);
+		/**
+		 * Surrogate keys purged when creating a new term.
+		 *
+		 * @param array  $keys     Surrogate keys.
+		 * @param array  $term_id  ID for new term.
+		 * @param array  $tt_id    Term taxonomy ID for new term.
+		 * @param string $taxonomy Taxonomy for the new term.
+		 */
+		$keys = apply_filters( 'pantheon_purge_create_term', $keys, $term_id, $tt_id, $taxonomy );
 		pantheon_wp_clear_edge_keys( $keys );
 	}
 
@@ -242,6 +265,12 @@ class Purger {
 				$keys[] = 'term-huge';
 			}
 		}
+		/**
+		 * Related surrogate keys purged when purging a post.
+		 *
+		 * @param array   $keys Surrogate keys.
+		 * @param WP_Post $post Post object.
+		 */
 		$keys = apply_filters( 'pantheon_purge_post_with_related', $keys, $post );
 		pantheon_wp_clear_edge_keys( $keys );
 	}
@@ -252,7 +281,21 @@ class Purger {
 	 * @param integer $term_id ID for the modified term.
 	 */
 	private static function purge_term( $term_id ) {
-		$keys = apply_filters( 'pantheon_purge_term', array( 'term-' . $term_id, 'rest-term-' . $term_id, 'post-term-' . $term_id, 'term-huge', 'rest-term-huge', 'post-term-huge' ), $term_id );
+		$keys = array(
+			'term-' . $term_id,
+			'rest-term-' . $term_id,
+			'post-term-' . $term_id,
+			'term-huge',
+			'rest-term-huge',
+			'post-term-huge',
+		);
+		/**
+		 * Surrogate keys purged when purging a term.
+		 *
+		 * @param array   $keys    Surrogate keys.
+		 * @param integer $term_id Term ID.
+		 */
+		$keys = apply_filters( 'pantheon_purge_term', $keys, $term_id );
 		pantheon_wp_clear_edge_keys( $keys );
 	}
 
@@ -269,6 +312,12 @@ class Purger {
 			'user-huge',
 			'rest-user-huge',
 		);
+		/**
+		 * Surrogate keys purged when clearing user cache.
+		 *
+		 * @param array $keys    Surrogate keys.
+		 * @param array $user_id ID for purged user.
+		 */
 		$keys = apply_filters( 'pantheon_purge_clean_user_cache', $keys, $user_id );
 		pantheon_wp_clear_edge_keys( $keys );
 	}
@@ -287,7 +336,17 @@ class Purger {
 			return;
 		}
 		$rest_name = ! empty( $settings[ $option ]['show_in_rest']['name'] ) ? $settings[ $option ]['show_in_rest']['name'] : $option;
-		$keys      = apply_filters( 'pantheon_purge_updated_option', array( 'rest-setting-' . $rest_name, 'rest-setting-huge' ), $option );
+		$keys      = array(
+			'rest-setting-' . $rest_name,
+			'rest-setting-huge',
+		);
+		/**
+		 * Surrogate keys purged when updating an option cache.
+		 *
+		 * @param array  $keys   Surrogate keys.
+		 * @param string $option Option name.
+		 */
+		$keys = apply_filters( 'pantheon_purge_updated_option', $keys, $option );
 		pantheon_wp_clear_edge_keys( $keys );
 	}
 
