@@ -3,7 +3,7 @@ Contributors: getpantheon, danielbachhuber
 Tags: pantheon, cdn, cache
 Requires at least: 4.7
 Tested up to: 4.9
-Stable tag: 0.2.1
+Stable tag: 0.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -278,6 +278,11 @@ Different WordPress actions cause different surrogate keys to be purged, documen
 * Affected views: REST API resource endpoint
 
 == Changelog ==
+
+= 0.3.0 (November 27th, 2017) =
+* Emits '404' surrogate key on 404s; purges when purging the homepage [[#107](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/107)].
+* Adds more specific filters for modifying surrogate keys in different contexts [[#109](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/109)].
+* Cleans up codebase according to WordPress Coding Standards [[#110](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/110), [#116](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/116)].
 
 = 0.2.1 (October 25th, 2017) =
 * Ensures use of `?_embed` emits correct surrogate keys [[#103](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/103)].
