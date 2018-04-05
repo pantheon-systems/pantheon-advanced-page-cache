@@ -157,6 +157,18 @@ This plugin implements a variety of [WP-CLI](https://wp-cli.org) commands. All c
 
 Use `wp help pantheon cache <command>` to learn more about each command.
 
+## Debugging ##
+
+By default, Pantheon's infrastructure strips out the `Surrogate-Key` response header before responses are served to clients. The contents of this header can be viewed as `Surrogate-Key-Raw` by adding on a debugging header to the request.
+
+A direct way of inspecting headers is with `curl -I`. This command will make a request and show just the response headers. Adding `-H "Pantheon-Debug:1"` will result in `Surrogate-Key-Raw` being included in the response headers. The complete command looks like this:
+
+ `curl -IH "Pantheon-Debug:1" https://scalewp.io/`
+
+ Piping to `grep` will filter the output down to just the `Surrogate-Key-Raw` header:
+
+`curl -IH "Pantheon-Debug:1" https://scalewp.io/ | grep -i Surrogate-Key-Raw`
+
 ## Emitted Keys and Purge Events ##
 
 ### Emitted Keys on Traditional Views ###
