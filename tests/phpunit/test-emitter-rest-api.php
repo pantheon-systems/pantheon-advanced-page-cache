@@ -326,7 +326,7 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 			'rest-setting-url',
 			'rest-setting-use_smilies',
 		);
-		if ( version_compare( str_replace( '-src', '', $GLOBALS['wp_version'] ), '5.0' ) ) {
+		if ( version_compare( str_replace( '-src', '', $GLOBALS['wp_version'] ), '5.0-alpha', '>=' ) ) {
 			$expected_count    = 16;
 			$expected_values[] = 'rest-setting-permalink_structure';
 		}
