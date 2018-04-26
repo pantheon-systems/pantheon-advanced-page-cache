@@ -21,3 +21,6 @@ default:
     Behat\MinkExtension:
       # base_url set by ENV
       goutte: ~
+        guzzle_parameters:
+          headers:
+            Pantheon-Debug: 1
