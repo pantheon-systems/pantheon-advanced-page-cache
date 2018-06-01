@@ -66,21 +66,9 @@ jobs:
         git clone --branch master https://github.com/pantheon-systems/terminus.git ~/terminus
         cd ~/terminus && composer install
         terminus auth:login --machine-token=$TERMINUS_TOKEN
-    # Save dependency cache
     - save_cache:
         key: v1-dep-{{ .Branch }}-{{ epoch }}
         paths:
-        # This is a broad list of cache paths to include many possible development environments
-        # You can probably delete some of these entries
-        - vendor/bundle
-        - ~/virtualenvs
-        - ~/.m2
-        - ~/.ivy2
-        - ~/.bundle
-        - ~/.go_workspace
-        - ~/.gradle
-        - ~/.cache/bower
-        # These cache paths were specified in the 1.0 config
         - ~/.composer/cache
         - ./node_modules
     # Test
