@@ -18,6 +18,7 @@ jobs:
         echo 'export TERMINUS_SITE=pantheon-advanced-page-cache' >> $BASH_ENV
         echo 'export SITE_ENV=pantheon-advanced-page-cache.ci-$CIRCLE_BUILD_NUM' >> $BASH_ENV
         echo 'export WORDPRESS_ADMIN_USERNAME=pantheon' >> $BASH_ENV
+        echo 'export WORDPRESS_ADMIN_EMAIL=no-reply@getpantheon.com' >> $BASH_ENV
         echo 'export WORDPRESS_ADMIN_PASSWORD=$(cat /tmp/WORDPRESS_ADMIN_PASSWORD)' >> $BASH_ENV
         source $BASH_ENV
     - run: echo "StrictHostKeyChecking no" >> "$HOME/.ssh/config"
