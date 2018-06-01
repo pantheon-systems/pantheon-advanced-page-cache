@@ -8,11 +8,7 @@ jobs:
     - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
       command: /sbin/init
     steps:
-    # Machine Setup
-    #   If you break your build into multiple jobs with workflows, you will probably want to do the parts of this that are relevant in each
-    # The following `checkout` command checks out your code to your working directory. In 1.0 we did this implicitly. In 2.0 you can choose where in the course of a job your code should be checked out.
     - checkout
-    # This is based on your 1.0 configuration file or project settings
     - run:
         working_directory: ~/pantheon-systems/pantheon-advanced-page-cache
         command: |-
@@ -22,17 +18,16 @@ jobs:
         keys:
         - v1-dep-{{ .Branch }}-
         - v1-dep-master-
-    # This is based on your 1.0 configuration file or project settings
     - run: echo $(openssl rand -hex 8) > ~/WORDPRESS_ADMIN_PASSWORD
     - run: echo "date.timezone = 'US/Central'"  >  /opt/circleci/php/7.0.7/etc/conf.d/xdebug.ini
     - run: |
-      echo 'export PATH=~/terminus/bin:$PATH' >> $BASH_ENV
-      echo 'export TERMINUS_ENV=ci-$CIRCLE_BUILD_NUM' >> $BASH_ENV
-      echo 'export TERMINUS_SITE=pantheon-advanced-page-cache' >> $BASH_ENV
-      echo 'export SITE_ENV=pantheon-advanced-page-cache.ci-$CIRCLE_BUILD_NUM' >> $BASH_ENV
-      echo 'export WORDPRESS_ADMIN_USERNAME=pantheon' >> $BASH_ENV
-      echo 'export WORDPRESS_ADMIN_PASSWORD=$(cat ~/WORDPRESS_ADMIN_PASSWORD)' >> $BASH_ENV
-      source $BASH_ENV
+        echo 'export PATH=~/terminus/bin:$PATH' >> $BASH_ENV
+        echo 'export TERMINUS_ENV=ci-$CIRCLE_BUILD_NUM' >> $BASH_ENV
+        echo 'export TERMINUS_SITE=pantheon-advanced-page-cache' >> $BASH_ENV
+        echo 'export SITE_ENV=pantheon-advanced-page-cache.ci-$CIRCLE_BUILD_NUM' >> $BASH_ENV
+        echo 'export WORDPRESS_ADMIN_USERNAME=pantheon' >> $BASH_ENV
+        echo 'export WORDPRESS_ADMIN_PASSWORD=$(cat ~/WORDPRESS_ADMIN_PASSWORD)' >> $BASH_ENV
+        source $BASH_ENV
     - run: |
         if [ -z "$GITHUB_TOKEN" ]; then
           echo "GITHUB_TOKEN environment variables missing; assuming unauthenticated build"
@@ -42,7 +37,6 @@ jobs:
         {
           composer config -g github-oauth.github.com $GITHUB_TOKEN
         } &> /dev/null
-    # This is based on your 1.0 configuration file or project settings
     - run: |
         if [ -z "$TERMINUS_TOKEN" ]; then
           echo "TERMINUS_TOKEN environment variables missing; assuming unauthenticated build"
@@ -57,11 +51,6 @@ jobs:
         paths:
         - ~/.composer/cache
         - ./node_modules
-    # Test
-    #   This would typically be a build job when using workflows, possibly combined with build
-    # This is based on your 1.0 configuration file or project settings
     - run: ./bin/behat-prepare.sh
-    # This is based on your 1.0 configuration file or project settings
     - run: ./bin/behat-test.sh
-    # This is based on your 1.0 configuration file or project settings
     - run: ./bin/behat-cleanup.sh
