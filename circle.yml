@@ -5,15 +5,10 @@ jobs:
     parallelism: 1
     shell: /bin/bash --login
     docker:
-    - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
+    - image: circleci/php: 7.1.18-apache-node-browsers
       command: /sbin/init
     steps:
     - checkout
-    - run:
-        working_directory: ~/pantheon-systems/pantheon-advanced-page-cache
-        command: |-
-          ln -fs << $HOME/.phpenv/versions/7.0.7/libexec/apache2/libphp5.so/usr/lib/apache2/modules/libphp5.so;
-          phpenv global 7.0.7 2>/dev/null
     - restore_cache:
         keys:
         - v1-dep-{{ .Branch }}-
