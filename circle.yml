@@ -3,10 +3,8 @@ jobs:
   build:
     working_directory: ~/pantheon-systems/pantheon-advanced-page-cache
     parallelism: 1
-    shell: /bin/bash --login
     docker:
     - image: circleci/php:7.1
-      command: /sbin/init
     steps:
     - checkout
     - restore_cache:
