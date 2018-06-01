@@ -13,15 +13,15 @@ jobs:
         keys:
         - v1-dep-{{ .Branch }}-
         - v1-dep-master-
-    - run: echo $(openssl rand -hex 8) > ~/WORDPRESS_ADMIN_PASSWORD
+    - run: echo $(openssl rand -hex 8) > /tmp/WORDPRESS_ADMIN_PASSWORD
     - run: echo "date.timezone = 'US/Central'"  >  /opt/circleci/php/7.0.7/etc/conf.d/xdebug.ini
     - run: |
-        echo 'export PATH=~/terminus/bin:$PATH' >> $BASH_ENV
+        echo 'export PATH=/tmp/terminus/bin:$PATH' >> $BASH_ENV
         echo 'export TERMINUS_ENV=ci-$CIRCLE_BUILD_NUM' >> $BASH_ENV
         echo 'export TERMINUS_SITE=pantheon-advanced-page-cache' >> $BASH_ENV
         echo 'export SITE_ENV=pantheon-advanced-page-cache.ci-$CIRCLE_BUILD_NUM' >> $BASH_ENV
         echo 'export WORDPRESS_ADMIN_USERNAME=pantheon' >> $BASH_ENV
-        echo 'export WORDPRESS_ADMIN_PASSWORD=$(cat ~/WORDPRESS_ADMIN_PASSWORD)' >> $BASH_ENV
+        echo 'export WORDPRESS_ADMIN_PASSWORD=$(cat /tmp/WORDPRESS_ADMIN_PASSWORD)' >> $BASH_ENV
         source $BASH_ENV
     - run: |
         if [ -z "$GITHUB_TOKEN" ]; then
@@ -38,8 +38,8 @@ jobs:
           exit 0
         fi
         composer install
-        git clone --branch master https://github.com/pantheon-systems/terminus.git ~/terminus
-        cd ~/terminus && composer install
+        git clone --branch master https://github.com/pantheon-systems/terminus.git /tmp/terminus
+        cd /tmp/terminus && composer install
         terminus auth:login --machine-token=$TERMINUS_TOKEN
     - save_cache:
         key: v1-dep-{{ .Branch }}-{{ epoch }}
