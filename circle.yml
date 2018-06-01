@@ -33,17 +33,10 @@ jobs:
         command: |-
           ln -fs << $HOME/.phpenv/versions/7.0.7/libexec/apache2/libphp5.so/usr/lib/apache2/modules/libphp5.so;
           phpenv global 7.0.7 2>/dev/null
-    # Dependencies
-    #   This would typically go in either a build or a build-and-test job when using workflows
-    # Restore the dependency cache
     - restore_cache:
         keys:
-        # This branch if available
         - v1-dep-{{ .Branch }}-
-        # Default branch if not
         - v1-dep-master-
-        # Any branch if there are none on the default branch - this should be unnecessary if you have your default branch configured correctly
-        - v1-dep-
     # This is based on your 1.0 configuration file or project settings
     - run: echo $(openssl rand -hex 8) > ~/WORDPRESS_ADMIN_PASSWORD
     - run: echo "date.timezone = 'US/Central'"  >  /opt/circleci/php/7.0.7/etc/conf.d/xdebug.ini
