@@ -9,14 +9,8 @@
 	<!-- Show progress and sniff codes in all reports -->
 	<arg value="ps"/>
 
-	<config name="minimum_supported_wp_version" value="4.7"/>
-	<rule ref="WordPress">
-		<exclude name="WordPress.VIP"/>
-		<exclude name="WordPress.Security.NonceVerification.NoNonceVerification"/>
-		<exclude name="WordPress.Security.ValidatedSanitizedInput.InputNotValidated"/>
-		<exclude name="WordPress.Security.ValidatedSanitizedInput.MissingUnslash"/>
-		<exclude name="WordPress.Security.ValidatedSanitizedInput.InputNotSanitized"/>
-	</rule>
+	<rule ref="WordPress-Core" />
+	<rule ref="WordPress-Docs" />
 
 	<exclude-pattern>*/bin/*</exclude-pattern>
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
