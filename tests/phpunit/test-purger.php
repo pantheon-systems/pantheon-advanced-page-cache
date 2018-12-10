@@ -840,7 +840,9 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function test_update_term() {
 		wp_update_term(
-			$this->tag_id2, 'post_tag', array(
+			$this->tag_id2,
+			'post_tag',
+			array(
 				'description' => 'Test description',
 			)
 		);

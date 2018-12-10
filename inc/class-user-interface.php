@@ -23,9 +23,9 @@ class User_Interface {
 		}
 
 		if ( ! empty( $_GET['message'] ) && 'pantheon-cleared-url-cache' === $_GET['message'] ) {
-			$title = __( 'URL Cache Cleared', 'pantheon-advanced-page-cache' );
+			$title = esc_html__( 'URL Cache Cleared', 'pantheon-advanced-page-cache' );
 		} else {
-			$title = __( 'Clear URL Cache', 'pantheon-advanced-page-cache' );
+			$title = esc_html__( 'Clear URL Cache', 'pantheon-advanced-page-cache' );
 		}
 
 		$wp_admin_bar->add_menu(
@@ -36,7 +36,7 @@ class User_Interface {
 				'meta'   => array(
 					'title' => __( 'Delete cache of the current URL.', 'pantheon-advanced-page-cache' ),
 				),
-				'href'   => wp_nonce_url( admin_url( 'admin-ajax.php?action=pantheon_clear_url_cache&path=' . urlencode( preg_replace( '/[ <>\'\"\r\n\t\(\)]/', '', $_SERVER['REQUEST_URI'] ) ) ), 'clear-url-cache' ),
+				'href'   => wp_nonce_url( admin_url( 'admin-ajax.php?action=pantheon_clear_url_cache&path=' . rawurlencode( preg_replace( '/[ <>\'\"\r\n\t\(\)]/', '', $_SERVER['REQUEST_URI'] ) ) ), 'clear-url-cache' ),
 			)
 		);
 	}
@@ -49,12 +49,12 @@ class User_Interface {
 		if ( empty( $_GET['_wpnonce'] )
 			|| ! wp_verify_nonce( $_GET['_wpnonce'], 'clear-url-cache' )
 			|| ! current_user_can( 'delete_others_posts' ) ) {
-			wp_die( __( "You shouldn't be doing this.", 'pantheon-advanced-page-cache' ) );
+			wp_die( esc_html__( "You shouldn't be doing this.", 'pantheon-advanced-page-cache' ) );
 		}
 
 		$ret = pantheon_wp_clear_edge_paths( array( $_GET['path'] ) );
 		if ( is_wp_error( $ret ) ) {
-			wp_die( $ret->get_error_message() );
+			wp_die( wp_kses_post( $ret->get_error_message() ) );
 		}
 		wp_safe_redirect( add_query_arg( 'message', 'pantheon-cleared-url-cache', preg_replace( '/[ <>\'\"\r\n\t\(\)]/', '', $_GET['path'] ) ) );
 		exit;

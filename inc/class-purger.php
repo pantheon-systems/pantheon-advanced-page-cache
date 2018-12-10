@@ -159,7 +159,7 @@ class Purger {
 	 * @param WP_Comment $comment Comment object.
 	 */
 	public static function action_wp_insert_comment( $id, $comment ) {
-		if ( 1 != $comment->comment_approved ) {
+		if ( 1 !== (int) $comment->comment_approved ) {
 			return;
 		}
 		$keys = array(
@@ -201,7 +201,6 @@ class Purger {
 		 */
 		$keys = apply_filters( 'pantheon_purge_transition_comment_status', $keys, $new_status, $old_status, $comment );
 		pantheon_wp_clear_edge_keys( $keys );
-		;
 	}
 
 	/**
@@ -252,7 +251,8 @@ class Purger {
 			$keys[] = 'rest-comment-post-huge';
 		}
 		$taxonomies = wp_list_filter(
-			get_object_taxonomies( $post->post_type, 'objects' ), array(
+			get_object_taxonomies( $post->post_type, 'objects' ),
+			array(
 				'public' => true,
 			)
 		);
