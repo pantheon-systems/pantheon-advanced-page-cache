@@ -9,7 +9,7 @@
 	<!-- Show progress and sniff codes in all reports -->
 	<arg value="ps"/>
 
-	<rule ref="WordPress-Core" />
+	<rule ref="WordPress" />
 	<rule ref="WordPress-Docs" />
 
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
