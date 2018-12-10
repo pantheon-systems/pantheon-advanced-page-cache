@@ -218,7 +218,7 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 	 * Sets up the REST API server object
 	 */
 	protected function setup_rest_api_server() {
-		$GLOBALS['wp_rest_server'] = new Spy_REST_Server;
+		$GLOBALS['wp_rest_server'] = new Spy_REST_Server();
 		$this->server              = $GLOBALS['wp_rest_server'];
 		do_action( 'rest_api_init' );
 	}
@@ -288,8 +288,8 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 		$rest_api_routes[] = '/wp/v2/comments/' . $this->comment_id1;
 		$views             = array_unique( $views );
 		foreach ( $views as $view ) {
-			$path  = parse_url( $view, PHP_URL_PATH );
-			$query = parse_url( $view, PHP_URL_QUERY );
+			$path  = wp_parse_url( $view, PHP_URL_PATH );
+			$query = wp_parse_url( $view, PHP_URL_QUERY );
 			if ( $query ) {
 				$path .= '?' . $query;
 			}

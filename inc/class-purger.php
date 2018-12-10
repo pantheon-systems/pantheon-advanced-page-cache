@@ -159,7 +159,7 @@ class Purger {
 	 * @param WP_Comment $comment Comment object.
 	 */
 	public static function action_wp_insert_comment( $id, $comment ) {
-		if ( 1 != $comment->comment_approved ) {
+		if ( 1 !== (int) $comment->comment_approved ) {
 			return;
 		}
 		$keys = array(
