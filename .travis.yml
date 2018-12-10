@@ -43,7 +43,7 @@ script:
     - |
       if [[ ! -z "$WP_VERSION" ]] ; then
         phpunit
-        phpunit -c multisite.xml
+        phpunit -c multisite.xml.dist
       fi
     - |
       if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
