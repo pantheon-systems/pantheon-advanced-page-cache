@@ -1,5 +1,7 @@
-language: php
+sudo: false
 dist: trusty
+
+language: php
 
 notifications:
   email:
