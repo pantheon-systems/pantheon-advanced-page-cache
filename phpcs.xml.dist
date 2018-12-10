@@ -9,12 +9,7 @@
 	<!-- Show progress and sniff codes in all reports -->
 	<arg value="ps"/>
 
-	<rule ref="WordPress">
-		<exclude name="WordPress.Security.NonceVerification.NoNonceVerification" />
-		<exclude name="WordPress.Security.ValidatedSanitizedInput.InputNotValidated" />
-		<exclude name="WordPress.Security.ValidatedSanitizedInput.InputNotSanitized" />
-		<exclude name="WordPress.Security.ValidatedSanitizedInput.MissingUnslash" />
-	</rule>
+	<rule ref="WordPress-Core" />
 	<rule ref="WordPress-Docs" />
 
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
