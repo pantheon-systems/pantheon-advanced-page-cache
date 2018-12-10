@@ -268,7 +268,8 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 			$rest_api_routes[] = '/wp/v2/users/' . $user_id;
 		}
 		$terms = get_terms(
-			array( 'post_tag', 'category', 'product_category' ), array(
+			array( 'post_tag', 'category', 'product_category' ),
+			array(
 				'hide_empty' => false,
 			)
 		);
@@ -343,14 +344,17 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 	 */
 	private function register_custom_types() {
 		register_post_type(
-			'product', array(
+			'product',
+			array(
 				'public'       => true,
 				'has_archive'  => 'products',
 				'show_in_rest' => true,
 			)
 		);
 		register_taxonomy(
-			'product_category', array( 'product' ), array(
+			'product_category',
+			array( 'product' ),
+			array(
 				'public'       => true,
 				'rewrite'      => array(
 					'slug' => 'product-category',

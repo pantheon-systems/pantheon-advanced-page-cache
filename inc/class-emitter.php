@@ -79,7 +79,8 @@ class Emitter {
 		foreach ( get_post_types(
 			array(
 				'show_in_rest' => true,
-			), 'objects'
+			),
+			'objects'
 		) as $post_type ) {
 			add_filter( "rest_prepare_{$post_type->name}", array( __CLASS__, 'filter_rest_prepare_post' ), 10, 3 );
 			$base = ! empty( $post_type->rest_base ) ? $post_type->rest_base : $post_type->name;
@@ -88,7 +89,8 @@ class Emitter {
 		foreach ( get_taxonomies(
 			array(
 				'show_in_rest' => true,
-			), 'objects'
+			),
+			'objects'
 		) as $taxonomy ) {
 			add_filter( "rest_prepare_{$taxonomy->name}", array( __CLASS__, 'filter_rest_prepare_term' ), 10, 3 );
 			$base = ! empty( $taxonomy->rest_base ) ? $taxonomy->rest_base : $taxonomy->name;
@@ -343,7 +345,8 @@ class Emitter {
 
 		// Sort by the output length of the key category.
 		uasort(
-			$keycats, function( $a, $b ) {
+			$keycats,
+			function( $a, $b ) {
 				$ca = strlen( implode( ' ', $a ) );
 				$cb = strlen( implode( ' ', $b ) );
 				if ( $ca === $cb ) {
