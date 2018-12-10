@@ -35,7 +35,8 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 				'rest-post-' . $this->post_id1,
 				'rest-post-' . $this->post_id2,
 				'rest-post-' . $this->post_id3,
-			), Emitter::get_rest_api_surrogate_keys()
+			),
+			Emitter::get_rest_api_surrogate_keys()
 		);
 	}
 
@@ -62,7 +63,8 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 				'rest-term-' . $this->tag_id2,
 				'rest-user-' . $this->user_id1,
 				'rest-user-' . $this->user_id2,
-			), Emitter::get_rest_api_surrogate_keys()
+			),
+			Emitter::get_rest_api_surrogate_keys()
 		);
 	}
 
@@ -77,7 +79,8 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertArrayValues(
 			array(
 				'rest-post-collection',
-			), Emitter::get_rest_api_surrogate_keys()
+			),
+			Emitter::get_rest_api_surrogate_keys()
 		);
 	}
 
@@ -92,7 +95,8 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertArrayValues(
 			array(
 				'rest-post-' . $this->post_id2,
-			), Emitter::get_rest_api_surrogate_keys()
+			),
+			Emitter::get_rest_api_surrogate_keys()
 		);
 	}
 
@@ -107,7 +111,8 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 			array(
 				'rest-page-collection',
 				'rest-post-' . $this->page_id1,
-			), Emitter::get_rest_api_surrogate_keys()
+			),
+			Emitter::get_rest_api_surrogate_keys()
 		);
 	}
 
@@ -122,7 +127,8 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertArrayValues(
 			array(
 				'rest-post-' . $this->page_id1,
-			), Emitter::get_rest_api_surrogate_keys()
+			),
+			Emitter::get_rest_api_surrogate_keys()
 		);
 	}
 
@@ -137,7 +143,8 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 			array(
 				'rest-attachment-collection',
 				'rest-post-' . $this->attachment_id1,
-			), Emitter::get_rest_api_surrogate_keys()
+			),
+			Emitter::get_rest_api_surrogate_keys()
 		);
 	}
 
@@ -152,7 +159,8 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertArrayValues(
 			array(
 				'rest-post-' . $this->attachment_id1,
-			), Emitter::get_rest_api_surrogate_keys()
+			),
+			Emitter::get_rest_api_surrogate_keys()
 		);
 	}
 
@@ -168,7 +176,8 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 				'rest-category-collection',
 				'rest-term-' . $this->category_id1,
 				'rest-term-' . $this->category_id2,
-			), Emitter::get_rest_api_surrogate_keys()
+			),
+			Emitter::get_rest_api_surrogate_keys()
 		);
 	}
 
@@ -183,7 +192,8 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertArrayValues(
 			array(
 				'rest-term-' . $this->category_id2,
-			), Emitter::get_rest_api_surrogate_keys()
+			),
+			Emitter::get_rest_api_surrogate_keys()
 		);
 	}
 
@@ -199,7 +209,8 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 				'rest-post_tag-collection',
 				'rest-term-' . $this->tag_id1,
 				'rest-term-' . $this->tag_id2,
-			), Emitter::get_rest_api_surrogate_keys()
+			),
+			Emitter::get_rest_api_surrogate_keys()
 		);
 	}
 
@@ -214,7 +225,8 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertArrayValues(
 			array(
 				'rest-term-' . $this->tag_id1,
-			), Emitter::get_rest_api_surrogate_keys()
+			),
+			Emitter::get_rest_api_surrogate_keys()
 		);
 	}
 
@@ -231,7 +243,8 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 				'rest-comment-collection',
 				'rest-comment-' . $this->comment_id1,
 				'rest-comment-post-' . $comment->comment_post_ID,
-			), Emitter::get_rest_api_surrogate_keys()
+			),
+			Emitter::get_rest_api_surrogate_keys()
 		);
 	}
 
@@ -246,7 +259,8 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertArrayValues(
 			array(
 				'rest-comment-collection',
-			), Emitter::get_rest_api_surrogate_keys()
+			),
+			Emitter::get_rest_api_surrogate_keys()
 		);
 	}
 
@@ -263,7 +277,8 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 			array(
 				'rest-comment-' . $this->comment_id1,
 				'rest-comment-post-' . $comment->comment_post_ID,
-			), Emitter::get_rest_api_surrogate_keys()
+			),
+			Emitter::get_rest_api_surrogate_keys()
 		);
 	}
 
@@ -279,7 +294,8 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 				'rest-user-collection',
 				'rest-user-' . $this->user_id1,
 				'rest-user-' . $this->user_id2,
-			), Emitter::get_rest_api_surrogate_keys()
+			),
+			Emitter::get_rest_api_surrogate_keys()
 		);
 	}
 
@@ -294,7 +310,8 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertArrayValues(
 			array(
 				'rest-user-' . $this->user_id2,
-			), Emitter::get_rest_api_surrogate_keys()
+			),
+			Emitter::get_rest_api_surrogate_keys()
 		);
 	}
 
@@ -326,13 +343,10 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 			'rest-setting-url',
 			'rest-setting-use_smilies',
 		);
-		if ( version_compare( str_replace( '-src', '', $GLOBALS['wp_version'] ), '5.0-alpha', '>=' ) ) {
-			$expected_count    = 16;
-			$expected_values[] = 'rest-setting-permalink_structure';
-		}
 		$this->assertCount( $expected_count, $response->get_data() );
 		$this->assertArrayValues(
-			$expected_values, Emitter::get_rest_api_surrogate_keys()
+			$expected_values,
+			Emitter::get_rest_api_surrogate_keys()
 		);
 	}
 
