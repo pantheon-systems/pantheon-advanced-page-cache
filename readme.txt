@@ -291,6 +291,10 @@ Different WordPress actions cause different surrogate keys to be purged, documen
 
 == Changelog ==
 
+= 0.3.1 (October 27th, 2019) =
+* Fixes reversed argument order with use of `implode()` [[#139](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/139)].
+* Various PHPCS cleanup [[#127](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/127)].
+
 = 0.3.0 (November 27th, 2017) =
 * Emits '404' surrogate key on 404s; purges when purging the homepage [[#107](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/107)].
 * Adds more specific filters for modifying surrogate keys in different contexts [[#109](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/109)].
