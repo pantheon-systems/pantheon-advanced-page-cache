@@ -61,9 +61,13 @@ jobs:
     steps:
     - checkout
     - run: |
-        if [ -z "$TERMINUS_TOKEN" ]; then
-          echo "TERMINUS_TOKEN environment variables missing; assuming unauthenticated build"
+        if [ -z "$GITHUB_TOKEN" ]; then
+          echo "GITHUB_TOKEN environment variables missing; assuming unauthenticated build"
           exit 0
         fi
-        terminus auth:login --machine-token=$TERMINUS_TOKEN
-    - run: terminus project:clu
+        echo "Setting GitHub OAuth token with suppressed ouput"
+        {
+          composer config -g github-oauth.github.com $GITHUB_TOKEN
+        } &> /dev/null
+    - run: composer install
+    - run: composer clu
