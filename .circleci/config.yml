@@ -4,6 +4,7 @@ workflows:
   main:
     jobs:
       - build
+      - clu
   nightly:
     triggers:
       - schedule:
@@ -53,3 +54,10 @@ jobs:
     - run:
         command: ./bin/behat-cleanup.sh
         when: always
+  clu:
+    working_directory: ~/pantheon-systems/pantheon-advanced-page-cache
+    docker:
+    - image: quay.io/pantheon-public/build-tools-ci:6.x
+    steps:
+    - checkout
+    - terminus project:clu
