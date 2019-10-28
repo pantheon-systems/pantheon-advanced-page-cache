@@ -60,4 +60,10 @@ jobs:
     - image: quay.io/pantheon-public/build-tools-ci:6.x
     steps:
     - checkout
+    - run: |
+        if [ -z "$TERMINUS_TOKEN" ]; then
+          echo "TERMINUS_TOKEN environment variables missing; assuming unauthenticated build"
+          exit 0
+        fi
+        terminus auth:login --machine-token=$TERMINUS_TOKEN
     - run: terminus project:clu
