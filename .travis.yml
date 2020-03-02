@@ -25,11 +25,9 @@ matrix:
     - php: 7.4
       env: WP_TRAVISCI=phpcs
     - php: 7.3
-      env: WP_TRAVISCI=latest
-    - php: 7.2
       env: WP_VERSION=latest
     - php: 7.2
-      env: WP_VERSION=4.7
+      env: WP_VERSION=latest
 
 before_script:
   - export PATH="$HOME/.composer/vendor/bin:$HOME/.config/composer/vendor/bin:$PATH"
