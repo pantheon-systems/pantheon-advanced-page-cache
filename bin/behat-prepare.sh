@@ -69,6 +69,9 @@ git config user.name "Pantheon"
 git commit -m "Include Pantheon Advanced Page Cache and its configuration files"
 git push
 
+# Sometimes Pantheon takes a little time to refresh the filesystem
+sleep 10
+
 ###
 # Set up WordPress, theme, and plugins for the test run
 ###
