@@ -75,10 +75,11 @@ sleep 8
 ###
 # Set up WordPress, theme, and plugins for the test run
 ###
+terminus wp $SITE_ENV -- core install --title=$TERMINUS_ENV-$TERMINUS_SITE --url=$PANTHEON_SITE_URL --admin_user=$WORDPRESS_ADMIN_USERNAME --admin_email=pantheon-advanced-page-cache@getpantheon.com --admin_password=pantheon
 # Silence output so as not to show the password.
-# {
-  terminus wp $SITE_ENV -- core install --title=$TERMINUS_ENV-$TERMINUS_SITE --url=$PANTHEON_SITE_URL --admin_user=$WORDPRESS_ADMIN_USERNAME --admin_email=pantheon-advanced-page-cache@getpantheon.com --admin_password=$WORDPRESS_ADMIN_PASSWORD
-# } &> /dev/null
+{
+	terminus wp $SITE_ENV -- user update $WORDPRESS_ADMIN_USERNAME --user_pass=$WORDPRESS_ADMIN_PASSWORD
+} &> /dev/null
 terminus wp $SITE_ENV -- cache flush
 terminus wp $SITE_ENV -- plugin activate pantheon-advanced-page-cache classic-editor
 terminus wp $SITE_ENV -- theme activate twentyseventeen
