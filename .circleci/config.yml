@@ -25,10 +25,10 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "composer.json" }}
+            - test-lint-dependencies-{{ checksum "composer.json" }}
       - run: composer install -n --prefer-dist
       - save_cache:
-          key: v1-dependencies-{{ checksum "composer.json" }}
+          key: test-lint-dependencies-{{ checksum "composer.json" }}
           paths:
             - vendor
       - run:
@@ -44,10 +44,10 @@ jobs:
     - checkout
     - restore_cache:
         keys:
-          - v1-dependencies-{{ checksum "composer.json" }}
+          - test-behat-dependencies-{{ checksum "composer.json" }}
     - run: composer install -n --prefer-dist
     - save_cache:
-        key: v1-dependencies-{{ checksum "composer.json" }}
+        key: test-behat-dependencies-{{ checksum "composer.json" }}
         paths:
           - vendor
     - run: echo $(openssl rand -hex 8) > /tmp/WORDPRESS_ADMIN_PASSWORD
@@ -92,10 +92,10 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "composer.json" }}
+            - test-phpunit-dependencies-{{ checksum "composer.json" }}
       - run: composer install -n --prefer-dist
       - save_cache:
-          key: v1-dependencies-{{ checksum "composer.json" }}
+          key: test-phpunit-dependencies-{{ checksum "composer.json" }}
           paths:
             - vendor
       - run:
