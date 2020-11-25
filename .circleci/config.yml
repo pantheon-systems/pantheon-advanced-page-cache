@@ -18,6 +18,7 @@ workflows:
       - test-behat
 jobs:
   lint:
+    working_directory: ~/pantheon-systems/pantheon-advanced-page-cache
     docker:
       - image: quay.io/pantheon-public/build-tools-ci:6.x
     steps:
@@ -80,6 +81,7 @@ jobs:
         command: ./bin/behat-cleanup.sh
         when: always
   test-phpunit:
+    working_directory: ~/pantheon-systems/pantheon-advanced-page-cache
     docker:
       - image: circleci/php:7.4-node-browsers
       - image: circleci/mariadb:10.3
