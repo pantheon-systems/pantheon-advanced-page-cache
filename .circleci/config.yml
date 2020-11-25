@@ -108,8 +108,6 @@ jobs:
             sudo docker-php-ext-enable imagick
             sudo docker-php-ext-install mysqli
             sudo apt-get install mariadb-client-10.3
-            sudo apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev
-            sudo docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && sudo docker-php-ext-install gd
       - run:
           name: "Run Tests"
           command: |
