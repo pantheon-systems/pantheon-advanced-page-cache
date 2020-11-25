@@ -81,7 +81,7 @@ jobs:
         when: always
   test-phpunit:
     docker:
-      - image: quay.io/pantheon-public/build-tools-ci:6.x
+      - image: circleci/php:7.4-node-browsers
       - image: circleci/mariadb:10.3
     environment:
       - WP_TESTS_DIR: "/tmp/wordpress-tests-lib"
