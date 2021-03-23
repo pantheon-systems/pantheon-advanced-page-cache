@@ -169,6 +169,8 @@ Piping to `grep` will filter the output down to just the `Surrogate-Key-Raw` hea
 
     curl -IH "Pantheon-Debug:1" https://scalewp.io/ | grep -i Surrogate-Key-Raw
 
+Tada!
+
 ## Emitted Keys and Purge Events ##
 
 ### Emitted Keys on Traditional Views ###
