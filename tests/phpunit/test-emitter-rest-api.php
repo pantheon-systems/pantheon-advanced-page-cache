@@ -323,9 +323,12 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 			$this->markTestSkipped( 'Test only applicable on single site.' );
 		}
 		wp_set_current_user( $this->admin_id1 );
-		$request         = new WP_REST_Request( 'GET', '/wp/v2/settings' );
-		$response        = $this->server->dispatch( $request );
-		$expected_count  = 15;
+		$request        = new WP_REST_Request( 'GET', '/wp/v2/settings' );
+		$response       = $this->server->dispatch( $request );
+		$expected_count = 15;
+		if ( version_compare( $GLOBALS['wp_version'], '5.8-alpha', '>=' ) ) {
+			$expected_count = 16;
+		}
 		$expected_values = array(
 			'rest-setting-date_format',
 			'rest-setting-default_category',
@@ -343,6 +346,14 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 			'rest-setting-url',
 			'rest-setting-use_smilies',
 		);
+		if ( version_compare( $GLOBALS['wp_version'], '5.8-alpha', '>=' ) ) {
+			array_splice(
+				$expected_values,
+				9,
+				0,
+				array( 'rest-setting-site_logo' )
+			);
+		}
 		$this->assertCount( $expected_count, $response->get_data() );
 		$this->assertArrayValues(
 			$expected_values,
