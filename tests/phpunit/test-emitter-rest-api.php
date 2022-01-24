@@ -328,6 +328,8 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$expected_count = 15;
 		if ( version_compare( $GLOBALS['wp_version'], '5.9-alpha', '>=' ) ) {
 			$expected_count = 17;
+		} elseif ( version_compare( $GLOBALS['wp_version'], '5.8', '>=' ) ) {
+			$expected_count = 16;
 		}
 		$expected_values = array(
 			'rest-setting-date_format',
@@ -352,6 +354,13 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 				9,
 				0,
 				array( 'rest-setting-site_icon', 'rest-setting-site_logo' )
+			);
+		} elseif ( version_compare( $GLOBALS['wp_version'], '5.8', '>=' ) ) {
+			array_splice(
+				$expected_values,
+				9,
+				0,
+				array( 'rest-setting-site_logo' )
 			);
 		}
 		$this->assertCount( $expected_count, $response->get_data() );
