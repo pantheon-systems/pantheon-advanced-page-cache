@@ -326,8 +326,8 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$request        = new WP_REST_Request( 'GET', '/wp/v2/settings' );
 		$response       = $this->server->dispatch( $request );
 		$expected_count = 15;
-		if ( version_compare( $GLOBALS['wp_version'], '5.8-alpha', '>=' ) ) {
-			$expected_count = 16;
+		if ( version_compare( $GLOBALS['wp_version'], '5.9-alpha', '>=' ) ) {
+			$expected_count = 17;
 		}
 		$expected_values = array(
 			'rest-setting-date_format',
@@ -346,12 +346,12 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 			'rest-setting-url',
 			'rest-setting-use_smilies',
 		);
-		if ( version_compare( $GLOBALS['wp_version'], '5.8-alpha', '>=' ) ) {
+		if ( version_compare( $GLOBALS['wp_version'], '5.9-alpha', '>=' ) ) {
 			array_splice(
 				$expected_values,
 				9,
 				0,
-				array( 'rest-setting-site_logo' )
+				array( 'rest-setting-site_icon', 'rest-setting-site_logo' )
 			);
 		}
 		$this->assertCount( $expected_count, $response->get_data() );
