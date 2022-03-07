@@ -1,4 +1,6 @@
 # Pantheon Advanced Page Cache #
+[![Actively Maintained](https://img.shields.io/badge/Pantheon-Actively_Maintained-yellow?logo=pantheon&color=FFDC28)](https://pantheon.io/docs/oss-support-levels#actively-maintained)
+
 **Contributors:** [getpantheon](https://profiles.wordpress.org/getpantheon), [danielbachhuber](https://profiles.wordpress.org/danielbachhuber)  
 **Tags:** pantheon, cdn, cache  
 **Requires at least:** 4.7  
