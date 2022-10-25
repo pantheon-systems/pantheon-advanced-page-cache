@@ -383,14 +383,14 @@ class Emitter {
 	 * Inspect the model and get the right surrogate keys.
 	 */
 	public static function filter_graphql_dataloader_get_model( $model ) {
-		$reflect = new \ReflectionClass($model);
+		$reflect = new \ReflectionClass( $model );
 		$class_short_name = $reflect->getShortName();
-		$surrogate_key_prefix = strtolower($class_short_name);
+		$surrogate_key_prefix = strtolower( $class_short_name );
 		if ( isset( $model->id )) {
-			if (!empty($model->databaseId)) {
+			if ( ! empty( $model->databaseId ) ) {
 				self::get_instance()->graphql_surrogate_keys[] = $surrogate_key_prefix . '-' . $model->databaseId;
 			}
-			if (!empty($model->slug)) {
+			if ( ! empty( $model->slug ) ) {
 				self::get_instance()->graphql_surrogate_keys[] = $surrogate_key_prefix . '-' . $model->slug;
 			}
 		}
@@ -422,7 +422,7 @@ class Emitter {
 	/**
 	 * Send additional headers to graphql response.
 	 */
-	public static function filter_graphql_response_headers_to_send($headers) {
+	public static function filter_graphql_response_headers_to_send( $headers ) {
 		$keys = self::get_graphql_surrogate_keys();
 		if ( ! empty( $keys ) ) {
 			$headers[self::HEADER_KEY] = implode( ' ', $keys );
