@@ -350,7 +350,14 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 			'rest-setting-url',
 			'rest-setting-use_smilies',
 		);
-		if ( version_compare( $GLOBALS['wp_version'], '5.9-alpha', '>=' ) ) {
+		if ( version_compare( $GLOBALS['wp_version'], '6.0.3', '>=' ) ) {
+			array_splice(
+				$expected_values,
+				9,
+				0,
+				array( 'rest-setting-show_on_front', 'rest-setting-posts_per_page', 'rest-setting-site_icon', 'rest-setting-site_logo' )
+			);
+		} elseif ( version_compare( $GLOBALS['wp_version'], '5.9-alpha', '>=' ) ) {
 			array_splice(
 				$expected_values,
 				9,
