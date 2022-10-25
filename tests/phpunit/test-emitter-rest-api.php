@@ -355,7 +355,7 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 				$expected_values,
 				9,
 				0,
-				array( 'rest-setting-show_on_front', 'rest-setting-posts_per_page', 'rest-setting-site_icon', 'rest-setting-site_logo' )
+				array( 'rest-setting-page_for_posts', 'rest-setting-page_on_front', 'rest-setting-show_on_front', 'rest-setting-site_icon', 'rest-setting-site_logo' )
 			);
 		} elseif ( version_compare( $GLOBALS['wp_version'], '5.9-alpha', '>=' ) ) {
 			array_splice(
