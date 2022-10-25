@@ -381,14 +381,18 @@ class Emitter {
 
 	/**
 	 * Inspect the model and get the right surrogate keys.
+	 *
+	 * @param WPGraphQL\Model\Model $model Model object.
 	 */
 	public static function filter_graphql_dataloader_get_model( $model ) {
-		$reflect = new \ReflectionClass( $model );
-		$class_short_name = $reflect->getShortName();
+		$reflect              = new \ReflectionClass( $model );
+		$class_short_name     = $reflect->getShortName();
 		$surrogate_key_prefix = strtolower( $class_short_name );
-		if ( isset( $model->id )) {
-			if ( ! empty( $model->databaseId ) ) {
+		if ( isset( $model->id ) ) {
+			// @codingStandardsIgnoreStart
+			if (!empty($model->databaseId)) {
 				self::get_instance()->graphql_surrogate_keys[] = $surrogate_key_prefix . '-' . $model->databaseId;
+				// @codingStandardsIgnoreEnd
 			}
 			if ( ! empty( $model->slug ) ) {
 				self::get_instance()->graphql_surrogate_keys[] = $surrogate_key_prefix . '-' . $model->slug;
@@ -421,11 +425,13 @@ class Emitter {
 
 	/**
 	 * Send additional headers to graphql response.
+	 *
+	 * @param array $headers Existing headers as set by graphql plugin.
 	 */
 	public static function filter_graphql_response_headers_to_send( $headers ) {
 		$keys = self::get_graphql_surrogate_keys();
 		if ( ! empty( $keys ) ) {
-			$headers[self::HEADER_KEY] = implode( ' ', $keys );
+			$headers[ self::HEADER_KEY ] = implode( ' ', $keys );
 		}
 		return $headers;
 	}
