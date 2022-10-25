@@ -83,7 +83,7 @@ jobs:
   test-phpunit:
     working_directory: ~/pantheon-systems/pantheon-advanced-page-cache
     docker:
-      - image: circleci/php:7.4-node-browsers
+      - image: cimg/php:7.4-browsers
       - image: circleci/mariadb:10.3
     environment:
       - WP_TESTS_DIR: "/tmp/wordpress-tests-lib"
