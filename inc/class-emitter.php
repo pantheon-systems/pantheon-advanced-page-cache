@@ -392,6 +392,9 @@ class Emitter {
 			// @codingStandardsIgnoreStart
 			if (!empty($model->databaseId)) {
 				self::get_instance()->graphql_surrogate_keys[] = $surrogate_key_prefix . '-' . $model->databaseId;
+				if ($surrogate_key_prefix === 'post' && !empty($model->authorDatabaseId)) {
+					self::get_instance()->graphql_surrogate_keys[] = $surrogate_key_prefix . '-user-' . $model->authorDatabaseId;
+				}
 				// @codingStandardsIgnoreEnd
 			}
 		}
@@ -414,6 +417,7 @@ class Emitter {
 		 */
 		$keys = self::get_instance()->graphql_surrogate_keys;
 		$keys = array_unique( $keys );
+		$keys = self::fix_graphql_user_keys( $keys );
 		$keys = apply_filters( 'pantheon_wp_graphql_surrogate_keys', $keys );
 		$keys = array_unique( $keys );
 		$keys = self::filter_huge_surrogate_keys_list( $keys );
@@ -431,5 +435,41 @@ class Emitter {
 			$headers[ self::HEADER_KEY ] = implode( ' ', $keys );
 		}
 		return $headers;
+	}
+
+	/**
+	 * Fix graphql user keys by removing already existing user-* keys.
+	 *
+	 * @param array $keys Existing keys.
+	 */
+	public static function fix_graphql_user_keys( $keys ) {
+		// First: populate user keys and unset them from the keys array.
+		$user_keys = array();
+		foreach ( $keys as $index => $key ) {
+			if ( strpos( $key, 'user-' ) === 0 ) {
+				$user_keys[ $index ] = $key;
+				unset( $keys[ $index ] );
+			}
+		}
+
+		if ( $user_keys ) {
+			// Second: Clear user_keys if the key is already in the keys array in the form "post-user-*".
+			foreach ( $keys as $index => $key ) {
+				if ( strpos( $key, 'post-user-' ) === 0 ) {
+					foreach ( $user_keys as $user_key_index => $user_key ) {
+						if ( "post-$user_key" === $key ) {
+							unset( $user_keys[ $user_key_index ] );
+							break;
+						}
+					}
+				}
+			}
+			// Finally: Merge back to keys array.
+			if ( count( $user_keys ) ) {
+				// If there are any left user keys, re-add them.
+				$keys = array_merge( $keys, $user_keys );
+			}
+		}
+		return $keys;
 	}
 }
