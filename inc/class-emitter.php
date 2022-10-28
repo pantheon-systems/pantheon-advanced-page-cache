@@ -394,9 +394,6 @@ class Emitter {
 				self::get_instance()->graphql_surrogate_keys[] = $surrogate_key_prefix . '-' . $model->databaseId;
 				// @codingStandardsIgnoreEnd
 			}
-			if ( ! empty( $model->slug ) ) {
-				self::get_instance()->graphql_surrogate_keys[] = $surrogate_key_prefix . '-' . $model->slug;
-			}
 		}
 		return $model;
 	}
