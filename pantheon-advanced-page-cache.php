@@ -116,6 +116,9 @@ add_action( 'rest_api_init', array( 'Pantheon_Advanced_Page_Cache\Emitter', 'act
 add_filter( 'rest_pre_dispatch', array( 'Pantheon_Advanced_Page_Cache\Emitter', 'filter_rest_pre_dispatch' ), 10, 3 );
 add_filter( 'rest_post_dispatch', array( 'Pantheon_Advanced_Page_Cache\Emitter', 'filter_rest_post_dispatch' ), 10, 2 );
 
+add_filter( 'graphql_dataloader_get_model', array( 'Pantheon_Advanced_Page_Cache\Emitter', 'filter_graphql_dataloader_get_model' ) );
+add_filter( 'graphql_response_headers_to_send', array( 'Pantheon_Advanced_Page_Cache\Emitter', 'filter_graphql_response_headers_to_send' ) );
+
 /**
  * Clears surrogate tags when various modification behaviors are performed.
  */
