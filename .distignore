@@ -1,9 +1,10 @@
 # A set of files you probably don't want in your WordPress.org distribution
+.circleci
 .distignore
 .editorconfig
 .git
+.github
 .gitignore
-.travis.yml
 .DS_Store
 Thumbs.db
 bin
@@ -11,13 +12,10 @@ composer.json
 composer.lock
 Gruntfile.js
 package.json
-phpunit.xml
-multisite.xml
+package-lock.json
+phpcs.xml.dist
 phpunit.xml.dist
-multisite.xml.dist
-phpcs.ruleset.xml
 README.md
-wp-cli.local.yml
 tests
 vendor
 node_modules
