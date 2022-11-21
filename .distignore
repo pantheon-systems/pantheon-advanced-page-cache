@@ -9,8 +9,10 @@
 Thumbs.db
 bin
 behat.yml
+CODEOWNERS
 composer.json
 composer.lock
+CONTRIBUTING.md
 Gruntfile.js
 package.json
 package-lock.json
@@ -20,3 +22,6 @@ README.md
 tests
 vendor
 node_modules
+*.sql
+*.tar.gz
+*.zip
