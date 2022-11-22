@@ -297,6 +297,10 @@ Pantheon Advanced Page Cache integrates with WordPress plugins, including:
 
 * [WPGraphQL](https://wordpress.org/plugins/wp-graphql/)
 
+== Contributing ==
+
+See [CONTRIBUTING.md](https://github.com/pantheon-systems/wp-saml-auth/blob/master/CONTRIBUTING.md) for information on contributing.
+
 == Changelog ==
 
 ### 1.1.0 (November 1, 2022) ###
