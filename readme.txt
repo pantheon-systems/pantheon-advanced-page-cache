@@ -3,7 +3,7 @@ Contributors: getpantheon, danielbachhuber, kporras07
 Tags: pantheon, cdn, cache
 Requires at least: 4.7
 Tested up to: 6.1
-Stable tag: 1.1.1
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -297,9 +297,16 @@ Pantheon Advanced Page Cache integrates with WordPress plugins, including:
 
 * [WPGraphQL](https://wordpress.org/plugins/wp-graphql/)
 
+== Contributing ==
+
+See [CONTRIBUTING.md](https://github.com/pantheon-systems/wp-saml-auth/blob/master/CONTRIBUTING.md) for information on contributing.
+
 == Changelog ==
 
-### 1.1.0 (November 1, 2022) ###
+= 1.2.0 (November 29, 2022) =
+* Adds Github Actions for building tag and deploying to wp.org. Add CONTRIBUTING.md. [[#203](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/203)]
+
+= 1.1.0 (November 1, 2022) =
 * Hook into WPGraphQL to emit surrogate keys [[#199](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/199)].
 * Add Plugin Integrations section to README
 
