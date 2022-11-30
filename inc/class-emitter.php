@@ -382,9 +382,13 @@ class Emitter {
 	/**
 	 * Inspect the model and get the right surrogate keys.
 	 *
-	 * @param WPGraphQL\Model\Model $model Model object.
+	 * @param WPGraphQL\Model\Model|mixed $model Model object, array, etc.
 	 */
 	public static function filter_graphql_dataloader_get_model( $model ) {
+		if ( ! $model instanceof \WPGraphQL\Model\Model ) {
+			return $model;
+		}
+
 		$reflect              = new \ReflectionClass( $model );
 		$class_short_name     = $reflect->getShortName();
 		$surrogate_key_prefix = strtolower( $class_short_name );
