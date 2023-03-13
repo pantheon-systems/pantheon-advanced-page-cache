@@ -15,11 +15,18 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 	/**
 	 * Set up REST API tests.
 	 */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		if ( version_compare( $GLOBALS['wp_version'], '4.7-alpha', '<' ) ) {
-			return $this->markTestSkipped( 'WordPress version not supported.' );
+			$this->wp_not_supported();
 		}
+	}
+
+	/**
+	 * Skip tests because WP version is not supported.
+	 */
+	public function wp_not_supported() {
+		return $this->markTestSkipped( 'WordPress version not supported.' );
 	}
 
 	/**
