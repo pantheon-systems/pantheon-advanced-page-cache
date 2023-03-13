@@ -17,7 +17,7 @@ require_once $_tests_dir . '/includes/functions.php';
  * Manually load the plugin being tested.
  */
 function _manually_load_plugin() {
-	require dirname( dirname( dirname( __FILE__ ) ) ) . '/pantheon-advanced-page-cache.php';
+	require dirname( dirname( __DIR__ ) ) . '/pantheon-advanced-page-cache.php';
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
@@ -28,5 +28,5 @@ if ( ! defined( 'REST_TESTS_IMPOSSIBLY_HIGH_NUMBER' ) ) {
 	define( 'REST_TESTS_IMPOSSIBLY_HIGH_NUMBER', 99999999 );
 }
 
-require dirname( __FILE__ ) . '/class-pantheon-advanced-page-cache-testcase.php';
-require dirname( __FILE__ ) . '/pantheon-edge-functions.php';
+require __DIR__ . '/class-pantheon-advanced-page-cache-testcase.php';
+require __DIR__ . '/pantheon-edge-functions.php';
