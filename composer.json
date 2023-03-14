@@ -12,15 +12,15 @@
     "behat/mink-extension": "^2.2",
     "behat/mink-goutte-driver": "^1.2",
     "pantheon-systems/pantheon-wordpress-upstream-tests": "dev-master",
-    "wp-coding-standards/wpcs": "^2",
-    "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
     "phpunit/phpunit": "^7",
     "phpcompatibility/php-compatibility": "^9.3",
-    "yoast/phpunit-polyfills": "^1.0"
+    "yoast/phpunit-polyfills": "^1.0",
+    "pantheon-systems/pantheon-wp-coding-standards": "^1.0"
   },
   "scripts": {
     "lint": "@phpcs",
-    "phpcs": "vendor/bin/phpcs",
+    "phpcs": "vendor/bin/phpcs -s --standard=Pantheon-WP .",
+    "phpcbf": "vendor/bin/phpcbf --standard=Pantheon-WP .",
     "phpunit": "vendor/bin/phpunit",
     "test": "@phpunit"
   },
