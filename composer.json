@@ -19,8 +19,8 @@
   },
   "scripts": {
     "lint": "@phpcs",
-    "phpcs": "vendor/bin/phpcs -s --standard=Pantheon-WP .",
-    "phpcbf": "vendor/bin/phpcbf --standard=Pantheon-WP .",
+    "phpcs": "vendor/bin/phpcs --ignore=tests/* -s --standard=Pantheon-WP .",
+    "phpcbf": "vendor/bin/phpcbf --ignore=tests/* --standard=Pantheon-WP .",
     "phpunit": "vendor/bin/phpunit",
     "test": "@phpunit"
   },
