@@ -22,7 +22,8 @@ class User_Interface {
 			return;
 		}
 
-		if ( ! empty( $_GET['message'] ) && 'pantheon-cleared-url-cache' === $_GET['message'] ) {
+		// Todo: Maybe add nonce check here.
+		if ( ! empty( $_GET['message'] ) && 'pantheon-cleared-url-cache' === $_GET['message'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$title = esc_html__( 'URL Cache Cleared', 'pantheon-advanced-page-cache' );
 		} else {
 			$title = esc_html__( 'Clear URL Cache', 'pantheon-advanced-page-cache' );
