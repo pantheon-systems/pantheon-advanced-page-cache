@@ -97,7 +97,7 @@ spl_autoload_register(
 			$parts[] = $last;
 			$file    = dirname( __FILE__ ) . '/inc/' . str_replace( '_', '-', strtolower( implode( '/', $parts ) ) );
 		if ( file_exists( $file ) ) {
-			require $file;
+			require $file; // phpcs:ignore WordPressVIPMinimum.Files.IncludingFile.UsingVariable
 		}
 	}
 );
