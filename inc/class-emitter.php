@@ -24,21 +24,21 @@ class Emitter {
 	 *
 	 * @var array
 	 */
-	private $rest_api_surrogate_keys = array();
+	private $rest_api_surrogate_keys = [];
 
 	/**
 	 * GraphQL surrogate keys to emit.
 	 *
 	 * @var array
 	 */
-	private $graphql_surrogate_keys = array();
+	private $graphql_surrogate_keys = [];
 
 	/**
 	 * REST API collection endpoints.
 	 *
 	 * @var array
 	 */
-	private $rest_api_collection_endpoints = array();
+	private $rest_api_collection_endpoints = [];
 
 	/**
 	 * Header key.
@@ -84,29 +84,29 @@ class Emitter {
 	 */
 	public static function action_rest_api_init() {
 		foreach ( get_post_types(
-			array(
+			[
 				'show_in_rest' => true,
-			),
+			],
 			'objects'
 		) as $post_type ) {
-			add_filter( "rest_prepare_{$post_type->name}", array( __CLASS__, 'filter_rest_prepare_post' ), 10, 3 );
+			add_filter( "rest_prepare_{$post_type->name}", [ __CLASS__, 'filter_rest_prepare_post' ], 10, 3 );
 			$base = ! empty( $post_type->rest_base ) ? $post_type->rest_base : $post_type->name;
 			self::get_instance()->rest_api_collection_endpoints[ '/wp/v2/' . $base ] = $post_type->name;
 		}
 		foreach ( get_taxonomies(
-			array(
+			[
 				'show_in_rest' => true,
-			),
+			],
 			'objects'
 		) as $taxonomy ) {
-			add_filter( "rest_prepare_{$taxonomy->name}", array( __CLASS__, 'filter_rest_prepare_term' ), 10, 3 );
+			add_filter( "rest_prepare_{$taxonomy->name}", [ __CLASS__, 'filter_rest_prepare_term' ], 10, 3 );
 			$base = ! empty( $taxonomy->rest_base ) ? $taxonomy->rest_base : $taxonomy->name;
 			self::get_instance()->rest_api_collection_endpoints[ '/wp/v2/' . $base ] = $taxonomy->name;
 		}
-		add_filter( 'rest_prepare_comment', array( __CLASS__, 'filter_rest_prepare_comment' ), 10, 3 );
+		add_filter( 'rest_prepare_comment', [ __CLASS__, 'filter_rest_prepare_comment' ], 10, 3 );
 		self::get_instance()->rest_api_collection_endpoints['/wp/v2/comments'] = 'comment';
-		add_filter( 'rest_prepare_user', array( __CLASS__, 'filter_rest_prepare_user' ), 10, 3 );
-		add_filter( 'rest_pre_get_setting', array( __CLASS__, 'filter_rest_pre_get_setting' ), 10, 2 );
+		add_filter( 'rest_prepare_user', [ __CLASS__, 'filter_rest_prepare_user' ], 10, 3 );
+		add_filter( 'rest_pre_get_setting', [ __CLASS__, 'filter_rest_pre_get_setting' ], 10, 2 );
 		self::get_instance()->rest_api_collection_endpoints['/wp/v2/users'] = 'user';
 	}
 
@@ -211,7 +211,7 @@ class Emitter {
 	public static function get_main_query_surrogate_keys() {
 		global $wp_query;
 
-		$keys = array();
+		$keys = [];
 		if ( is_front_page() ) {
 			$keys[] = 'front';
 		}
@@ -282,7 +282,7 @@ class Emitter {
 
 		// Don't emit surrogate keys in the admin, unless defined by the filter.
 		if ( is_admin() ) {
-			$keys = array();
+			$keys = [];
 		}
 
 		/**
@@ -323,7 +323,7 @@ class Emitter {
 	 * Reset surrogate keys stored on the instance.
 	 */
 	public static function reset_rest_api_surrogate_keys() {
-		self::get_instance()->rest_api_surrogate_keys = array();
+		self::get_instance()->rest_api_surrogate_keys = [];
 	}
 
 	/**
@@ -339,7 +339,7 @@ class Emitter {
 			return $keys;
 		}
 
-		$keycats = array();
+		$keycats = [];
 		foreach ( $keys as $k ) {
 			$p = strrpos( $k, '-' );
 			if ( false === $p ) {
@@ -365,8 +365,8 @@ class Emitter {
 
 		$cats = array_keys( $keycats );
 		foreach ( $cats as $c ) {
-			$keycats[ $c ] = array( $c . 'huge' );
-			$keyout        = array();
+			$keycats[ $c ] = [ $c . 'huge' ];
+			$keyout        = [];
 			foreach ( $keycats as $v ) {
 				$keyout = array_merge( $keyout, $v );
 			}

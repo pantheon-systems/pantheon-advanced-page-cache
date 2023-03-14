@@ -29,15 +29,15 @@ class User_Interface {
 		}
 
 		$wp_admin_bar->add_menu(
-			array(
+			[
 				'parent' => '',
 				'id'     => 'clear-page-cache',
 				'title'  => $title,
-				'meta'   => array(
+				'meta'   => [
 					'title' => __( 'Delete cache of the current URL.', 'pantheon-advanced-page-cache' ),
-				),
+				],
 				'href'   => wp_nonce_url( admin_url( 'admin-ajax.php?action=pantheon_clear_url_cache&path=' . rawurlencode( preg_replace( '/[ <>\'\"\r\n\t\(\)]/', '', $_SERVER['REQUEST_URI'] ) ) ), 'clear-url-cache' ),
-			)
+			]
 		);
 	}
 
@@ -52,7 +52,7 @@ class User_Interface {
 			wp_die( esc_html__( "You shouldn't be doing this.", 'pantheon-advanced-page-cache' ) );
 		}
 
-		$ret = pantheon_wp_clear_edge_paths( array( $_GET['path'] ) );
+		$ret = pantheon_wp_clear_edge_paths( [ $_GET['path'] ] );
 		if ( is_wp_error( $ret ) ) {
 			wp_die( wp_kses_post( $ret->get_error_message() ) );
 		}
