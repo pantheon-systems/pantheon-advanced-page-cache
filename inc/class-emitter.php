@@ -4,6 +4,7 @@
  *
  * @package Pantheon_Advanced_Page_Cache
  * @phpcs:disable VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
+ * @phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
  */
 
 namespace Pantheon_Advanced_Page_Cache;
@@ -72,9 +73,7 @@ class Emitter {
 	public static function action_wp() {
 		$keys = self::get_main_query_surrogate_keys();
 		if ( ! empty( $keys ) ) {
-			// @codingStandardsIgnoreStart
-			@header( self::HEADER_KEY . ': ' . implode( ' ', $keys ) );
-			// @codingStandardsIgnoreEnd
+			@header( self::HEADER_KEY . ': ' . implode( ' ', $keys ) ); // phpcs:ignore
 		}
 	}
 
@@ -381,10 +380,8 @@ class Emitter {
 		$class_short_name     = $reflect->getShortName();
 		$surrogate_key_prefix = strtolower( $class_short_name );
 		if ( isset( $model->id ) ) {
-			// @codingStandardsIgnoreStart
-			if (!empty($model->databaseId)) {
+			if ( ! empty( $model->databaseId ) ) {
 				self::get_instance()->graphql_surrogate_keys[] = $surrogate_key_prefix . '-' . $model->databaseId;
-				// @codingStandardsIgnoreEnd
 			}
 		}
 		return $model;
