@@ -10,6 +10,7 @@ use Pantheon_Advanced_Page_Cache\Emitter;
 /**
  * Class from which all tests inherit.
  */
+#[AllowDynamicProperties]
 class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 
 	/**
@@ -29,7 +30,7 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 	/**
 	 * Sets up the testcase.
 	 */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 
 		$this->factory->product_category = new WP_UnitTest_Factory_For_Term( $this->factory, 'product_category' );
@@ -427,7 +428,7 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 	/**
 	 * Tear down behaviors after the tests have completed.
 	 */
-	public function tearDown() {
+	public function tearDown(): void {
 		$this->cleared_keys = array();
 		remove_action( 'pantheon_wp_clear_edge_keys', array( $this, 'action_pantheon_wp_clear_edge_keys' ) );
 		_unregister_post_type( 'product' );

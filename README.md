@@ -3,8 +3,8 @@
 **Contributors:** [getpantheon](https://profiles.wordpress.org/getpantheon), [danielbachhuber](https://profiles.wordpress.org/danielbachhuber), [kporras07](https://profiles.wordpress.org/kporras07)
 **Tags:** pantheon, cdn, cache  
 **Requires at least:** 4.7  
-**Tested up to:** 6.1
-**Stable tag:** 1.2.1
+**Tested up to:** 6.1  
+**Stable tag:** 1.2.2  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -303,6 +303,10 @@ Pantheon Advanced Page Cache integrates with WordPress plugins, including:
 See [CONTRIBUTING.md](https://github.com/pantheon-systems/pantheon-advanced-page-cache/blob/master/CONTRIBUTING.md) for information on contributing.
 
 ## Changelog ##
+
+## 1.2.2 (March 14, 2023) ##
+* Adds PHP 8.2 compatibility [[#218](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/218)].
+* Bump dependencies [[#204](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/204)].
 
 ## 1.2.1 (February 23, 2023) ##
 * Handle models that are not instances of the `WPGraphQL\Model\Model` class [[#212](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/212)].
