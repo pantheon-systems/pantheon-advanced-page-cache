@@ -3,6 +3,11 @@
  * WP-CLI commands for managing the Pantheon Advanced Page Cache.
  *
  * @package Pantheon_Advanced_Page_Cache
+ *
+ * This file handles the PAPC WP-CLI commands. WP-CLI uses docblocks
+ * to define functionality. As such, we are disabling the sniffs that
+ * warn about missing parameter tags.
+ *
  * @phpcs:disable Squiz.Commenting.FunctionComment.MissingParamTag
  */
 

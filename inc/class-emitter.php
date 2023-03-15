@@ -3,7 +3,19 @@
  * Generates and emits surrogate keys based on the current request.
  *
  * @package Pantheon_Advanced_Page_Cache
+ *
+ * This file handles the PAPC surrogate key emitter. Surrogate keys are added to
+ * response headers and make use of HTTP response APIs. There are a few
+ * occasions where we are using functions that include a $response parameter,
+ * but we are not using it. We are disabling the sniffs that warn about unused
+ * parameters because the functions that are being hooked into might expect
+ * those parameters to exist.
  * @phpcs:disable VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
+ *
+ * This file also handles surrogate keys for GraphQL requests. The GraphQL
+ * API uses a different naming convention for its variables than the REST API
+ * and values might come back in camelCase instead of snake_case. We are
+ * disabling the sniff that warns about this.
  * @phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
  */
 
