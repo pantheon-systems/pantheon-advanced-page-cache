@@ -3,6 +3,7 @@
  * WP-CLI commands for managing the Pantheon Advanced Page Cache.
  *
  * @package Pantheon_Advanced_Page_Cache
+ * @phpcs:disable Squiz.Commenting.FunctionComment.MissingParamTag
  */
 
 namespace Pantheon_Advanced_Page_Cache;
