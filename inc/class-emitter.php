@@ -3,6 +3,7 @@
  * Generates and emits surrogate keys based on the current request.
  *
  * @package Pantheon_Advanced_Page_Cache
+ * @phpcs:disable VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
  */
 
 namespace Pantheon_Advanced_Page_Cache;
