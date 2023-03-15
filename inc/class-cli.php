@@ -14,7 +14,6 @@ use WP_CLI;
  * Manage the Pantheon Advanced Page Cache.
  */
 class CLI {
-
 	/**
 	 * Purge one or more surrogate keys from cache.
 	 *

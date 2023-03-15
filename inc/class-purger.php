@@ -11,7 +11,6 @@ namespace Pantheon_Advanced_Page_Cache;
  * Purges the appropriate surrogate key based on the event.
  */
 class Purger {
-
 	/**
 	 * Purge surrogate keys associated with a post being updated.
 	 *
@@ -95,9 +94,7 @@ class Purger {
 	 */
 	public static function action_created_term( $term_id, $tt_id, $taxonomy ) {
 		self::purge_term( $term_id );
-		$keys = [
-			'rest-' . $taxonomy . '-collection',
-		];
+		$keys = [ 'rest-' . $taxonomy . '-collection' ];
 		/**
 		 * Surrogate keys purged when creating a new term.
 		 *
@@ -252,9 +249,7 @@ class Purger {
 		}
 		$taxonomies = wp_list_filter(
 			get_object_taxonomies( $post->post_type, 'objects' ),
-			[
-				'public' => true,
-			]
+			[ 'public' => true ]
 		);
 		foreach ( $taxonomies as $taxonomy ) {
 			$terms = get_the_terms( $post, $taxonomy->name );

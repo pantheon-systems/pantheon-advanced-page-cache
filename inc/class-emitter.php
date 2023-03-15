@@ -12,7 +12,6 @@ namespace Pantheon_Advanced_Page_Cache;
  * Generates and emits surrogate keys based on the current request.
  */
 class Emitter {
-
 	/**
 	 * Current instance when set.
 	 *
@@ -71,7 +70,6 @@ class Emitter {
 	 * Render surrogate keys after the main query has run
 	 */
 	public static function action_wp() {
-
 		$keys = self::get_main_query_surrogate_keys();
 		if ( ! empty( $keys ) ) {
 			// @codingStandardsIgnoreStart
@@ -84,22 +82,12 @@ class Emitter {
 	 * Register filters to sniff surrogate keys out of REST API responses.
 	 */
 	public static function action_rest_api_init() {
-		foreach ( get_post_types(
-			[
-				'show_in_rest' => true,
-			],
-			'objects'
-		) as $post_type ) {
+		foreach ( get_post_types( [ 'show_in_rest' => true ], 'objects' ) as $post_type ) {
 			add_filter( "rest_prepare_{$post_type->name}", [ __CLASS__, 'filter_rest_prepare_post' ], 10, 3 );
 			$base = ! empty( $post_type->rest_base ) ? $post_type->rest_base : $post_type->name;
 			self::get_instance()->rest_api_collection_endpoints[ '/wp/v2/' . $base ] = $post_type->name;
 		}
-		foreach ( get_taxonomies(
-			[
-				'show_in_rest' => true,
-			],
-			'objects'
-		) as $taxonomy ) {
+		foreach ( get_taxonomies( [ 'show_in_rest' => true ], 'objects' ) as $taxonomy ) {
 			add_filter( "rest_prepare_{$taxonomy->name}", [ __CLASS__, 'filter_rest_prepare_term' ], 10, 3 );
 			$base = ! empty( $taxonomy->rest_base ) ? $taxonomy->rest_base : $taxonomy->name;
 			self::get_instance()->rest_api_collection_endpoints[ '/wp/v2/' . $base ] = $taxonomy->name;
@@ -132,7 +120,6 @@ class Emitter {
 	 * @param WP_REST_Server   $server  Server instance.
 	 */
 	public static function filter_rest_post_dispatch( $result, $server ) {
-
 		$keys = self::get_rest_api_surrogate_keys();
 		if ( ! empty( $keys ) ) {
 			$server->send_header( self::HEADER_KEY, implode( ' ', $keys ) );

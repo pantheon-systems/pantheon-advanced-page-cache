@@ -11,7 +11,6 @@ namespace Pantheon_Advanced_Page_Cache;
  * Controller for a variety of admin UI.
  */
 class User_Interface {
-
 	/**
 	 * Register a toolbar button to purge the cache for the current page.
 	 *
@@ -30,17 +29,15 @@ class User_Interface {
 		}
 
 		$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( $_SERVER['REQUEST_URI'] ) : '';
-		$wp_admin_bar->add_menu(
-			[
-				'parent' => '',
-				'id'     => 'clear-page-cache',
-				'title'  => $title,
-				'meta'   => [
-					'title' => __( 'Delete cache of the current URL.', 'pantheon-advanced-page-cache' ),
-				],
-				'href'   => wp_nonce_url( admin_url( 'admin-ajax.php?action=pantheon_clear_url_cache&path=' . rawurlencode( preg_replace( '/[ <>\'\"\r\n\t\(\)]/', '', $request_uri ) ) ), 'clear-url-cache' ),
-			]
-		);
+		$wp_admin_bar->add_menu( [
+			'parent' => '',
+			'id'     => 'clear-page-cache',
+			'title'  => $title,
+			'meta'   => [
+				'title' => __( 'Delete cache of the current URL.', 'pantheon-advanced-page-cache' ),
+			],
+			'href'   => wp_nonce_url( admin_url( 'admin-ajax.php?action=pantheon_clear_url_cache&path=' . rawurlencode( preg_replace( '/[ <>\'\"\r\n\t\(\)]/', '', $request_uri ) ) ), 'clear-url-cache' ),
+		] );
 	}
 
 	/**

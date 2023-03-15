@@ -18,7 +18,6 @@
  * @param array $keys Surrogate keys to purge.
  */
 function pantheon_wp_clear_edge_keys( $keys ) {
-
 	/**
 	 * Fires when purging specific surrogate keys.
 	 *
@@ -42,7 +41,6 @@ function pantheon_wp_clear_edge_keys( $keys ) {
  * @param array $paths URI paths to purge.
  */
 function pantheon_wp_clear_edge_paths( $paths ) {
-
 	/**
 	 * Fires when purging specific URI paths.
 	 *
@@ -64,7 +62,6 @@ function pantheon_wp_clear_edge_paths( $paths ) {
  * Purge the entire cache.
  */
 function pantheon_wp_clear_edge_all() {
-
 	/**
 	 * Fires when purging the entire cache.
 	 */
@@ -90,12 +87,13 @@ spl_autoload_register(
 			return;
 		}
 
-			$parts = explode( '\\', $class );
-			array_shift( $parts ); // Don't need "Pantheon_Advanced_Page_Cache".
-			$last    = array_pop( $parts ); // File should be 'class-[...].php'.
-			$last    = 'class-' . $last . '.php';
-			$parts[] = $last;
-			$file    = dirname( __FILE__ ) . '/inc/' . str_replace( '_', '-', strtolower( implode( '/', $parts ) ) );
+		$parts = explode( '\\', $class );
+		array_shift( $parts ); // Don't need "Pantheon_Advanced_Page_Cache".
+		$last    = array_pop( $parts ); // File should be 'class-[...].php'.
+		$last    = 'class-' . $last . '.php';
+		$parts[] = $last;
+		$file    = dirname( __FILE__ ) . '/inc/' . str_replace( '_', '-', strtolower( implode( '/', $parts ) ) );
+
 		if ( file_exists( $file ) ) {
 			require $file; // phpcs:ignore WordPressVIPMinimum.Files.IncludingFile.UsingVariable
 		}
