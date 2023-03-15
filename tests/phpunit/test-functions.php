@@ -13,7 +13,7 @@ class Test_Functions extends Pantheon_Advanced_Page_Cache_Testcase {
 	/**
 	 * Set up test function tests.
 	 */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$GLOBALS['pantheon_clear_edge_all_throw_exception'] = false;
 	}
