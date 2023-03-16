@@ -428,7 +428,7 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 	/**
 	 * Tear down behaviors after the tests have completed.
 	 */
-	public function tearDown() {
+	public function tearDown() : void {
 		$this->cleared_keys = [];
 		remove_action( 'pantheon_wp_clear_edge_keys', [ $this, 'action_pantheon_wp_clear_edge_keys' ] );
 		_unregister_post_type( 'product' );
