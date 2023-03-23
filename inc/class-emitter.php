@@ -3,6 +3,20 @@
  * Generates and emits surrogate keys based on the current request.
  *
  * @package Pantheon_Advanced_Page_Cache
+ *
+ * This file handles the PAPC surrogate key emitter. Surrogate keys are added to
+ * response headers and make use of HTTP response APIs. There are a few
+ * occasions where we are using functions that include a $response parameter,
+ * but we are not using it. We are disabling the sniffs that warn about unused
+ * parameters because the functions that are being hooked into might expect
+ * those parameters to exist.
+ * @phpcs:disable VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
+ *
+ * This file also handles surrogate keys for GraphQL requests. The GraphQL
+ * API uses a different naming convention for its variables than the REST API
+ * and values might come back in camelCase instead of snake_case. We are
+ * disabling the sniff that warns about this.
+ * @phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
  */
 
 namespace Pantheon_Advanced_Page_Cache;
@@ -11,7 +25,6 @@ namespace Pantheon_Advanced_Page_Cache;
  * Generates and emits surrogate keys based on the current request.
  */
 class Emitter {
-
 	/**
 	 * Current instance when set.
 	 *
@@ -24,21 +37,21 @@ class Emitter {
 	 *
 	 * @var array
 	 */
-	private $rest_api_surrogate_keys = array();
+	private $rest_api_surrogate_keys = [];
 
 	/**
 	 * GraphQL surrogate keys to emit.
 	 *
 	 * @var array
 	 */
-	private $graphql_surrogate_keys = array();
+	private $graphql_surrogate_keys = [];
 
 	/**
 	 * REST API collection endpoints.
 	 *
 	 * @var array
 	 */
-	private $rest_api_collection_endpoints = array();
+	private $rest_api_collection_endpoints = [];
 
 	/**
 	 * Header key.
@@ -70,12 +83,9 @@ class Emitter {
 	 * Render surrogate keys after the main query has run
 	 */
 	public static function action_wp() {
-
 		$keys = self::get_main_query_surrogate_keys();
 		if ( ! empty( $keys ) ) {
-			// @codingStandardsIgnoreStart
-			@header( self::HEADER_KEY . ': ' . implode( ' ', $keys ) );
-			// @codingStandardsIgnoreEnd
+			@header( self::HEADER_KEY . ': ' . implode( ' ', $keys ) ); // phpcs:ignore
 		}
 	}
 
@@ -83,30 +93,20 @@ class Emitter {
 	 * Register filters to sniff surrogate keys out of REST API responses.
 	 */
 	public static function action_rest_api_init() {
-		foreach ( get_post_types(
-			array(
-				'show_in_rest' => true,
-			),
-			'objects'
-		) as $post_type ) {
-			add_filter( "rest_prepare_{$post_type->name}", array( __CLASS__, 'filter_rest_prepare_post' ), 10, 3 );
+		foreach ( get_post_types( [ 'show_in_rest' => true ], 'objects' ) as $post_type ) {
+			add_filter( "rest_prepare_{$post_type->name}", [ __CLASS__, 'filter_rest_prepare_post' ], 10, 3 );
 			$base = ! empty( $post_type->rest_base ) ? $post_type->rest_base : $post_type->name;
 			self::get_instance()->rest_api_collection_endpoints[ '/wp/v2/' . $base ] = $post_type->name;
 		}
-		foreach ( get_taxonomies(
-			array(
-				'show_in_rest' => true,
-			),
-			'objects'
-		) as $taxonomy ) {
-			add_filter( "rest_prepare_{$taxonomy->name}", array( __CLASS__, 'filter_rest_prepare_term' ), 10, 3 );
+		foreach ( get_taxonomies( [ 'show_in_rest' => true ], 'objects' ) as $taxonomy ) {
+			add_filter( "rest_prepare_{$taxonomy->name}", [ __CLASS__, 'filter_rest_prepare_term' ], 10, 3 );
 			$base = ! empty( $taxonomy->rest_base ) ? $taxonomy->rest_base : $taxonomy->name;
 			self::get_instance()->rest_api_collection_endpoints[ '/wp/v2/' . $base ] = $taxonomy->name;
 		}
-		add_filter( 'rest_prepare_comment', array( __CLASS__, 'filter_rest_prepare_comment' ), 10, 3 );
+		add_filter( 'rest_prepare_comment', [ __CLASS__, 'filter_rest_prepare_comment' ], 10, 3 );
 		self::get_instance()->rest_api_collection_endpoints['/wp/v2/comments'] = 'comment';
-		add_filter( 'rest_prepare_user', array( __CLASS__, 'filter_rest_prepare_user' ), 10, 3 );
-		add_filter( 'rest_pre_get_setting', array( __CLASS__, 'filter_rest_pre_get_setting' ), 10, 2 );
+		add_filter( 'rest_prepare_user', [ __CLASS__, 'filter_rest_prepare_user' ], 10, 3 );
+		add_filter( 'rest_pre_get_setting', [ __CLASS__, 'filter_rest_pre_get_setting' ], 10, 2 );
 		self::get_instance()->rest_api_collection_endpoints['/wp/v2/users'] = 'user';
 	}
 
@@ -131,7 +131,6 @@ class Emitter {
 	 * @param WP_REST_Server   $server  Server instance.
 	 */
 	public static function filter_rest_post_dispatch( $result, $server ) {
-
 		$keys = self::get_rest_api_surrogate_keys();
 		if ( ! empty( $keys ) ) {
 			$server->send_header( self::HEADER_KEY, implode( ' ', $keys ) );
@@ -211,7 +210,7 @@ class Emitter {
 	public static function get_main_query_surrogate_keys() {
 		global $wp_query;
 
-		$keys = array();
+		$keys = [];
 		if ( is_front_page() ) {
 			$keys[] = 'front';
 		}
@@ -282,7 +281,7 @@ class Emitter {
 
 		// Don't emit surrogate keys in the admin, unless defined by the filter.
 		if ( is_admin() ) {
-			$keys = array();
+			$keys = [];
 		}
 
 		/**
@@ -323,7 +322,7 @@ class Emitter {
 	 * Reset surrogate keys stored on the instance.
 	 */
 	public static function reset_rest_api_surrogate_keys() {
-		self::get_instance()->rest_api_surrogate_keys = array();
+		self::get_instance()->rest_api_surrogate_keys = [];
 	}
 
 	/**
@@ -339,7 +338,7 @@ class Emitter {
 			return $keys;
 		}
 
-		$keycats = array();
+		$keycats = [];
 		foreach ( $keys as $k ) {
 			$p = strrpos( $k, '-' );
 			if ( false === $p ) {
@@ -365,8 +364,8 @@ class Emitter {
 
 		$cats = array_keys( $keycats );
 		foreach ( $cats as $c ) {
-			$keycats[ $c ] = array( $c . 'huge' );
-			$keyout        = array();
+			$keycats[ $c ] = [ $c . 'huge' ];
+			$keyout        = [];
 			foreach ( $keycats as $v ) {
 				$keyout = array_merge( $keyout, $v );
 			}
@@ -393,10 +392,8 @@ class Emitter {
 		$class_short_name     = $reflect->getShortName();
 		$surrogate_key_prefix = strtolower( $class_short_name );
 		if ( isset( $model->id ) ) {
-			// @codingStandardsIgnoreStart
-			if (!empty($model->databaseId)) {
+			if ( ! empty( $model->databaseId ) ) {
 				self::get_instance()->graphql_surrogate_keys[] = $surrogate_key_prefix . '-' . $model->databaseId;
-				// @codingStandardsIgnoreEnd
 			}
 		}
 		return $model;

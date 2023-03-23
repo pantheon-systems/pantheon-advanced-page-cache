@@ -3,8 +3,8 @@
 **Contributors:** [getpantheon](https://profiles.wordpress.org/getpantheon), [danielbachhuber](https://profiles.wordpress.org/danielbachhuber), [kporras07](https://profiles.wordpress.org/kporras07)
 **Tags:** pantheon, cdn, cache  
 **Requires at least:** 4.7  
-**Tested up to:** 6.1
-**Stable tag:** 1.2.0
+**Tested up to:** 6.1  
+**Stable tag:** 1.2.2  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -303,6 +303,15 @@ Pantheon Advanced Page Cache integrates with WordPress plugins, including:
 See [CONTRIBUTING.md](https://github.com/pantheon-systems/pantheon-advanced-page-cache/blob/master/CONTRIBUTING.md) for information on contributing.
 
 ## Changelog ##
+
+## 1.2.2 (March 14, 2023) ##
+* Adds PHP 8.2 compatibility [[#218](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/218)].
+* Bump dependencies [[#204](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/204)].
+
+## 1.2.1 (February 23, 2023) ##
+* Handle models that are not instances of the `WPGraphQL\Model\Model` class [[#212](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/212)].
+* Make dependabot target develop branch [[#209](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/209)].
+* Bump dependencies [[#210](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/210)] [[#214](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/214)].
 
 ## 1.2.0 (November 29, 2022) ##
 * Adds Github Actions for building tag and deploying to wp.org. Add CONTRIBUTING.md. [[#203](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/203)]

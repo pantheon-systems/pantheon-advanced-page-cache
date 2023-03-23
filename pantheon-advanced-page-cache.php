@@ -7,7 +7,7 @@
  * Author URI:      https://pantheon.io
  * Text Domain:     pantheon-advanced-page-cache
  * Domain Path:     /languages
- * Version:         1.2.0
+ * Version:         1.2.2
  *
  * @package         Pantheon_Advanced_Page_Cache
  */
@@ -18,7 +18,6 @@
  * @param array $keys Surrogate keys to purge.
  */
 function pantheon_wp_clear_edge_keys( $keys ) {
-
 	/**
 	 * Fires when purging specific surrogate keys.
 	 *
@@ -42,7 +41,6 @@ function pantheon_wp_clear_edge_keys( $keys ) {
  * @param array $paths URI paths to purge.
  */
 function pantheon_wp_clear_edge_paths( $paths ) {
-
 	/**
 	 * Fires when purging specific URI paths.
 	 *
@@ -64,7 +62,6 @@ function pantheon_wp_clear_edge_paths( $paths ) {
  * Purge the entire cache.
  */
 function pantheon_wp_clear_edge_all() {
-
 	/**
 	 * Fires when purging the entire cache.
 	 */
@@ -97,7 +94,7 @@ spl_autoload_register(
 			$parts[] = $last;
 			$file    = __DIR__ . '/inc/' . str_replace( '_', '-', strtolower( implode( '/', $parts ) ) );
 		if ( file_exists( $file ) ) {
-			require $file;
+			require $file; // phpcs:ignore WordPressVIPMinimum.Files.IncludingFile.UsingVariable
 		}
 	}
 );
@@ -105,37 +102,37 @@ spl_autoload_register(
 /**
  * Registers relevant UI
  */
-add_action( 'admin_bar_menu', array( 'Pantheon_Advanced_Page_Cache\User_Interface', 'action_admin_bar_menu' ), 99 ); // End of the stack.
-add_action( 'wp_ajax_pantheon_clear_url_cache', array( 'Pantheon_Advanced_Page_Cache\User_Interface', 'handle_ajax_clear_url_cache' ) );
+add_action( 'admin_bar_menu', [ 'Pantheon_Advanced_Page_Cache\User_Interface', 'action_admin_bar_menu' ], 99 ); // End of the stack.
+add_action( 'wp_ajax_pantheon_clear_url_cache', [ 'Pantheon_Advanced_Page_Cache\User_Interface', 'handle_ajax_clear_url_cache' ] );
 
 /**
  * Emits the appropriate surrogate tags per view.
  */
-add_filter( 'wp', array( 'Pantheon_Advanced_Page_Cache\Emitter', 'action_wp' ) );
-add_action( 'rest_api_init', array( 'Pantheon_Advanced_Page_Cache\Emitter', 'action_rest_api_init' ) );
-add_filter( 'rest_pre_dispatch', array( 'Pantheon_Advanced_Page_Cache\Emitter', 'filter_rest_pre_dispatch' ), 10, 3 );
-add_filter( 'rest_post_dispatch', array( 'Pantheon_Advanced_Page_Cache\Emitter', 'filter_rest_post_dispatch' ), 10, 2 );
+add_filter( 'wp', [ 'Pantheon_Advanced_Page_Cache\Emitter', 'action_wp' ] );
+add_action( 'rest_api_init', [ 'Pantheon_Advanced_Page_Cache\Emitter', 'action_rest_api_init' ] );
+add_filter( 'rest_pre_dispatch', [ 'Pantheon_Advanced_Page_Cache\Emitter', 'filter_rest_pre_dispatch' ], 10, 3 );
+add_filter( 'rest_post_dispatch', [ 'Pantheon_Advanced_Page_Cache\Emitter', 'filter_rest_post_dispatch' ], 10, 2 );
 
-add_filter( 'graphql_dataloader_get_model', array( 'Pantheon_Advanced_Page_Cache\Emitter', 'filter_graphql_dataloader_get_model' ) );
-add_filter( 'graphql_response_headers_to_send', array( 'Pantheon_Advanced_Page_Cache\Emitter', 'filter_graphql_response_headers_to_send' ) );
+add_filter( 'graphql_dataloader_get_model', [ 'Pantheon_Advanced_Page_Cache\Emitter', 'filter_graphql_dataloader_get_model' ] );
+add_filter( 'graphql_response_headers_to_send', [ 'Pantheon_Advanced_Page_Cache\Emitter', 'filter_graphql_response_headers_to_send' ] );
 
 /**
  * Clears surrogate tags when various modification behaviors are performed.
  */
-add_action( 'wp_insert_post', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_wp_insert_post' ), 10, 2 );
-add_action( 'transition_post_status', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_transition_post_status' ), 10, 3 );
-add_action( 'before_delete_post', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_before_delete_post' ) );
-add_action( 'delete_attachment', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_delete_attachment' ) );
-add_action( 'clean_post_cache', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_clean_post_cache' ) );
-add_action( 'created_term', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_created_term' ), 10, 3 );
-add_action( 'edited_term', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_edited_term' ) );
-add_action( 'delete_term', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_delete_term' ) );
-add_action( 'clean_term_cache', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_clean_term_cache' ) );
-add_action( 'wp_insert_comment', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_wp_insert_comment' ), 10, 2 );
-add_action( 'transition_comment_status', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_transition_comment_status' ), 10, 3 );
-add_action( 'clean_comment_cache', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_clean_comment_cache' ) );
-add_action( 'clean_user_cache', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_clean_user_cache' ) );
-add_action( 'updated_option', array( 'Pantheon_Advanced_Page_Cache\Purger', 'action_updated_option' ) );
+add_action( 'wp_insert_post', [ 'Pantheon_Advanced_Page_Cache\Purger', 'action_wp_insert_post' ], 10, 2 );
+add_action( 'transition_post_status', [ 'Pantheon_Advanced_Page_Cache\Purger', 'action_transition_post_status' ], 10, 3 );
+add_action( 'before_delete_post', [ 'Pantheon_Advanced_Page_Cache\Purger', 'action_before_delete_post' ] );
+add_action( 'delete_attachment', [ 'Pantheon_Advanced_Page_Cache\Purger', 'action_delete_attachment' ] );
+add_action( 'clean_post_cache', [ 'Pantheon_Advanced_Page_Cache\Purger', 'action_clean_post_cache' ] );
+add_action( 'created_term', [ 'Pantheon_Advanced_Page_Cache\Purger', 'action_created_term' ], 10, 3 );
+add_action( 'edited_term', [ 'Pantheon_Advanced_Page_Cache\Purger', 'action_edited_term' ] );
+add_action( 'delete_term', [ 'Pantheon_Advanced_Page_Cache\Purger', 'action_delete_term' ] );
+add_action( 'clean_term_cache', [ 'Pantheon_Advanced_Page_Cache\Purger', 'action_clean_term_cache' ] );
+add_action( 'wp_insert_comment', [ 'Pantheon_Advanced_Page_Cache\Purger', 'action_wp_insert_comment' ], 10, 2 );
+add_action( 'transition_comment_status', [ 'Pantheon_Advanced_Page_Cache\Purger', 'action_transition_comment_status' ], 10, 3 );
+add_action( 'clean_comment_cache', [ 'Pantheon_Advanced_Page_Cache\Purger', 'action_clean_comment_cache' ] );
+add_action( 'clean_user_cache', [ 'Pantheon_Advanced_Page_Cache\Purger', 'action_clean_user_cache' ] );
+add_action( 'updated_option', [ 'Pantheon_Advanced_Page_Cache\Purger', 'action_updated_option' ] );
 
 /**
  * Registers the WP-CLI commands.
