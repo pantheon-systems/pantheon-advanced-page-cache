@@ -1,7 +1,7 @@
 # Pantheon Advanced Page Cache #
 
-**Contributors:** [getpantheon](https://profiles.wordpress.org/getpantheon), [danielbachhuber](https://profiles.wordpress.org/danielbachhuber), [kporras07](https://profiles.wordpress.org/kporras07)
-**Tags:** pantheon, cdn, cache  
+**Contributors:** [getpantheon](https://profiles.wordpress.org/getpantheon), [danielbachhuber](https://profiles.wordpress.org/danielbachhuber), [kporras07](https://profiles.wordpress.org/kporras07) [jspellman](https://profiles.wordpress.org/jspellman/) [jazzs3quence](https://profiles.wordpress.org/jazzs3quence/)  
+**Tags:** pantheon, cdn, cache 
 **Requires at least:** 4.7  
 **Tested up to:** 6.2  
 **Stable tag:** 1.2.3 
