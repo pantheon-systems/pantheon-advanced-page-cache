@@ -304,6 +304,9 @@ See [CONTRIBUTING.md](https://github.com/pantheon-systems/pantheon-advanced-page
 
 ## Changelog ##
 
+## 1.2.3 (April 5, 2023) ##
+* Bump tested up to version to 6.2
+
 ## 1.2.2 (March 14, 2023) ##
 * Adds PHP 8.2 compatibility [[#218](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/218)].
 * Bump dependencies [[#204](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/204)].
