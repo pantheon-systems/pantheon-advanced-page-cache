@@ -587,6 +587,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 				'home',
 				'front',
 				'feed',
+				'product-archive',
 				'404',
 				'post-' . $this->product_id3,
 				'post-huge',
