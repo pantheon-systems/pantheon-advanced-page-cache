@@ -79,7 +79,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 	/**
 	 * Assert expected surrogate keys for a single product.
 	 */
-	public function test_single_product() {
+	public function test_surrogate_keys() {
 		$this->go_to( get_permalink( $this->product_id1 ) );
 		$this->assertArrayValues(
 			array(
