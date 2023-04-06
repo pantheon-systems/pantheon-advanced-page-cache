@@ -187,6 +187,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 			array(
 				'archive',
 				'post-type-archive',
+				'product-archive',
 				'post-' . $this->product_id1,
 				'post-' . $this->product_id2,
 			),
