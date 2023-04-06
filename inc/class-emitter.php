@@ -267,7 +267,7 @@ class Emitter {
 			$keys[] = 'archive';
 			if ( is_post_type_archive() ) {
 				$keys[] = 'post-type-archive';
-				// $keys[] = get_query_var( 'post_type' ) . '-archive';
+				$keys[] = get_query_var( 'post_type' ) . '-archive';
 			} elseif ( is_author() ) {
 				$user_id = get_queried_object_id();
 				if ( $user_id ) {
