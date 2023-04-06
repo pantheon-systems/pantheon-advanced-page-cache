@@ -11,7 +11,6 @@ namespace Pantheon_Advanced_Page_Cache;
  * Purges the appropriate surrogate key based on the event.
  */
 class Purger {
-
 	/**
 	 * Purge surrogate keys associated with a post being updated.
 	 *
@@ -70,12 +69,12 @@ class Purger {
 		if ( $type && 'revision' === $type ) {
 			return;
 		}
-		$keys = array(
+		$keys = [
 			'post-' . $post_id,
 			'rest-post-' . $post_id,
 			'post-huge',
 			'rest-post-huge',
-		);
+		];
 		/**
 		 * Surrogate keys purged when clearing post cache.
 		 *
@@ -95,9 +94,7 @@ class Purger {
 	 */
 	public static function action_created_term( $term_id, $tt_id, $taxonomy ) {
 		self::purge_term( $term_id );
-		$keys = array(
-			'rest-' . $taxonomy . '-collection',
-		);
+		$keys = [ 'rest-' . $taxonomy . '-collection' ];
 		/**
 		 * Surrogate keys purged when creating a new term.
 		 *
@@ -134,8 +131,8 @@ class Purger {
 	 * @param integer $term_ids One or more IDs of modified terms.
 	 */
 	public static function action_clean_term_cache( $term_ids ) {
-		$keys     = array();
-		$term_ids = is_array( $term_ids ) ? $term_ids : array( $term_ids );
+		$keys     = [];
+		$term_ids = is_array( $term_ids ) ? $term_ids : [ $term_ids ];
 		foreach ( $term_ids as $term_id ) {
 			$keys[] = 'term-' . $term_id;
 			$keys[] = 'rest-term-' . $term_id;
@@ -162,11 +159,11 @@ class Purger {
 		if ( 1 !== (int) $comment->comment_approved ) {
 			return;
 		}
-		$keys = array(
+		$keys = [
 			'rest-comment-' . $comment->comment_ID,
 			'rest-comment-collection',
 			'rest-comment-huge',
-		);
+		];
 		/**
 		 * Surrogate keys purged when inserting a new comment.
 		 *
@@ -186,11 +183,11 @@ class Purger {
 	 * @param object     $comment    The comment data.
 	 */
 	public static function action_transition_comment_status( $new_status, $old_status, $comment ) {
-		$keys = array(
+		$keys = [
 			'rest-comment-' . $comment->comment_ID,
 			'rest-comment-collection',
 			'rest-comment-huge',
-		);
+		];
 		/**
 		 * Surrogate keys purged when transitioning a comment status.
 		 *
@@ -209,10 +206,10 @@ class Purger {
 	 * @param integer $comment_id Modified comment id.
 	 */
 	public static function action_clean_comment_cache( $comment_id ) {
-		$keys = array(
+		$keys = [
 			'rest-comment-' . $comment_id,
 			'rest-comment-huge',
-		);
+		];
 		/**
 		 * Surrogate keys purged when cleaning comment cache.
 		 *
@@ -233,14 +230,14 @@ class Purger {
 		if ( 'revision' === $post->post_type ) {
 			return;
 		}
-		$keys   = array(
+		$keys   = [
 			'home',
 			'front',
 			'404',
 			'feed',
 			'post-' . $post->ID,
 			'post-huge',
-		);
+		];
 		$keys[] = 'rest-' . $post->post_type . '-collection';
 		if ( post_type_supports( $post->post_type, 'author' ) ) {
 			$keys[] = 'user-' . $post->post_author;
@@ -252,9 +249,7 @@ class Purger {
 		}
 		$taxonomies = wp_list_filter(
 			get_object_taxonomies( $post->post_type, 'objects' ),
-			array(
-				'public' => true,
-			)
+			[ 'public' => true ]
 		);
 		foreach ( $taxonomies as $taxonomy ) {
 			$terms = get_the_terms( $post, $taxonomy->name );
@@ -281,14 +276,14 @@ class Purger {
 	 * @param integer $term_id ID for the modified term.
 	 */
 	private static function purge_term( $term_id ) {
-		$keys = array(
+		$keys = [
 			'term-' . $term_id,
 			'rest-term-' . $term_id,
 			'post-term-' . $term_id,
 			'term-huge',
 			'rest-term-huge',
 			'post-term-huge',
-		);
+		];
 		/**
 		 * Surrogate keys purged when purging a term.
 		 *
@@ -306,12 +301,12 @@ class Purger {
 	 * @param integer $user_id ID for the modified user.
 	 */
 	public static function action_clean_user_cache( $user_id ) {
-		$keys = array(
+		$keys = [
 			'user-' . $user_id,
 			'rest-user-' . $user_id,
 			'user-huge',
 			'rest-user-huge',
-		);
+		];
 		/**
 		 * Surrogate keys purged when clearing user cache.
 		 *
@@ -336,10 +331,10 @@ class Purger {
 			return;
 		}
 		$rest_name = ! empty( $settings[ $option ]['show_in_rest']['name'] ) ? $settings[ $option ]['show_in_rest']['name'] : $option;
-		$keys      = array(
+		$keys      = [
 			'rest-setting-' . $rest_name,
 			'rest-setting-huge',
-		);
+		];
 		/**
 		 * Surrogate keys purged when updating an option cache.
 		 *
