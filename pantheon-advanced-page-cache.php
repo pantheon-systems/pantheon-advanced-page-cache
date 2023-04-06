@@ -78,6 +78,24 @@ function pantheon_wp_clear_edge_all() {
 }
 
 /**
+ * Prefix surrogate keys with the blog ID to provide compatibility with WPMS. See https://github.com/pantheon-systems/pantheon-advanced-page-cache/issues/196.
+ * 
+ * @param array $keys Keys to be prefixed.
+ */
+function pantheon_wp_prefix_surrogate_keys_with_blog_id( $keys ) {
+	// Array that will hold the new keys.
+	$prefixed_keys = [];
+
+	$prefix = 'blog-' . get_current_blog_id() . '-';
+	$prefix = apply_filters( 'pantheon_wp_surrogate_key_prepend', $prefix );
+	foreach ( $keys as $key ) {
+		$prefixed_keys[] = $prefix . $key;
+	}
+
+	return $prefixed_keys;
+}
+
+/**
  * Registers the class autoloader.
  */
 spl_autoload_register(

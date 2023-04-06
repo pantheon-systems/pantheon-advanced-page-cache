@@ -75,6 +75,7 @@ class Purger {
 			'post-huge',
 			'rest-post-huge',
 		];
+		$keys = pantheon_wp_prefix_surrogate_keys_with_blog_id( $keys );
 		/**
 		 * Surrogate keys purged when clearing post cache.
 		 *
@@ -95,6 +96,7 @@ class Purger {
 	public static function action_created_term( $term_id, $tt_id, $taxonomy ) {
 		self::purge_term( $term_id );
 		$keys = [ 'rest-' . $taxonomy . '-collection' ];
+		$keys = pantheon_wp_prefix_surrogate_keys_with_blog_id( $keys );
 		/**
 		 * Surrogate keys purged when creating a new term.
 		 *
@@ -139,6 +141,7 @@ class Purger {
 		}
 		$keys[] = 'term-huge';
 		$keys[] = 'rest-term-huge';
+		$keys   = pantheon_wp_prefix_surrogate_keys_with_blog_id( $keys );
 		/**
 		 * Surrogate keys purged when clearing term cache.
 		 *
@@ -164,6 +167,7 @@ class Purger {
 			'rest-comment-collection',
 			'rest-comment-huge',
 		];
+		$keys = pantheon_wp_prefix_surrogate_keys_with_blog_id( $keys );
 		/**
 		 * Surrogate keys purged when inserting a new comment.
 		 *
@@ -188,6 +192,7 @@ class Purger {
 			'rest-comment-collection',
 			'rest-comment-huge',
 		];
+		$keys = pantheon_wp_prefix_surrogate_keys_with_blog_id( $keys );
 		/**
 		 * Surrogate keys purged when transitioning a comment status.
 		 *
@@ -210,6 +215,7 @@ class Purger {
 			'rest-comment-' . $comment_id,
 			'rest-comment-huge',
 		];
+		$keys = pantheon_wp_prefix_surrogate_keys_with_blog_id( $keys );
 		/**
 		 * Surrogate keys purged when cleaning comment cache.
 		 *
@@ -260,6 +266,7 @@ class Purger {
 				$keys[] = 'term-huge';
 			}
 		}
+		$keys = pantheon_wp_prefix_surrogate_keys_with_blog_id( $keys );
 		/**
 		 * Related surrogate keys purged when purging a post.
 		 *
@@ -284,6 +291,7 @@ class Purger {
 			'rest-term-huge',
 			'post-term-huge',
 		];
+		$keys = pantheon_wp_prefix_surrogate_keys_with_blog_id( $keys );
 		/**
 		 * Surrogate keys purged when purging a term.
 		 *
@@ -307,6 +315,7 @@ class Purger {
 			'user-huge',
 			'rest-user-huge',
 		];
+		$keys = pantheon_wp_prefix_surrogate_keys_with_blog_id( $keys );
 		/**
 		 * Surrogate keys purged when clearing user cache.
 		 *
@@ -335,6 +344,7 @@ class Purger {
 			'rest-setting-' . $rest_name,
 			'rest-setting-huge',
 		];
+		$keys = pantheon_wp_prefix_surrogate_keys_with_blog_id( $keys );
 		/**
 		 * Surrogate keys purged when updating an option cache.
 		 *
