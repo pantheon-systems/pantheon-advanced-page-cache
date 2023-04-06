@@ -40,6 +40,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 				'post-type-archive',
 				'product-archive',
 				'post-' . $this->product_id1,
+				'post-' . $this->product_id2,
 			),
 			Emitter::get_main_query_surrogate_keys()
 		);
