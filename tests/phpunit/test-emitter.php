@@ -32,7 +32,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 	/**
 	 * Assert expected surrogate keys for the product archive
 	 */
-	public function test_single_product() {
+	public function test_product_archive() {
 		$this->go_to( get_post_type_archive_link( 'product' ) );
 		$this->assertArrayValues(
 			array(
