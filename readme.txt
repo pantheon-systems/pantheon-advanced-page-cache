@@ -3,7 +3,7 @@ Contributors: getpantheon, danielbachhuber, kporras07, jspellman, jazzs3quence
 Tags: pantheon, cdn, cache
 Requires at least: 4.7
 Tested up to: 6.2
-Stable tag: 1.2.3
+Stable tag: 1.3.0-dev
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -302,6 +302,10 @@ Pantheon Advanced Page Cache integrates with WordPress plugins, including:
 See [CONTRIBUTING.md](https://github.com/pantheon-systems/wp-saml-auth/blob/master/CONTRIBUTING.md) for information on contributing.
 
 == Changelog ==
+
+= 1.3.0-dev (April 13, 2023) =
+* Adds support for WordPress Multisite [[#228](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/228)].
+
 = 1.2.3 (April 5, 2023) =
 * Bump tested up to version to 6.2
 
