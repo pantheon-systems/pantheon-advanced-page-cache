@@ -83,6 +83,11 @@ function pantheon_wp_clear_edge_all() {
  * @param array $keys Keys to be prefixed.
  */
 function pantheon_wp_prefix_surrogate_keys_with_blog_id( $keys ) {
+	// Do not prefix keys if this is not a multisite install.
+	if ( ! is_multisite() ) {
+		return $keys;
+	}
+
 	// Array that will hold the new keys.
 	$prefixed_keys = [];
 
