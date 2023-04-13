@@ -212,6 +212,10 @@ Tada!
 
 * Emits surrogate keys: `404`
 
+**Custom Post Type Archive**
+
+* Emits surrogate keys: `archive`, `post-type-archive`, `<custom-post-type-name>-archive`, `post-<id>`(all posts in main query)
+
 ### Emitted Keys on REST API Endpoints ###
 
 **Posts**
@@ -254,7 +258,7 @@ Different WordPress actions cause different surrogate keys to be purged, documen
 
 **wp_insert_post / transition_post_status / before_delete_post / delete_attachment**
 
-* Purges surrogate keys: `home`, `front`, `404`, `post-<id>`, `user-<id>`, `term-<id>`, `rest-<type>-collection`, `rest-comment-post-<id>`
+* Purges surrogate keys: `home`, `front`, `404`, `post-<id>`, `user-<id>`, `term-<id>`, `rest-<type>-collection`, `rest-comment-post-<id>`, `post-type-archive`, `<custom-post-type-name>-archive`
 * Affected views: homepage, single post, any page with 404 header, any archive where post displays, author archive, term archive, REST API collection and resource endpoints
 
 **clean_post_cache**
