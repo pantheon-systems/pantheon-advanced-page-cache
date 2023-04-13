@@ -47,16 +47,29 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function test_product_archive() {
 		$this->go_to( get_post_type_archive_link( 'product' ) );
-		$this->assertArrayValues(
-			array(
-				'archive',
-				'post-type-archive',
-				'product-archive',
-				'post-' . $this->product_id1,
-				'post-' . $this->product_id2,
-			),
-			Emitter::get_main_query_surrogate_keys()
-		);
+		if ( ! is_multisite() ) {
+			$this->assertArrayValues(
+				array(
+					'archive',
+					'post-type-archive',
+					'product-archive',
+					'post-' . $this->product_id1,
+					'post-' . $this->product_id2,
+				),
+				Emitter::get_main_query_surrogate_keys()
+			);
+		} else {
+			$this->assertArrayValues(
+				array(
+					'blog-1-archive',
+					'blog-1-post-type-archive',
+					'blog-1-product-archive',
+					'blog-1-post-' . $this->product_id1,
+					'blog-1-post-' . $this->product_id2,
+				),
+				Emitter::get_main_query_surrogate_keys()
+			);
+		}
 	}
 
 	/**
