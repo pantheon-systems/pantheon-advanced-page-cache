@@ -239,6 +239,7 @@ class Purger {
 		$keys   = [
 			'home',
 			'front',
+			$post->post_type . '-archive',
 			'404',
 			'feed',
 			'post-' . $post->ID,

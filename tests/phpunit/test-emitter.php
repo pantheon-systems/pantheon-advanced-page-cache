@@ -43,6 +43,23 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 	}
 
 	/**
+	 * Assert expected surrogate keys for the product archive
+	 */
+	public function test_product_archive() {
+		$this->go_to( get_post_type_archive_link( 'product' ) );
+		$this->assertArrayValues(
+			array(
+				'archive',
+				'post-type-archive',
+				'product-archive',
+				'post-' . $this->product_id1,
+				'post-' . $this->product_id2,
+			),
+			Emitter::get_main_query_surrogate_keys()
+		);
+	}
+
+	/**
 	 * Assert expected surrogate keys for a single post.
 	 */
 	public function test_single_post() {
@@ -99,7 +116,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 	/**
 	 * Assert expected surrogate keys for a single product.
 	 */
-	public function test_single_product() {
+	public function test_surrogate_keys() {
 		$this->go_to( get_permalink( $this->product_id1 ) );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
@@ -282,6 +299,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 				array(
 					'archive',
 					'post-type-archive',
+					'product-archive',
 					'post-' . $this->product_id1,
 					'post-' . $this->product_id2,
 				),
@@ -292,6 +310,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 				array(
 					'blog-1-archive',
 					'blog-1-post-type-archive',
+					'blog-1-product-archive',
 					'blog-1-post-' . $this->product_id1,
 					'blog-1-post-' . $this->product_id2,
 				),
