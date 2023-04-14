@@ -303,8 +303,8 @@ See [CONTRIBUTING.md](https://github.com/pantheon-systems/wp-saml-auth/blob/mast
 
 == Changelog ==
 
-= 1.3.0-dev (April 13, 2023) =
-* Adds support for WordPress Multisite [[#228](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/228)].
+= Latest =
+* Adds support for WordPress Multisite. For users who already have this plugin installed on a WPMS, they will need to click the Clear Cache button on the settings page to generate the prefixed keys [[#228](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/228)].
 
 = 1.2.3 (April 5, 2023) =
 * Bump tested up to version to 6.2
