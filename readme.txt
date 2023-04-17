@@ -364,4 +364,4 @@ See [CONTRIBUTING.md](https://github.com/pantheon-systems/wp-saml-auth/blob/mast
 == Upgrade Notice ==
 
 = Latest =
-**Note that the Pantheon Advanced Page Cache Latest release now prefixes keys on WPMS with the blog ID. For users who already have this plugin installed on a WPMS, they will need to click the Clear Cache button on the settings page to generate the prefixed keys.
+Note that the Pantheon Advanced Page Cache Latest release now prefixes keys on a WordPress Multisite (WPMS) with the blog ID. For users who already have this plugin installed on a WPMS, they will need to click the Clear Cache button on the settings page to generate the prefixed keys.
