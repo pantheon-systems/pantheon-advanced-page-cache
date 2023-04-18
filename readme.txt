@@ -136,21 +136,21 @@ Need a bit more power? In addition to `pantheon_wp_clear_edge_keys()`, there are
 This plugin implements a variety of [WP-CLI](https://wp-cli.org) commands. All commands are grouped into the `wp pantheon cache` namespace.
 
     $ wp help pantheon cache
-    
+
     NAME
-    
+
       wp pantheon cache
-    
+
     DESCRIPTION
-    
+
       Manage the Pantheon Advanced Page Cache.
-    
+
     SYNOPSIS
-    
+
       wp pantheon cache <command>
-    
+
     SUBCOMMANDS
-    
+
       purge-all       Purge the entire page cache.
       purge-key       Purge one or more surrogate keys from cache.
       purge-path      Purge one or more paths from cache.
@@ -305,6 +305,9 @@ See [CONTRIBUTING.md](https://github.com/pantheon-systems/wp-saml-auth/blob/mast
 
 = Latest =
 * Adds support for WordPress Multisite which resolves issue where editing a Post on one subsite clears the home page cache of other sites in the Multisite install if it has a Post containing the same ID [[#228](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/228)].
+
+= 1.2.4 (April 13, 2023) =
+* Adds surrogate key to post-type archive pages (e.g. "portfolio") that's specific to that archive(e.g. "portfolio-archive"), and clears that archive where appropriate [[#225](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/225)].
 
 = 1.2.3 (April 5, 2023) =
 * Bump tested up to version to 6.2
