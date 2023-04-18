@@ -23,28 +23,53 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 				'post_name'     => 'fifth-post',
 			)
 		);
-		$this->assertClearedKeys(
-			array(
-				'home',
-				'front',
-				'feed',
-				'404',
-				'post-archive',
-				'post-' . $this->post_id5,
-				'post-huge',
-				'rest-post-' . $this->post_id5,
-				'rest-post-huge',
-				'rest-comment-post-' . $this->post_id5,
-				'rest-comment-post-huge',
-				'user-' . $this->user_id1,
-				'user-huge',
-				'term-' . $this->category_id1,
-				'term-huge',
-				'rest-term-' . $this->category_id1,
-				'rest-term-huge',
-				'rest-post-collection',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'home',
+					'front',
+					'feed',
+					'404',
+					'post-archive',
+					'post-' . $this->post_id5,
+					'post-huge',
+					'rest-post-' . $this->post_id5,
+					'rest-post-huge',
+					'rest-comment-post-' . $this->post_id5,
+					'rest-comment-post-huge',
+					'user-' . $this->user_id1,
+					'user-huge',
+					'term-' . $this->category_id1,
+					'term-huge',
+					'rest-term-' . $this->category_id1,
+					'rest-term-huge',
+					'rest-post-collection',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-home',
+					'blog-1-front',
+					'blog-1-feed',
+					'blog-1-404',
+					'blog-1-post-archive',
+					'blog-1-post-' . $this->post_id5,
+					'blog-1-post-huge',
+					'blog-1-rest-post-' . $this->post_id5,
+					'blog-1-rest-post-huge',
+					'blog-1-rest-comment-post-' . $this->post_id5,
+					'blog-1-rest-comment-post-huge',
+					'blog-1-user-' . $this->user_id1,
+					'blog-1-user-huge',
+					'blog-1-term-' . $this->category_id1,
+					'blog-1-term-huge',
+					'blog-1-rest-term-' . $this->category_id1,
+					'blog-1-rest-term-huge',
+					'blog-1-rest-post-collection',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/',
@@ -73,30 +98,57 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 				'post_content' => 'Test content',
 			)
 		);
-		$this->assertClearedKeys(
-			array(
-				'home',
-				'front',
-				'feed',
-				'404',
-				'post-archive',
-				'post-' . $this->post_id1,
-				'post-huge',
-				'rest-post-' . $this->post_id1,
-				'rest-post-huge',
-				'rest-comment-post-' . $this->post_id1,
-				'rest-comment-post-huge',
-				'user-' . $this->user_id1,
-				'user-huge',
-				'term-' . $this->category_id1,
-				'term-huge',
-				'rest-term-' . $this->category_id1,
-				'rest-term-huge',
-				'term-' . $this->tag_id2,
-				'rest-term-' . $this->tag_id2,
-				'rest-post-collection',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'home',
+					'front',
+					'feed',
+					'404',
+					'post-archive',
+					'post-' . $this->post_id1,
+					'post-huge',
+					'rest-post-' . $this->post_id1,
+					'rest-post-huge',
+					'rest-comment-post-' . $this->post_id1,
+					'rest-comment-post-huge',
+					'user-' . $this->user_id1,
+					'user-huge',
+					'term-' . $this->category_id1,
+					'term-huge',
+					'rest-term-' . $this->category_id1,
+					'rest-term-huge',
+					'term-' . $this->tag_id2,
+					'rest-term-' . $this->tag_id2,
+					'rest-post-collection',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-home',
+					'blog-1-front',
+					'blog-1-feed',
+					'blog-1-404',
+					'blog-1-post-archive',
+					'blog-1-post-' . $this->post_id1,
+					'blog-1-post-huge',
+					'blog-1-rest-post-' . $this->post_id1,
+					'blog-1-rest-post-huge',
+					'blog-1-rest-comment-post-' . $this->post_id1,
+					'blog-1-rest-comment-post-huge',
+					'blog-1-user-' . $this->user_id1,
+					'blog-1-user-huge',
+					'blog-1-term-' . $this->category_id1,
+					'blog-1-term-huge',
+					'blog-1-rest-term-' . $this->category_id1,
+					'blog-1-rest-term-huge',
+					'blog-1-term-' . $this->tag_id2,
+					'blog-1-rest-term-' . $this->tag_id2,
+					'blog-1-rest-post-collection',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/',
@@ -135,18 +187,33 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 				'post_content' => 'Test content',
 			)
 		);
-		$this->assertClearedKeys(
-			array(
-				'post-' . $this->post_id4,
-				'post-huge',
-				'rest-post-' . $this->post_id4,
-				'rest-post-huge',
-				'term-' . $this->category_id1,
-				'term-huge',
-				'rest-term-' . $this->category_id1,
-				'rest-term-huge',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'post-' . $this->post_id4,
+					'post-huge',
+					'rest-post-' . $this->post_id4,
+					'rest-post-huge',
+					'term-' . $this->category_id1,
+					'term-huge',
+					'rest-term-' . $this->category_id1,
+					'rest-term-huge',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-post-' . $this->post_id4,
+					'blog-1-post-huge',
+					'blog-1-rest-post-' . $this->post_id4,
+					'blog-1-rest-post-huge',
+					'blog-1-term-' . $this->category_id1,
+					'blog-1-term-huge',
+					'blog-1-rest-term-' . $this->category_id1,
+					'blog-1-rest-term-huge',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/category/uncategorized/',
@@ -166,30 +233,57 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 				'post_status' => 'draft',
 			)
 		);
-		$this->assertClearedKeys(
-			array(
-				'home',
-				'front',
-				'feed',
-				'404',
-				'post-archive',
-				'post-' . $this->post_id1,
-				'post-huge',
-				'rest-post-' . $this->post_id1,
-				'rest-post-huge',
-				'rest-comment-post-' . $this->post_id1,
-				'rest-comment-post-huge',
-				'user-' . $this->user_id1,
-				'user-huge',
-				'term-' . $this->category_id1,
-				'term-huge',
-				'rest-term-' . $this->category_id1,
-				'rest-term-huge',
-				'term-' . $this->tag_id2,
-				'rest-term-' . $this->tag_id2,
-				'rest-post-collection',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'home',
+					'front',
+					'feed',
+					'404',
+					'post-archive',
+					'post-' . $this->post_id1,
+					'post-huge',
+					'rest-post-' . $this->post_id1,
+					'rest-post-huge',
+					'rest-comment-post-' . $this->post_id1,
+					'rest-comment-post-huge',
+					'user-' . $this->user_id1,
+					'user-huge',
+					'term-' . $this->category_id1,
+					'term-huge',
+					'rest-term-' . $this->category_id1,
+					'rest-term-huge',
+					'term-' . $this->tag_id2,
+					'rest-term-' . $this->tag_id2,
+					'rest-post-collection',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-home',
+					'blog-1-front',
+					'blog-1-feed',
+					'blog-1-404',
+					'blog-1-post-archive',
+					'blog-1-post-' . $this->post_id1,
+					'blog-1-post-huge',
+					'blog-1-rest-post-' . $this->post_id1,
+					'blog-1-rest-post-huge',
+					'blog-1-rest-comment-post-' . $this->post_id1,
+					'blog-1-rest-comment-post-huge',
+					'blog-1-user-' . $this->user_id1,
+					'blog-1-user-huge',
+					'blog-1-term-' . $this->category_id1,
+					'blog-1-term-huge',
+					'blog-1-rest-term-' . $this->category_id1,
+					'blog-1-rest-term-huge',
+					'blog-1-term-' . $this->tag_id2,
+					'blog-1-rest-term-' . $this->tag_id2,
+					'blog-1-rest-post-collection',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/',
@@ -223,32 +317,61 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function test_trash_post() {
 		wp_trash_post( $this->post_id1 );
-		$this->assertClearedKeys(
-			array(
-				'home',
-				'front',
-				'feed',
-				'404',
-				'post-archive',
-				'post-' . $this->post_id1,
-				'post-huge',
-				'rest-post-' . $this->post_id1,
-				'rest-post-huge',
-				'rest-comment-' . $this->comment_id1,
-				'rest-comment-huge',
-				'rest-comment-post-' . $this->post_id1,
-				'rest-comment-post-huge',
-				'user-' . $this->user_id1,
-				'user-huge',
-				'term-' . $this->category_id1,
-				'term-huge',
-				'rest-term-' . $this->category_id1,
-				'rest-term-huge',
-				'term-' . $this->tag_id2,
-				'rest-term-' . $this->tag_id2,
-				'rest-post-collection',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'home',
+					'front',
+					'feed',
+					'404',
+					'post-archive',
+					'post-' . $this->post_id1,
+					'post-huge',
+					'rest-post-' . $this->post_id1,
+					'rest-post-huge',
+					'rest-comment-' . $this->comment_id1,
+					'rest-comment-huge',
+					'rest-comment-post-' . $this->post_id1,
+					'rest-comment-post-huge',
+					'user-' . $this->user_id1,
+					'user-huge',
+					'term-' . $this->category_id1,
+					'term-huge',
+					'rest-term-' . $this->category_id1,
+					'rest-term-huge',
+					'term-' . $this->tag_id2,
+					'rest-term-' . $this->tag_id2,
+					'rest-post-collection',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-home',
+					'blog-1-front',
+					'blog-1-feed',
+					'blog-1-404',
+					'blog-1-post-archive',
+					'blog-1-post-' . $this->post_id1,
+					'blog-1-post-huge',
+					'blog-1-rest-post-' . $this->post_id1,
+					'blog-1-rest-post-huge',
+					'blog-1-rest-comment-' . $this->comment_id1,
+					'blog-1-rest-comment-huge',
+					'blog-1-rest-comment-post-' . $this->post_id1,
+					'blog-1-rest-comment-post-huge',
+					'blog-1-user-' . $this->user_id1,
+					'blog-1-user-huge',
+					'blog-1-term-' . $this->category_id1,
+					'blog-1-term-huge',
+					'blog-1-rest-term-' . $this->category_id1,
+					'blog-1-rest-term-huge',
+					'blog-1-term-' . $this->tag_id2,
+					'blog-1-rest-term-' . $this->tag_id2,
+					'blog-1-rest-post-collection',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/',
@@ -282,33 +405,63 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function test_delete_post() {
 		wp_delete_post( $this->post_id1, true );
-		$this->assertClearedKeys(
-			array(
-				'home',
-				'front',
-				'feed',
-				'404',
-				'post-archive',
-				'post-' . $this->post_id1,
-				'post-huge',
-				'rest-post-' . $this->post_id1,
-				'rest-post-huge',
-				'rest-comment-' . $this->comment_id1,
-				'rest-comment-huge',
-				'rest-comment-post-' . $this->post_id1,
-				'rest-comment-post-huge',
-				'user-' . $this->user_id1,
-				'user-huge',
-				'term-' . $this->category_id1,
-				'term-huge',
-				'rest-term-' . $this->category_id1,
-				'rest-term-huge',
-				'term-' . $this->tag_id2,
-				'rest-term-' . $this->tag_id2,
-				'rest-post-collection',
-				'rest-comment-collection',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'home',
+					'front',
+					'feed',
+					'404',
+					'post-archive',
+					'post-' . $this->post_id1,
+					'post-huge',
+					'rest-post-' . $this->post_id1,
+					'rest-post-huge',
+					'rest-comment-' . $this->comment_id1,
+					'rest-comment-huge',
+					'rest-comment-post-' . $this->post_id1,
+					'rest-comment-post-huge',
+					'user-' . $this->user_id1,
+					'user-huge',
+					'term-' . $this->category_id1,
+					'term-huge',
+					'rest-term-' . $this->category_id1,
+					'rest-term-huge',
+					'term-' . $this->tag_id2,
+					'rest-term-' . $this->tag_id2,
+					'rest-post-collection',
+					'rest-comment-collection',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-home',
+					'blog-1-front',
+					'blog-1-feed',
+					'blog-1-404',
+					'blog-1-post-archive',
+					'blog-1-post-' . $this->post_id1,
+					'blog-1-post-huge',
+					'blog-1-rest-post-' . $this->post_id1,
+					'blog-1-rest-post-huge',
+					'blog-1-rest-comment-' . $this->comment_id1,
+					'blog-1-rest-comment-huge',
+					'blog-1-rest-comment-post-' . $this->post_id1,
+					'blog-1-rest-comment-post-huge',
+					'blog-1-user-' . $this->user_id1,
+					'blog-1-user-huge',
+					'blog-1-term-' . $this->category_id1,
+					'blog-1-term-huge',
+					'blog-1-rest-term-' . $this->category_id1,
+					'blog-1-rest-term-huge',
+					'blog-1-term-' . $this->tag_id2,
+					'blog-1-rest-term-' . $this->tag_id2,
+					'blog-1-rest-post-collection',
+					'blog-1-rest-comment-collection',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/',
@@ -352,24 +505,45 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 				'post_type'     => 'page',
 			)
 		);
-		$this->assertClearedKeys(
-			array(
-				'home',
-				'front',
-				'feed',
-				'404',
-				'page-archive',
-				'post-' . $this->page_id2,
-				'post-huge',
-				'rest-post-' . $this->page_id2,
-				'rest-post-huge',
-				'rest-comment-post-' . $this->page_id2,
-				'rest-comment-post-huge',
-				'user-' . $this->user_id1,
-				'user-huge',
-				'rest-page-collection',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'home',
+					'front',
+					'feed',
+					'404',
+					'page-archive',
+					'post-' . $this->page_id2,
+					'post-huge',
+					'rest-post-' . $this->page_id2,
+					'rest-post-huge',
+					'rest-comment-post-' . $this->page_id2,
+					'rest-comment-post-huge',
+					'user-' . $this->user_id1,
+					'user-huge',
+					'rest-page-collection',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-home',
+					'blog-1-front',
+					'blog-1-feed',
+					'blog-1-404',
+					'blog-1-page-archive',
+					'blog-1-post-' . $this->page_id2,
+					'blog-1-post-huge',
+					'blog-1-rest-post-' . $this->page_id2,
+					'blog-1-rest-post-huge',
+					'blog-1-rest-comment-post-' . $this->page_id2,
+					'blog-1-rest-comment-post-huge',
+					'blog-1-user-' . $this->user_id1,
+					'blog-1-user-huge',
+					'blog-1-rest-page-collection',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/',
@@ -395,24 +569,45 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 				'post_content' => 'Test content',
 			)
 		);
-		$this->assertClearedKeys(
-			array(
-				'home',
-				'front',
-				'feed',
-				'404',
-				'page-archive',
-				'post-' . $this->page_id1,
-				'post-huge',
-				'rest-post-' . $this->page_id1,
-				'rest-post-huge',
-				'rest-comment-post-' . $this->page_id1,
-				'rest-comment-post-huge',
-				'user-' . $this->user_id1,
-				'user-huge',
-				'rest-page-collection',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'home',
+					'front',
+					'feed',
+					'404',
+					'page-archive',
+					'post-' . $this->page_id1,
+					'post-huge',
+					'rest-post-' . $this->page_id1,
+					'rest-post-huge',
+					'rest-comment-post-' . $this->page_id1,
+					'rest-comment-post-huge',
+					'user-' . $this->user_id1,
+					'user-huge',
+					'rest-page-collection',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-home',
+					'blog-1-front',
+					'blog-1-feed',
+					'blog-1-404',
+					'blog-1-page-archive',
+					'blog-1-post-' . $this->page_id1,
+					'blog-1-post-huge',
+					'blog-1-rest-post-' . $this->page_id1,
+					'blog-1-rest-post-huge',
+					'blog-1-rest-comment-post-' . $this->page_id1,
+					'blog-1-rest-comment-post-huge',
+					'blog-1-user-' . $this->user_id1,
+					'blog-1-user-huge',
+					'blog-1-rest-page-collection',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/',
@@ -440,24 +635,45 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 				'post_status' => 'draft',
 			)
 		);
-		$this->assertClearedKeys(
-			array(
-				'home',
-				'front',
-				'feed',
-				'404',
-				'page-archive',
-				'post-' . $this->page_id1,
-				'post-huge',
-				'rest-post-' . $this->page_id1,
-				'rest-post-huge',
-				'rest-comment-post-' . $this->page_id1,
-				'rest-comment-post-huge',
-				'user-' . $this->user_id1,
-				'user-huge',
-				'rest-page-collection',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'home',
+					'front',
+					'feed',
+					'404',
+					'page-archive',
+					'post-' . $this->page_id1,
+					'post-huge',
+					'rest-post-' . $this->page_id1,
+					'rest-post-huge',
+					'rest-comment-post-' . $this->page_id1,
+					'rest-comment-post-huge',
+					'user-' . $this->user_id1,
+					'user-huge',
+					'rest-page-collection',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-home',
+					'blog-1-front',
+					'blog-1-feed',
+					'blog-1-404',
+					'blog-1-page-archive',
+					'blog-1-post-' . $this->page_id1,
+					'blog-1-post-huge',
+					'blog-1-rest-post-' . $this->page_id1,
+					'blog-1-rest-post-huge',
+					'blog-1-rest-comment-post-' . $this->page_id1,
+					'blog-1-rest-comment-post-huge',
+					'blog-1-user-' . $this->user_id1,
+					'blog-1-user-huge',
+					'blog-1-rest-page-collection',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/',
@@ -480,24 +696,45 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function test_trash_page() {
 		wp_trash_post( $this->page_id1 );
-		$this->assertClearedKeys(
-			array(
-				'home',
-				'front',
-				'feed',
-				'404',
-				'page-archive',
-				'post-' . $this->page_id1,
-				'post-huge',
-				'rest-post-' . $this->page_id1,
-				'rest-post-huge',
-				'rest-comment-post-' . $this->page_id1,
-				'rest-comment-post-huge',
-				'user-' . $this->user_id1,
-				'user-huge',
-				'rest-page-collection',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'home',
+					'front',
+					'feed',
+					'404',
+					'page-archive',
+					'post-' . $this->page_id1,
+					'post-huge',
+					'rest-post-' . $this->page_id1,
+					'rest-post-huge',
+					'rest-comment-post-' . $this->page_id1,
+					'rest-comment-post-huge',
+					'user-' . $this->user_id1,
+					'user-huge',
+					'rest-page-collection',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-home',
+					'blog-1-front',
+					'blog-1-feed',
+					'blog-1-404',
+					'blog-1-page-archive',
+					'blog-1-post-' . $this->page_id1,
+					'blog-1-post-huge',
+					'blog-1-rest-post-' . $this->page_id1,
+					'blog-1-rest-post-huge',
+					'blog-1-rest-comment-post-' . $this->page_id1,
+					'blog-1-rest-comment-post-huge',
+					'blog-1-user-' . $this->user_id1,
+					'blog-1-user-huge',
+					'blog-1-rest-page-collection',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/',
@@ -520,24 +757,45 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function test_delete_page() {
 		wp_delete_post( $this->page_id1, true );
-		$this->assertClearedKeys(
-			array(
-				'home',
-				'front',
-				'feed',
-				'404',
-				'page-archive',
-				'post-' . $this->page_id1,
-				'post-huge',
-				'rest-post-' . $this->page_id1,
-				'rest-post-huge',
-				'rest-comment-post-' . $this->page_id1,
-				'rest-comment-post-huge',
-				'user-' . $this->user_id1,
-				'user-huge',
-				'rest-page-collection',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'home',
+					'front',
+					'feed',
+					'404',
+					'page-archive',
+					'post-' . $this->page_id1,
+					'post-huge',
+					'rest-post-' . $this->page_id1,
+					'rest-post-huge',
+					'rest-comment-post-' . $this->page_id1,
+					'rest-comment-post-huge',
+					'user-' . $this->user_id1,
+					'user-huge',
+					'rest-page-collection',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-home',
+					'blog-1-front',
+					'blog-1-feed',
+					'blog-1-404',
+					'blog-1-page-archive',
+					'blog-1-post-' . $this->page_id1,
+					'blog-1-post-huge',
+					'blog-1-rest-post-' . $this->page_id1,
+					'blog-1-rest-post-huge',
+					'blog-1-rest-comment-post-' . $this->page_id1,
+					'blog-1-rest-comment-post-huge',
+					'blog-1-user-' . $this->user_id1,
+					'blog-1-user-huge',
+					'blog-1-rest-page-collection',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/',
@@ -560,14 +818,25 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function test_clean_post_cache_page() {
 		clean_post_cache( $this->page_id1 );
-		$this->assertClearedKeys(
-			array(
-				'post-' . $this->page_id1,
-				'post-huge',
-				'rest-post-' . $this->page_id1,
-				'rest-post-huge',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'post-' . $this->page_id1,
+					'post-huge',
+					'rest-post-' . $this->page_id1,
+					'rest-post-huge',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-post-' . $this->page_id1,
+					'blog-1-post-huge',
+					'blog-1-rest-post-' . $this->page_id1,
+					'blog-1-rest-post-huge',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/first-page/',
@@ -592,24 +861,46 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			)
 		);
 		wp_set_object_terms( $this->product_id3, array( $this->product_category_id1 ), 'product_category' );
-		$this->assertClearedKeys(
-			array(
-				'home',
-				'front',
-				'feed',
-				'product-archive',
-				'404',
-				'post-' . $this->product_id3,
-				'post-huge',
-				'rest-post-' . $this->product_id3,
-				'rest-post-huge',
-				'term-' . $this->product_category_id1,
-				'term-huge',
-				'rest-term-' . $this->product_category_id1,
-				'rest-term-huge',
-				'rest-product-collection',
-			)
-		);
+
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'home',
+					'front',
+					'feed',
+					'product-archive',
+					'404',
+					'post-' . $this->product_id3,
+					'post-huge',
+					'rest-post-' . $this->product_id3,
+					'rest-post-huge',
+					'term-' . $this->product_category_id1,
+					'term-huge',
+					'rest-term-' . $this->product_category_id1,
+					'rest-term-huge',
+					'rest-product-collection',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-home',
+					'blog-1-front',
+					'blog-1-feed',
+					'blog-1-product-archive',
+					'blog-1-404',
+					'blog-1-post-' . $this->product_id3,
+					'blog-1-post-huge',
+					'blog-1-rest-post-' . $this->product_id3,
+					'blog-1-rest-post-huge',
+					'blog-1-term-' . $this->product_category_id1,
+					'blog-1-term-huge',
+					'blog-1-rest-term-' . $this->product_category_id1,
+					'blog-1-rest-term-huge',
+					'blog-1-rest-product-collection',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/',
@@ -637,24 +928,45 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 				'post_content' => 'Test content',
 			)
 		);
-		$this->assertClearedKeys(
-			array(
-				'home',
-				'front',
-				'feed',
-				'404',
-				'product-archive',
-				'post-' . $this->product_id2,
-				'post-huge',
-				'rest-post-' . $this->product_id2,
-				'rest-post-huge',
-				'term-' . $this->product_category_id1,
-				'term-huge',
-				'rest-term-' . $this->product_category_id1,
-				'rest-term-huge',
-				'rest-product-collection',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'home',
+					'front',
+					'feed',
+					'404',
+					'product-archive',
+					'post-' . $this->product_id2,
+					'post-huge',
+					'rest-post-' . $this->product_id2,
+					'rest-post-huge',
+					'term-' . $this->product_category_id1,
+					'term-huge',
+					'rest-term-' . $this->product_category_id1,
+					'rest-term-huge',
+					'rest-product-collection',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-home',
+					'blog-1-front',
+					'blog-1-feed',
+					'blog-1-404',
+					'blog-1-product-archive',
+					'blog-1-post-' . $this->product_id2,
+					'blog-1-post-huge',
+					'blog-1-rest-post-' . $this->product_id2,
+					'blog-1-rest-post-huge',
+					'blog-1-term-' . $this->product_category_id1,
+					'blog-1-term-huge',
+					'blog-1-rest-term-' . $this->product_category_id1,
+					'blog-1-rest-term-huge',
+					'blog-1-rest-product-collection',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/',
@@ -679,24 +991,45 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function test_trash_product() {
 		wp_trash_post( $this->product_id2 );
-		$this->assertClearedKeys(
-			array(
-				'home',
-				'front',
-				'feed',
-				'404',
-				'product-archive',
-				'post-' . $this->product_id2,
-				'post-huge',
-				'rest-post-' . $this->product_id2,
-				'rest-post-huge',
-				'term-' . $this->product_category_id1,
-				'term-huge',
-				'rest-term-' . $this->product_category_id1,
-				'rest-term-huge',
-				'rest-product-collection',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'home',
+					'front',
+					'feed',
+					'404',
+					'product-archive',
+					'post-' . $this->product_id2,
+					'post-huge',
+					'rest-post-' . $this->product_id2,
+					'rest-post-huge',
+					'term-' . $this->product_category_id1,
+					'term-huge',
+					'rest-term-' . $this->product_category_id1,
+					'rest-term-huge',
+					'rest-product-collection',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-home',
+					'blog-1-front',
+					'blog-1-feed',
+					'blog-1-404',
+					'blog-1-product-archive',
+					'blog-1-post-' . $this->product_id2,
+					'blog-1-post-huge',
+					'blog-1-rest-post-' . $this->product_id2,
+					'blog-1-rest-post-huge',
+					'blog-1-term-' . $this->product_category_id1,
+					'blog-1-term-huge',
+					'blog-1-rest-term-' . $this->product_category_id1,
+					'blog-1-rest-term-huge',
+					'blog-1-rest-product-collection',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/',
@@ -721,24 +1054,45 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function test_delete_product() {
 		wp_delete_post( $this->product_id2, true );
-		$this->assertClearedKeys(
-			array(
-				'home',
-				'front',
-				'feed',
-				'404',
-				'product-archive',
-				'post-' . $this->product_id2,
-				'post-huge',
-				'rest-post-' . $this->product_id2,
-				'rest-post-huge',
-				'term-' . $this->product_category_id1,
-				'term-huge',
-				'rest-term-' . $this->product_category_id1,
-				'rest-term-huge',
-				'rest-product-collection',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'home',
+					'front',
+					'feed',
+					'404',
+					'product-archive',
+					'post-' . $this->product_id2,
+					'post-huge',
+					'rest-post-' . $this->product_id2,
+					'rest-post-huge',
+					'term-' . $this->product_category_id1,
+					'term-huge',
+					'rest-term-' . $this->product_category_id1,
+					'rest-term-huge',
+					'rest-product-collection',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-home',
+					'blog-1-front',
+					'blog-1-feed',
+					'blog-1-404',
+					'blog-1-product-archive',
+					'blog-1-post-' . $this->product_id2,
+					'blog-1-post-huge',
+					'blog-1-rest-post-' . $this->product_id2,
+					'blog-1-rest-post-huge',
+					'blog-1-term-' . $this->product_category_id1,
+					'blog-1-term-huge',
+					'blog-1-rest-term-' . $this->product_category_id1,
+					'blog-1-rest-term-huge',
+					'blog-1-rest-product-collection',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/',
@@ -763,14 +1117,25 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function test_clean_post_cache_product() {
 		clean_post_cache( $this->product_id1 );
-		$this->assertClearedKeys(
-			array(
-				'post-' . $this->product_id1,
-				'post-huge',
-				'rest-post-' . $this->product_id1,
-				'rest-post-huge',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'post-' . $this->product_id1,
+					'post-huge',
+					'rest-post-' . $this->product_id1,
+					'rest-post-huge',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-post-' . $this->product_id1,
+					'blog-1-post-huge',
+					'blog-1-rest-post-' . $this->product_id1,
+					'blog-1-rest-post-huge',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/product-category/second-product-category/',
@@ -788,24 +1153,45 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 	public function test_delete_attachment() {
 		$post_name = get_post_field( 'post_name', $this->attachment_id1 );
 		wp_delete_attachment( $this->attachment_id1, true );
-		$this->assertClearedKeys(
-			array(
-				'home',
-				'front',
-				'404',
-				'feed',
-				'attachment-archive',
-				'post-' . $this->attachment_id1,
-				'post-huge',
-				'rest-post-' . $this->attachment_id1,
-				'rest-post-huge',
-				'rest-comment-post-' . $this->attachment_id1,
-				'rest-comment-post-huge',
-				'user-' . $this->user_id1,
-				'user-huge',
-				'rest-attachment-collection',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'home',
+					'front',
+					'404',
+					'feed',
+					'attachment-archive',
+					'post-' . $this->attachment_id1,
+					'post-huge',
+					'rest-post-' . $this->attachment_id1,
+					'rest-post-huge',
+					'rest-comment-post-' . $this->attachment_id1,
+					'rest-comment-post-huge',
+					'user-' . $this->user_id1,
+					'user-huge',
+					'rest-attachment-collection',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-home',
+					'blog-1-front',
+					'blog-1-404',
+					'blog-1-feed',
+					'blog-1-attachment-archive',
+					'blog-1-post-' . $this->attachment_id1,
+					'blog-1-post-huge',
+					'blog-1-rest-post-' . $this->attachment_id1,
+					'blog-1-rest-post-huge',
+					'blog-1-rest-comment-post-' . $this->attachment_id1,
+					'blog-1-rest-comment-post-huge',
+					'blog-1-user-' . $this->user_id1,
+					'blog-1-user-huge',
+					'blog-1-rest-attachment-collection',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/',
@@ -832,17 +1218,31 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 				'slug' => 'third-tag',
 			)
 		);
-		$this->assertClearedKeys(
-			array(
-				'term-' . $this->tag_id3,
-				'term-huge',
-				'rest-term-' . $this->tag_id3,
-				'rest-term-huge',
-				'post-term-' . $this->tag_id3,
-				'post-term-huge',
-				'rest-post_tag-collection',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'term-' . $this->tag_id3,
+					'term-huge',
+					'rest-term-' . $this->tag_id3,
+					'rest-term-huge',
+					'post-term-' . $this->tag_id3,
+					'post-term-huge',
+					'rest-post_tag-collection',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-term-' . $this->tag_id3,
+					'blog-1-term-huge',
+					'blog-1-rest-term-' . $this->tag_id3,
+					'blog-1-rest-term-huge',
+					'blog-1-post-term-' . $this->tag_id3,
+					'blog-1-post-term-huge',
+					'blog-1-rest-post_tag-collection',
+				)
+			);
+		}
 		// Hasn't appeared on any views yet.
 		$this->assertPurgedURIs(
 			array(
@@ -862,16 +1262,29 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 				'description' => 'Test description',
 			)
 		);
-		$this->assertClearedKeys(
-			array(
-				'term-' . $this->tag_id2,
-				'term-huge',
-				'rest-term-' . $this->tag_id2,
-				'rest-term-huge',
-				'post-term-' . $this->tag_id2,
-				'post-term-huge',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'term-' . $this->tag_id2,
+					'term-huge',
+					'rest-term-' . $this->tag_id2,
+					'rest-term-huge',
+					'post-term-' . $this->tag_id2,
+					'post-term-huge',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-term-' . $this->tag_id2,
+					'blog-1-term-huge',
+					'blog-1-rest-term-' . $this->tag_id2,
+					'blog-1-rest-term-huge',
+					'blog-1-post-term-' . $this->tag_id2,
+					'blog-1-post-term-huge',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/2016/10/14/first-post/',
@@ -887,16 +1300,29 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function test_delete_term() {
 		wp_delete_term( $this->tag_id2, 'post_tag' );
-		$this->assertClearedKeys(
-			array(
-				'term-' . $this->tag_id2,
-				'term-huge',
-				'rest-term-' . $this->tag_id2,
-				'rest-term-huge',
-				'post-term-' . $this->tag_id2,
-				'post-term-huge',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'term-' . $this->tag_id2,
+					'term-huge',
+					'rest-term-' . $this->tag_id2,
+					'rest-term-huge',
+					'post-term-' . $this->tag_id2,
+					'post-term-huge',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-term-' . $this->tag_id2,
+					'blog-1-term-huge',
+					'blog-1-rest-term-' . $this->tag_id2,
+					'blog-1-rest-term-huge',
+					'blog-1-post-term-' . $this->tag_id2,
+					'blog-1-post-term-huge',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/2016/10/14/first-post/',
@@ -912,14 +1338,25 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function test_clean_term_cache() {
 		clean_term_cache( $this->tag_id1 );
-		$this->assertClearedKeys(
-			array(
-				'term-' . $this->tag_id1,
-				'term-huge',
-				'rest-term-' . $this->tag_id1,
-				'rest-term-huge',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'term-' . $this->tag_id1,
+					'term-huge',
+					'rest-term-' . $this->tag_id1,
+					'rest-term-huge',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-term-' . $this->tag_id1,
+					'blog-1-term-huge',
+					'blog-1-rest-term-' . $this->tag_id1,
+					'blog-1-rest-term-huge',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/tag/first-tag/',
@@ -934,14 +1371,25 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function test_clean_term_cache_category() {
 		clean_term_cache( $this->category_id1 );
-		$this->assertClearedKeys(
-			array(
-				'term-' . $this->category_id1,
-				'term-huge',
-				'rest-term-' . $this->category_id1,
-				'rest-term-huge',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'term-' . $this->category_id1,
+					'term-huge',
+					'rest-term-' . $this->category_id1,
+					'rest-term-huge',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-term-' . $this->category_id1,
+					'blog-1-term-huge',
+					'blog-1-rest-term-' . $this->category_id1,
+					'blog-1-rest-term-huge',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/category/uncategorized/',
@@ -956,14 +1404,25 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function test_clean_term_cache_product_category() {
 		clean_term_cache( $this->product_category_id1 );
-		$this->assertClearedKeys(
-			array(
-				'term-' . $this->product_category_id1,
-				'term-huge',
-				'rest-term-' . $this->product_category_id1,
-				'rest-term-huge',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'term-' . $this->product_category_id1,
+					'term-huge',
+					'rest-term-' . $this->product_category_id1,
+					'rest-term-huge',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-term-' . $this->product_category_id1,
+					'blog-1-term-huge',
+					'blog-1-rest-term-' . $this->product_category_id1,
+					'blog-1-rest-term-huge',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/product-category/first-product-category/',
@@ -978,14 +1437,25 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function test_clean_user_cache() {
 		clean_user_cache( $this->user_id1 );
-		$this->assertClearedKeys(
-			array(
-				'user-' . $this->user_id1,
-				'user-huge',
-				'rest-user-' . $this->user_id1,
-				'rest-user-huge',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'user-' . $this->user_id1,
+					'user-huge',
+					'rest-user-' . $this->user_id1,
+					'rest-user-huge',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-user-' . $this->user_id1,
+					'blog-1-user-huge',
+					'blog-1-rest-user-' . $this->user_id1,
+					'blog-1-rest-user-huge',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/author/first-user/',
@@ -1006,17 +1476,31 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 				'user_id'          => 0,
 			)
 		);
-		$this->assertClearedKeys(
-			array(
-				'rest-comment-' . $this->comment_id2,
-				'rest-comment-huge',
-				'rest-comment-collection',
-				'post-' . $this->post_id2,
-				'post-huge',
-				'rest-post-' . $this->post_id2,
-				'rest-post-huge',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'rest-comment-' . $this->comment_id2,
+					'rest-comment-huge',
+					'rest-comment-collection',
+					'post-' . $this->post_id2,
+					'post-huge',
+					'rest-post-' . $this->post_id2,
+					'rest-post-huge',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-rest-comment-' . $this->comment_id2,
+					'blog-1-rest-comment-huge',
+					'blog-1-rest-comment-collection',
+					'blog-1-post-' . $this->post_id2,
+					'blog-1-post-huge',
+					'blog-1-rest-post-' . $this->post_id2,
+					'blog-1-rest-post-huge',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/',
@@ -1045,16 +1529,29 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 				'comment_content' => 'Pantheon!',
 			)
 		);
-		$this->assertClearedKeys(
-			array(
-				'rest-comment-' . $this->comment_id1,
-				'rest-comment-huge',
-				'post-' . $this->post_id1,
-				'post-huge',
-				'rest-post-' . $this->post_id1,
-				'rest-post-huge',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'rest-comment-' . $this->comment_id1,
+					'rest-comment-huge',
+					'post-' . $this->post_id1,
+					'post-huge',
+					'rest-post-' . $this->post_id1,
+					'rest-post-huge',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-rest-comment-' . $this->comment_id1,
+					'blog-1-rest-comment-huge',
+					'blog-1-post-' . $this->post_id1,
+					'blog-1-post-huge',
+					'blog-1-rest-post-' . $this->post_id1,
+					'blog-1-rest-post-huge',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/',
@@ -1079,17 +1576,31 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function test_trash_comment() {
 		wp_delete_comment( $this->comment_id1, false );
-		$this->assertClearedKeys(
-			array(
-				'rest-comment-' . $this->comment_id1,
-				'rest-comment-huge',
-				'post-' . $this->post_id1,
-				'post-huge',
-				'rest-post-' . $this->post_id1,
-				'rest-post-huge',
-				'rest-comment-collection',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'rest-comment-' . $this->comment_id1,
+					'rest-comment-huge',
+					'post-' . $this->post_id1,
+					'post-huge',
+					'rest-post-' . $this->post_id1,
+					'rest-post-huge',
+					'rest-comment-collection',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-rest-comment-' . $this->comment_id1,
+					'blog-1-rest-comment-huge',
+					'blog-1-post-' . $this->post_id1,
+					'blog-1-post-huge',
+					'blog-1-rest-post-' . $this->post_id1,
+					'blog-1-rest-post-huge',
+					'blog-1-rest-comment-collection',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/',
@@ -1115,17 +1626,31 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function test_delete_comment() {
 		wp_delete_comment( $this->comment_id1, true );
-		$this->assertClearedKeys(
-			array(
-				'rest-comment-' . $this->comment_id1,
-				'rest-comment-huge',
-				'post-' . $this->post_id1,
-				'post-huge',
-				'rest-post-' . $this->post_id1,
-				'rest-post-huge',
-				'rest-comment-collection',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'rest-comment-' . $this->comment_id1,
+					'rest-comment-huge',
+					'post-' . $this->post_id1,
+					'post-huge',
+					'rest-post-' . $this->post_id1,
+					'rest-post-huge',
+					'rest-comment-collection',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-rest-comment-' . $this->comment_id1,
+					'blog-1-rest-comment-huge',
+					'blog-1-post-' . $this->post_id1,
+					'blog-1-post-huge',
+					'blog-1-rest-post-' . $this->post_id1,
+					'blog-1-rest-post-huge',
+					'blog-1-rest-comment-collection',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/',
@@ -1151,12 +1676,21 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function test_clean_comment_cache() {
 		clean_comment_cache( $this->comment_id1 );
-		$this->assertClearedKeys(
-			array(
-				'rest-comment-' . $this->comment_id1,
-				'rest-comment-huge',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'rest-comment-' . $this->comment_id1,
+					'rest-comment-huge',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-rest-comment-' . $this->comment_id1,
+					'blog-1-rest-comment-huge',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/wp-json/wp/v2/comments',
@@ -1173,12 +1707,21 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			return $this->markTestSkipped( 'WordPress version not supported.' );
 		}
 		update_option( 'date_format', 'Y-m-d' );
-		$this->assertClearedKeys(
-			array(
-				'rest-setting-date_format',
-				'rest-setting-huge',
-			)
-		);
+		if ( ! is_multisite() ) {
+			$this->assertClearedKeys(
+				array(
+					'rest-setting-date_format',
+					'rest-setting-huge',
+				)
+			);
+		} else {
+			$this->assertClearedKeys(
+				array(
+					'blog-1-rest-setting-date_format',
+					'blog-1-rest-setting-huge',
+				)
+			);
+		}
 		$this->assertPurgedURIs(
 			array(
 				'/wp-json/wp/v2/settings',
