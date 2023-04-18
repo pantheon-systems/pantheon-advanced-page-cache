@@ -4,7 +4,7 @@
 **Tags:** pantheon, cdn, cache  
 **Requires at least:** 4.7  
 **Tested up to:** 6.2  
-**Stable tag:** 1.3.0-dev  
+**Stable tag:** 1.3.0  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -308,7 +308,7 @@ See [CONTRIBUTING.md](https://github.com/pantheon-systems/pantheon-advanced-page
 
 ## Changelog ##
 
-### Latest ###
+### 1.3.0 (April 19, 2023) ###
 * Adds support for WordPress Multisite which resolves issue where editing a Post on one subsite clears the home page cache of other sites in the Multisite install if it has a Post containing the same ID [[#228](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/228)].
 
 ### 1.2.4 (April 13, 2023) ###
@@ -371,5 +371,5 @@ See [CONTRIBUTING.md](https://github.com/pantheon-systems/pantheon-advanced-page
 
 ## Upgrade Notice ##
 
-### Latest ###
-Note that the Pantheon Advanced Page Cache Latest release now prefixes keys on a WordPress Multisite (WPMS) with the blog ID. For users who already have this plugin installed on a WPMS, they will need to click the Clear Cache button on the settings page to generate the prefixed keys.
+### 1.3.0 ###
+Note that the Pantheon Advanced Page Cache 1.3.0 release now prefixes keys on a WordPress Multisite (WPMS) with the blog ID. For users who already have this plugin installed on a WPMS, they will need to click the Clear Cache button on the settings page to generate the prefixed keys.
