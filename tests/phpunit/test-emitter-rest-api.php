@@ -36,15 +36,27 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$request  = new WP_REST_Request( 'GET', '/wp/v2/posts' );
 		$response = $this->server->dispatch( $request );
 		$this->assertCount( 3, $response->get_data() );
-		$this->assertArrayValues(
-			array(
-				'rest-post-collection',
-				'rest-post-' . $this->post_id1,
-				'rest-post-' . $this->post_id2,
-				'rest-post-' . $this->post_id3,
-			),
-			Emitter::get_rest_api_surrogate_keys()
-		);
+		if ( ! is_multisite() ) {
+			$this->assertArrayValues(
+				array(
+					'rest-post-collection',
+					'rest-post-' . $this->post_id1,
+					'rest-post-' . $this->post_id2,
+					'rest-post-' . $this->post_id3,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		} else {
+			$this->assertArrayValues(
+				array(
+					'blog-1-rest-post-collection',
+					'blog-1-rest-post-' . $this->post_id1,
+					'blog-1-rest-post-' . $this->post_id2,
+					'blog-1-rest-post-' . $this->post_id3,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		}
 	}
 
 	/**
@@ -55,24 +67,45 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$response = $this->server->dispatch( $request );
 		$data     = $this->server->response_to_data( $response, true );
 		$this->assertCount( 3, $data );
-		$this->assertArrayValues(
-			array(
-				'rest-post-collection',
-				'rest-post-' . $this->post_id1,
-				'rest-post-' . $this->post_id2,
-				'rest-post-' . $this->post_id3,
-				'rest-comment-collection',
-				'rest-comment-' . $this->comment_id1,
-				'rest-comment-post-' . $this->post_id1,
-				'rest-category-collection',
-				'rest-term-1',
-				'rest-post_tag-collection',
-				'rest-term-' . $this->tag_id2,
-				'rest-user-' . $this->user_id1,
-				'rest-user-' . $this->user_id2,
-			),
-			Emitter::get_rest_api_surrogate_keys()
-		);
+		if ( ! is_multisite() ) {
+			$this->assertArrayValues(
+				array(
+					'rest-post-collection',
+					'rest-post-' . $this->post_id1,
+					'rest-post-' . $this->post_id2,
+					'rest-post-' . $this->post_id3,
+					'rest-comment-collection',
+					'rest-comment-' . $this->comment_id1,
+					'rest-comment-post-' . $this->post_id1,
+					'rest-category-collection',
+					'rest-term-1',
+					'rest-post_tag-collection',
+					'rest-term-' . $this->tag_id2,
+					'rest-user-' . $this->user_id1,
+					'rest-user-' . $this->user_id2,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		} else {
+			$this->assertArrayValues(
+				array(
+					'blog-1-rest-post-collection',
+					'blog-1-rest-post-' . $this->post_id1,
+					'blog-1-rest-post-' . $this->post_id2,
+					'blog-1-rest-post-' . $this->post_id3,
+					'blog-1-rest-comment-collection',
+					'blog-1-rest-comment-' . $this->comment_id1,
+					'blog-1-rest-comment-post-' . $this->post_id1,
+					'blog-1-rest-category-collection',
+					'blog-1-rest-term-1',
+					'blog-1-rest-post_tag-collection',
+					'blog-1-rest-term-' . $this->tag_id2,
+					'blog-1-rest-user-' . $this->user_id1,
+					'blog-1-rest-user-' . $this->user_id2,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		}
 	}
 
 	/**
@@ -83,12 +116,21 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$request->set_param( 'author', REST_TESTS_IMPOSSIBLY_HIGH_NUMBER );
 		$response = $this->server->dispatch( $request );
 		$this->assertCount( 0, $response->get_data() );
-		$this->assertArrayValues(
-			array(
-				'rest-post-collection',
-			),
-			Emitter::get_rest_api_surrogate_keys()
-		);
+		if ( ! is_multisite() ) {
+			$this->assertArrayValues(
+				array(
+					'rest-post-collection',
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		} else {
+			$this->assertArrayValues(
+				array(
+					'blog-1-rest-post-collection',
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		}
 	}
 
 	/**
@@ -99,12 +141,21 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$response = $this->server->dispatch( $request );
 		$data     = $response->get_data();
 		$this->assertEquals( $this->post_id2, $data['id'] );
-		$this->assertArrayValues(
-			array(
-				'rest-post-' . $this->post_id2,
-			),
-			Emitter::get_rest_api_surrogate_keys()
-		);
+		if ( ! is_multisite() ) {
+			$this->assertArrayValues(
+				array(
+					'rest-post-' . $this->post_id2,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		} else {
+			$this->assertArrayValues(
+				array(
+					'blog-1-rest-post-' . $this->post_id2,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		}
 	}
 
 	/**
@@ -114,13 +165,23 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$request  = new WP_REST_Request( 'GET', '/wp/v2/pages' );
 		$response = $this->server->dispatch( $request );
 		$this->assertCount( 1, $response->get_data() );
-		$this->assertArrayValues(
-			array(
-				'rest-page-collection',
-				'rest-post-' . $this->page_id1,
-			),
-			Emitter::get_rest_api_surrogate_keys()
-		);
+		if ( ! is_multisite() ) {
+			$this->assertArrayValues(
+				array(
+					'rest-page-collection',
+					'rest-post-' . $this->page_id1,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		} else {
+			$this->assertArrayValues(
+				array(
+					'blog-1-rest-page-collection',
+					'blog-1-rest-post-' . $this->page_id1,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		}
 	}
 
 	/**
@@ -131,12 +192,21 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$response = $this->server->dispatch( $request );
 		$data     = $response->get_data();
 		$this->assertEquals( $this->page_id1, $data['id'] );
-		$this->assertArrayValues(
-			array(
-				'rest-post-' . $this->page_id1,
-			),
-			Emitter::get_rest_api_surrogate_keys()
-		);
+		if ( ! is_multisite() ) {
+			$this->assertArrayValues(
+				array(
+					'rest-post-' . $this->page_id1,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		} else {
+			$this->assertArrayValues(
+				array(
+					'blog-1-rest-post-' . $this->page_id1,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		}
 	}
 
 	/**
@@ -146,13 +216,23 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$request  = new WP_REST_Request( 'GET', '/wp/v2/media' );
 		$response = $this->server->dispatch( $request );
 		$this->assertCount( 1, $response->get_data() );
-		$this->assertArrayValues(
-			array(
-				'rest-attachment-collection',
-				'rest-post-' . $this->attachment_id1,
-			),
-			Emitter::get_rest_api_surrogate_keys()
-		);
+		if ( ! is_multisite() ) {
+			$this->assertArrayValues(
+				array(
+					'rest-attachment-collection',
+					'rest-post-' . $this->attachment_id1,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		} else {
+			$this->assertArrayValues(
+				array(
+					'blog-1-rest-attachment-collection',
+					'blog-1-rest-post-' . $this->attachment_id1,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		}
 	}
 
 	/**
@@ -163,12 +243,21 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$response = $this->server->dispatch( $request );
 		$data     = $response->get_data();
 		$this->assertEquals( $this->attachment_id1, $data['id'] );
-		$this->assertArrayValues(
-			array(
-				'rest-post-' . $this->attachment_id1,
-			),
-			Emitter::get_rest_api_surrogate_keys()
-		);
+		if ( ! is_multisite() ) {
+			$this->assertArrayValues(
+				array(
+					'rest-post-' . $this->attachment_id1,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		} else {
+			$this->assertArrayValues(
+				array(
+					'blog-1-rest-post-' . $this->attachment_id1,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		}
 	}
 
 	/**
@@ -178,14 +267,25 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$request  = new WP_REST_Request( 'GET', '/wp/v2/categories' );
 		$response = $this->server->dispatch( $request );
 		$this->assertCount( 2, $response->get_data() );
-		$this->assertArrayValues(
-			array(
-				'rest-category-collection',
-				'rest-term-' . $this->category_id1,
-				'rest-term-' . $this->category_id2,
-			),
-			Emitter::get_rest_api_surrogate_keys()
-		);
+		if ( ! is_multisite() ) {
+			$this->assertArrayValues(
+				array(
+					'rest-category-collection',
+					'rest-term-' . $this->category_id1,
+					'rest-term-' . $this->category_id2,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		} else {
+			$this->assertArrayValues(
+				array(
+					'blog-1-rest-category-collection',
+					'blog-1-rest-term-' . $this->category_id1,
+					'blog-1-rest-term-' . $this->category_id2,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		}
 	}
 
 	/**
@@ -196,12 +296,21 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$response = $this->server->dispatch( $request );
 		$data     = $response->get_data();
 		$this->assertEquals( $this->category_id2, $data['id'] );
-		$this->assertArrayValues(
-			array(
-				'rest-term-' . $this->category_id2,
-			),
-			Emitter::get_rest_api_surrogate_keys()
-		);
+		if ( ! is_multisite() ) {
+			$this->assertArrayValues(
+				array(
+					'rest-term-' . $this->category_id2,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		} else {
+			$this->assertArrayValues(
+				array(
+					'blog-1-rest-term-' . $this->category_id2,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		}
 	}
 
 	/**
@@ -211,14 +320,25 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$request  = new WP_REST_Request( 'GET', '/wp/v2/tags' );
 		$response = $this->server->dispatch( $request );
 		$this->assertCount( 2, $response->get_data() );
-		$this->assertArrayValues(
-			array(
-				'rest-post_tag-collection',
-				'rest-term-' . $this->tag_id1,
-				'rest-term-' . $this->tag_id2,
-			),
-			Emitter::get_rest_api_surrogate_keys()
-		);
+		if ( ! is_multisite() ) {
+			$this->assertArrayValues(
+				array(
+					'rest-post_tag-collection',
+					'rest-term-' . $this->tag_id1,
+					'rest-term-' . $this->tag_id2,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		} else {
+			$this->assertArrayValues(
+				array(
+					'blog-1-rest-post_tag-collection',
+					'blog-1-rest-term-' . $this->tag_id1,
+					'blog-1-rest-term-' . $this->tag_id2,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		}
 	}
 
 	/**
@@ -229,12 +349,21 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$response = $this->server->dispatch( $request );
 		$data     = $response->get_data();
 		$this->assertEquals( $this->tag_id1, $data['id'] );
-		$this->assertArrayValues(
-			array(
-				'rest-term-' . $this->tag_id1,
-			),
-			Emitter::get_rest_api_surrogate_keys()
-		);
+		if ( ! is_multisite() ) {
+			$this->assertArrayValues(
+				array(
+					'rest-term-' . $this->tag_id1,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		} else {
+			$this->assertArrayValues(
+				array(
+					'blog-1-rest-term-' . $this->tag_id1,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		}
 	}
 
 	/**
@@ -245,14 +374,25 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$comment  = get_comment( $this->comment_id1 );
 		$response = $this->server->dispatch( $request );
 		$this->assertCount( 1, $response->get_data() );
-		$this->assertArrayValues(
-			array(
-				'rest-comment-collection',
-				'rest-comment-' . $this->comment_id1,
-				'rest-comment-post-' . $comment->comment_post_ID,
-			),
-			Emitter::get_rest_api_surrogate_keys()
-		);
+		if ( ! is_multisite() ) {
+			$this->assertArrayValues(
+				array(
+					'rest-comment-collection',
+					'rest-comment-' . $this->comment_id1,
+					'rest-comment-post-' . $comment->comment_post_ID,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		} else {
+			$this->assertArrayValues(
+				array(
+					'blog-1-rest-comment-collection',
+					'blog-1-rest-comment-' . $this->comment_id1,
+					'blog-1-rest-comment-post-' . $comment->comment_post_ID,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		}
 	}
 
 	/**
@@ -263,12 +403,21 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$request->set_param( 'post', REST_TESTS_IMPOSSIBLY_HIGH_NUMBER );
 		$response = $this->server->dispatch( $request );
 		$this->assertCount( 0, $response->get_data() );
-		$this->assertArrayValues(
-			array(
-				'rest-comment-collection',
-			),
-			Emitter::get_rest_api_surrogate_keys()
-		);
+		if ( ! is_multisite() ) {
+			$this->assertArrayValues(
+				array(
+					'rest-comment-collection',
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		} else {
+			$this->assertArrayValues(
+				array(
+					'blog-1-rest-comment-collection',
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		}
 	}
 
 	/**
@@ -280,13 +429,23 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$response = $this->server->dispatch( $request );
 		$data     = $response->get_data();
 		$this->assertEquals( $this->comment_id1, $data['id'] );
-		$this->assertArrayValues(
-			array(
-				'rest-comment-' . $this->comment_id1,
-				'rest-comment-post-' . $comment->comment_post_ID,
-			),
-			Emitter::get_rest_api_surrogate_keys()
-		);
+		if ( ! is_multisite() ) {
+			$this->assertArrayValues(
+				array(
+					'rest-comment-' . $this->comment_id1,
+					'rest-comment-post-' . $comment->comment_post_ID,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		} else {
+			$this->assertArrayValues(
+				array(
+					'blog-1-rest-comment-' . $this->comment_id1,
+					'blog-1-rest-comment-post-' . $comment->comment_post_ID,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		}
 	}
 
 	/**
@@ -296,14 +455,25 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$request  = new WP_REST_Request( 'GET', '/wp/v2/users' );
 		$response = $this->server->dispatch( $request );
 		$this->assertCount( 2, $response->get_data() );
-		$this->assertArrayValues(
-			array(
-				'rest-user-collection',
-				'rest-user-' . $this->user_id1,
-				'rest-user-' . $this->user_id2,
-			),
-			Emitter::get_rest_api_surrogate_keys()
-		);
+		if ( ! is_multisite() ) {
+			$this->assertArrayValues(
+				array(
+					'rest-user-collection',
+					'rest-user-' . $this->user_id1,
+					'rest-user-' . $this->user_id2,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		} else {
+			$this->assertArrayValues(
+				array(
+					'blog-1-rest-user-collection',
+					'blog-1-rest-user-' . $this->user_id1,
+					'blog-1-rest-user-' . $this->user_id2,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		}
 	}
 
 	/**
@@ -314,12 +484,21 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$response = $this->server->dispatch( $request );
 		$data     = $response->get_data();
 		$this->assertEquals( $this->user_id2, $data['id'] );
-		$this->assertArrayValues(
-			array(
-				'rest-user-' . $this->user_id2,
-			),
-			Emitter::get_rest_api_surrogate_keys()
-		);
+		if ( ! is_multisite() ) {
+			$this->assertArrayValues(
+				array(
+					'rest-user-' . $this->user_id2,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		} else {
+			$this->assertArrayValues(
+				array(
+					'blog-1-rest-user-' . $this->user_id2,
+				),
+				Emitter::get_rest_api_surrogate_keys()
+			);
+		}
 	}
 
 	/**
@@ -340,44 +519,89 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		} elseif ( version_compare( $GLOBALS['wp_version'], '5.8', '>=' ) ) {
 			$expected_count = 16;
 		}
-		$expected_values = array(
-			'rest-setting-date_format',
-			'rest-setting-default_category',
-			'rest-setting-default_comment_status',
-			'rest-setting-default_ping_status',
-			'rest-setting-default_post_format',
-			'rest-setting-description',
-			'rest-setting-email',
-			'rest-setting-language',
-			'rest-setting-posts_per_page',
-			'rest-setting-start_of_week',
-			'rest-setting-time_format',
-			'rest-setting-timezone',
-			'rest-setting-title',
-			'rest-setting-url',
-			'rest-setting-use_smilies',
-		);
-		if ( version_compare( $GLOBALS['wp_version'], '6.0.3', '>=' ) ) {
-			array_splice(
-				$expected_values,
-				9,
-				0,
-				array( 'rest-setting-page_for_posts', 'rest-setting-page_on_front', 'rest-setting-show_on_front', 'rest-setting-site_icon', 'rest-setting-site_logo' )
+		if ( ! is_multisite() ) {
+			$expected_values = array(
+				'rest-setting-date_format',
+				'rest-setting-default_category',
+				'rest-setting-default_comment_status',
+				'rest-setting-default_ping_status',
+				'rest-setting-default_post_format',
+				'rest-setting-description',
+				'rest-setting-email',
+				'rest-setting-language',
+				'rest-setting-posts_per_page',
+				'rest-setting-start_of_week',
+				'rest-setting-time_format',
+				'rest-setting-timezone',
+				'rest-setting-title',
+				'rest-setting-url',
+				'rest-setting-use_smilies',
 			);
-		} elseif ( version_compare( $GLOBALS['wp_version'], '5.9-alpha', '>=' ) ) {
-			array_splice(
-				$expected_values,
-				9,
-				0,
-				array( 'rest-setting-site_icon', 'rest-setting-site_logo' )
+		} else {
+			$expected_values = array(
+				'blog-1-rest-setting-date_format',
+				'blog-1-rest-setting-default_category',
+				'blog-1-rest-setting-default_comment_status',
+				'blog-1-rest-setting-default_ping_status',
+				'blog-1-rest-setting-default_post_format',
+				'blog-1-rest-setting-description',
+				'blog-1-rest-setting-email',
+				'blog-1-rest-setting-language',
+				'blog-1-rest-setting-posts_per_page',
+				'blog-1-rest-setting-start_of_week',
+				'blog-1-rest-setting-time_format',
+				'blog-1-rest-setting-timezone',
+				'blog-1-rest-setting-title',
+				'blog-1-rest-setting-url',
+				'blog-1-rest-setting-use_smilies',
 			);
-		} elseif ( version_compare( $GLOBALS['wp_version'], '5.8', '>=' ) ) {
-			array_splice(
-				$expected_values,
-				9,
-				0,
-				array( 'rest-setting-site_logo' )
-			);
+		}
+		if ( ! is_multisite() ) {
+			if ( version_compare( $GLOBALS['wp_version'], '6.0.3', '>=' ) ) {
+				array_splice(
+					$expected_values,
+					9,
+					0,
+					array( 'rest-setting-page_for_posts', 'rest-setting-page_on_front', 'rest-setting-show_on_front', 'rest-setting-site_icon', 'rest-setting-site_logo' )
+				);
+			} elseif ( version_compare( $GLOBALS['wp_version'], '5.9-alpha', '>=' ) ) {
+				array_splice(
+					$expected_values,
+					9,
+					0,
+					array( 'rest-setting-site_icon', 'rest-setting-site_logo' )
+				);
+			} elseif ( version_compare( $GLOBALS['wp_version'], '5.8', '>=' ) ) {
+				array_splice(
+					$expected_values,
+					9,
+					0,
+					array( 'rest-setting-site_logo' )
+				);
+			}
+		} else {
+			if ( version_compare( $GLOBALS['wp_version'], '6.0.3', '>=' ) ) {
+				array_splice(
+					$expected_values,
+					9,
+					0,
+					array( 'blog-1-rest-setting-page_for_posts', 'blog-1-rest-setting-page_on_front', 'blog-1-rest-setting-show_on_front', 'blog-1-rest-setting-site_icon', 'blog-1-rest-setting-site_logo' )
+				);
+			} elseif ( version_compare( $GLOBALS['wp_version'], '5.9-alpha', '>=' ) ) {
+				array_splice(
+					$expected_values,
+					9,
+					0,
+					array( 'blog-1-rest-setting-site_icon', 'blog-1-rest-setting-site_logo' )
+				);
+			} elseif ( version_compare( $GLOBALS['wp_version'], '5.8', '>=' ) ) {
+				array_splice(
+					$expected_values,
+					9,
+					0,
+					array( 'blog-1-rest-setting-site_logo' )
+				);
+			}
 		}
 		$this->assertCount( $expected_count, $response->get_data() );
 		$this->assertArrayValues(

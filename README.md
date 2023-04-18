@@ -4,7 +4,7 @@
 **Tags:** pantheon, cdn, cache  
 **Requires at least:** 4.7  
 **Tested up to:** 6.2  
-**Stable tag:** 1.2.4  
+**Stable tag:** 1.3.0-dev  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -308,22 +308,25 @@ See [CONTRIBUTING.md](https://github.com/pantheon-systems/pantheon-advanced-page
 
 ## Changelog ##
 
-## 1.2.4 (April 13, 2023) ##
-* Adds surrogate key to post-type archive pages (eg, "portfolio") that's specific to that archive( eg "portfolio-archive"), and clears that archive where appropriate. [[#225](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/225)]
+### Latest ###
+* Adds support for WordPress Multisite which resolves issue where editing a Post on one subsite clears the home page cache of other sites in the Multisite install if it has a Post containing the same ID [[#228](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/228)].
 
-## 1.2.3 (April 5, 2023) ##
+### 1.2.4 (April 13, 2023) ###
+* Adds surrogate key to post-type archive pages (e.g. "portfolio") that's specific to that archive(e.g. "portfolio-archive"), and clears that archive where appropriate [[#225](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/225)].
+
+### 1.2.3 (April 5, 2023) ###
 * Bump tested up to version to 6.2
 
-## 1.2.2 (March 14, 2023) ##
+### 1.2.2 (March 14, 2023) ###
 * Adds PHP 8.2 compatibility [[#218](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/218)].
 * Bump dependencies [[#204](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/204)].
 
-## 1.2.1 (February 23, 2023) ##
+### 1.2.1 (February 23, 2023) ###
 * Handle models that are not instances of the `WPGraphQL\Model\Model` class [[#212](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/212)].
 * Make dependabot target develop branch [[#209](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/209)].
 * Bump dependencies [[#210](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/210)] [[#214](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/214)].
 
-## 1.2.0 (November 29, 2022) ##
+### 1.2.0 (November 29, 2022) ###
 * Adds Github Actions for building tag and deploying to wp.org. Add CONTRIBUTING.md. [[#203](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/203)]
 
 ### 1.1.0 (November 1, 2022) ###
@@ -365,3 +368,8 @@ See [CONTRIBUTING.md](https://github.com/pantheon-systems/pantheon-advanced-page
 
 ### 0.1.0 (November 23rd, 2016) ###
 * Initial release.
+
+## Upgrade Notice ##
+
+### Latest ###
+Note that the Pantheon Advanced Page Cache Latest release now prefixes keys on a WordPress Multisite (WPMS) with the blog ID. For users who already have this plugin installed on a WPMS, they will need to click the Clear Cache button on the settings page to generate the prefixed keys.

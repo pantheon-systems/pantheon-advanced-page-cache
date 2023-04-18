@@ -7,7 +7,7 @@
  * Author URI:      https://pantheon.io
  * Text Domain:     pantheon-advanced-page-cache
  * Domain Path:     /languages
- * Version:         1.2.4
+ * Version:         1.3.0-dev
  *
  * @package         Pantheon_Advanced_Page_Cache
  */
@@ -75,6 +75,29 @@ function pantheon_wp_clear_edge_all() {
 		return new WP_Error( 'pantheon_clear_edge_all', $e->getMessage() );
 	}
 	return true;
+}
+
+/**
+ * Prefix surrogate keys with the blog ID to provide compatibility with WPMS. See https://github.com/pantheon-systems/pantheon-advanced-page-cache/issues/196.
+ * 
+ * @param array $keys Keys to be prefixed.
+ */
+function pantheon_wp_prefix_surrogate_keys_with_blog_id( $keys ) {
+	// Do not prefix keys if this is not a multisite install.
+	if ( ! is_multisite() ) {
+		return $keys;
+	}
+
+	// Array that will hold the new keys.
+	$prefixed_keys = [];
+
+	$prefix = 'blog-' . get_current_blog_id() . '-';
+	$prefix = apply_filters( 'pantheon_wp_surrogate_key_prepend', $prefix );
+	foreach ( $keys as $key ) {
+		$prefixed_keys[] = $prefix . $key;
+	}
+
+	return $prefixed_keys;
 }
 
 /**

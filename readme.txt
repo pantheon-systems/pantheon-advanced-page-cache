@@ -3,7 +3,7 @@ Contributors: getpantheon, danielbachhuber, kporras07, jspellman, jazzs3quence
 Tags: pantheon, cdn, cache
 Requires at least: 4.7
 Tested up to: 6.2
-Stable tag: 1.2.4
+Stable tag: 1.3.0-dev
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -302,9 +302,12 @@ Pantheon Advanced Page Cache integrates with WordPress plugins, including:
 See [CONTRIBUTING.md](https://github.com/pantheon-systems/wp-saml-auth/blob/master/CONTRIBUTING.md) for information on contributing.
 
 == Changelog ==
-= 1.2.4 (April 13, 2023) =
-* Adds surrogate key to post-type archive pages (eg, "portfolio") that's specific to that archive( eg "portfolio-archive"), and clears that archive where appropriate. [[#225](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/225)]
 
+= Latest =
+* Adds support for WordPress Multisite which resolves issue where editing a Post on one subsite clears the home page cache of other sites in the Multisite install if it has a Post containing the same ID [[#228](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/228)].
+
+= 1.2.4 (April 13, 2023) =
+* Adds surrogate key to post-type archive pages (e.g. "portfolio") that's specific to that archive(e.g. "portfolio-archive"), and clears that archive where appropriate [[#225](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/225)].
 
 = 1.2.3 (April 5, 2023) =
 * Bump tested up to version to 6.2
@@ -360,3 +363,8 @@ See [CONTRIBUTING.md](https://github.com/pantheon-systems/wp-saml-auth/blob/mast
 
 = 0.1.0 (November 23rd, 2016) =
 * Initial release.
+
+== Upgrade Notice ==
+
+= Latest =
+Note that the Pantheon Advanced Page Cache Latest release now prefixes keys on a WordPress Multisite (WPMS) with the blog ID. For users who already have this plugin installed on a WPMS, they will need to click the Clear Cache button on the settings page to generate the prefixed keys.
