@@ -20,7 +20,7 @@ The `master` branch matches the latest stable release deployed to [wp.org](wp.or
 
 1. From `develop`, checkout a new branch `release_X.Y.Z`.
 1. Make a release commit:
-    * Drop the `-dev` from the version number in [readme.txt](./readme.txt) and [wp-decoupled-preview.php](./wp-decoupled-preview.php)
+    * Drop the `-dev` from the version number in `package.json`, `README.md`, `readme.txt`, and `pantheon-advanced-page-cache.php`.
     * Update the "Latest" heading in the changelog to the new version number with the date
     * Commit these changes with the message `Release X.Y.Z`
     * Push the release branch up.
