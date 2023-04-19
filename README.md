@@ -4,7 +4,7 @@
 **Tags:** pantheon, cdn, cache  
 **Requires at least:** 4.7  
 **Tested up to:** 6.2  
-**Stable tag:** 1.3.0  
+**Stable tag:** 1.3.1-dev  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -307,6 +307,8 @@ Pantheon Advanced Page Cache integrates with WordPress plugins, including:
 See [CONTRIBUTING.md](https://github.com/pantheon-systems/pantheon-advanced-page-cache/blob/master/CONTRIBUTING.md) for information on contributing.
 
 ## Changelog ##
+
+### Latest ###
 
 ### 1.3.0 (April 19, 2023) ###
 * Adds support for WordPress Multisite which resolves issue where editing a Post on one subsite clears the home page cache of other sites in the Multisite install if it has a Post containing the same ID [[#228](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/228)].
