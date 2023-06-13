@@ -309,6 +309,7 @@ See [CONTRIBUTING.md](https://github.com/pantheon-systems/pantheon-advanced-page
 ## Changelog ##
 
 ### Latest ###
+* Bumped Dependencies [[236](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/236)]
 
 ### 1.3.0 (April 19, 2023) ###
 * Adds support for WordPress Multisite which resolves issue where editing a Post on one subsite clears the home page cache of other sites in the Multisite install if it has a Post containing the same ID [[#228](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/228)].
