@@ -132,8 +132,8 @@ class Emitter {
 	 */
 	public static function filter_rest_post_dispatch( $result, $server ) {
 		$keys = self::get_rest_api_surrogate_keys();
-		if ( ! empty( $keys ) ) {
-			$server->send_header( self::HEADER_KEY, implode( ' ', $keys ) );
+		if ( ! empty( $keys ) && $result instanceof \WP_REST_Response ) {
+			$result->header( self::HEADER_KEY, implode( ' ', $keys ) );
 		}
 		return $result;
 	}
