@@ -247,8 +247,8 @@ class Emitter {
 					}
 
 					/**
-					 * filter pantheon_should_add_terms
-					 * skips surrogate keys for products' taxonomies and terms
+					 * Filter pantheon_should_add_terms
+					 * Skips surrogate keys for products' taxonomies and terms
 					 *
 					 * @param $add_terms whether or not to create surrogate keys for a given post's taxonomy terms.
 					 * @param $wp_query the full WP_Query object.
