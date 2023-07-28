@@ -136,7 +136,6 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 				array(
 					'single',
 					'post-' . $this->product_id1,
-					'post-term-' . $this->product_category_id2,
 				),
 				Emitter::get_main_query_surrogate_keys()
 			);
@@ -145,7 +144,6 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 				array(
 					'blog-1-single',
 					'blog-1-post-' . $this->product_id1,
-					'blog-1-post-term-' . $this->product_category_id2,
 				),
 				Emitter::get_main_query_surrogate_keys()
 			);
@@ -595,6 +593,34 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 			}
 			$this->assertArrayValues( array( 'blog-1-post-huge', 'blog-1-post-term-1', 'blog-1-post-term-5', 'blog-1-post' ), Pantheon_Advanced_Page_Cache\Emitter::filter_huge_surrogate_keys_list( $keys ) );
 		}
+	}
+
+	/**
+	 * Assert expected surrogate keys for a single product when filter is overriden to add them.
+	 */
+	public function test_surrogate_keys_with_filter_override() {
+		add_filter( 'pantheon_should_add_terms',"__return_true", 10, 2);
+		$this->go_to( get_permalink( $this->product_id1 ) );
+		if ( ! is_multisite() ) {
+			$this->assertArrayValues(
+				array(
+					'single',
+					'post-' . $this->product_id1,
+					'post-term-' . $this->product_category_id2,
+				),
+				Emitter::get_main_query_surrogate_keys()
+			);
+		} else {
+			$this->assertArrayValues(
+				array(
+					'blog-1-single',
+					'blog-1-post-' . $this->product_id1,
+					'blog-1-post-term-' . $this->product_category_id2,
+				),
+				Emitter::get_main_query_surrogate_keys()
+			);
+		}
+		remove_all_filters("pantheon_should_add_terms");
 	}
 
 }
