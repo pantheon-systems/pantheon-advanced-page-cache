@@ -291,6 +291,13 @@ Different WordPress actions cause different surrogate keys to be purged, documen
 * Purges surrogate keys: `rest-setting-<name>`
 * Affected views: REST API resource endpoint
 
+= Surrogate Keys for 'product' post types =
+Surrogate keys are skipped for 'product' post types' taxonomy terms for performance. This can be overridden, or further customized with the `pantheon_should_add_terms` filter.
+
+```
+add_filter( 'pantheon_should_add_terms',"__return_true", 10, 2);
+```
+
 ## Plugin Integrations ##
 
 Pantheon Advanced Page Cache integrates with WordPress plugins, including:
@@ -305,6 +312,7 @@ See [CONTRIBUTING.md](https://github.com/pantheon-systems/wp-saml-auth/blob/mast
 
 = Latest =
 * Bumped Dependencies [[236](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/236)]
+* Disabled surrogate keys for 'product' post types' taxonomy terms [[239](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/239)]
 
 = 1.3.0 =
 * Adds support for WordPress Multisite which resolves issue where editing a Post on one subsite clears the home page cache of other sites in the Multisite install if it has a Post containing the same ID [[#228](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/228)].
