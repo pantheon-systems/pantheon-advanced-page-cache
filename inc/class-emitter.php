@@ -241,10 +241,24 @@ class Emitter {
 		if ( ! empty( $wp_query->posts ) ) {
 			foreach ( $wp_query->posts as $p ) {
 				$keys[] = 'post-' . $p->ID;
-				if ( $wp_query->is_singular() || $wp_query->is_page() ) {
+				if ( $wp_query->is_singular() ) {
 					if ( post_type_supports( $p->post_type, 'author' ) ) {
 						$keys[] = 'post-user-' . $p->post_author;
 					}
+
+					/**
+					 * filter pantheon_should_add_terms
+					 * skips surrogate keys for products' taxonomies and terms
+					 * @param $add_terms whether or not to create surrogate keys for a given post's taxonomy terms.
+					 * @param $wp_query the full WP_Query object.
+					 * @return bool
+					 * usage: add_filter( 'pantheon_should_add_terms',"__return_true", 10, 2);
+					 */
+					$add_terms = apply_filters( 'pantheon_should_add_terms', ! $wp_query->is_singular('product'), $wp_query );
+					if ( ! $add_terms ) {
+						continue;
+					}
+
 					foreach ( get_object_taxonomies( $p ) as $tax ) {
 						$terms = get_the_terms( $p->ID, $tax );
 						if ( $terms && ! is_wp_error( $terms ) ) {
@@ -257,7 +271,7 @@ class Emitter {
 			}
 		}
 
-		if ( is_singular() || is_page() ) {
+		if ( is_singular() ) {
 			$keys[] = 'single';
 			if ( is_attachment() ) {
 				$keys[] = 'attachment';
