@@ -253,9 +253,9 @@ class Emitter {
 					 * @param $add_terms whether or not to create surrogate keys for a given post's taxonomy terms.
 					 * @param $wp_query the full WP_Query object.
 					 * @return bool
-					 * usage: add_filter( 'pantheon_should_add_terms',"__return_true", 10, 2);
+					 * usage: add_filter( 'pantheon_should_add_terms',"__return_false", 10, 2);
 					 */
-					$add_terms = apply_filters( 'pantheon_should_add_terms', ! $wp_query->is_singular( 'product' ), $wp_query );
+					$add_terms = apply_filters( 'pantheon_should_add_terms', true, $wp_query );
 					if ( ! $add_terms ) {
 						continue;
 					}

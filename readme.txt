@@ -291,13 +291,6 @@ Different WordPress actions cause different surrogate keys to be purged, documen
 * Purges surrogate keys: `rest-setting-<name>`
 * Affected views: REST API resource endpoint
 
-= Surrogate Keys for 'product' post types =
-Surrogate keys are skipped for 'product' post types' taxonomy terms for performance. This can be overridden, or further customized with the `pantheon_should_add_terms` filter.
-
-```
-add_filter( 'pantheon_should_add_terms',"__return_true", 10, 2);
-```
-
 ## Plugin Integrations ##
 
 Pantheon Advanced Page Cache integrates with WordPress plugins, including:
