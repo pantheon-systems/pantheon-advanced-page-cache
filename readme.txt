@@ -3,7 +3,7 @@ Contributors: getpantheon, danielbachhuber, kporras07, jspellman, jazzs3quence, 
 Tags: pantheon, cdn, cache
 Requires at least: 4.7
 Tested up to: 6.2
-Stable tag: 1.3.0
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -291,7 +291,20 @@ Different WordPress actions cause different surrogate keys to be purged, documen
 * Purges surrogate keys: `rest-setting-<name>`
 * Affected views: REST API resource endpoint
 
-## Plugin Integrations ##
+== Surrogate Keys for taxonomy terms ==
+Setting surrogate keys for posts with large numbers of taxonomies (such as WooCommerce products with a large number of global attributes) can suffer from slower queries. Surrogate keys can be skipped for 'product' post types' taxonomy terms (or any other criteria you see fit) with the following filter:
+
+```
+function custom_should_add_terms($should_add_terms, $wp_query) {
+    if ( $wp_query->is_singular( 'product' ) ) {
+        return false;
+    }
+    return $should_add_terms;
+}
+add_filter('pantheon_should_add_terms', 'custom_should_add_terms', 10, 2);
+```
+
+== Plugin Integrations ==
 
 Pantheon Advanced Page Cache integrates with WordPress plugins, including:
 
@@ -302,6 +315,10 @@ Pantheon Advanced Page Cache integrates with WordPress plugins, including:
 See [CONTRIBUTING.md](https://github.com/pantheon-systems/wp-saml-auth/blob/master/CONTRIBUTING.md) for information on contributing.
 
 == Changelog ==
+
+= 1.4.0 =
+* Bumped Dependencies [[236](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/236)]
+* Add filter `pantheon_should_add_terms` to allow disabling surrogate keys for posts' taxonomy terms [[239](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/239)]
 
 = 1.3.0 =
 * Adds support for WordPress Multisite which resolves issue where editing a Post on one subsite clears the home page cache of other sites in the Multisite install if it has a Post containing the same ID [[#228](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/228)].
