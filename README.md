@@ -1,10 +1,10 @@
 # Pantheon Advanced Page Cache #
 
-**Contributors:** [getpantheon](https://profiles.wordpress.org/getpantheon), [danielbachhuber](https://profiles.wordpress.org/danielbachhuber), [kporras07](https://profiles.wordpress.org/kporras07), [jspellman](https://profiles.wordpress.org/jspellman/), [jazzs3quence](https://profiles.wordpress.org/jazzs3quence/), [ryanshoover](https://profiles.wordpress.org/ryanshoover/), [rwagner00](https://profiles.wordpress.org/rwagner00/)  
+**Contributors:** [getpantheon](https://profiles.wordpress.org/getpantheon), [danielbachhuber](https://profiles.wordpress.org/danielbachhuber), [kporras07](https://profiles.wordpress.org/kporras07), [jspellman](https://profiles.wordpress.org/jspellman/), [jazzs3quence](https://profiles.wordpress.org/jazzs3quence/), [ryanshoover](https://profiles.wordpress.org/ryanshoover/), [rwagner00](https://profiles.wordpress.org/rwagner00/), [pwtyler](https://profiles.wordpress.org/pwtyler)  
 **Tags:** pantheon, cdn, cache  
 **Requires at least:** 4.7  
-**Tested up to:** 6.2  
-**Stable tag:** 1.4.0  
+**Tested up to:** 6.3  
+**Stable tag:** 1.4.1  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -320,6 +320,9 @@ Pantheon Advanced Page Cache integrates with WordPress plugins, including:
 See [CONTRIBUTING.md](https://github.com/pantheon-systems/pantheon-advanced-page-cache/blob/master/CONTRIBUTING.md) for information on contributing.
 
 ## Changelog ##
+
+### 1.4.1 ###
+* Send the REST API response header to the result and not the REST server [[#237](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/237)]. Props [@srtfisher](https://github.com/srtfisher) & [@felixarntz](https://github.com/felixarntz).
 
 ### 1.4.0 ###
 * Bumped Dependencies [[236](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/236)]

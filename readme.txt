@@ -1,9 +1,9 @@
 === Pantheon Advanced Page Cache ===
-Contributors: getpantheon, danielbachhuber, kporras07, jspellman, jazzs3quence, ryanshoover, rwagner00
+Contributors: getpantheon, danielbachhuber, kporras07, jspellman, jazzs3quence, ryanshoover, rwagner00, pwtyler
 Tags: pantheon, cdn, cache
 Requires at least: 4.7
-Tested up to: 6.2
-Stable tag: 1.4.0
+Tested up to: 6.3
+Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -294,15 +294,13 @@ Different WordPress actions cause different surrogate keys to be purged, documen
 == Surrogate Keys for taxonomy terms ==
 Setting surrogate keys for posts with large numbers of taxonomies (such as WooCommerce products with a large number of global attributes) can suffer from slower queries. Surrogate keys can be skipped for 'product' post types' taxonomy terms (or any other criteria you see fit) with the following filter:
 
-```
-function custom_should_add_terms($should_add_terms, $wp_query) {
-    if ( $wp_query->is_singular( 'product' ) ) {
-        return false;
-    }
-    return $should_add_terms;
-}
-add_filter('pantheon_should_add_terms', 'custom_should_add_terms', 10, 2);
-```
+	function custom_should_add_terms($should_add_terms, $wp_query) {
+		if ( $wp_query->is_singular( 'product' ) ) {
+			return false;
+		}
+		return $should_add_terms;
+	}
+	add_filter('pantheon_should_add_terms', 'custom_should_add_terms', 10, 2);
 
 == Plugin Integrations ==
 
@@ -315,6 +313,9 @@ Pantheon Advanced Page Cache integrates with WordPress plugins, including:
 See [CONTRIBUTING.md](https://github.com/pantheon-systems/wp-saml-auth/blob/master/CONTRIBUTING.md) for information on contributing.
 
 == Changelog ==
+
+= 1.4.1 =
+* Send the REST API response header to the result and not the REST server [[#237](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/237)]. Props [@srtfisher](https://github.com/srtfisher) & [@felixarntz](https://github.com/felixarntz).
 
 = 1.4.0 =
 * Bumped Dependencies [[236](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/236)]
