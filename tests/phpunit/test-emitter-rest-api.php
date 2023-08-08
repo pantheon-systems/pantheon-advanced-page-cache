@@ -610,6 +610,32 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		);
 	}
 
+	/**
+     * Test headers set on a REST API response.
+     */
+	public function test_rest_api_response_headers() {
+		// Add the filter to include the test key
+		add_filter('pantheon_wp_rest_api_surrogate_keys', function ($keys) {
+			$keys[] = 'test-key';
+			return $keys;
+		});
+
+		// Create a new instance of WP_REST_Response
+		$response = new WP_REST_Response( [ 'foo' => 'bar' ] );
+		$server = rest_get_server();
+
+		// Fire up the filter to capture the headers from the response.
+		$rest_post_dispatch = Emitter::filter_rest_post_dispatch( $response, $server );
+		$actual_headers = $rest_post_dispatch->headers;
+
+		// Define your expected surrogate keys
+		$expected_surrogate_keys = Emitter::get_rest_api_surrogate_keys();
+
+		// Verify that the headers were set correctly
+		$this->assertContains( 'test-key', $expected_surrogate_keys );
+		$this->assertArrayHasKey( 'Surrogate-Key', $actual_headers );
+		$this->assertEquals( $actual_headers['Surrogate-Key'], implode( ' ', $expected_surrogate_keys ) );
+	}
 
     /**
      * Test headers set on a GraphQL response.
