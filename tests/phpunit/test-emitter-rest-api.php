@@ -656,7 +656,8 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
         // Call the filter_graphql_response_headers_to_send() method
         $result_headers = Emitter::filter_graphql_response_headers_to_send($existing_headers);
 
-		$expected_headers = array_merge( $existing_headers, [ 'Surrogate-Key' => 'graphql-collection test-key' ] );
+		$graphql_collection_key = is_multisite() ? 'blog-1-graphql-collection' : 'graphql-collection';
+		$expected_headers = array_merge( $existing_headers, [ 'Surrogate-Key' => "$graphql_collection_key test-key" ] );
         // Verify that the existing headers are preserved
         $this->assertEquals($expected_headers, $result_headers);
 
