@@ -3,7 +3,7 @@ Contributors: getpantheon, danielbachhuber, kporras07, jspellman, jazzs3quence, 
 Tags: pantheon, cdn, cache
 Requires at least: 4.7
 Tested up to: 6.3
-Stable tag: 1.4.1
+Stable tag: 1.4.2-dev
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -313,6 +313,7 @@ Pantheon Advanced Page Cache integrates with WordPress plugins, including:
 See [CONTRIBUTING.md](https://github.com/pantheon-systems/wp-saml-auth/blob/master/CONTRIBUTING.md) for information on contributing.
 
 == Changelog ==
+= 1.4.2-dev =
 
 = 1.4.1 =
 * Send the REST API response header to the result and not the REST server [[#237](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/237)]. Props [@srtfisher](https://github.com/srtfisher) & [@felixarntz](https://github.com/felixarntz).
