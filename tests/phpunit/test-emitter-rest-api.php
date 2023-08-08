@@ -610,4 +610,34 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		);
 	}
 
+
+    /**
+     * Test headers set on a GraphQL response.
+     */
+    public function test_graphql_response_headers() {
+        // Set up the mock response array with the existing headers set by the GraphQL plugin
+        $existing_headers = [
+            'header1' => 'value1',
+            'header2' => 'value2',
+        ];
+
+        // Simulate adding a surrogate key via a filter
+        add_filter('pantheon_wp_graphql_surrogate_keys', function ($keys) {
+            $keys[] = 'test-key';
+            return $keys;
+        });
+
+        // Call the filter_graphql_response_headers_to_send() method
+        $result_headers = Emitter::filter_graphql_response_headers_to_send($existing_headers);
+
+		$expected_headers = array_merge( $existing_headers, [ 'Surrogate-Key' => 'graphql-collection test-key' ] );
+        // Verify that the existing headers are preserved
+        $this->assertEquals($expected_headers, $result_headers);
+
+        // Verify that the 'Surrogate-Key' header was added with the expected value
+        $expected_surrogate_keys = Emitter::get_graphql_surrogate_keys();
+        $this->assertArrayHasKey(Emitter::HEADER_KEY, $result_headers);
+        $this->assertEquals(implode(' ', $expected_surrogate_keys), $result_headers[Emitter::HEADER_KEY]);
+		$this->assertContains( 'test-key', $expected_surrogate_keys );
+    }
 }
