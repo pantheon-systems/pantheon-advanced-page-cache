@@ -294,15 +294,13 @@ Different WordPress actions cause different surrogate keys to be purged, documen
 == Surrogate Keys for taxonomy terms ==
 Setting surrogate keys for posts with large numbers of taxonomies (such as WooCommerce products with a large number of global attributes) can suffer from slower queries. Surrogate keys can be skipped for 'product' post types' taxonomy terms (or any other criteria you see fit) with the following filter:
 
-```
-function custom_should_add_terms($should_add_terms, $wp_query) {
-    if ( $wp_query->is_singular( 'product' ) ) {
-        return false;
-    }
-    return $should_add_terms;
-}
-add_filter('pantheon_should_add_terms', 'custom_should_add_terms', 10, 2);
-```
+	function custom_should_add_terms($should_add_terms, $wp_query) {
+		if ( $wp_query->is_singular( 'product' ) ) {
+			return false;
+		}
+		return $should_add_terms;
+	}
+	add_filter('pantheon_should_add_terms', 'custom_should_add_terms', 10, 2);
 
 == Plugin Integrations ==
 
