@@ -3,7 +3,7 @@ Contributors: getpantheon, danielbachhuber, kporras07, jspellman, jazzs3quence, 
 Tags: pantheon, cdn, cache
 Requires at least: 4.7
 Tested up to: 6.3
-Stable tag: 1.4.1-dev
+Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -314,7 +314,7 @@ See [CONTRIBUTING.md](https://github.com/pantheon-systems/wp-saml-auth/blob/mast
 
 == Changelog ==
 
-= 1.4.1-dev =
+= 1.4.1 =
 * Send the REST API response header to the result and not the REST server [[#237](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/237)]. Props [@srtfisher](https://github.com/srtfisher) & [@felixarntz](https://github.com/felixarntz).
 
 = 1.4.0 =
