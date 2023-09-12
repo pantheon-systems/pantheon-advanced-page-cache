@@ -26,4 +26,8 @@
 	<rule ref="Squiz.Commenting.FunctionComment.MissingParamTag">
 		<exclude-pattern>*/inc/class-cli.php</exclude-pattern>
 	</rule>
+
+	<rule ref="Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed">
+		<exclude-pattern>*/inc/class-emitter.php</exclude-pattern>
+	</rule>
 </ruleset>
