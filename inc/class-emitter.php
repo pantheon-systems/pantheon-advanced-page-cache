@@ -368,7 +368,7 @@ class Emitter {
 		// Sort by the output length of the key category.
 		uasort(
 			$keycats,
-			function( $a, $b ) {
+			function ( $a, $b ) {
 				$ca = strlen( implode( ' ', $a ) );
 				$cb = strlen( implode( ' ', $b ) );
 				if ( $ca === $cb ) {

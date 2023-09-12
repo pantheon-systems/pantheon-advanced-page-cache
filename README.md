@@ -321,6 +321,7 @@ See [CONTRIBUTING.md](https://github.com/pantheon-systems/pantheon-advanced-page
 
 ## Changelog ##
 ### 1.4.2-dev ###
+* Updates Pantheon WP Coding Standards to 2.0 [[#249](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/249)]
 
 ### 1.4.1 ###
 * Send the REST API response header to the result and not the REST server [[#237](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/237)]. Props [@srtfisher](https://github.com/srtfisher) & [@felixarntz](https://github.com/felixarntz).
