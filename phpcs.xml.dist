@@ -9,9 +9,8 @@
 	<!-- Show progress and sniff codes in all reports -->
 	<arg value="ps"/>
 
-	<rule ref="WordPress-Core" />
-	<rule ref="WordPress-Docs" />
 	<rule ref="PHPCompatibility"/>
+	<rule ref="Pantheon-WP" />
 
 	<config name="testVersion" value="7.1-"/>
 	<config name="minimum_supported_wp_version" value="4.7"/>
