@@ -15,7 +15,7 @@
     "phpunit/phpunit": "^9",
     "phpcompatibility/php-compatibility": "^9.3",
     "yoast/phpunit-polyfills": "^2.0",
-    "pantheon-systems/pantheon-wp-coding-standards": "^1.0"
+    "pantheon-systems/pantheon-wp-coding-standards": "^2.0"
   },
   "scripts": {
     "lint": "@phpcs",
