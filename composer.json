@@ -19,7 +19,7 @@
   },
   "scripts": {
     "lint": [
-      "@phpcs",,
+      "@phpcs",
       "@phplint"
     ],
     "phpcs": "vendor/bin/phpcs --ignore=tests/* -s .",
