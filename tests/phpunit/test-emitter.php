@@ -653,14 +653,25 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertTrue( ! is_wp_error( Emitter::get_main_query_surrogate_keys() ) );
 
 		// Test that we have surrogate keys for the post and product we created.
-		$this->assertContains(
-			'post-archive',
-			Emitter::get_main_query_surrogate_keys()
-		);
-		$this->assertContains(
-			'product-archive',
-			Emitter::get_main_query_surrogate_keys()
-		);
+		if ( is_multisite() ) {
+			$this->assertContains(
+				'blog-1-post-archive',
+				Emitter::get_main_query_surrogate_keys()
+			);
+			$this->assertContains(
+				'blog-1-product-archive',
+				Emitter::get_main_query_surrogate_keys()
+			);
+		} else {
+			$this->assertContains(
+				'post-archive',
+				Emitter::get_main_query_surrogate_keys()
+			);
+			$this->assertContains(
+				'product-archive',
+				Emitter::get_main_query_surrogate_keys()
+			);
+		}
 		wp_reset_query( $wp_query );
 	}
 }
