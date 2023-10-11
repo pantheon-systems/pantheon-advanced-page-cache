@@ -651,15 +651,6 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 
 		// Ensure that we don't get a WP Error from the surrogate key generator. This is a bit superfluous since if there was an error, we'd see it in the tests.
 		$this->assertTrue( ! is_wp_error( Emitter::get_main_query_surrogate_keys() ) );
-		// Make sure our newly-created posts are in the list of surrogate keys.
-		$this->assertContains(
-			"post-$post_id",
-			Emitter::get_main_query_surrogate_keys()
-		);
-		$this->assertContains(
-			"post-$product_id",
-			Emitter::get_main_query_surrogate_keys()
-		);
 
 		// Test that we have surrogate keys for the post and product archives.
 		$wpms_prefix = '';
@@ -674,6 +665,16 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		);
 		$this->assertContains(
 			$product_archive_key,
+			Emitter::get_main_query_surrogate_keys()
+		);
+
+		// Make sure our newly-created posts are in the list of surrogate keys.
+		$this->assertContains(
+			$wpms_prefix . "post-$post_id",
+			Emitter::get_main_query_surrogate_keys()
+		);
+		$this->assertContains(
+			$wpms_prefix . "post-$product_id",
 			Emitter::get_main_query_surrogate_keys()
 		);
 		wp_reset_query( $wp_query );
