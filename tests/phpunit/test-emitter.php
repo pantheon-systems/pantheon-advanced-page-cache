@@ -632,11 +632,11 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		global $wp_query;
 
 		// Set up posts of different post types.
-		$this->factory->post->create( [
+		$product_id = $this->factory->post->create( [
 			'post_type' => 'product',
 			'post_title' => 'test product'
 		] );
-		$this->factory->post->create( [
+		$post_id = $this->factory->post->create( [
 			'post_type' => 'post',
 			'post_title' => 'test post'
 		] );
@@ -651,7 +651,15 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 
 		// Ensure that we don't get a WP Error from the surrogate key generator. This is a bit superfluous since if there was an error, we'd see it in the tests.
 		$this->assertTrue( ! is_wp_error( Emitter::get_main_query_surrogate_keys() ) );
-
+		// Make sure our newly-created posts are in the list of surrogate keys.
+		$this->assertContains(
+			"post-$post_id",
+			Emitter::get_main_query_surrogate_keys()
+		);
+		$this->assertContains(
+			"post-$product_id",
+			Emitter::get_main_query_surrogate_keys()
+		);
 		// Test that we have surrogate keys for the post and product we created.
 		if ( is_multisite() ) {
 			$this->assertContains(
