@@ -633,7 +633,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 
 		// Set up posts of different post types.
 		$this->factory->post->create( [
-			'post_type' => 'post',
+			'post_type' => 'product',
 			'post_title' => 'test product'
 		] );
 		$this->factory->post->create( [
