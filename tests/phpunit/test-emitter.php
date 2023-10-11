@@ -624,7 +624,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 	}
 
 	/**
-	 * Test that queries on archive pages with multiple post types doesn't throw an error.
+	 * Test that queries on archive pages with multiple post types don't throw an error.
 	 *
 	 * @see https://getpantheon.atlassian.net/browse/BUGS-6934
 	 */
