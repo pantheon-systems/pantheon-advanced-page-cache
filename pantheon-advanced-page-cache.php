@@ -7,7 +7,7 @@
  * Author URI:      https://pantheon.io
  * Text Domain:     pantheon-advanced-page-cache
  * Domain Path:     /languages
- * Version:         1.4.1
+ * Version:         1.4.2
  *
  * @package         Pantheon_Advanced_Page_Cache
  */
@@ -104,7 +104,7 @@ function pantheon_wp_prefix_surrogate_keys_with_blog_id( $keys ) {
  * Registers the class autoloader.
  */
 spl_autoload_register(
-	function( $class_autoloader ) {
+	function ( $class_autoloader ) {
 			$class_autoloader = ltrim( $class_autoloader, '\\' );
 		if ( 0 !== stripos( $class_autoloader, 'Pantheon_Advanced_Page_Cache\\' ) ) {
 			return;

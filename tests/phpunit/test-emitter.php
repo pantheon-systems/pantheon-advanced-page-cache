@@ -623,4 +623,60 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		remove_all_filters("pantheon_should_add_terms");
 	}
 
+	/**
+	 * Test that queries on archive pages with multiple post types don't throw an error.
+	 *
+	 * @see https://getpantheon.atlassian.net/browse/BUGS-6934
+	 */
+	public function test_surrogate_keys_multiple_post_types() {
+		global $wp_query;
+
+		// Set up posts of different post types.
+		$product_id = $this->factory->post->create( [
+			'post_type' => 'product',
+			'post_title' => 'test product'
+		] );
+		$post_id = $this->factory->post->create( [
+			'post_type' => 'post',
+			'post_title' => 'test post'
+		] );
+
+		// Query the posts we just created.
+		$wp_query = new WP_Query( [
+			's' => 'test',
+			'post_type' => [ 'post', 'product' ],
+		] );
+		$wp_query->is_archive = true;
+		$wp_query->is_post_type_archive = true;
+
+		// Ensure that we don't get a WP Error from the surrogate key generator. This is a bit superfluous since if there was an error, we'd see it in the tests.
+		$this->assertTrue( ! is_wp_error( Emitter::get_main_query_surrogate_keys() ) );
+
+		// Test that we have surrogate keys for the post and product archives.
+		$wpms_prefix = '';
+		if ( is_multisite() ) {
+			$wpms_prefix = 'blog-1-';
+		}
+		$post_archive_key = $wpms_prefix . 'post-archive';
+		$product_archive_key = $wpms_prefix . 'product-archive';
+		$this->assertContains(
+			$post_archive_key,
+			Emitter::get_main_query_surrogate_keys()
+		);
+		$this->assertContains(
+			$product_archive_key,
+			Emitter::get_main_query_surrogate_keys()
+		);
+
+		// Make sure our newly-created posts are in the list of surrogate keys.
+		$this->assertContains(
+			$wpms_prefix . "post-$post_id",
+			Emitter::get_main_query_surrogate_keys()
+		);
+		$this->assertContains(
+			$wpms_prefix . "post-$product_id",
+			Emitter::get_main_query_surrogate_keys()
+		);
+		wp_reset_query( $wp_query );
+	}
 }

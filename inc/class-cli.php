@@ -101,5 +101,4 @@ class CLI {
 			WP_CLI::success( 'Purged page cache.' );
 		}
 	}
-
 }

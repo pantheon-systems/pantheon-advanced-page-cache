@@ -355,5 +355,4 @@ class Purger {
 		$keys = apply_filters( 'pantheon_purge_updated_option', $keys, $option );
 		pantheon_wp_clear_edge_keys( $keys );
 	}
-
 }

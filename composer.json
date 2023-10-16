@@ -15,14 +15,20 @@
     "phpunit/phpunit": "^9",
     "phpcompatibility/php-compatibility": "^9.3",
     "yoast/phpunit-polyfills": "^2.0",
-    "pantheon-systems/pantheon-wp-coding-standards": "^1.0"
+    "pantheon-systems/pantheon-wp-coding-standards": "^2.0"
   },
   "scripts": {
-    "lint": "@phpcs",
-    "phpcs": "vendor/bin/phpcs --ignore=tests/* -s --standard=Pantheon-WP .",
-    "phpcbf": "vendor/bin/phpcbf --ignore=tests/* --standard=Pantheon-WP .",
-    "phpunit": "vendor/bin/phpunit",
-    "test": "@phpunit"
+    "lint": [
+      "@phpcs",
+      "@phplint"
+    ],
+    "phpcs": "vendor/bin/phpcs --ignore=tests/* -s .",
+    "phpcbf": "vendor/bin/phpcbf --ignore=tests/* .",
+    "phplint": "find . -type f -name '*.php' -not -path './vendor/*' -not -path './tests/*' -exec php -l {} \\;",
+    "phpunit": "vendor/bin/phpunit --do-not-cache-result",
+    "test": "@phpunit",
+    "test:install": "bin/install-local-tests.sh --no-db",
+    "test:install:withdb": "bin/install-local-tests.sh"
   },
   "config": {
     "allow-plugins": {
