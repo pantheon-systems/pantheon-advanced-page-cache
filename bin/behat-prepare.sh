@@ -53,7 +53,7 @@ cd $BASH_DIR/..
 rsync -av --exclude='node_modules/' --exclude='vendor/' --exclude='tests/' ./* $PREPARE_DIR/wp-content/plugins/pantheon-advanced-page-cache
 rm -rf $PREPARE_DIR/wp-content/plugins/pantheon-advanced-page-cache/.git
 
-PHP_VERSION="$(terminus connection:info $SITE_ENV --field=php_version)"
+PHP_VERSION="$(terminus env:info $SITE_ENV --field=php_version)"
 echo "PHP Version: $PHP_VERSION"
 
 ###
