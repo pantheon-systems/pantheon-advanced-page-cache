@@ -23,7 +23,5 @@ jobs:
         with:
           header: composer-diff
           message: |
-            <details>
             <summary>Composer Changes</summary>
             ${{ steps.composer_diff.outputs.composer_diff }}
-            </details>
