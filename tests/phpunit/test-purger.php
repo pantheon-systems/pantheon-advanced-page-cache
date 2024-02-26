@@ -5,10 +5,46 @@
  * @package Pantheon_Advanced_Page_Cache
  */
 
-/**
+use Pantheon_Advanced_Page_Cache\Emitter;
+ /**
  * Tests for the Purger class.
  */
 class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
+	public function setUp(): void {
+		parent::setUp();
+		$this->old_cleared_keys = $this->cleared_keys;
+
+		$this->ignored_post_type = register_post_type(
+			'ignored',
+			[ 'public' => true ]
+		);
+
+		$this->ignored_post_id = $this->factory->post->create( [
+			'post_type'     => 'ignored',
+			'post_status'   => 'publish',
+			'post_author'   => $this->user_id1,
+			'post_name'     => 'ignored-post',
+			'post_date'     => '2016-10-14 12:00',
+			'post_date_gmt' => '2016-10-14 12:00',
+		] );
+
+		add_filter( 'pantheon_purge_post_type_ignored', [ $this, 'filter_ignored_posts' ] );
+	}
+
+	/**
+	 * Tear down behaviors after the tests have completed.
+	 */
+	public function tearDown(): void {
+		$this->cleared_keys = $this->old_cleared_keys;
+		add_filter('pantheon_purge_post_type_ignored', [$this, 'filter_ignored_posts']);
+		_unregister_post_type( 'ignored' );
+		parent::tearDown();
+	}
+
+	public function filter_ignored_posts( $ignored ) {
+		$ignored[] = 'ignored';
+		return $ignored;
+	}
 
 	/**
 	 * Verify publishing a new post purges the homepage and associated archive pages.
@@ -1733,12 +1769,43 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 	 * Verify updating an option not in the REST API doesn't clear keys.
 	 */
 	public function test_update_option_not_in_rest() {
-		if ( version_compare( $GLOBALS['wp_version'], '4.7-alpha', '<' ) ) {
-			return $this->markTestSkipped( 'WordPress version not supported.' );
-		}
 		update_option( 'papc_secret_email', 'foo@example.org' );
 		$this->assertClearedKeys( array() );
 		$this->assertPurgedURIs( array() );
 	}
 
+	public function test_filter_post_type() {
+		wp_update_post( [
+			'ID' => $this->ignored_post_id,
+			'post_content' => 'Test content',
+		] );
+
+		$expected = [
+			'post-' . $this->ignored_post_id,
+			'ignored-archive',
+			'rest-post-' . $this->ignored_post_id,
+			'rest-ignored-collection',
+		];
+
+		foreach ( $expected as $value ) {
+			$this->assertNotContains(
+				$value,
+				$this->cleared_keys
+			);
+		}
+
+		remove_all_filters( 'pantheon_purge_post_type_ignored' );
+
+		wp_update_post( [
+			'ID' => $this->ignored_post_id,
+			'post_content' => 'Test content 1',
+		] );
+
+		foreach ( $expected as $value ) {
+			$this->assertContains(
+				$value,
+				$this->cleared_keys
+			);
+		}
+	}
 }
