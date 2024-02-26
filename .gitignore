@@ -3,3 +3,9 @@ Thumbs.db
 wp-cli.local.yml
 node_modules/
 vendor/
+
+# wpunit helpers
+bin/helpers.sh
+bin/install-wp-tests.sh
+bin/install-wp-tests.sh
+bin/phpunit-test.sh
