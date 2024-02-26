@@ -2,8 +2,8 @@
 Contributors: getpantheon, danielbachhuber, kporras07, jspellman, jazzs3quence, ryanshoover, rwagner00, pwtyler
 Tags: pantheon, cdn, cache
 Requires at least: 4.7
-Tested up to: 6.3
-Stable tag: 1.4.2
+Tested up to: 6.4.1
+Stable tag: 1.4.3-dev
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -313,6 +313,8 @@ Pantheon Advanced Page Cache integrates with WordPress plugins, including:
 See [CONTRIBUTING.md](https://github.com/pantheon-systems/wp-saml-auth/blob/master/CONTRIBUTING.md) for information on contributing.
 
 == Changelog ==
+= 1.4.3-dev =
+
 = 1.4.2 (October 16, 2023) =
 * Updates Pantheon WP Coding Standards to 2.0 [[#249](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/249)]
 * Fixes an issue where a PHP warning was thrown when surrogate keys were emitted from archive pages with multiple post types. [[#252](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/252)]

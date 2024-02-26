@@ -10,6 +10,7 @@
  * but we are not using it. We are disabling the sniffs that warn about unused
  * parameters because the functions that are being hooked into might expect
  * those parameters to exist.
+ *
  * @phpcs:disable VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
  *
  * This file also handles surrogate keys for GraphQL requests. The GraphQL
