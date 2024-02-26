@@ -1,11 +1,11 @@
 # Pantheon Advanced Page Cache #
 
-**Contributors:** [getpantheon](https://profiles.wordpress.org/getpantheon), [danielbachhuber](https://profiles.wordpress.org/danielbachhuber), [kporras07](https://profiles.wordpress.org/kporras07), [jspellman](https://profiles.wordpress.org/jspellman/), [jazzs3quence](https://profiles.wordpress.org/jazzs3quence/), [ryanshoover](https://profiles.wordpress.org/ryanshoover/), [rwagner00](https://profiles.wordpress.org/rwagner00/), [pwtyler](https://profiles.wordpress.org/pwtyler)  
-**Tags:** pantheon, cdn, cache  
-**Requires at least:** 4.7  
-**Tested up to:** 6.4.1  
-**Stable tag:** 1.4.3-dev  
-**License:** GPLv2 or later  
+**Contributors:** [getpantheon](https://profiles.wordpress.org/getpantheon), [danielbachhuber](https://profiles.wordpress.org/danielbachhuber), [kporras07](https://profiles.wordpress.org/kporras07), [jspellman](https://profiles.wordpress.org/jspellman/), [jazzs3quence](https://profiles.wordpress.org/jazzs3quence/), [ryanshoover](https://profiles.wordpress.org/ryanshoover/), [rwagner00](https://profiles.wordpress.org/rwagner00/), [pwtyler](https://profiles.wordpress.org/pwtyler)
+**Tags:** pantheon, cdn, cache
+**Requires at least:** 4.7
+**Tested up to:** 6.4.1
+**Stable tag:** 1.4.3-dev
+**License:** GPLv2 or later
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
 Automatically clear related pages from Pantheon's Edge when you update content. High TTL. Fresh content. Visitors never wait.
@@ -42,7 +42,9 @@ Pantheon Advanced Page Cache makes heavy use of surrogate keys, which enable res
 
 Similarly, a `GET` requests to `/wp-json/wp/v2/posts` might include the `Surrogate-Key` header with these keys:
 
-    Surrogate-Key: rest-post-collection rest-post-43 rest-post-43 rest-post-9 rest-post-7 rest-post-1
+```
+Surrogate-Key: rest-post-collection rest-post-43 rest-post-43 rest-post-9 rest-post-7 rest-post-1
+```
 
 Because cached responses include metadata describing the data therein, surrogate keys enable more flexible purging behavior like:
 
@@ -57,6 +59,7 @@ By default, Pantheon Advanced Page Cache generates surrogate keys based on an in
 
 For example, to include surrogate keys for a sidebar rendered on the homepage, you can filter the keys using the `is_home()` template tag:
 
+```php
     /**
      * Add surrogate key for the featured content sidebar rendered on the homepage.
      */
@@ -66,18 +69,22 @@ For example, to include surrogate keys for a sidebar rendered on the homepage, y
         }
         return $keys;
     });
+```
 
 Then, when sidebars are updated, you can use the `pantheon_wp_clear_edge_keys()` helper function to emit a purge event specific to the surrogate key:
 
+```php
     /**
      * Trigger a purge event for the featured content sidebar when widgets are updated.
      */
     add_action( 'update_option_sidebars_widgets', function() {
         pantheon_wp_clear_edge_keys( array( 'sidebar-home-featured' ) );
     });
+```
 
 Similarly, to include surrogate keys for posts queried on the homepage, you can pre-fetch the posts before the page is rendered:
 
+```php
     /**
      * An example of pre-fetching a WP_Query to tag the
      * response with queried data. You'd use `papcx_wp_query()`
@@ -122,6 +129,7 @@ Similarly, to include surrogate keys for posts queried on the homepage, you can 
         wp_cache_set( $cache_key, $query, 'papc-non-persistent' );
         return $query;
     }
+```
 
 Because Pantheon Advanced Page Cache already handles WordPress post purge events, there's no additional call to `pantheon_wp_clear_edge_keys()`.
 
@@ -136,11 +144,11 @@ Need a bit more power? In addition to `pantheon_wp_clear_edge_keys()`, there are
 
 This plugin implements a variety of [WP-CLI](https://wp-cli.org) commands. All commands are grouped into the `wp pantheon cache` namespace.
 
-    $ wp help pantheon cache
+    `$ wp help pantheon cache`
 
     NAME
 
-      wp pantheon cache
+      `wp pantheon cache`
 
     DESCRIPTION
 
@@ -148,13 +156,13 @@ This plugin implements a variety of [WP-CLI](https://wp-cli.org) commands. All c
 
     SYNOPSIS
 
-      wp pantheon cache <command>
+      `wp pantheon cache <command>`
 
     SUBCOMMANDS
 
-      purge-all       Purge the entire page cache.
-      purge-key       Purge one or more surrogate keys from cache.
-      purge-path      Purge one or more paths from cache.
+      `purge-all`       Purge the entire page cache.
+      `purge-key`       Purge one or more surrogate keys from cache.
+      `purge-path`      Purge one or more paths from cache.
 
 Use `wp help pantheon cache <command>` to learn more about each command.
 
@@ -164,7 +172,9 @@ By default, Pantheon's infrastructure strips out the `Surrogate-Key` response he
 
 A direct way of inspecting headers is with `curl -I`. This command will make a request and show just the response headers. Adding `-H "Pantheon-Debug:1"` will result in `Surrogate-Key-Raw` being included in the response headers. The complete command looks like this:
 
-    curl -IH "Pantheon-Debug:1" https://scalewp.io/
+```
+curl -IH "Pantheon-Debug:1" https://scalewp.io/
+```
 
 Piping to `grep` will filter the output down to just the `Surrogate-Key-Raw` header:
 
@@ -256,42 +266,42 @@ Tada!
 
 Different WordPress actions cause different surrogate keys to be purged, documented here.
 
-**wp_insert_post / transition_post_status / before_delete_post / delete_attachment**
+**`wp_insert_post` / `transition_post_status` / `before_delete_post` / `delete_attachment`**
 
 * Purges surrogate keys: `home`, `front`, `404`, `post-<id>`, `user-<id>`, `term-<id>`, `rest-<type>-collection`, `rest-comment-post-<id>`, `post-type-archive`, `<custom-post-type-name>-archive`
 * Affected views: homepage, single post, any page with 404 header, any archive where post displays, author archive, term archive, REST API collection and resource endpoints
 
-**clean_post_cache**
+**`clean_post_cache`**
 
 * Purges surrogate keys: `post-<id>`, `rest-post-<id>`
 * Affected views: single post, REST API resource endpoint
 
-**created_term / edited_term / delete_term**
+**`created_term` / `edited_term` / `delete_term`**
 
 * Purges surrogate keys: `term-<id>`, `post-term-<id>`, `rest-<taxonomy>-collection`
 * Affected views: term archive, any post where the term is assigned, REST API collection and resource endpoints
 
-**clean_term_cache**
+**`clean_term_cache`**
 
 * Purges surrogate keys: `term-<id>`, `rest-term-<id>`
 * Affected views: term archive, REST API resource endpoint
 
-**wp_insert_comment / transition_comment_status**
+**`wp_insert_comment` / `transition_comment_status`**
 
 * Purges surrogate keys: `rest-comment-collection`, `rest-comment-<id>`
 * Affected views: REST API collection and resource endpoints
 
-**clean_comment_cache**
+**`clean_comment_cache`**
 
 * Purges surrogate keys: `rest-comment-<id>`
 * Affected views: REST API resource endpoint
 
-**clean_user_cache**
+**`clean_user_cache`**
 
 * Purges surrogate keys: `user-<id>`, `rest-user-<id>`
 * Affected views: author archive, any post where the user is the author
 
-**updated_option**
+**`updated_option`**
 
 * Purges surrogate keys: `rest-setting-<name>`
 * Affected views: REST API resource endpoint
