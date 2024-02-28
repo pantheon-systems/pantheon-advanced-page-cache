@@ -249,22 +249,17 @@ class Purger {
 		$keys   = [
 			'home',
 			'front',
-			$post->post_type . '-archive',
 			'404',
 			'feed',
-			'post-' . $post->ID,
 			'post-huge',
 		];
-		$keys[] = 'rest-' . $post->post_type . '-collection';
 
 		// Exclude post types that are ignored from $keys.
-		if ( in_array( $post->post_type, $ignored_post_types, true ) ) {
-			unset( $keys[ $post->post_type . '-archive' ] );
-			unset( $keys[ 'post-' . $post->ID ] );
-			unset( $keys[ 'rest-' . $post->post_type . '-collection' ] );
-		}
-
 		if ( ! in_array( $post->post_type, $ignored_post_types, true ) ) {
+			$keys[] = 'post-' . $post->ID;
+			$keys[] = $post->post_type . '-archive';
+			$keys[] = 'rest-' . $post->post_type . '-collection';
+
 			if ( post_type_supports( $post->post_type, 'author' ) ) {
 				$keys[] = 'user-' . $post->post_author;
 				$keys[] = 'user-huge';
