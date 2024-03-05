@@ -232,11 +232,6 @@ class Purger {
 	 * @param object $post Object representing the modified post.
 	 */
 	private static function purge_post_with_related( $post ) {
-		// Ignore revisions, which aren't ever displayed on the site.
-		if ( 'revision' === $post->post_type ) {
-			return;
-		}
-
 		/**
 		 * Allow specific post types to ignore the purge process.
 		 *
@@ -244,9 +239,16 @@ class Purger {
 		 * @return array
 		 * @since 1.4.3
 		 */
-		$ignored_post_types = apply_filters( 'pantheon_purge_post_type_ignored', [] );
+		$ignored_post_types = apply_filters( 'pantheon_purge_post_type_ignored', [ 'revision' ] );
+
+		if ( in_array( $post->post_type, $ignored_post_types, true ) ) {
+			return;
+		}
 
 		$keys   = [
+			'post-' . $post->ID,
+			$post->post_type . '-archive',
+			'rest-' . $post->post_type . '-collection',
 			'home',
 			'front',
 			'404',
@@ -254,35 +256,28 @@ class Purger {
 			'post-huge',
 		];
 
-		// Exclude post types that are ignored from $keys.
-		if ( ! in_array( $post->post_type, $ignored_post_types, true ) ) {
-			$keys[] = 'post-' . $post->ID;
-			$keys[] = $post->post_type . '-archive';
-			$keys[] = 'rest-' . $post->post_type . '-collection';
+		if ( post_type_supports( $post->post_type, 'author' ) ) {
+			$keys[] = 'user-' . $post->post_author;
+			$keys[] = 'user-huge';
+		}
 
-			if ( post_type_supports( $post->post_type, 'author' ) ) {
-				$keys[] = 'user-' . $post->post_author;
-				$keys[] = 'user-huge';
-			}
+		if ( post_type_supports( $post->post_type, 'comments' ) ) {
+			$keys[] = 'rest-comment-post-' . $post->ID;
+			$keys[] = 'rest-comment-post-huge';
+		}
 
-			if ( post_type_supports( $post->post_type, 'comments' ) ) {
-				$keys[] = 'rest-comment-post-' . $post->ID;
-				$keys[] = 'rest-comment-post-huge';
-			}
+		$taxonomies = wp_list_filter(
+			get_object_taxonomies( $post->post_type, 'objects' ),
+			[ 'public' => true ]
+		);
 
-			$taxonomies = wp_list_filter(
-				get_object_taxonomies( $post->post_type, 'objects' ),
-				[ 'public' => true ]
-			);
-
-			foreach ( $taxonomies as $taxonomy ) {
-				$terms = get_the_terms( $post, $taxonomy->name );
-				if ( $terms ) {
-					foreach ( $terms as $term ) {
-						$keys[] = 'term-' . $term->term_id;
-					}
-					$keys[] = 'term-huge';
+		foreach ( $taxonomies as $taxonomy ) {
+			$terms = get_the_terms( $post, $taxonomy->name );
+			if ( $terms ) {
+				foreach ( $terms as $term ) {
+					$keys[] = 'term-' . $term->term_id;
 				}
+				$keys[] = 'term-huge';
 			}
 		}
 
