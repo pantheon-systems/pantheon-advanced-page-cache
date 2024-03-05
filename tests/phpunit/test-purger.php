@@ -1792,6 +1792,9 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 	}
 
 	public function test_filter_post_type() {
+		// Set up the post stuff to test the filter.
+		$this->before_filter_ignore_posts();
+
 		wp_update_post( [
 			'ID' => $this->ignored_post_id,
 			'post_content' => 'Test content',
@@ -1824,5 +1827,8 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 				$this->cleared_keys
 			);
 		}
+
+		// Clean up after the test.
+		$this->after_filter_ignore_posts();
 	}
 }
