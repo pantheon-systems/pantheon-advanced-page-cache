@@ -31,7 +31,15 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	protected $old_cleared_keys;
 
+	/**
+	 * Set up the state for the pantheon_purge_post_type_ignored filter.
+	 *
+	 * Creates the ignored post type, adds an ignored post, and sets up the filter.
+	 *
+	 * @return void
+	 */
 	private function before_filter_ignore_posts() {
+		// Save the old cleared keys and clear the current cleared keys.
 		$this->old_cleared_keys = $this->cleared_keys;
 		$this->cleared_keys = [];
 
@@ -52,12 +60,25 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		] );
 	}
 
+	/**
+	 * Reset the state after the pantheon_purge_post_type_ignored filter.
+	 *
+	 * Restores the old cleared keys and removes the filter.
+	 *
+	 * @return void
+	 */
 	private function after_filter_ignore_posts() {
 		$this->cleared_keys = $this->old_cleared_keys;
 		remove_filter( 'pantheon_purge_post_type_ignored', [ $this, 'filter_ignored_posts' ] );
 		_unregister_post_type( 'ignored' );
 	}
 
+	/**
+	 * Add the ignored post type to the ignored post types.
+	 *
+	 * @param array $ignored Ignored post types.
+	 * @return array
+	 */
 	public function filter_ignored_posts( $ignored ) {
 		$ignored[] = 'ignored';
 		return $ignored;
