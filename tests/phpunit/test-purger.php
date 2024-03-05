@@ -30,6 +30,8 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 	 * @var array
 	 */
 	protected $old_cleared_keys;
+
+	private function before_filter_ignore_posts() {
 		$this->old_cleared_keys = $this->cleared_keys;
 
 		$this->ignored_post_type = register_post_type(
@@ -45,18 +47,12 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'post_date'     => '2016-10-14 12:00',
 			'post_date_gmt' => '2016-10-14 12:00',
 		] );
-
-		add_filter( 'pantheon_purge_post_type_ignored', [ $this, 'filter_ignored_posts' ] );
 	}
 
-	/**
-	 * Tear down behaviors after the tests have completed.
-	 */
-	public function tearDown(): void {
+	private function after_filter_ignore_posts() {
 		$this->cleared_keys = $this->old_cleared_keys;
 		add_filter('pantheon_purge_post_type_ignored', [$this, 'filter_ignored_posts']);
 		_unregister_post_type( 'ignored' );
-		parent::tearDown();
 	}
 
 	public function filter_ignored_posts( $ignored ) {
