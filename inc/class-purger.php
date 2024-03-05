@@ -65,16 +65,27 @@ class Purger {
 	 */
 	public static function action_clean_post_cache( $post_id ) {
 		$type = get_post_type( $post_id );
-		// Ignore revisions, which aren't ever displayed on the site.
-		if ( $type && 'revision' === $type ) {
+
+		/**
+		 * Allow specific post types to ignore the purge process.
+		 *
+		 * @param array $ignored_post_types Post types to ignore.
+		 * @return array
+		 * @since 1.4.3
+		 */
+		$ignored_post_types = apply_filters( 'pantheon_purge_post_type_ignored', [ 'revision' ] );
+
+		if ( $type && in_array( $type, $ignored_post_types, true ) ) {
 			return;
 		}
+
 		$keys = [
 			'post-' . $post_id,
 			'rest-post-' . $post_id,
 			'post-huge',
 			'rest-post-huge',
 		];
+
 		$keys = pantheon_wp_prefix_surrogate_keys_with_blog_id( $keys );
 		/**
 		 * Surrogate keys purged when clearing post cache.
