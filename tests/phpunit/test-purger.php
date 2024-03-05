@@ -54,7 +54,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 
 	private function after_filter_ignore_posts() {
 		$this->cleared_keys = $this->old_cleared_keys;
-		add_filter('pantheon_purge_post_type_ignored', [$this, 'filter_ignored_posts']);
+		remove_filter( 'pantheon_purge_post_type_ignored', [ $this, 'filter_ignored_posts' ] );
 		_unregister_post_type( 'ignored' );
 	}
 
