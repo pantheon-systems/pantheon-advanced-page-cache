@@ -19,6 +19,13 @@
     "pantheon-systems/wpunit-helpers": "^2.0"
   },
   "scripts": {
+    "fix-perms": "chmod +x ./bin/*.sh",
+    "post-update-cmd": [
+      "@fix-perms"
+    ],
+    "post-install-cmd": [
+      "@fix-perms"
+    ],
     "lint": [
       "@phpcs",
       "@phplint"
