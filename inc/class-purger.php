@@ -256,7 +256,7 @@ class Purger {
 			return;
 		}
 
-		$keys   = [
+		$keys = [
 			'post-' . $post->ID,
 			$post->post_type . '-archive',
 			'rest-' . $post->post_type . '-collection',
