@@ -1814,7 +1814,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			);
 		}
 
-		remove_all_filters( 'pantheon_purge_post_type_ignored' );
+		remove_filter( 'pantheon_purge_post_type_ignored', [ $this, 'filter_ignored_posts' ] );
 
 		wp_update_post( [
 			'ID' => $this->ignored_post_id,
