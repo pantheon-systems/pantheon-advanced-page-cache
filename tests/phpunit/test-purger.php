@@ -1824,12 +1824,23 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			'post_content' => 'Test content',
 		] );
 
-		$expected = [
-			'post-' . $this->ignored_post_id,
-			'ignored-archive',
-			'rest-post-' . $this->ignored_post_id,
-			'rest-ignored-collection',
-		];
+		if ( ! is_multisite() ) {
+			$expected = [
+				'post-' . $this->ignored_post_id,
+				'ignored-archive',
+				'rest-post-' . $this->ignored_post_id,
+				'rest-ignored-collection',
+			];
+		} else {
+			$blog_id = get_current_blog_id();
+			// If multisite, the keys will be blog-{blog_id}-*.
+			$expected = [
+				"blog-$blog_id-post-$this->ignored_post_id",
+				"blog-$blog_id-ignored-archive",
+				"blog-$blog_id-rest-post-$this->ignored_post_id",
+				"blog-$blog_id-rest-ignored-collection",
+			];
+		}
 
 		foreach ( $expected as $value ) {
 			$this->assertNotContains(
