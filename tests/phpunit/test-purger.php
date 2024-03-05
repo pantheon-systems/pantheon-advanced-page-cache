@@ -10,8 +10,26 @@ use Pantheon_Advanced_Page_Cache\Emitter;
  * Tests for the Purger class.
  */
 class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
-	public function setUp(): void {
-		parent::setUp();
+	/**
+	 * Post ID for ignored post type post.
+	 *
+	 * @var int
+	 */
+	protected $ignored_post_id;
+
+	/**
+	 * Ignored post type.
+	 *
+	 * @var WP_Post_Type
+	 */
+	protected $ignored_post_type;
+
+	/**
+	 * Old cleared keys.
+	 *
+	 * @var array
+	 */
+	protected $old_cleared_keys;
 		$this->old_cleared_keys = $this->cleared_keys;
 
 		$this->ignored_post_type = register_post_type(
