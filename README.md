@@ -140,29 +140,52 @@ Need a bit more power? In addition to `pantheon_wp_clear_edge_keys()`, there are
 * `pantheon_wp_clear_edge_paths( $paths = array() )` - Purge cache for one or more paths.
 * `pantheon_wp_clear_edge_all()` - Warning! With great power comes great responsibility. Purge the entire cache, but do so wisely.
 
+### Ignoring Specific Post Types ###
+
+By default, Pantheon Advanced Page Cache is pretty aggressive in how it clears its surrogate keys. Specifically, any time `wp_insert_post` is called (which can include any time a post of any type is added or updated, even private post types), it will purge a variety of keys including `home`, `front`, `404` and `feed`. To bypass or override this behavior, since 1.4.3 we have a filter allowing an array of post types to ignore to be passed before those caches are purged. By default, the `revision` post type is ignored, but others can be added:
+
+```php
+/**
+ * Add a custom post type to the ignored post types.
+ *
+ * @param array $ignored_post_types The array of ignored post types.
+ * @return array
+ */
+function filter_ignored_posts( $ignored_post_types ) {
+	$ignored_post_types[] = 'my-post-type'; // Ignore my-post-type from cache purges.
+	return $ignored_post_types;
+}
+
+add_filter( 'pantheon_purge_post_type_ignored', 'filter_ignored_posts' );
+```
+
+This will prevent the cache from being purged if the given post type is updated.
+
 ## WP-CLI Commands ##
 
 This plugin implements a variety of [WP-CLI](https://wp-cli.org) commands. All commands are grouped into the `wp pantheon cache` namespace.
 
-    `$ wp help pantheon cache`
+```
+$ wp help pantheon cache
 
-    NAME
+NAME
 
-      `wp pantheon cache`
+  wp pantheon cache
 
-    DESCRIPTION
+DESCRIPTION
 
-      Manage the Pantheon Advanced Page Cache.
+  Manage the Pantheon Advanced Page Cache.
 
-    SYNOPSIS
+SYNOPSIS
 
-      `wp pantheon cache <command>`
+  wp pantheon cache <command>
 
-    SUBCOMMANDS
+SUBCOMMANDS
 
-      `purge-all`       Purge the entire page cache.
-      `purge-key`       Purge one or more surrogate keys from cache.
-      `purge-path`      Purge one or more paths from cache.
+  purge-all       Purge the entire page cache.
+  purge-key       Purge one or more surrogate keys from cache.
+  purge-path      Purge one or more paths from cache.
+```
 
 Use `wp help pantheon cache <command>` to learn more about each command.
 
@@ -331,6 +354,8 @@ See [CONTRIBUTING.md](https://github.com/pantheon-systems/pantheon-advanced-page
 
 ## Changelog ##
 ### 1.4.3-dev ###
+* Adds filter `pantheon_purge_post_type_ignored` to allow an array of post types to ignore before purging cache [[#258](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/258)]
+* Adds [wpunit-helpers](https://github.com/pantheon-systems/wpunit-helpers) for running/setting up WP Unit tests
 
 ### 1.4.2 (October 16, 2023) ###
 * Updates Pantheon WP Coding Standards to 2.0 [[#249](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/249)]
