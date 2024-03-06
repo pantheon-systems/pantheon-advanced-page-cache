@@ -79,11 +79,8 @@ jobs:
           path: ~/vendor
           key: test-dependencies-{{ checksum "composer.json" }}
           restore-keys: test-dependencies-{{ checksum "composer.json" }}
-      - name: Install WP-CLI
-        run: |
-          curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-          chmod +x wp-cli.phar
-          sudo mv wp-cli.phar /usr/local/bin/wp
+      - name: Setup WP-CLI
+         uses: godaddy-wordpress/setup-wp-cli@1
       - name: Install Composer dependencies
         run: |
           if [ ${{ matrix.php_version }} = "7.4" ]; then
