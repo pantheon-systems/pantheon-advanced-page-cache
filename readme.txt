@@ -3,7 +3,7 @@ Contributors: getpantheon, danielbachhuber, kporras07, jspellman, jazzs3quence, 
 Tags: pantheon, cdn, cache
 Requires at least: 4.7
 Tested up to: 6.4.1
-Stable tag: 1.4.3-dev
+Stable tag: 1.5.0-dev
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -133,7 +133,7 @@ Need a bit more power? In addition to `pantheon_wp_clear_edge_keys()`, there are
 
 = Ignoring Specific Post Types =
 
-By default, Pantheon Advanced Page Cache is pretty aggressive in how it clears its surrogate keys. Specifically, any time `wp_insert_post` is called (which can include any time a post of any type is added or updated, even private post types), it will purge a variety of keys including `home`, `front`, `404` and `feed`. To bypass or override this behavior, since 1.4.3 we have a filter allowing an array of post types to ignore to be passed before those caches are purged. By default, the `revision` post type is ignored, but others can be added:
+By default, Pantheon Advanced Page Cache is pretty aggressive in how it clears its surrogate keys. Specifically, any time `wp_insert_post` is called (which can include any time a post of any type is added or updated, even private post types), it will purge a variety of keys including `home`, `front`, `404` and `feed`. To bypass or override this behavior, since 1.5.0 we have a filter allowing an array of post types to ignore to be passed before those caches are purged. By default, the `revision` post type is ignored, but others can be added:
 
 ```php
 /**
@@ -334,7 +334,7 @@ Pantheon Advanced Page Cache integrates with WordPress plugins, including:
 See [CONTRIBUTING.md](https://github.com/pantheon-systems/wp-saml-auth/blob/master/CONTRIBUTING.md) for information on contributing.
 
 == Changelog ==
-= 1.4.3-dev =
+= 1.5.0-dev =
 * Adds filter `pantheon_purge_post_type_ignored` to allow an array of post types to ignore before purging cache [[#258](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/258)]
 * Adds [wpunit-helpers](https://github.com/pantheon-systems/wpunit-helpers) for running/setting up WP Unit tests
 

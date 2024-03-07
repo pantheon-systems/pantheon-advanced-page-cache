@@ -71,7 +71,7 @@ class Purger {
 		 *
 		 * @param array $ignored_post_types Post types to ignore.
 		 * @return array
-		 * @since 1.4.3
+		 * @since 1.5.0-dev
 		 */
 		$ignored_post_types = apply_filters( 'pantheon_purge_post_type_ignored', [ 'revision' ] );
 
@@ -248,7 +248,7 @@ class Purger {
 		 *
 		 * @param array $ignored_post_types Post types to ignore.
 		 * @return array
-		 * @since 1.4.3
+		 * @since 1.5.0-dev
 		 */
 		$ignored_post_types = apply_filters( 'pantheon_purge_post_type_ignored', [ 'revision' ] );
 
