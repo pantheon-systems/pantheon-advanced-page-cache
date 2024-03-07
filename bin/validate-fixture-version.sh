@@ -75,8 +75,21 @@ main(){
 
 	if [[ $VERSION_COMPARE -eq 1 ]]; then
 		echo "${FIXTURE_VERSION} is less than ${TESTED_UP_TO}"
-		echo "Please apply upstream updates on ${TERMINUS_SITE}"
-		exit 1
+
+		# Extract major and minor version numbers from the current version
+		read -r CURRENT_MAJOR CURRENT_MINOR <<<$(echo "$CURRENT_WP_VERSION" | awk -F. '{print $1, $2}')
+
+		# Predict the next major version (increment minor version by 1)
+		NEXT_MAJOR_VERSION="${CURRENT_MAJOR}.$((${CURRENT_MINOR}+1))"
+
+		# Compare TESTED_UP_TO with the predicted next major version
+		if [[ "$TESTED_UP_TO" == "$NEXT_MAJOR_VERSION" ]]; then
+			echo "Tested Up To: ${TESTED_UP_TO} is the next major version after the Current WordPress Version: ${CURRENT_WP_VERSION}"
+			echo "Ensure you have validated that the plugin works on the next major version of WordPress or update ${TERMINUS_SITE} to a pre-release version."
+		else
+			echo "Tested Up To: ${TESTED_UP_TO} is not the next major version (${NEXT_MAJOR_VERSION}). This seems like an error. Please review."
+			exit 1
+		fi
 	fi
 }
 
