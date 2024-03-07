@@ -80,7 +80,7 @@ jobs:
           key: test-dependencies-{{ checksum "composer.json" }}
           restore-keys: test-dependencies-{{ checksum "composer.json" }}
       - name: Setup WP-CLI
-         uses: godaddy-wordpress/setup-wp-cli@1
+        uses: godaddy-wordpress/setup-wp-cli@1
       - name: Install Composer dependencies
         run: |
           if [ ${{ matrix.php_version }} = "7.4" ]; then
