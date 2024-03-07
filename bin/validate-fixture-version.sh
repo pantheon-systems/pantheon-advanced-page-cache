@@ -34,11 +34,24 @@ main(){
     FIXTURE_VERSION=$(terminus wp "${TERMINUS_SITE}.dev" -- core version)
     echo "Fixture Version: ${FIXTURE_VERSION}"
 
-    if ! php -r "exit(version_compare('${TESTED_UP_TO}', '${FIXTURE_VERSION}'));"; then
-        echo "${FIXTURE_VERSION} is less than ${TESTED_UP_TO}"
-        echo "Please update ${TERMINUS_SITE} to at least WordPress ${TESTED_UP_TO}"
-        exit 1
-    fi
+	local VERSION_COMPARE
+	VERSION_COMPARE=$(php -r "exit(version_compare('${TESTED_UP_TO}', '${FIXTURE_VERSION}'));")
+	if ! $VERSION_COMPARE; then
+		echo "${TESTED_UP_TO} matches ${FIXTURE_VERSION}"
+		exit 0
+	fi
+
+	if [[ $VERSION_COMPARE -eq -1 ]]; then
+		echo "${TESTED_UP_TO} is less than ${FIXTURE_VERSION}"
+		echo "Please update ${TESTED_UP_TO} to ${FIXTURE_VERSION}"
+		exit 1
+	fi
+
+	if [[ $VERSION_COMPARE -eq 1 ]]; then
+		echo "${FIXTURE_VERSION} is less than ${TESTED_UP_TO}"
+		echo "Please apply upstream updates on ${TERMINUS_SITE}"
+		exit 1
+	fi
 }
 
 main
