@@ -9,7 +9,7 @@ main(){
 
 	local CURRENT_WP_VERSION
 	CURRENT_WP_VERSION=$(curl -s https://api.wordpress.org/core/version-check/1.7/ | jq -r '.offers[0].current')
-
+	echo "Current WordPress Version: ${CURRENT_WP_VERSION}"
 
     if [ -z "${TERMINUS_SITE}" ]; then
         echo "TERMINUS_SITE environment variable must be set"
@@ -45,11 +45,11 @@ main(){
 	WP_VERSION_COMPARE=$(php -r "exit(version_compare('${TESTED_UP_TO}', '${CURRENT_WP_VERSION}'));")
 
 	if [[ $WP_VERSION_COMPARE -eq 0 ]]; then
-		echo "Tested Up To: ${TESTED_UP_TO} matches Current WP Version: ${CURRENT_WP_VERSION}"
+		echo "Tested Up To: ${TESTED_UP_TO} matches Current WordPress Version: ${CURRENT_WP_VERSION}"
 	elif [[ $WP_VERSION_COMPARE -eq 1 ]]; then
-		echo "Tested Up To: ${TESTED_UP_TO} is greater than Current WP Version: ${CURRENT_WP_VERSION}"
+		echo "Tested Up To: ${TESTED_UP_TO} is greater than Current WordPress Version: ${CURRENT_WP_VERSION}"
 	else
-		echo "Tested Up To: ${TESTED_UP_TO} does not match Current WP Version: ${CURRENT_WP_VERSION}"
+		echo "Tested Up To: ${TESTED_UP_TO} does not match Current WordPress Version: ${CURRENT_WP_VERSION}"
 		echo "Please update ${TESTED_UP_TO} to ${CURRENT_WP_VERSION}"
 		exit 1
 	fi
