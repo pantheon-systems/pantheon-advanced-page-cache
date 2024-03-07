@@ -36,7 +36,7 @@ main(){
 
 	local VERSION_COMPARE
 	VERSION_COMPARE=$(php -r "exit(version_compare('${TESTED_UP_TO}', '${FIXTURE_VERSION}'));")
-	if ! $VERSION_COMPARE; then
+	if [[ $VERSION_COMPARE -eq 0 ]]; then
 		echo "${TESTED_UP_TO} matches ${FIXTURE_VERSION}"
 		exit 0
 	fi
