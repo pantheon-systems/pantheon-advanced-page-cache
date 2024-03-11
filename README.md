@@ -4,7 +4,7 @@
 **Tags:** pantheon, cdn, cache  
 **Requires at least:** 4.7  
 **Tested up to:** 6.4.3  
-**Stable tag:** 1.5.0-dev  
+**Stable tag:** 1.5.0  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -353,7 +353,7 @@ Pantheon Advanced Page Cache integrates with WordPress plugins, including:
 See [CONTRIBUTING.md](https://github.com/pantheon-systems/pantheon-advanced-page-cache/blob/master/CONTRIBUTING.md) for information on contributing.
 
 ## Changelog ##
-### 1.5.0-dev ###
+### 1.5.0 (March 11, 2024) ###
 * Adds filter `pantheon_purge_post_type_ignored` to allow an array of post types to ignore before purging cache [[#258](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/258)]
 * Adds [wpunit-helpers](https://github.com/pantheon-systems/wpunit-helpers) for running/setting up WP Unit tests
 
