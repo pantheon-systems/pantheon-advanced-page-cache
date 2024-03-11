@@ -18,3 +18,4 @@ jobs:
         uses: pantheon-systems/plugin-release-actions/build-tag-release@main
         with:
           gh_token: ${{ github.token }}
+          readme_md: README.md
