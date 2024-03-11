@@ -1,6 +1,11 @@
 name: Draft Release PR
 on:
-  push:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
     branches:
       - develop
 
