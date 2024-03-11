@@ -31,34 +31,54 @@ jobs:
         key: test-behat-dependencies-{{ checksum "composer.json" }}
         paths:
           - vendor
-    - run: echo $(openssl rand -hex 8) > /tmp/WORDPRESS_ADMIN_PASSWORD
-    - run: |
-        echo 'export TERMINUS_ENV=ci-$CIRCLE_BUILD_NUM' >> $BASH_ENV
-        echo 'export TERMINUS_SITE=pantheon-advanced-page-cache' >> $BASH_ENV
-        echo 'export SITE_ENV=pantheon-advanced-page-cache.ci-$CIRCLE_BUILD_NUM' >> $BASH_ENV
-        echo 'export WORDPRESS_ADMIN_USERNAME=pantheon' >> $BASH_ENV
-        echo 'export WORDPRESS_ADMIN_EMAIL=no-reply@getpantheon.com' >> $BASH_ENV
-        echo 'export WORDPRESS_ADMIN_PASSWORD=$(cat /tmp/WORDPRESS_ADMIN_PASSWORD)' >> $BASH_ENV
-        source $BASH_ENV
-    - run: echo "StrictHostKeyChecking no" >> "$HOME/.ssh/config"
-    - run: |
-        if [ -z "$GITHUB_TOKEN" ]; then
-          echo "GITHUB_TOKEN environment variables missing; assuming unauthenticated build"
-          exit 0
-        fi
-        echo "Setting GitHub OAuth token with suppressed ouput"
-        {
-          composer config -g github-oauth.github.com $GITHUB_TOKEN
-        } &> /dev/null
-    - run: |
-        if [ -z "$TERMINUS_TOKEN" ]; then
-          echo "TERMINUS_TOKEN environment variables missing; assuming unauthenticated build"
-          exit 0
-        fi
-        terminus auth:login --machine-token=$TERMINUS_TOKEN
-    - run: ./bin/validate-fixture-version.sh
-    - run: ./bin/behat-prepare.sh
-    - run: ./bin/behat-test.sh --strict
     - run:
+        name: Create Random Password
+        command: echo $(openssl rand -hex 8) > /tmp/WORDPRESS_ADMIN_PASSWORD
+    - run:
+        name: Set Environment Variables
+        command: |
+          echo 'export TERMINUS_ENV=ci-$CIRCLE_BUILD_NUM' >> $BASH_ENV
+          echo 'export TERMINUS_SITE=pantheon-advanced-page-cache' >> $BASH_ENV
+          echo 'export SITE_ENV=pantheon-advanced-page-cache.ci-$CIRCLE_BUILD_NUM' >> $BASH_ENV
+          echo 'export WORDPRESS_ADMIN_USERNAME=pantheon' >> $BASH_ENV
+          echo 'export WORDPRESS_ADMIN_EMAIL=no-reply@getpantheon.com' >> $BASH_ENV
+          echo 'export WORDPRESS_ADMIN_PASSWORD=$(cat /tmp/WORDPRESS_ADMIN_PASSWORD)' >> $BASH_ENV
+          source $BASH_ENV
+    - run:
+        name: Update SSH Config
+        command: echo "StrictHostKeyChecking no" >> "$HOME/.ssh/config"
+    - run:
+        name: Set GitHub OAuth Token
+        command: |
+          if [ -z "$GITHUB_TOKEN" ]; then
+            echo "GITHUB_TOKEN environment variables missing; assuming unauthenticated build"
+            exit 0
+          fi
+          echo "Setting GitHub OAuth token with suppressed ouput"
+          {
+            composer config -g github-oauth.github.com $GITHUB_TOKEN
+          } &> /dev/null
+    - run:
+        name: Authenticate Terminus
+        command: |
+          if [ -z "$TERMINUS_TOKEN" ]; then
+            echo "TERMINUS_TOKEN environment variables missing; assuming unauthenticated build"
+            exit 0
+          fi
+          terminus auth:login --machine-token=$TERMINUS_TOKEN
+    - run:
+        name: Validate Fixture Version
+        command: |
+          wget -q https://gist.githubusercontent.com/jazzsequence/13f2493785ee8760323deae9ca96d09a/raw/19056fe59fd2dc2e2fb62051e96fb2d5bb63bfe3/validate-fixture-version.sh -O ./bin/validate-fixture-version.sh
+          chmod +x ./bin/validate-fixture-version.sh
+          ./bin/validate-fixture-version.sh
+    - run:
+        name: Prepare Behat
+        command: ./bin/behat-prepare.sh
+    - run:
+        name: Run Behat Tests
+        command: ./bin/behat-test.sh --strict
+    - run:
+        name: Cleanup Behat
         command: ./bin/behat-cleanup.sh
         when: always

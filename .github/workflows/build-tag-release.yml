@@ -1,0 +1,20 @@
+name: Build, Tag and Release
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  pull-requests: write
+  contents: write
+
+jobs:
+  tag:
+    name: Create Tag and Draft Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build, Tag & Release
+        uses: pantheon-systems/plugin-release-actions/build-tag-release@main
+        with:
+          gh_token: ${{ github.token }}
