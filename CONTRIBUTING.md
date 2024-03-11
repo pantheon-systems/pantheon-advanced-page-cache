@@ -8,13 +8,13 @@ Pull requests and issues are welcome!
 
 ## Workflow
 
-Development and releases are structured around two branches, `develop` and `master`. The `develop` branch is the default branch for the repository, and is the source and destination for feature branches.
+Development and releases are structured around two branches, `develop` and `release`. The `develop` branch is the default branch for the repository, and is the source and destination for feature branches.
 
 We prefer to squash commits (i.e. avoid merge PRs) from a feature branch into `develop` when merging, and to include the PR # in the commit message. PRs to `develop` should also include any relevent updates to the changelog in readme.txt. For example, if a feature constitutes a minor or major version bump, that version update should be discussed and made as part of approving and merging the feature into `develop`.
 
 `develop` should be stable and usable, though possibly a few commits ahead of the public release on wp.org.
 
-The `master` branch matches the latest stable release deployed to [wp.org](wp.org).
+The `release` branch matches the latest stable release deployed to [wp.org](wp.org).
 
 ## Release Process
 
@@ -26,10 +26,10 @@ The `master` branch matches the latest stable release deployed to [wp.org](wp.or
 1. Wait for the [_Release pantheon-advanced-page-cache plugin to wp.org_ action](https://github.com/pantheon-systems/pantheon-advanced-page-cache/actions/workflows/wordpress-plugin-deploy.yml) to finish deploying to the WordPress.org plugin repository. If all goes well, users with SVN commit access for that plugin will receive an emailed diff of changes.
 1. Check WordPress.org: Ensure that the changes are live on [the plugin repository](https://wordpress.org/plugins/pantheon-advanced-page-cache/). This may take a few minutes.
 1. Following the release, prepare the next dev version with the following steps:
-    * `git checkout master`
-    * `git pull origin master`
+    * `git checkout release`
+    * `git pull origin release`
     * `git checkout develop`
-    * `git rebase master`
+    * `git rebase release`
     * Update the version number in all locations, incrementing the version by one patch version, and add the `-dev` flag (e.g. after releasing `1.2.3`, the new verison will be `1.2.4-dev`)
     * Add a new `** X.Y.X-dev **` heading to the changelog in readme.txt and README.md
     * `git add -A .`
