@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "98c30648786e5a12e8bacd9518e56594",
+    "content-hash": "d419737ca82f803d08b2cd2ecfea8c61",
     "packages": [],
     "packages-dev": [
         {
@@ -1136,16 +1136,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v5.0.0",
+            "version": "v5.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "4a21235f7e56e713259a6f76bf4b5ea08502b9dc"
+                "reference": "2218c2252c874a4624ab2f613d86ac32d227bc69"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/4a21235f7e56e713259a6f76bf4b5ea08502b9dc",
-                "reference": "4a21235f7e56e713259a6f76bf4b5ea08502b9dc",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/2218c2252c874a4624ab2f613d86ac32d227bc69",
+                "reference": "2218c2252c874a4624ab2f613d86ac32d227bc69",
                 "shasum": ""
             },
             "require": {
@@ -1188,9 +1188,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v5.0.0"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v5.0.1"
             },
-            "time": "2024-01-07T17:17:35+00:00"
+            "time": "2024-02-21T19:24:10+00:00"
         },
         {
             "name": "pantheon-systems/pantheon-wordpress-upstream-tests",
@@ -1268,6 +1268,52 @@
                 "source": "https://github.com/pantheon-systems/Pantheon-WP-Coding-Standards/tree/2.0.1"
             },
             "time": "2023-12-12T16:18:18+00:00"
+        },
+        {
+            "name": "pantheon-systems/wpunit-helpers",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pantheon-systems/wpunit-helpers.git",
+                "reference": "8f77f209060fbb9178952d0265f53af0ed2517df"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pantheon-systems/wpunit-helpers/zipball/8f77f209060fbb9178952d0265f53af0ed2517df",
+                "reference": "8f77f209060fbb9178952d0265f53af0ed2517df",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^2.0"
+            },
+            "require-dev": {
+                "squizlabs/php_codesniffer": "^3.7"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Pantheon\\WPUnitHelpers\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Pantheon\\WPUnitHelpers\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pantheon",
+                    "email": "noreply@pantheon.io"
+                }
+            ],
+            "description": "Unified scripts for installing and running automated WP Unit Tests.",
+            "support": {
+                "issues": "https://github.com/pantheon-systems/wpunit-helpers/issues",
+                "source": "https://github.com/pantheon-systems/wpunit-helpers/tree/v2.0.0"
+            },
+            "time": "2024-02-13T21:19:22+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -1722,16 +1768,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.25.0",
+            "version": "1.26.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "bd84b629c8de41aa2ae82c067c955e06f1b00240"
+                "reference": "231e3186624c03d7e7c890ec662b81e6b0405227"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/bd84b629c8de41aa2ae82c067c955e06f1b00240",
-                "reference": "bd84b629c8de41aa2ae82c067c955e06f1b00240",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/231e3186624c03d7e7c890ec662b81e6b0405227",
+                "reference": "231e3186624c03d7e7c890ec662b81e6b0405227",
                 "shasum": ""
             },
             "require": {
@@ -1763,9 +1809,9 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.25.0"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.26.0"
             },
-            "time": "2024-01-04T17:06:16+00:00"
+            "time": "2024-02-23T16:05:55+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -2088,16 +2134,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.6.16",
+            "version": "9.6.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "3767b2c56ce02d01e3491046f33466a1ae60a37f"
+                "reference": "1a156980d78a6666721b7e8e8502fe210b587fcd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3767b2c56ce02d01e3491046f33466a1ae60a37f",
-                "reference": "3767b2c56ce02d01e3491046f33466a1ae60a37f",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/1a156980d78a6666721b7e8e8502fe210b587fcd",
+                "reference": "1a156980d78a6666721b7e8e8502fe210b587fcd",
                 "shasum": ""
             },
             "require": {
@@ -2171,7 +2217,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.16"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.17"
             },
             "funding": [
                 {
@@ -2187,7 +2233,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-01-19T07:03:14+00:00"
+            "time": "2024-02-23T13:14:51+00:00"
         },
         {
             "name": "psr/container",
@@ -3531,16 +3577,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.8.1",
+            "version": "3.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
-                "reference": "14f5fff1e64118595db5408e946f3a22c75807f7"
+                "reference": "d63cee4890a8afaf86a22e51ad4d97c91dd4579b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/14f5fff1e64118595db5408e946f3a22c75807f7",
-                "reference": "14f5fff1e64118595db5408e946f3a22c75807f7",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/d63cee4890a8afaf86a22e51ad4d97c91dd4579b",
+                "reference": "d63cee4890a8afaf86a22e51ad4d97c91dd4579b",
                 "shasum": ""
             },
             "require": {
@@ -3607,7 +3653,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2024-01-11T20:47:48+00:00"
+            "time": "2024-02-16T15:06:51+00:00"
         },
         {
             "name": "symfony/browser-kit",
@@ -5677,5 +5723,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.6.0"
 }
