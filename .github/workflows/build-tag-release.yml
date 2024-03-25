@@ -9,7 +9,39 @@ permissions:
   contents: write
 
 jobs:
+  check-status:
+    runs-on: ubuntu-latest
+    outputs:
+      run-plugin-update: ${{ steps.set-outputs.outputs.run-plugin-update }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: get-changed-files
+        uses: jitterbit/get-changed-files@v1
+      - id: set-outputs
+        run: |
+          echo "Changed files: ${{ steps.get-changed-files.outputs.all }}"
+          run_plugin_update="true"
+          for file in ${{ steps.get-changed-files.outputs.all }}; do
+            if [[ ! "$file" =~ ^\.wordpress\.org/ ]] && [[ "$file" != "readme.txt" ]]; then
+              run_plugin_update="false"
+              break
+            fi
+          done
+          echo "::set-output name=run-plugin-update::$run_plugin_update"
+  asset-only:
+    needs: check-status
+    if: ${{ needs.check-status.outputs.run-plugin-update == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: WP.org Asset Only Update
+        uses: 10up/action-wordpress-plugin-asset-update@stable
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
   tag:
+    needs: check-status
+    if: ${{ needs.check-status.outputs.run-plugin-update == 'false' }}
     name: Create Tag and Draft Release
     runs-on: ubuntu-latest
     steps:
