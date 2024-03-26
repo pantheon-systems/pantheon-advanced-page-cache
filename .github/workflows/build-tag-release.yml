@@ -21,6 +21,7 @@ jobs:
       - id: set-outputs
         run: |
           echo "Changed files: ${{ steps.get-changed-files.outputs.all }}"
+          shopt -s nocasematch
           run_plugin_update="true"
           for file in ${{ steps.get-changed-files.outputs.all }}; do
             if [[ ! "$file" =~ ^\.wordpress\.org/ ]] && [[ "$file" != "readme.txt" ]]; then
