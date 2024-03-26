@@ -24,7 +24,7 @@ jobs:
           shopt -s nocasematch
           run_plugin_update="true"
           for file in ${{ steps.get-changed-files.outputs.all }}; do
-            if [[ ! "$file" =~ ^\.wordpress\.org/ ]] && [[ "$file" != "readme.txt" ]]; then
+            if [[ ! "$file" =~ ^\.wordpress\.org/ ]] && [[ "$file" != "readme.txt" ]] && [[ $file != "readme.md" ]] && [[ $file =~ ^\.github/ ]]; then
               run_plugin_update="false"
               break
             fi
