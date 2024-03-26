@@ -133,22 +133,20 @@ Need a bit more power? In addition to `pantheon_wp_clear_edge_keys()`, there are
 
 = Ignoring Specific Post Types =
 
-By default, Pantheon Advanced Page Cache is pretty aggressive in how it clears its surrogate keys. Specifically, any time `wp_insert_post` is called (which can include any time a post of any type is added or updated, even private post types), it will purge a variety of keys including `home`, `front`, `404` and `feed`. To bypass or override this behavior, since 1.5.0 we have a filter allowing an array of post types to ignore to be passed before those caches are purged. By default, the `revision` post type is ignored, but others can be added:
+By default, Pantheon Advanced Page Cache is pretty aggressive in how it clears its surrogate keys. Specifically, any time `wp_insert_post` is called (which can include any time a post of any type is added or updated, even private post types), it will purge a variety of keys including `home`, `front`, `404` and `feed`. To bypass or override this behavior, since 1.5.0-dev we have a filter allowing an array of post types to ignore to be passed before those caches are purged. By default, the `revision` post type is ignored, but others can be added:
 
-```php
-/**
- * Add a custom post type to the ignored post types.
- *
- * @param array $ignored_post_types The array of ignored post types.
- * @return array
- */
-function filter_ignored_posts( $ignored_post_types ) {
-	$ignored_post_types[] = 'my-post-type'; // Ignore my-post-type from cache purges.
-	return $ignored_post_types;
-}
+	/**
+	* Add a custom post type to the ignored post types.
+	*
+	* @param array $ignored_post_types The array of ignored post types.
+	* @return array
+	*/
+	function filter_ignored_posts( $ignored_post_types ) {
+		$ignored_post_types[] = 'my-post-type'; // Ignore my-post-type from cache purges.
+		return $ignored_post_types;
+	}
 
-add_filter( 'pantheon_purge_post_type_ignored', 'filter_ignored_posts' );
-```
+	add_filter( 'pantheon_purge_post_type_ignored', 'filter_ignored_posts' );
 
 This will prevent the cache from being purged if the given post type is updated.
 
