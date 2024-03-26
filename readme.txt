@@ -3,7 +3,7 @@ Contributors: getpantheon, danielbachhuber, kporras07, jspellman, jazzs3quence, 
 Tags: pantheon, cdn, cache
 Requires at least: 4.7
 Tested up to: 6.4.3
-Stable tag: 1.5.0
+Stable tag: 1.5.0-dev
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -133,7 +133,7 @@ Need a bit more power? In addition to `pantheon_wp_clear_edge_keys()`, there are
 
 = Ignoring Specific Post Types =
 
-By default, Pantheon Advanced Page Cache is pretty aggressive in how it clears its surrogate keys. Specifically, any time `wp_insert_post` is called (which can include any time a post of any type is added or updated, even private post types), it will purge a variety of keys including `home`, `front`, `404` and `feed`. To bypass or override this behavior, since 1.5.0 we have a filter allowing an array of post types to ignore to be passed before those caches are purged. By default, the `revision` post type is ignored, but others can be added:
+By default, Pantheon Advanced Page Cache is pretty aggressive in how it clears its surrogate keys. Specifically, any time `wp_insert_post` is called (which can include any time a post of any type is added or updated, even private post types), it will purge a variety of keys including `home`, `front`, `404` and `feed`. To bypass or override this behavior, since 1.5.0-dev we have a filter allowing an array of post types to ignore to be passed before those caches are purged. By default, the `revision` post type is ignored, but others can be added:
 
 	/**
 	* Add a custom post type to the ignored post types.
