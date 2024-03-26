@@ -10,6 +10,7 @@ permissions:
 
 jobs:
   check-status:
+    name: Check Status
     runs-on: ubuntu-latest
     outputs:
       run-plugin-update: ${{ steps.set-outputs.outputs.run-plugin-update }}
@@ -29,6 +30,7 @@ jobs:
           done
           echo "::set-output name=run-plugin-update::$run_plugin_update"
   asset-only:
+    name: WP.org Asset Only Update
     needs: check-status
     if: ${{ needs.check-status.outputs.run-plugin-update == 'true' }}
     runs-on: ubuntu-latest
