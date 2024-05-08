@@ -65,7 +65,7 @@ class Admin_Interface {
 
 		$mu_plugin_version = PANTHEON_MU_PLUGIN_VERSION;
 		$message = sprintf(
-			__( 'You appear to have an old version of the <a href="%1$s">Pantheon MU plugin. 1.4.0 or above expected but %2$d found.', 'pantheon-advanced-page-cache' ),
+			__( 'You appear to have an old version of the <a href="%1$s">Pantheon MU plugin</a>. 1.4.0 or above expected but %2$s found.', 'pantheon-advanced-page-cache' ),
 			'https://github.com/pantheon-systems/pantheon-mu-plugin',
 			$mu_plugin_version
 		);
