@@ -60,7 +60,9 @@ class Admin_Interface {
 	 * Display an admin notice if the Pantheon MU plugin is out of date.
 	 */
 	public static function admin_notice_old_mu_plugin() {
-		if ( apply_filters( 'pantheon_apc_disable_admin_notices', false ) ) {
+		$current_screen = get_current_screen();
+
+		if ( apply_filters( 'pantheon_apc_disable_admin_notices', false ) || 'settings_page_pantheon-cache' !== $current_screen->id) {
 			return;
 		}
 
@@ -93,7 +95,9 @@ class Admin_Interface {
 	 * Display an admin notice if the max-age is less than a week but not equal to 600 seconds.
 	 */
 	public static function admin_notice_maybe_recommend_higher_max_age() {
-		if ( apply_filters( 'pantheon_apc_disable_admin_notices', false ) ) {
+		$current_screen = get_current_screen();
+
+		if ( apply_filters( 'pantheon_apc_disable_admin_notices', false ) || 'settings_page_pantheon-cache' !== $current_screen->id ) {
 			return;
 		}
 
