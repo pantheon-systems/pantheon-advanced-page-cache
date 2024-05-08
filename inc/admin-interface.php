@@ -20,7 +20,7 @@ function bootstrap() {
 		// Only do things here if we've got the MU plugin and it's > 1.4.0.
 		if ( version_compare( PANTHEON_MU_PLUGIN_VERSION, '1.4.0', '>' ) ) {
 			// Do stuff, e.g. add_action().
-			add_action( 'admin_notices', __NAMESPACE__ . '\\admin_notice_maybe_recommend_higher_max_age');
+			add_action( 'admin_notices', __NAMESPACE__ . '\\admin_notice_maybe_recommend_higher_max_age' );
 		} else {
 			add_action( 'admin_notices', __NAMESPACE__ . '\\admin_notice_old_mu_plugin' );
 		}
@@ -172,8 +172,8 @@ function test_cache_max_age() {
 				'label' => __( 'Performance', 'pantheon-advanced-page-cache' ),
 				'color' => 'orange',
 			],
-			// translators: %1$s is the current max-age, %2$s is the recommended max-age, %3$d is the recommended max-age in seconds.
 			'description' => sprintf(
+				// translators: %1$s is the current max-age, %2$s is the recommended max-age, %3$d is the recommended max-age in seconds.
 				__( 'The Pantheon GCDN cache max-age is currently set to %1$s. We recommend increasing to %2$s (%3$d)', 'pantheon-advanced-page-cache' ),
 				$humanized_time,
 				$humanized_reccomended_time,
@@ -186,8 +186,8 @@ function test_cache_max_age() {
 	}
 
 	$result = [
-		// translators: %s is the humanized time.
 		'label' => sprintf(
+			// translators: %s is the humanized time.
 			__( 'Pantheon GCDN Cache Max-Age set to %1$s', 'pantheon-advanced-page-cache' ),
 			$humanized_time,
 			$humanized_reccomended_time
@@ -199,15 +199,15 @@ function test_cache_max_age() {
 		],
 		'description' => sprintf(
 			'%1$s<br />%2$s',
-			// translators: %1$s is the current max-age, %2$s is the recommended max-age, %3$d is the recommended max-age in seconds.
 			sprintf(
+				// translators: %1$s is the current max-age, %2$s is the recommended max-age, %3$d is the recommended max-age in seconds.
 				__( 'The Pantheon cache max-age is currently set to %1$s. Our recommendation is %2$s (%3$d) or more.', 'pantheon-advanced-page-cache' ),
 				$humanized_time,
 				$humanized_reccomended_time,
 				WEEK_IN_SECONDS
 			),
-			// translators: %s is a link to the cache configuration guide.
 			sprintf(
+				// translators: %s is a link to the cache configuration guide.
 				__( 'View our <a href="%s">cache configuration guide</a> for more information.', 'pantheon-advanced-page-cache' ),
 				'https://docs.pantheon.io/guides/wordpress-configurations/wordpress-cache-plugin#pantheon-page-cache-plugin-configuration'
 			)
