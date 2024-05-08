@@ -127,6 +127,7 @@ spl_autoload_register(
  */
 add_action( 'admin_bar_menu', [ 'Pantheon_Advanced_Page_Cache\User_Interface', 'action_admin_bar_menu' ], 99 ); // End of the stack.
 add_action( 'wp_ajax_pantheon_clear_url_cache', [ 'Pantheon_Advanced_Page_Cache\User_Interface', 'handle_ajax_clear_url_cache' ] );
+add_action( 'init', [ 'Pantheon_Advanced_Page_Cache\Admin_Interface', 'bootstrap' ] );
 
 /**
  * Emits the appropriate surrogate tags per view.
