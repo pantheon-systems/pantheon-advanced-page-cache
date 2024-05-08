@@ -86,4 +86,23 @@ class Admin_Interface {
 			]
 		);
 	}
+	/**
+	 * Get the current max-age value.
+	 *
+	 * This comes from the Pantheon mu-plugin and only exists if settings were actually saved.
+	 *
+	 * If the site existed prior to 1.4.0 of the mu-plugin, the default value is 600 seconds. Otherwise, the default value is 1 week.
+	 *
+	 * @return int
+	 */
+	private static function get_current_max_age() {
+		$options = get_option( 'pantheon-cache', [] );
+
+		// If the default_ttl option is not set, we're using the default, which is 1 week.
+		if ( ! isset( $options['default_ttl'] ) ) {
+			return apply_filters( 'pantheon_cache_default_max_age', WEEK_IN_SECONDS );
+		}
+
+		return apply_filters( 'pantheon_cache_default_max_age', $options['default_ttl'] );
+	}
 }
