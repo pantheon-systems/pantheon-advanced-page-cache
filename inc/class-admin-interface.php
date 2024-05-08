@@ -28,7 +28,31 @@ class Admin_Interface {
 				// admin notice to update the WordPress upstream. maybe detect if this is a composer site and suggest a composer update.
 			}
 		} else {
-			// admin notice that this plugin is designed for use on Pantheon.
+			add_action( 'admin_notices', [ __NAMESPACE__ . '\\Admin_Interface' , 'admin_notice_no_mu_plugin' ] );
 		}
+	}
+
+	/**
+	 * Display an admin notice if the Pantheon MU plugin was not found.
+	 */
+	public static function admin_notice_no_mu_plugin() {
+		/**
+		 * Allow disabling the admin notice.
+		 *
+		 * @param bool $disable_admin_notices Whether to disable the admin notice.
+		 */
+		if ( apply_filters( 'pantheon_apc_disable_admin_notices', false ) ) {
+			return;
+		}
+
+		wp_admin_notice(
+			// translators: %s is a link to the Pantheon MU plugin.
+			sprintf( __( 'Pantheon Advanced Page Cache works best on the Pantheon platform. If you are working inside a Pantheon environment, ensure your site is using the <a href="%s">Pantheon MU plugin</a>.', 'pantheon-advanced-page-cache' ), 'https://github.com/pantheon-systems/pantheon-mu-plugin' ),
+			[
+				'type' => 'error',
+				'dismissible' => true,
+			]
+		);
+	}
 	}
 }
