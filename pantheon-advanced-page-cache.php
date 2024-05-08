@@ -1,13 +1,15 @@
 <?php
 /**
- * Plugin Name:     Pantheon Advanced Page Cache
- * Plugin URI:      https://wordpress.org/plugins/pantheon-advanced-page-cache/
- * Description:     Automatically clear related pages from Pantheon's Edge when you update content. High TTL. Fresh content. Visitors never wait.
- * Author:          Pantheon
- * Author URI:      https://pantheon.io
- * Text Domain:     pantheon-advanced-page-cache
- * Domain Path:     /languages
- * Version:         1.5.0
+ * Plugin Name: Pantheon Advanced Page Cache
+ * Plugin URI: https://wordpress.org/plugins/pantheon-advanced-page-cache/
+ * Description: Automatically clear related pages from Pantheon's Edge when you update content. High TTL. Fresh content. Visitors never wait.
+ * Author: Pantheon
+ * Author URI: https://pantheon.io
+ * Text Domain: pantheon-advanced-page-cache
+ * Domain Path: /languages
+ * Version: 1.5.0
+ * Requires at least: 6.4
+ * Tested up to: 6.5.3
  *
  * @package         Pantheon_Advanced_Page_Cache
  */
@@ -127,7 +129,7 @@ spl_autoload_register(
  */
 add_action( 'admin_bar_menu', [ 'Pantheon_Advanced_Page_Cache\User_Interface', 'action_admin_bar_menu' ], 99 ); // End of the stack.
 add_action( 'wp_ajax_pantheon_clear_url_cache', [ 'Pantheon_Advanced_Page_Cache\User_Interface', 'handle_ajax_clear_url_cache' ] );
-add_action( 'init', [ 'Pantheon_Advanced_Page_Cache\Admin_Interface', 'bootstrap' ] );
+add_action( 'admin_init', [ 'Pantheon_Advanced_Page_Cache\Admin_Interface', 'bootstrap' ] );
 
 /**
  * Emits the appropriate surrogate tags per view.
