@@ -72,9 +72,9 @@ class Admin_Interface {
 
 		// Check if there's a composer.json file in the root of the site.
 		if ( file_exists( ABSPATH . 'composer.json' ) ) {
-			$message .= '<br />' . __( 'If you are using Composer, you can update the MU plugin by running <code>composer update</code>.', 'pantheon-advanced-page-cache' );
+			$message .= ' ' . __( 'If you are using Composer, you can update the MU plugin by running <code>composer update</code>.', 'pantheon-advanced-page-cache' );
 		} else {
-			$message .= '<br />' . __( 'You should Apply Updates from the Pantheon Dashboard to get the latest version of WordPress and the Pantheon MU plugin.', 'pantheon-advanced-page-cache' );
+			$message .= ' ' . __( 'You should Apply Updates from the Pantheon Dashboard to get the latest version of WordPress and the Pantheon MU plugin.', 'pantheon-advanced-page-cache' );
 		}
 
 		wp_admin_notice(
