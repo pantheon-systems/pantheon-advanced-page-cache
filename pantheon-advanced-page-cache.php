@@ -103,6 +103,29 @@ function pantheon_wp_prefix_surrogate_keys_with_blog_id( $keys ) {
 }
 
 /**
+ * Bootstrapper for namespaced files that aren't classes.
+ *
+ * Expects that a bootstrap() function exists in the namespaced file.
+ *
+ * @return void
+ */
+function pantheon_bootstrap_namespaces() {
+	$namespaced_files = [
+		'\\Pantheon_Advanced_Page_Cache\\Admin_Interface' => __DIR__ . '/inc/admin-interface.php',
+	];
+
+	foreach ( $namespaced_files as $namespace => $file ) {
+		if ( file_exists( $file ) ) {
+			require $file;
+			call_user_func( $namespace . '\\bootstrap' );
+		} else {
+			wp_die( "Could not find $file", 'Pantheon Advanced Page Cache error' );
+
+		}
+	}
+}
+
+/**
  * Registers the class autoloader.
  */
 spl_autoload_register(
@@ -125,11 +148,15 @@ spl_autoload_register(
 );
 
 /**
+ * Init namespaced files.
+ */
+add_action( 'plugins_loaded', 'pantheon_bootstrap_namespaces' );
+
+/**
  * Registers relevant UI
  */
 add_action( 'admin_bar_menu', [ 'Pantheon_Advanced_Page_Cache\User_Interface', 'action_admin_bar_menu' ], 99 ); // End of the stack.
 add_action( 'wp_ajax_pantheon_clear_url_cache', [ 'Pantheon_Advanced_Page_Cache\User_Interface', 'handle_ajax_clear_url_cache' ] );
-add_action( 'admin_init', [ 'Pantheon_Advanced_Page_Cache\Admin_Interface', 'bootstrap' ] );
 
 /**
  * Emits the appropriate surrogate tags per view.
