@@ -24,6 +24,7 @@ class Admin_Interface {
 			// Only do things here if we've got the MU plugin and it's > 1.4.0.
 			if ( version_compare( PANTHEON_MU_PLUGIN_VERSION, '1.4.0', '>' ) ) {
 				// Do stuff, e.g. add_action().
+				add_action( 'admin_notices', [ __NAMESPACE__ . '\\Admin_Interface', 'admin_notice_maybe_recommend_higher_max_age' ] );
 			} else {
 				add_action( 'admin_notices', [ __NAMESPACE__ . '\\Admin_Interface' , 'admin_notice_old_mu_plugin' ] );
 			}
@@ -86,6 +87,30 @@ class Admin_Interface {
 			]
 		);
 	}
+
+	public static function admin_notice_maybe_recommend_higher_max_age() {
+		if ( apply_filters( 'pantheon_apc_disable_admin_notices', false ) ) {
+			return;
+		}
+
+		$current_max_age = self::get_current_max_age();
+		if ( $current_max_age < WEEK_IN_SECONDS && $current_max_age !== 600 ) {
+			$message = sprintf(
+				__( 'The cache max-age is currently set to %1$s seconds. This is a very low value and may not be optimal for your site. Consider increasing the cache max-age to at least %2$d seconds (1 week).', 'pantheon-advanced-page-cache' ),
+				$current_max_age,
+				WEEK_IN_SECONDS
+			);
+
+			wp_admin_notice(
+				$message,
+				[
+					'type' => 'warning',
+					'dismissible' => true,
+				]
+			);
+		}
+	}
+
 	/**
 	 * Get the current max-age value.
 	 *
