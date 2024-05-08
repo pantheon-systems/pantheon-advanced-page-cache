@@ -119,7 +119,7 @@ function pantheon_bootstrap_namespaces() {
 			require $file;
 			call_user_func( $namespace . '\\bootstrap' );
 		} else {
-			wp_die( "Could not find $file", 'Pantheon Advanced Page Cache error' );
+			wp_die( esc_html( "Could not find $file" ), 'Pantheon Advanced Page Cache error' );
 
 		}
 	}
