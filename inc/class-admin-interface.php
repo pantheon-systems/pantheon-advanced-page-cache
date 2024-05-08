@@ -66,6 +66,7 @@ class Admin_Interface {
 
 		$mu_plugin_version = PANTHEON_MU_PLUGIN_VERSION;
 		$message = sprintf(
+			// translators: %1$s is a link to the Pantheon MU plugin, %2$s is the version of the MU plugin.
 			__( 'You appear to have an old version of the <a href="%1$s">Pantheon MU plugin</a>. 1.4.0 or above expected but %2$s found.', 'pantheon-advanced-page-cache' ),
 			'https://github.com/pantheon-systems/pantheon-mu-plugin',
 			$mu_plugin_version
@@ -99,6 +100,7 @@ class Admin_Interface {
 		$current_max_age = self::get_current_max_age();
 		if ( $current_max_age < WEEK_IN_SECONDS && $current_max_age !== 600 ) {
 			$message = sprintf(
+				// translators: %1$s is the current max-age, %2$d is the recommended max-age.
 				__( 'The cache max-age is currently set to %1$s seconds. This is a very low value and may not be optimal for your site. Consider increasing the cache max-age to at least %2$d seconds (1 week).', 'pantheon-advanced-page-cache' ),
 				$current_max_age,
 				WEEK_IN_SECONDS
