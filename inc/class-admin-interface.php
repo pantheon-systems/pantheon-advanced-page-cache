@@ -88,6 +88,9 @@ class Admin_Interface {
 		);
 	}
 
+	/**
+	 * Display an admin notice if the max-age is less than a week but not equal to 600 seconds.
+	 */
 	public static function admin_notice_maybe_recommend_higher_max_age() {
 		if ( apply_filters( 'pantheon_apc_disable_admin_notices', false ) ) {
 			return;
