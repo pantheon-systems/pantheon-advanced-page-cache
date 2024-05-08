@@ -25,7 +25,7 @@ class Admin_Interface {
 			if ( version_compare( PANTHEON_MU_PLUGIN_VERSION, '1.4.0', '>' ) ) {
 				// Do stuff, e.g. add_action().
 			} else {
-				// admin notice to update the WordPress upstream. maybe detect if this is a composer site and suggest a composer update.
+				add_action( 'admin_notices', [ __NAMESPACE__ . '\\Admin_Interface' , 'admin_notice_old_mu_plugin' ] );
 			}
 		} else {
 			add_action( 'admin_notices', [ __NAMESPACE__ . '\\Admin_Interface' , 'admin_notice_no_mu_plugin' ] );
@@ -54,5 +54,36 @@ class Admin_Interface {
 			]
 		);
 	}
+
+	/**
+	 * Display an admin notice if the Pantheon MU plugin is out of date.
+	 */
+	public static function admin_notice_old_mu_plugin() {
+		if ( apply_filters( 'pantheon_apc_disable_admin_notices', false ) ) {
+			return;
+		}
+
+		$mu_plugin_version = PANTHEON_MU_PLUGIN_VERSION;
+		$message = sprintf(
+			__( 'You appear to have an old version of the <a href="%1$s">Pantheon MU plugin. 1.4.0 or above expected but %2$d found.', 'pantheon-advanced-page-cache' ),
+			'https://github.com/pantheon-systems/pantheon-mu-plugin',
+			$mu_plugin_version
+		);
+
+		// Check if there's a composer.json file in the root of the site.
+		if ( file_exists( ABSPATH . 'composer.json' ) ) {
+			$message .= '<br />' . __( 'If you are using Composer, you can update the MU plugin by running <code>composer update</code>.', 'pantheon-advanced-page-cache' );
+		} else {
+			$message .= '<br />' . __( 'You should Apply Updates from the Pantheon Dashboard to get the latest version of WordPress and the Pantheon MU plugin.', 'pantheon-advanced-page-cache' );
+		}
+
+		wp_admin_notice(
+			// translators: %s is a link to the Pantheon MU plugin.
+			$message,
+			[
+				'type' => 'warning',
+				'dismissible' => true,
+			]
+		);
 	}
 }
