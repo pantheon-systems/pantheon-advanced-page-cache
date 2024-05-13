@@ -102,10 +102,11 @@ function admin_notice_maybe_recommend_higher_max_age() {
 	$current_max_age = get_current_max_age();
 	if ( $current_max_age < WEEK_IN_SECONDS && $current_max_age !== 600 ) {
 		$message = sprintf(
-			// translators: %1$s is the current max-age, %2$d is the recommended max-age.
-			__( 'The cache max-age is currently set to %1$s seconds. This is a very low value and may not be optimal for your site. Consider increasing the cache max-age to at least %2$d seconds (1 week).', 'pantheon-advanced-page-cache' ),
+			// translators: %1$s is the current max-age, %2$d is the recommended max-age in seconds, %3$s is the humanized max-age.
+			__( 'The cache max-age is currently set to %1$s seconds. This is a very low value and may not be optimal for your site. Consider increasing the cache max-age to at least %2$d seconds (%3$s).', 'pantheon-advanced-page-cache' ),
 			$current_max_age,
-			WEEK_IN_SECONDS
+			WEEK_IN_SECONDS,
+			humanized_max_age( true )
 		);
 
 		wp_admin_notice(
@@ -154,15 +155,28 @@ function default_cache_max_age_test( $tests ) {
 }
 
 /**
+ * Get the humanized max-age.
+ *
+ * @param bool $recommended Whether to get the recommended max-age.
+ *
+ * @return string
+ */
+function humanized_max_age( $recommended = false ) {
+	$time = time();
+	$current_max_age = $recommended ? apply_filters( 'pantheon_cache_default_max_age', WEEK_IN_SECONDS ) : get_current_max_age();
+	$humanized_time = human_time_diff( $time, $time + $current_max_age );
+
+	return $humanized_time;
+}
+
+/**
  * The GCDN cache max-age Site Health test.
  *
  * @return array
  */
 function test_cache_max_age() {
-	$time = time();
-	$current_max_age = get_current_max_age();
-	$humanized_time = human_time_diff( $time, $time + $current_max_age );
-	$humanized_reccomended_time = human_time_diff( $time, $time + WEEK_IN_SECONDS );
+	$humanized_time = humanized_max_age();
+	$humanized_reccomended_time = humanized_max_age( true );
 
 	if ( $current_max_age < WEEK_IN_SECONDS ) {
 		$result = [
