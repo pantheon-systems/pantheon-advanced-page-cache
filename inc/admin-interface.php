@@ -178,7 +178,7 @@ function test_cache_max_age() {
 	$humanized_time = humanized_max_age();
 	$humanized_reccomended_time = humanized_max_age( true );
 
-	if ( $current_max_age < WEEK_IN_SECONDS ) {
+	if ( get_current_max_age() < WEEK_IN_SECONDS ) {
 		$result = [
 			'label' => __( 'Pantheon GCDN Cache Max-Age', 'pantheon-advanced-page-cache' ),
 			'status' => 'recommended',
