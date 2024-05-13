@@ -175,10 +175,11 @@ function humanized_max_age( $recommended = false ) {
  * @return array
  */
 function test_cache_max_age() {
+	$current_max_age = get_current_max_age();
 	$humanized_time = humanized_max_age();
 	$humanized_reccomended_time = humanized_max_age( true );
 
-	if ( get_current_max_age() < WEEK_IN_SECONDS ) {
+	if ( $current_max_age < $default_max_age ) {
 		$result = [
 			'label' => __( 'Pantheon GCDN Cache Max-Age', 'pantheon-advanced-page-cache' ),
 			'status' => 'recommended',
@@ -188,8 +189,9 @@ function test_cache_max_age() {
 			],
 			'description' => sprintf(
 				// translators: %1$s is the current max-age, %2$s is the recommended max-age, %3$d is the recommended max-age in seconds.
-				__( 'The Pantheon GCDN cache max-age is currently set to %1$s. We recommend increasing to %2$s (%3$d)', 'pantheon-advanced-page-cache' ),
+				__( 'The Pantheon GCDN cache max-age is currently set to %1$s (%2$d seconds). We recommend increasing to %3$s (%4$d seconds)', 'pantheon-advanced-page-cache' ),
 				$humanized_time,
+				$current_max_age,
 				$humanized_reccomended_time,
 				WEEK_IN_SECONDS
 			),
@@ -215,7 +217,7 @@ function test_cache_max_age() {
 			'%1$s<br />%2$s',
 			sprintf(
 				// translators: %1$s is the current max-age, %2$s is the recommended max-age, %3$d is the recommended max-age in seconds.
-				__( 'The Pantheon cache max-age is currently set to %1$s. Our recommendation is %2$s (%3$d) or more.', 'pantheon-advanced-page-cache' ),
+				__( 'The Pantheon cache max-age is currently set to %1$s. Our recommendation is %2$s (%3$d seconds) or more.', 'pantheon-advanced-page-cache' ),
 				$humanized_time,
 				$humanized_reccomended_time,
 				WEEK_IN_SECONDS
