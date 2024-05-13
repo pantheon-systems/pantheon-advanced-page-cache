@@ -99,12 +99,21 @@ function admin_notice_maybe_recommend_higher_max_age() {
 		return;
 	}
 
+	$max_age_rank = max_age_compare();
 	$current_max_age = get_current_max_age();
-	if ( $current_max_age < WEEK_IN_SECONDS && $current_max_age !== 600 ) {
+	if (
+		$max_age_rank > 0 &&
+		$current_max_age < WEEK_IN_SECONDS &&
+		$current_max_age !== 600
+	) {
+		// If the current max-age value has a rank of 3 or more (10 is the highest), we'll note that it's very low.
+		$very_low = $max_age_rank > 3 ? __( 'This is a very low value and may not be optimal for your site.', 'pantheon-advanced-page-cache' ) : '';
 		$message = sprintf(
 			// translators: %1$s is the current max-age, %2$d is the recommended max-age in seconds, %3$s is the humanized max-age.
-			__( 'The cache max-age is currently set to %1$s seconds. This is a very low value and may not be optimal for your site. Consider increasing the cache max-age to at least %2$d seconds (%3$s).', 'pantheon-advanced-page-cache' ),
+			__( 'The cache max-age is currently set to %1$s (%2$s seconds). %3$s Consider increasing the cache max-age to at least %4$d seconds (%5$s).', 'pantheon-advanced-page-cache' ),
+			humanized_max_age(),
 			$current_max_age,
+			$very_low,
 			WEEK_IN_SECONDS,
 			humanized_max_age( true )
 		);
@@ -176,6 +185,26 @@ function humanized_max_age( $recommended = false ) {
  */
 function get_default_max_age() {
 	return apply_filters( 'pantheon_cache_default_max_age', WEEK_IN_SECONDS );
+}
+
+/**
+ * Compare the current max-age to the default max-age.
+ *
+ * @return int A ranked value from 0 to 10 where 0 is optimal (equal to or greater than the recommended max age) and 10 is very bad.
+ */
+function max_age_compare() {
+	$current_max_age = get_current_max_age();
+	$default_max_age = get_default_max_age();
+	$diff = $current_max_age - $default_max_age;
+
+	if ( $diff >= 0 ) {
+		return 0;
+	}
+
+	// Rank the difference on a scale of 0 ($current_max_age >= $default_max_age) to 10 and return the rank int.
+	$rank = round( abs( $diff ) / $default_max_age * 10 );
+
+	return min( max( $rank, 1 ), 10 );
 }
 
 /**
