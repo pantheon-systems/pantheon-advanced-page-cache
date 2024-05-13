@@ -119,10 +119,13 @@ function admin_notice_maybe_recommend_higher_max_age() {
 			humanized_max_age( true )
 		);
 
+		// Escalating notice types based on the max-age rank.
+		$notice_type = ( $max_age_rank === 1 ? 'info' : $max_age_rank > 3 ) ? 'error' : 'warning';
+
 		wp_admin_notice(
 			$message,
 			[
-				'type' => $max_age_rank > 3 ? 'error' : ( $max_age_rank === 1 ? 'info' : 'warning' ),
+				'type' => $notice_type,
 				'dismissible' => true,
 			]
 		);
