@@ -193,6 +193,12 @@ function get_default_max_age() {
  * @return int A ranked value from 0 to 10 where 0 is optimal (equal to or greater than the recommended max age) and 10 is very bad.
  */
 function max_age_compare() {
+	$cached_rank = get_transient( 'papc_max_age_compare' );
+
+	if ( false !== $cached_rank ) {
+		return $cached_rank;
+	}
+
 	$current_max_age = get_current_max_age();
 	$default_max_age = get_default_max_age();
 	$diff = $current_max_age - $default_max_age;
@@ -204,7 +210,9 @@ function max_age_compare() {
 	// Rank the difference on a scale of 0 ($current_max_age >= $default_max_age) to 10 and return the rank int.
 	$rank = round( abs( $diff ) / $default_max_age * 10 );
 
-	return min( max( $rank, 1 ), 10 );
+	$cached_rank = min( max( $rank, 1 ), 10 );
+	set_transient( 'papc_max_age_compare', $cached_rank, WEEK_IN_SECONDS );
+	return $cached_rank;
 }
 
 /**
