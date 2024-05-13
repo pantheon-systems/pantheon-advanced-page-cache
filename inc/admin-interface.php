@@ -225,6 +225,7 @@ function test_cache_max_age() {
 	$current_max_age = get_current_max_age();
 	$humanized_time = humanized_max_age();
 	$humanized_reccomended_time = humanized_max_age( true );
+	$recommend_color = max_age_compare() > 3 ? 'red' : 'orange';
 
 	if ( $current_max_age < $default_max_age ) {
 		$result = [
@@ -232,7 +233,7 @@ function test_cache_max_age() {
 			'status' => 'recommended',
 			'badge' => [
 				'label' => __( 'Performance', 'pantheon-advanced-page-cache' ),
-				'color' => 'orange',
+				'color' => $recommend_color,
 			],
 			'description' => sprintf(
 				// translators: %1$s is the current max-age, %2$s is the recommended max-age, %3$d is the recommended max-age in seconds.
