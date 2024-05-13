@@ -29,6 +29,7 @@ function bootstrap() {
 	}
 
 	add_filter( 'site_status_tests', __NAMESPACE__ . '\\default_cache_max_age_test' );
+	add_action( 'update_option_pantheon-cache', __NAMESPACE__ . '\\clear_max_age_compare_cache' );
 }
 
 /**
@@ -281,4 +282,11 @@ function test_cache_max_age() {
 	];
 
 	return $result;
+}
+
+/**
+ * Clear the max-age compare cache when the max-age is updated.
+ */
+function clear_max_age_compare_cache() {
+	delete_transient( 'papc_max_age_compare' );
 }
