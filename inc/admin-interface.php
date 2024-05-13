@@ -121,7 +121,7 @@ function admin_notice_maybe_recommend_higher_max_age() {
 		wp_admin_notice(
 			$message,
 			[
-				'type' => 'warning',
+				'type' => $max_age_rank > 3 ? 'error' : ( $max_age_rank === 1 ? 'info' : 'warning' ),
 				'dismissible' => true,
 			]
 		);
