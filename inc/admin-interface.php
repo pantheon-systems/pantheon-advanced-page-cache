@@ -175,6 +175,7 @@ function humanized_max_age( $recommended = false ) {
  * @return array
  */
 function test_cache_max_age() {
+	$default_max_age = apply_filters( 'pantheon_cache_default_max_age', WEEK_IN_SECONDS );
 	$current_max_age = get_current_max_age();
 	$humanized_time = humanized_max_age();
 	$humanized_reccomended_time = humanized_max_age( true );
@@ -193,7 +194,7 @@ function test_cache_max_age() {
 				$humanized_time,
 				$current_max_age,
 				$humanized_reccomended_time,
-				WEEK_IN_SECONDS
+				$default_max_age
 			),
 			'test' => 'pantheon_edge_cache',
 		];
@@ -220,7 +221,7 @@ function test_cache_max_age() {
 				__( 'The Pantheon cache max-age is currently set to %1$s. Our recommendation is %2$s (%3$d seconds) or more.', 'pantheon-advanced-page-cache' ),
 				$humanized_time,
 				$humanized_reccomended_time,
-				WEEK_IN_SECONDS
+				$default_max_age
 			),
 			sprintf(
 				// translators: %s is a link to the cache configuration guide.
