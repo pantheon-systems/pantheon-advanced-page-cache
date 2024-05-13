@@ -227,8 +227,9 @@ function test_cache_max_age() {
 			'%1$s<br />%2$s',
 			sprintf(
 				// translators: %1$s is the current max-age, %2$s is the recommended max-age, %3$d is the recommended max-age in seconds.
-				__( 'The Pantheon cache max-age is currently set to %1$s. Our recommendation is %2$s (%3$d seconds) or more.', 'pantheon-advanced-page-cache' ),
+				__( 'The Pantheon cache max-age is currently set to %1$s (%2$s seconds). Our recommendation is %3$s (%4$d seconds) or more.', 'pantheon-advanced-page-cache' ),
 				$humanized_time,
+				$current_max_age,
 				$humanized_reccomended_time,
 				$default_max_age
 			),
