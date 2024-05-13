@@ -133,7 +133,7 @@ function get_current_max_age() {
 
 	// If the default_ttl option is not set, we're using the default, which is 1 week.
 	if ( ! isset( $options['default_ttl'] ) ) {
-		return apply_filters( 'pantheon_cache_default_max_age', WEEK_IN_SECONDS );
+		return get_default_max_age();
 	}
 
 	return apply_filters( 'pantheon_cache_default_max_age', $options['default_ttl'] );
@@ -163,10 +163,19 @@ function default_cache_max_age_test( $tests ) {
  */
 function humanized_max_age( $recommended = false ) {
 	$time = time();
-	$current_max_age = $recommended ? apply_filters( 'pantheon_cache_default_max_age', WEEK_IN_SECONDS ) : get_current_max_age();
+	$current_max_age = $recommended ? get_default_max_age() : get_current_max_age();
 	$humanized_time = human_time_diff( $time, $time + $current_max_age );
 
 	return $humanized_time;
+}
+
+/**
+ * Get the default max-age.
+ *
+ * @return int
+ */
+function get_default_max_age() {
+	return apply_filters( 'pantheon_cache_default_max_age', WEEK_IN_SECONDS );
 }
 
 /**
@@ -175,7 +184,7 @@ function humanized_max_age( $recommended = false ) {
  * @return array
  */
 function test_cache_max_age() {
-	$default_max_age = apply_filters( 'pantheon_cache_default_max_age', WEEK_IN_SECONDS );
+	$default_max_age = get_default_max_age();
 	$current_max_age = get_current_max_age();
 	$humanized_time = humanized_max_age();
 	$humanized_reccomended_time = humanized_max_age( true );
