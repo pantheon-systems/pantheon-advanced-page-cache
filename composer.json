@@ -7,11 +7,6 @@
       "email": "noreply@pantheon.io"
     }
   ],
-  "autoload": {
-    "psr-4": {
-        "PantheonSystems\\PantheonAdvancedPageCache\\Behat\\": "tests/behat/features"
-    }
-  },
   "require-dev": {
     "behat/behat": "^3.1",
     "behat/mink-extension": "^2.2",
