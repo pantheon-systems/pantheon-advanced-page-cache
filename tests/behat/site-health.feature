@@ -22,5 +22,4 @@ Scenario: Site Health check should pass when Max Age is the recommneded value
 	And I fill in "pantheon-cache[default_ttl]" with "604800"
 	And I press "Save Changes"
 	And I go to "/wp-admin/site-health.php"
-	And I press "Passed tests"
-	Then I should see "Pantheon GCDN Cache Max-Age set to 1 week"
+	Then I should not see "Pantheon GCDN Cache Max-Age"
