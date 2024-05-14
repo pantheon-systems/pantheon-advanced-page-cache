@@ -107,6 +107,7 @@ function pantheon_wp_prefix_surrogate_keys_with_blog_id( $keys ) {
  *
  * Expects that a bootstrap() function exists in the namespaced file.
  *
+ * @since 2.0.0
  * @return void
  */
 function pantheon_bootstrap_namespaces() {
