@@ -12,9 +12,9 @@ ignored_paths=(
   phpunit.xml.dist
   README.md
   readme.txt
+  .circleci/config.yml
   .wordpress-org/*
   .github/*
-  .circleci/*
   tests/phpunit/*
 )
 
