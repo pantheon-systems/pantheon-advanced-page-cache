@@ -31,7 +31,6 @@ for file in $changed_files; do
 	is_ignored=false
 	for ignore in "${ignored_paths[@]}"; do
 		if [ "$file" = "$ignore" ]; then
-			echo "Ignoring $file..."
 			is_ignored=true
 			break
 		fi
