@@ -25,20 +25,28 @@ ignored_paths=(
 
 # Fetch list of changed files from the last commit
 changed_files=$(git diff-tree --no-commit-id --name-only -r HEAD)
-should_skip=false
+should_run_tests=true
 
 for file in $changed_files; do
-	if echo "$file" | grep -Eq "^($ignored_paths)$"; then
-	  should_skip=true
-	  echo "Skipping $file..."
+	is_ignored=false
+	for ignore in "${ignored_paths[@]}"; do
+		if [ "$file" = "$ignore" ]; then
+			echo "Ignoring $file..."
+			is_ignored=true
+			break
+		fi
+	done
+	if [ "$is_ignored" = false ]; then
+		should_run_tests=true
+		echo "Running tests because $file was changed."
+		break
 	else
-	  should_skip=false
-	  echo "Running tests because $file was changed."
-	  break
+		should_run_tests=false
+		echo "Skipping $file..."
 	fi
 done
 
-if [ "$should_skip" = true ]; then
+if [ "$should_run_tests" = false ]; then
   echo "Only ignored files modified. Skipping Behat tests."
   circleci-agent step halt
 fi
