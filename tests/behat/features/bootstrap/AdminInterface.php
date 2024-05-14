@@ -1,11 +1,12 @@
 <?php
 // tests/behat/features/AdminInterface.php
 
-namespace behat\features\bootstrap;
+namespace Behat\Features\Bootstrap;
 
 use Behat\Behat\Context\Context;
+use Behat\MinkExtension\Context\MinkContext;
 
-class AdminInterface implements Context
+class AdminInterface extends MinkContext implements Context
 {
 	/**
 	 * @When I open the accordion :accordionText
