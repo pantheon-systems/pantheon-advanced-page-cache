@@ -23,6 +23,9 @@ jobs:
       - image: quay.io/pantheon-public/build-tools-ci:8.x-php8.2
     steps:
     - checkout
+    - run:
+        name: Check if we need to run Behat
+        command: ./bin/maybe-skip-tests.sh
     - restore_cache:
         keys:
           - test-behat-dependencies-{{ checksum "composer.json" }}
