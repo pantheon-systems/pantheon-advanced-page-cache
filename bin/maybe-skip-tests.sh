@@ -13,6 +13,11 @@ ignored_paths=(
   README.md
   readme.txt
   .circleci/config.yml
+  bin/maybe-skip-tests.sh
+  bin/helpers.sh
+  bin/install-local-tests.sh
+  bin/install-wp-tests.sh
+  bin/phpunit-test.sh
   .wordpress-org/*
   .github/*
   tests/phpunit/*
