@@ -332,6 +332,9 @@ Pantheon Advanced Page Cache integrates with WordPress plugins, including:
 See [CONTRIBUTING.md](https://github.com/pantheon-systems/wp-saml-auth/blob/master/CONTRIBUTING.md) for information on contributing.
 
 == Changelog ==
+= 2.0.0-dev =
+* Adds new admin alerts and Site Health tests about default cache max-age settings and recommendations [[#268](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/268)]
+
 = 1.5.0 (11 March 2024) =
 * Adds filter `pantheon_purge_post_type_ignored` to allow an array of post types to ignore before purging cache [[#258](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/258)]
 * Adds [wpunit-helpers](https://github.com/pantheon-systems/wpunit-helpers) for running/setting up WP Unit tests
@@ -409,6 +412,8 @@ See [CONTRIBUTING.md](https://github.com/pantheon-systems/wp-saml-auth/blob/mast
 * Initial release.
 
 == Upgrade Notice ==
+= 2.0.0 =
+This release requires a minimum WordPress version of 6.4.0. It uses Site Health checks and the `wp_admin_notices` function to alert users to the new cache max-age default settings and recommendations. The plugin will still function with earlier versions, but you will not get the benefit of the alerts and Site Health checks.
 
 = Latest =
 Note that the Pantheon Advanced Page Cache 1.3.0 release now prefixes keys on a WordPress Multisite (WPMS) with the blog ID. For users who already have this plugin installed on a WPMS, they will need to click the Clear Cache button on the settings page to generate the prefixed keys.

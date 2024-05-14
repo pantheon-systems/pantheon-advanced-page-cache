@@ -353,7 +353,10 @@ Pantheon Advanced Page Cache integrates with WordPress plugins, including:
 See [CONTRIBUTING.md](https://github.com/pantheon-systems/pantheon-advanced-page-cache/blob/master/CONTRIBUTING.md) for information on contributing.
 
 ## Changelog ##
-### 1.5.0-dev (March 11, 2024) ###
+### 2.0.0-dev ###
+* Adds new admin alerts and Site Health tests about default cache max-age settings and recommendations [[#268](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/268)]
+
+### 1.5.0 (March 11, 2024) ###
 * Adds filter `pantheon_purge_post_type_ignored` to allow an array of post types to ignore before purging cache [[#258](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/258)]
 * Adds [wpunit-helpers](https://github.com/pantheon-systems/wpunit-helpers) for running/setting up WP Unit tests
 
