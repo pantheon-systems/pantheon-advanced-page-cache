@@ -262,7 +262,7 @@ function test_cache_max_age() {
 			],
 			'description' => sprintf(
 				// translators: %1$s is the current max-age, %2$s is the recommended max-age, %3$d is the recommended max-age in seconds.
-				__( 'The Pantheon GCDN cache max-age is currently set to %1$s (%2$d seconds). We recommend increasing to %3$s (%4$d seconds)', 'pantheon-advanced-page-cache' ),
+				__( 'The Pantheon GCDN cache max-age is currently set to %1$s (%2$d seconds). We recommend increasing to %3$s (%4$d seconds).', 'pantheon-advanced-page-cache' ),
 				$humanized_time,
 				$current_max_age,
 				$humanized_reccomended_time,
