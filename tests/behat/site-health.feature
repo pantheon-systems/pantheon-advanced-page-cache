@@ -9,6 +9,7 @@ Scenario: Site Health should report when Max Age is a low value
 	And I press "Save Changes"
 	And I go to "/wp-admin/site-health.php"
 	Then I should see "Pantheon GCDN Cache Max-Age"
+	And I should see "The Pantheon GCDN cache max-age is currently set to 5 mins (300 seconds)."
 
 Scenario: Site Health should report when Max age is less than the recommendation
 	When I go to "/wp-admin/options-general.php?page=pantheon-cache"
