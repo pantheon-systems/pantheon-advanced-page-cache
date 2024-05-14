@@ -9,7 +9,7 @@ Scenario: Site Health should report when Max Age is a low value
 	And I press "Save Changes"
 	And I go to "/wp-admin/site-health.php"
 	Then I should see "Pantheon GCDN Cache Max-Age"
-	And I should see "The Pantheon GCDN cache max-age is currently set to 5 mins (300 seconds)."
+	And I should see "The Pantheon GCDN cache max-age is currently set to 5 mins (300 seconds). We recommend increasing to 1 week (604800 seconds)"
 
 Scenario: Site Health should report when Max age is less than the recommendation
 	When I go to "/wp-admin/options-general.php?page=pantheon-cache"
@@ -17,6 +17,7 @@ Scenario: Site Health should report when Max age is less than the recommendation
 	And I press "Save Changes"
 	And I go to "/wp-admin/site-health.php"
 	Then I should see "Pantheon GCDN Cache Max-Age"
+	And I should see "The Pantheon GCDN cache max-age is currently set to 5 days (432000 seconds). We recommend increasing to 1 week (604800 seconds)"
 
 Scenario: Site Health check should pass when Max Age is the recommneded value
 	When I go to "/wp-admin/options-general.php?page=pantheon-cache"
@@ -24,3 +25,4 @@ Scenario: Site Health check should pass when Max Age is the recommneded value
 	And I press "Save Changes"
 	And I go to "/wp-admin/site-health.php"
 	Then I should see "Pantheon GCDN Cache Max-Age set to 1 week"
+	And I should see "The Pantheon cache max-age is currently set to 1 week (604800 seconds). Our recommendation is 1 week (604800 seconds) or more."
