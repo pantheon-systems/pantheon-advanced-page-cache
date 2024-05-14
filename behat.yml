@@ -8,7 +8,7 @@ default:
         - Behat\MinkExtension\Context\MinkContext
         - PantheonSystems\PantheonWordPressUpstreamTests\Behat\AdminLogIn
         - PantheonSystems\PantheonWordPressUpstreamTests\Behat\ResponseHeader
-        - Behat\Features\Bootstrap\AdminInterface
+        - tests/behat/features/AdminInterface
     core:
       filters:
         tags: "~@upstreamonly"

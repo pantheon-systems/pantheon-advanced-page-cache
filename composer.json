@@ -9,7 +9,7 @@
   ],
   "autoload": {
     "psr-4": {
-        "Behat\\Features\\Bootstrap\\": "tests/behat/features/bootstrap"
+        "PantheonSystems\\PantheonAdvancedPageCache\\Behat\\": "tests/behat/features"
     }
   },
   "require-dev": {
