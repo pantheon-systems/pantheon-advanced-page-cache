@@ -34,6 +34,7 @@ function bootstrap() {
 
 	add_filter( 'site_status_tests', __NAMESPACE__ . '\\default_cache_max_age_test' );
 	add_action( 'update_option_pantheon-cache', __NAMESPACE__ . '\\clear_max_age_compare_cache' );
+	add_action( 'admin_init', __NAMESPACE__ . '\\set_max_age_to_default' );
 }
 
 /**
@@ -363,4 +364,52 @@ function set_max_age_to_default() {
 	update_option( 'pantheon-cache', $option );
 	set_max_age_updated();
 	add_action( 'admin_notices', __NAMESPACE__ . '\\max_age_updated_admin_notice' );
+}
+
+/**
+ * Display an admin notice if the max-age was updated.
+ *
+ * @since 2.0.0
+ * @return void
+ */
+function max_age_updated_admin_notice() {
+	// Check if notices should be disabled. This includes if the user is using a version of WordPress that does not support wp_admin_notice.
+	if ( apply_filters( 'pantheon_apc_disable_admin_notices', false ) ) {
+		return;
+	}
+
+	// Can the user manage options? If not, don't show the notice.
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+
+	// Check user meta to see if this user has seen this notice before.
+	$current_user_id = get_current_user_id();
+	$dismissed = get_user_meta( $current_user_id, 'pantheon_max_age_updated', true );
+	if ( $dismissed ) {
+		return;
+	}
+
+	// Check if the max-age was updated.
+	$option = get_option( 'pantheon-cache', [] );
+	if ( ! isset( $option['max_age_updated'] ) ) {
+		return;
+	}
+
+	// If we got here, this is the _first time_ this user has seen this notice since the option was updated. Show the notice and update the user meta.
+	wp_admin_notice(
+		sprintf(
+			__( 'The Pantheon GCDN cache max-age has been updated. The previous value was 10 minutes (600 seconds). The new value is %1$s (%2$s seconds). For more information, refer to the <a href="%3$s">Pantheon documentation</a>.', 'pantheon-advanced-page-cache' ),
+			humanized_max_age(),
+			get_current_max_age(),
+			'https://docs.pantheon.io/guides/wordpress-configurations/wordpress-cache-plugin'
+		),
+		[
+			'type' => 'info',
+			'dismissible' => true,
+		]
+	);
+
+	// Update the user meta to prevent this notice from showing again after they've seen it once.
+	update_user_meta( $current_user_id, 'pantheon_max_age_updated', true );
 }
