@@ -317,3 +317,50 @@ function test_cache_max_age() {
 function clear_max_age_compare_cache() {
 	delete_transient( 'papc_max_age_compare' );
 }
+
+/**
+ * Set the max-age updated flag.
+ *
+ * @since 2.0.0
+ * @return void
+ */
+function set_max_age_updated() {
+	$option = get_option( 'pantheon-cache', [] );
+	$option['max_age_updated'] = true;
+	update_option( 'pantheon-cache', $option );
+}
+
+/**
+ * Set the default_ttl from the mu-plugin to WEEK_IN_SECONDS if it was saved as 600 seconds.
+ *
+ * @since 2.0.0
+ * @return bool
+ */
+function set_max_age_to_default() {
+	$option = get_option( 'pantheon-cache', [] );
+
+	// If we've already done this, bail.
+	if ( isset( $option['max_age_updated'] ) ) {
+		return;
+	}
+
+	// If nothing is saved, bail. The default is used automatically.
+	if ( ! isset( $option['default_ttl'] ) ) {
+		return;
+	}
+
+	// If the default_ttl is not 600, bail.
+	if ( 600 !== $option['default_ttl'] ) {
+		// Set the max_age_updated flag. These people don't need to see the notice.
+		set_max_age_updated();
+		return;
+	}
+
+	// Set the max age. At this point, we should only be here if it was set to 600. We're using the filter here in case someone has overridden the default.
+	$option['default_ttl'] = apply_filters( 'pantheon_cache_default_max_age', WEEK_IN_SECONDS );
+
+	// Update the option and set the max_age_updated flag and show the admin notice.
+	update_option( 'pantheon-cache', $option );
+	set_max_age_updated();
+	add_action( 'admin_notices', __NAMESPACE__ . '\\max_age_updated_admin_notice' );
+}
