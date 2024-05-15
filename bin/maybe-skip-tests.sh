@@ -27,22 +27,23 @@ ignored_paths=(
 changed_files=$(git diff-tree --no-commit-id --name-only -r HEAD)
 should_run_tests=true
 
-for file in $changed_files; do
-	is_ignored=false
-	for ignore in "${ignored_paths[@]}"; do
-		if [ "$file" = "$ignore" ]; then
-			is_ignored=true
-			break
+
+is_ignored_file(){
+    for ignore in "${ignored_paths[@]}"; do
+		if [[ "${1:-}" == "$ignore" ]]; then
+			return 0
 		fi
 	done
-	if [ "$is_ignored" = false ]; then
-		should_run_tests=true
+	return 1
+}
+
+for file in $changed_files; do
+    if ! is_ignored_file "$file"; then
 		echo "Running tests because $file was changed."
 		break
-	else
-		should_run_tests=false
-		echo "Skipping $file..."
-	fi
+    fi
+    should_run_tests=false
+    echo "Skipping $file..."
 done
 
 if [ "$should_run_tests" = false ]; then
