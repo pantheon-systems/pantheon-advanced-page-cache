@@ -35,6 +35,7 @@ function bootstrap() {
 	add_filter( 'site_status_tests', __NAMESPACE__ . '\\default_cache_max_age_test' );
 	add_action( 'update_option_pantheon-cache', __NAMESPACE__ . '\\clear_max_age_compare_cache' );
 	add_action( 'admin_init', __NAMESPACE__ . '\\set_max_age_to_default' );
+	add_action( 'admin_notices', __NAMESPACE__ . '\\max_age_updated_admin_notice' );
 }
 
 /**
@@ -363,7 +364,6 @@ function set_max_age_to_default() {
 	// Update the option and set the max_age_updated flag and show the admin notice.
 	update_option( 'pantheon-cache', $option );
 	set_max_age_updated();
-	add_action( 'admin_notices', __NAMESPACE__ . '\\max_age_updated_admin_notice' );
 }
 
 /**
