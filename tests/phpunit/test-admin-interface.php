@@ -134,8 +134,8 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 		set_max_age_to_default();
 		$pantheon_cache = get_option( 'pantheon-cache' );
 		$max_age_updated = get_option( 'pantheon_max_age_updated' );
-		$this->assertFalse( isset( $pantheon_cache['default_ttl'] ) );
-		$this->assertFalse( $max_age_updated );
+		$this->assertFalse( isset( $pantheon_cache['default_ttl'] ), 'The default_ttl option should not be set.' );
+		$this->assertFalse( $max_age_updated, 'The max age updated option should not be set.');
 
 		// Cache max-age set to 600 and we haven't updated it since the notice.
 		delete_option( 'pantheon-cache' );
@@ -144,12 +144,12 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 		update_option( 'pantheon-cache', $pantheon_cache );
 		$pantheon_cache = get_option( 'pantheon-cache' );
 		// Validate that the option was set correctly. We'll only check this once.
-		$this->assertEquals( 600, $pantheon_cache['default_ttl'] );
+		$this->assertEquals( 600, $pantheon_cache['default_ttl'], 'The default_ttl option should be set to 600.' );
 		set_max_age_to_default();
 		$pantheon_cache = get_option( 'pantheon-cache' );
 		$max_age_updated = get_option( 'pantheon_max_age_updated' );
-		$this->assertEquals( WEEK_IN_SECONDS, $pantheon_cache['default_ttl'] );
-		$this->assertTrue( $max_age_updated );
+		$this->assertEquals( WEEK_IN_SECONDS, $pantheon_cache['default_ttl'], 'The default_ttl option should be set to 1 week.');
+		$this->assertTrue( $max_age_updated, 'The max age updated option should be true.');
 
 		// Cache max-age set to 600 and we have updated it since the notice.
 		delete_option( 'pantheon-cache' );
@@ -158,7 +158,7 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 		update_option( 'pantheon-cache', $pantheon_cache );
 		set_max_age_to_default();
 		$pantheon_cache = get_option( 'pantheon-cache' );
-		$this->assertEquals( 600, $pantheon_cache['default_ttl'] );
+		$this->assertEquals( 600, $pantheon_cache['default_ttl'], 'The default_ttl option should be set to 600.' );
 
 		// Cache max-age set to anything else. We shouldn't ever see the notice.
 		delete_option( 'pantheon-cache' );
@@ -169,8 +169,8 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 		set_max_age_to_default();
 		$pantheon_cache = get_option( 'pantheon-cache' );
 		$max_age_updated = get_option( 'pantheon_max_age_updated' );
-		$this->assertEquals( 432000, $pantheon_cache['default_ttl'] );
-		$this->assertTrue( $max_age_updated );
+		$this->assertEquals( 432000, $pantheon_cache['default_ttl'], 'The default_ttl option should be set to 432000.' );
+		$this->assertTrue( $max_age_updated, 'The max age updated option should be true.');
 
 		// Use the filter to override the default. If a site had 600 set, we should still update it to the filtered value.
 		add_filter( 'pantheon_cache_default_max_age', function() {
@@ -185,8 +185,8 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 		$pantheon_cache = [];
 		$pantheon_cache = get_option( 'pantheon-cache' );
 		$max_age_updated = get_option( 'pantheon_max_age_updated' );
-		$this->assertEquals( 3 * DAY_IN_SECONDS, $pantheon_cache['default_ttl'] );
-		$this->assertTrue( $max_age_updated );
+		$this->assertEquals( 3 * DAY_IN_SECONDS, $pantheon_cache['default_ttl'], 'The default_ttl option should be set to 3 days (the filtered value).' );
+		$this->assertTrue( $max_age_updated, 'The max age updated option should be true.');
 	}
 
 	/**
