@@ -374,7 +374,7 @@ function max_age_updated_admin_notice() {
 
 	// Check user meta to see if this user has seen this notice before.
 	$current_user_id = get_current_user_id();
-	$dismissed = get_user_meta( $current_user_id, 'pantheon_max_age_updated', true );
+	$dismissed = get_user_meta( $current_user_id, 'pantheon_max_age_updated_notice', true );
 	if ( $dismissed ) {
 		return;
 	}
@@ -400,5 +400,5 @@ function max_age_updated_admin_notice() {
 	);
 
 	// Update the user meta to prevent this notice from showing again after they've seen it once.
-	update_user_meta( $current_user_id, 'pantheon_max_age_updated', true );
+	update_user_meta( $current_user_id, 'pantheon_max_age_updated_notice', true );
 }
