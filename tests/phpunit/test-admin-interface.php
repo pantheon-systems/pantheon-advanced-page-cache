@@ -125,6 +125,9 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertFalse( $cached_max_age_compare );
 	}
 
+	/**
+	 * Test setting the max age to the default value if it was set to 600.
+	 */
 	public function test_set_max_age_to_default() {
 		// Default start state.
 		delete_option( 'pantheon-cache' );
