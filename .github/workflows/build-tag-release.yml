@@ -54,3 +54,4 @@ jobs:
         with:
           gh_token: ${{ github.token }}
           readme_md: README.md
+          build_node_assets: true
