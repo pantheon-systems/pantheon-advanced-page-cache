@@ -388,6 +388,7 @@ function max_age_updated_admin_notice() {
 	// If we got here, this is the _first time_ this user has seen this notice since the option was updated. Show the notice and update the user meta.
 	wp_admin_notice(
 		sprintf(
+			// translators: %1$s is the humanized max-age, %2$d is the max-age in seconds, %3$s is a link to the Pantheon documentation.
 			__( 'The Pantheon GCDN cache max-age has been updated. The previous value was 10 minutes (600 seconds). The new value is %1$s (%2$s seconds). For more information, refer to the <a href="%3$s">Pantheon documentation</a>.', 'pantheon-advanced-page-cache' ),
 			humanized_max_age(),
 			get_current_max_age(),
