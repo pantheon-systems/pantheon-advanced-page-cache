@@ -96,7 +96,7 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 		update_option( 'pantheon-cache', [ 'default_ttl' => WEEK_IN_SECONDS ] );
 		$this->assertEquals( 0, max_age_compare() );
 
-		// More than the recommendation is also good and should alwasy return 0.
+		// More than the recommendation is also good and should always return 0.
 		update_option( 'pantheon-cache', [ 'default_ttl' => 2 * WEEK_IN_SECONDS ] );
 		$this->assertEquals( 0, max_age_compare() );
 	}
