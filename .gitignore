@@ -3,6 +3,8 @@ Thumbs.db
 wp-cli.local.yml
 node_modules/
 vendor/
+assets/css/*.css
+assets/css/*.css.map
 
 # wpunit helpers
 bin/helpers.sh
