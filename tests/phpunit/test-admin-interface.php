@@ -201,7 +201,7 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 			if ( $callback === __NAMESPACE__ . '\\admin_notice_no_mu_plugin' ) {
 				return true;
 			}
-			return false;
+			return $disable_notices;
 		}, 10, 2 );
 
 		$current_user_id = get_current_user_id();
