@@ -321,18 +321,6 @@ function clear_max_age_compare_cache() {
 }
 
 /**
- * Set the max-age updated flag.
- *
- * @since 2.0.0
- * @return void
- */
-function set_max_age_updated() {
-	$option = get_option( 'pantheon-cache', [] );
-	$option['max_age_updated'] = true;
-	update_option( 'pantheon-cache', $option );
-}
-
-/**
  * Set the default_ttl from the mu-plugin to WEEK_IN_SECONDS if it was saved as 600 seconds.
  *
  * @since 2.0.0
