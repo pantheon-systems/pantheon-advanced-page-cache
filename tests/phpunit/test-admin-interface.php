@@ -188,4 +188,38 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertEquals( 3 * DAY_IN_SECONDS, $pantheon_cache['default_ttl'] );
 		$this->assertTrue( $max_age_updated );
 	}
+
+	/**
+	 * Test the admin notice for the max age being updated.
+	 */
+	function test_max_age_updated_admin_notice() {
+		// Switch to admin.
+		wp_set_current_user( 1 );
+
+		// We're testing notices but we don't want to display the "no mu plugin" notice.
+		add_filter( 'pantheon_apc_disable_admin_notices', function( $disable_notices, $callback ) {
+			if ( $callback === __NAMESPACE__ . '\\admin_notice_no_mu_plugin' ) {
+				return true;
+			}
+			return false;
+		}, 10, 2 );
+
+		$current_user_id = get_current_user_id();
+
+		// Reset everything to start.
+		delete_option( 'pantheon-cache' );
+		delete_user_meta( $current_user_id, 'pantheon_max_age_updated_notice' );
+
+		// Make sure the option says we've updated the max age. We're checking the notice, not the option.
+		update_option( 'pantheon_max_age_updated', true );
+
+		ob_start();
+		max_age_updated_admin_notice();
+		$notice = ob_get_clean();
+
+		// The notice that we're catching should be the one that the max-age was updated.
+		$this->assertStringContainsString( 'The Pantheon GCDN cache max-age has been updated. The previous value was 10 minutes. The new value is 1 week.', $notice );
+		// The user meta should have been updated in the process.
+		$this->assertEquals( 1, get_user_meta( $current_user_id, 'pantheon_max_age_updated_notice', true ) );
+	}
 }
