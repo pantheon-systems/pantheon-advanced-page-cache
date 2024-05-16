@@ -10,6 +10,7 @@
   },
   "main": "pantheon-advanced-page-cache.php",
   "devDependencies": {
+    "del": "^7.1.0",
     "gulp": "^5.0.0",
     "gulp-autoprefixer": "^9.0.0",
     "gulp-csso": "^4.0.1",
