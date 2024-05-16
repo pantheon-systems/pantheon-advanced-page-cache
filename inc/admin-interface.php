@@ -396,7 +396,7 @@ function max_age_updated_admin_notice() {
 		),
 		[
 			'type' => 'info',
-			'dismissible' => true,
+			'dismissible' => false,
 		]
 	);
 
