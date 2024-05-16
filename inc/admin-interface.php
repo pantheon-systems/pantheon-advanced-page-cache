@@ -327,31 +327,32 @@ function clear_max_age_compare_cache() {
  * @return bool
  */
 function set_max_age_to_default() {
-	$option = get_option( 'pantheon-cache', [] );
+	$pantheon_cache = get_option( 'pantheon-cache', [] );
+	$pantheon_max_age_updated = get_option( 'pantheon_max_age_updated', false );
 
 	// If we've already done this, bail.
-	if ( isset( $option['max_age_updated'] ) ) {
+	if ( $pantheon_max_age_updated ) {
 		return;
 	}
 
 	// If nothing is saved, bail. The default is used automatically.
-	if ( ! isset( $option['default_ttl'] ) ) {
+	if ( ! isset( $pantheon_cache['default_ttl'] ) ) {
 		return;
 	}
 
+	// Everything beyond this point assumes the max age has been set manually or will be set to the default.
+	update_option( 'pantheon_max_age_updated', true );
+
 	// If the default_ttl is not 600, bail.
-	if ( 600 !== $option['default_ttl'] ) {
-		// Set the max_age_updated flag. These people don't need to see the notice.
-		set_max_age_updated();
+	if ( 600 !== $pantheon_cache['default_ttl'] ) {
 		return;
 	}
 
 	// Set the max age. At this point, we should only be here if it was set to 600. We're using the filter here in case someone has overridden the default.
-	$option['default_ttl'] = apply_filters( 'pantheon_cache_default_max_age', WEEK_IN_SECONDS );
+	$pantheon_cache['default_ttl'] = apply_filters( 'pantheon_cache_default_max_age', WEEK_IN_SECONDS );
 
 	// Update the option and set the max_age_updated flag and show the admin notice.
-	update_option( 'pantheon-cache', $option );
-	set_max_age_updated();
+	update_option( 'pantheon-cache', $pantheon_cache );
 }
 
 /**
@@ -379,8 +380,8 @@ function max_age_updated_admin_notice() {
 	}
 
 	// Check if the max-age was updated.
-	$option = get_option( 'pantheon-cache', [] );
-	if ( ! isset( $option['max_age_updated'] ) ) {
+	$max_age_updated = get_option( 'pantheon_max_age_updated', false );
+	if ( ! $max_age_updated ) {
 		return;
 	}
 
