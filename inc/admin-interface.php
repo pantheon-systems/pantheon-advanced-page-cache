@@ -49,8 +49,9 @@ function admin_notice_no_mu_plugin() {
 	 * Allow disabling the admin notice.
 	 *
 	 * @param bool $disable_admin_notices Whether to disable the admin notice.
+	 * @param string $callback The name of the current callback function.
 	 */
-	if ( apply_filters( 'pantheon_apc_disable_admin_notices', false ) ) {
+	if ( apply_filters( 'pantheon_apc_disable_admin_notices', false, __FUNCTION__ ) ) {
 		return;
 	}
 
@@ -73,7 +74,7 @@ function admin_notice_no_mu_plugin() {
 function admin_notice_old_mu_plugin() {
 	$current_screen = get_current_screen();
 
-	if ( apply_filters( 'pantheon_apc_disable_admin_notices', false ) || 'settings_page_pantheon-cache' !== $current_screen->id ) {
+	if ( apply_filters( 'pantheon_apc_disable_admin_notices', false, __FUNCTION__ ) || 'settings_page_pantheon-cache' !== $current_screen->id ) {
 		return;
 	}
 
@@ -111,7 +112,7 @@ function admin_notice_old_mu_plugin() {
 function admin_notice_maybe_recommend_higher_max_age() {
 	$current_screen = get_current_screen();
 
-	if ( apply_filters( 'pantheon_apc_disable_admin_notices', false ) || 'settings_page_pantheon-cache' !== $current_screen->id ) {
+	if ( apply_filters( 'pantheon_apc_disable_admin_notices', false, __FUNCTION__ ) || 'settings_page_pantheon-cache' !== $current_screen->id ) {
 		return;
 	}
 
@@ -363,7 +364,7 @@ function set_max_age_to_default() {
  */
 function max_age_updated_admin_notice() {
 	// Check if notices should be disabled. This includes if the user is using a version of WordPress that does not support wp_admin_notice.
-	if ( apply_filters( 'pantheon_apc_disable_admin_notices', false ) ) {
+	if ( apply_filters( 'pantheon_apc_disable_admin_notices', false, __FUNCTION__ ) ) {
 		return;
 	}
 
