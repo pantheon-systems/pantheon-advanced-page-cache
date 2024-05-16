@@ -1,16 +1,12 @@
 {
   "name": "pantheon-advanced-page-cache",
   "version": "2.0.0",
-  "description": "Automatically clear related pages from Pantheon's Edge when you update content. High TTL. Fresh content. Visitors never wait.",
   "author": "Pantheon",
   "license": "GPL-2.0-only",
   "homepage": "https://github.com/pantheon-systems/pantheon-advanced-page-cache",
-  "bugs": {
-    "url": "https://github.com/pantheon-systems/pantheon-advanced-page-cache/issues"
-  },
-  "main": "pantheon-advanced-page-cache.php",
+  "main": "gulpfile.mjs",
+  "type": "module",
   "devDependencies": {
-    "del": "^7.1.0",
     "gulp": "^5.0.0",
     "gulp-autoprefixer": "^9.0.0",
     "gulp-csso": "^4.0.1",
@@ -20,5 +16,8 @@
   "scripts": {
     "build": "gulp build",
     "watch": "gulp watch"
+  },
+  "dependencies": {
+    "del": "^7.1.0"
   }
 }
