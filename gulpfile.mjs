@@ -1,7 +1,9 @@
 import {deleteAsync} from 'del';
 import gulp from 'gulp';
 import csso from 'gulp-csso';
-import sass from 'gulp-sass';
+import sassCompiler from 'sass';
+import gulpSass from 'gulp-sass';
+const sass = gulpSass(sassCompiler);
 
 gulp.task('styles', () => {
   return gulp.src('assets/sass/**/*.scss')
