@@ -1,0 +1,11 @@
+.pantheon-page-cache {
+	hr {
+		display: none;
+	}
+
+	tr.cache-default-max-age {
+		background: $white;
+		color: $charcoal;
+		box-shadow: $shadow;
+	}
+}
