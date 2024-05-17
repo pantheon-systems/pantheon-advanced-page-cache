@@ -1,15 +1,16 @@
-import {deleteAsync} from 'del';
+import { deleteAsync } from 'del';
 import gulp from 'gulp';
 import csso from 'gulp-csso';
-import sassCompiler from 'sass';
+import * as sassCompiler from 'sass';
 import gulpSass from 'gulp-sass';
+
 const sass = gulpSass(sassCompiler);
 
 gulp.task('styles', () => {
-  return gulp.src('assets/sass/**/*.scss')
-    .pipe(sass().on('error', sass.logError))
-    .pipe(csso())
-    .pipe(gulp.dest('assets/css'));
+  return gulp.src('assets/sass/styles.scss') // Only compile the main file
+    .pipe(sass().on('error', sass.logError)) // Compile SASS to CSS
+    .pipe(csso()) // Minify CSS
+    .pipe(gulp.dest('assets/css')); // Save the CSS file
 });
 
 gulp.task('clean', () => {
