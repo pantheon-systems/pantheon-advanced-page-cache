@@ -25,6 +25,7 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 	public function tearDown(): void {
 		parent::tearDown();
 		delete_option( 'pantheon-cache' );
+		delete_option( 'pantheon_max_age_updated' );
 		delete_transient( 'papc_max_age_compare' );
 	}
 
@@ -158,9 +159,9 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 	}
 
 	/**
-	 * Test setting the max age to the default value if it was set to 600.
+	 * Test running set_max_age_to_default when no option has been set.
 	 */
-	public function test_set_max_age_to_default() {
+	public function test_set_max_age_to_default_start() {
 		// Default start state.
 		delete_option( 'pantheon-cache' );
 		set_max_age_to_default();
@@ -168,9 +169,13 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 		$max_age_updated = get_option( 'pantheon_max_age_updated' );
 		$this->assertFalse( isset( $pantheon_cache['default_ttl'] ), 'The default_ttl option should not be set.' );
 		$this->assertFalse( $max_age_updated, 'The max age updated option should not be set.');
+	}
 
+	/**
+	 * Test running set_max_age_to_default when the default_ttl is 600.
+	 */
+	public function test_set_max_age_to_default_600() {
 		// Cache max-age set to 600 and we haven't updated it since the notice.
-		delete_option( 'pantheon-cache' );
 		$pantheon_cache = [];
 		$pantheon_cache['default_ttl'] = 600;
 		update_option( 'pantheon-cache', $pantheon_cache );
@@ -182,18 +187,27 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 		$max_age_updated = get_option( 'pantheon_max_age_updated' );
 		$this->assertEquals( WEEK_IN_SECONDS, $pantheon_cache['default_ttl'], 'The default_ttl option should be set to 1 week.');
 		$this->assertTrue( $max_age_updated, 'The max age updated option should be true.');
+	}
 
+	/**
+	 * Test running set_max_age_to_default when the default_ttl was manually reset to 600.
+	 */
+	public function test_set_max_age_to_default_600_reset() {
 		// Cache max-age set to 600 and we have updated it since the notice.
-		delete_option( 'pantheon-cache' );
 		$pantheon_cache = [];
 		$pantheon_cache['default_ttl'] = 600;
 		update_option( 'pantheon-cache', $pantheon_cache );
+		update_option( 'pantheon_max_age_updated', true );
 		set_max_age_to_default();
 		$pantheon_cache = get_option( 'pantheon-cache' );
 		$this->assertEquals( 600, $pantheon_cache['default_ttl'], 'The default_ttl option should be set to 600.' );
+	}
 
+	/**
+	 * Test running set_max_age_to_default when the default_ttl is 432000.
+	 */
+	public function test_set_max_age_to_default_432000() {
 		// Cache max-age set to anything else. We shouldn't ever see the notice.
-		delete_option( 'pantheon-cache' );
 		delete_option( 'pantheon_max_age_updated' );
 		$pantheon_cache = [];
 		$pantheon_cache['default_ttl'] = 432000;
@@ -203,14 +217,17 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 		$max_age_updated = get_option( 'pantheon_max_age_updated' );
 		$this->assertEquals( 432000, $pantheon_cache['default_ttl'], 'The default_ttl option should be set to 432000.' );
 		$this->assertTrue( $max_age_updated, 'The max age updated option should be true.');
+	}
 
+	/**
+	 * Test running set_max_age_to_default when the default_ttl is 600 and a filter is set.
+	 */
+	public function test_set_max_age_to_default_600_filter() {
 		// Use the filter to override the default. If a site had 600 set, we should still update it to the filtered value.
 		add_filter( 'pantheon_cache_default_max_age', function() {
 			return 3 * DAY_IN_SECONDS;
 		} );
 		$pantheon_cache = [];
-		delete_option( 'pantheon-cache' );
-		delete_option( 'pantheon_max_age_updated' );
 		$pantheon_cache['default_ttl'] = 600;
 		update_option( 'pantheon-cache', $pantheon_cache );
 		set_max_age_to_default();
@@ -254,5 +271,4 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 		// The user meta should have been updated in the process.
 		$this->assertEquals( 1, get_user_meta( $current_user_id, 'pantheon_max_age_updated_notice', true ) );
 	}
-
 }
