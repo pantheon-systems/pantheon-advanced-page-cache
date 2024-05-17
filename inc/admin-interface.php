@@ -118,6 +118,7 @@ function admin_notice_maybe_recommend_higher_max_age() {
 	}
 
 	$message = '';
+	$dismissable = true;
 	$max_age_rank = max_age_compare();
 	$current_max_age = get_current_max_age();
 	if (
@@ -150,6 +151,7 @@ function admin_notice_maybe_recommend_higher_max_age() {
 			__( 'Your site\'s cache max-age is set below the recommendation (1 week). Visit the <a href="%s">Pantheon GCDN configuration page</a> to update the setting.' ),
 			admin_url( 'options-general.php?page=pantheon-cache' )
 		);
+		$dismissable = false;
 		update_user_meta( get_current_user_id(), 'pantheon_max_age_global_warning_notice', true );
 	}
 
@@ -161,7 +163,7 @@ function admin_notice_maybe_recommend_higher_max_age() {
 			$message,
 			[
 				'type' => $notice_type,
-				'dismissible' => true,
+				'dismissible' => $dismissable,
 			]
 		);
 	}
