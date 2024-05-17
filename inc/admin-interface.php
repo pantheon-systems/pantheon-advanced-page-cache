@@ -148,8 +148,9 @@ function admin_notice_maybe_recommend_higher_max_age() {
 	) {
 		$message = sprintf(
 			// translators: %s is a link to the Pantheon GCDN configuration page.
-			__( 'Your site\'s cache max-age is set below the recommendation (1 week). Visit the <a href="%s">Pantheon GCDN configuration page</a> to update the setting.' ),
-			admin_url( 'options-general.php?page=pantheon-cache' )
+			__( 'Your site\'s cache max-age is set below the recommendation (1 week). Visit the <a href="%1$s">Pantheon GCDN configuration page</a> to update the setting.%2$s' ),
+			admin_url( 'options-general.php?page=pantheon-cache' ),
+			sprintf( '<!-- Max Age Rank: %d -->', $max_age_rank )
 		);
 		$dismissable = false;
 		update_user_meta( get_current_user_id(), 'pantheon_max_age_global_warning_notice', true );
