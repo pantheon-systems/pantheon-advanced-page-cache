@@ -37,6 +37,7 @@ function bootstrap() {
 	add_action( 'admin_init', __NAMESPACE__ . '\\set_max_age_to_default' );
 	add_action( 'admin_notices', __NAMESPACE__ . '\\max_age_updated_admin_notice' );
 	add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\\enqueue_admin_assets' );
+	add_filter( 'pantheon_cache_default_ttl_field_before_html', __NAMESPACE__ . '\\add_max_age_setting_header' );
 }
 
 /**
@@ -53,6 +54,18 @@ function enqueue_admin_assets() {
 	}
 
 	wp_enqueue_style( 'papc-admin', plugin_dir_url( dirname( __FILE__ ) ) .'assets/css/styles.css', [], '2.0.0-' . time() ); // TODO: remove time() when done testing.
+}
+
+/**
+ * Add a header to the max-age setting field.
+ */
+function add_max_age_setting_header() {
+	ob_start();
+	?>
+	<div class="pantheon-cache-default-max-age">
+		<span class="pantheon-cache-default-max-age-info-bar"><i class="dashicons dashicons-info"></i><?php esc_html_e( 'Boost site speed with a higher GCDN cache max-age.', 'pantheon-advanced-page-cache' ); ?></span>
+	<?php
+	return ob_get_clean();
 }
 
 /**
