@@ -36,6 +36,23 @@ function bootstrap() {
 	add_action( 'update_option_pantheon-cache', __NAMESPACE__ . '\\clear_max_age_compare_cache' );
 	add_action( 'admin_init', __NAMESPACE__ . '\\set_max_age_to_default' );
 	add_action( 'admin_notices', __NAMESPACE__ . '\\max_age_updated_admin_notice' );
+	add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\\enqueue_admin_assets' );
+}
+
+/**
+ * Enqueue admin assets.
+ *
+ * @since 2.0.0
+ * @return void
+ */
+function enqueue_admin_assets() {
+	$screen = get_current_screen();
+
+	if ( 'settings_page_pantheon-cache' !== $screen->id ) {
+		return;
+	}
+
+	wp_enqueue_style( 'papc-admin', plugin_dir_url( dirname( __FILE__ ) ) .'assets/css/styles.css', [], '2.0.0-' . time() ); // TODO: remove time() when done testing.
 }
 
 /**
