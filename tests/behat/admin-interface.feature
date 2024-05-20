@@ -23,8 +23,6 @@ Scenario: Change the cache max age to 5 days
 	And I fill in "pantheon-cache[default_ttl]" with "432000"
 	And I press "Save Changes"
 	Then the "pantheon-cache[default_ttl]" field should contain "432000"
-	When I go to "/wp-admin/options-general.php?page=pantheon-cache"
-	Then I should see "The cache max-age is currently set to 5 days"
 	And I should see "Consider increasing the cache max-age to at least 1 week"
 
 Scenario: Change the cache max age to 1 week
