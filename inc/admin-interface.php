@@ -55,7 +55,7 @@ function enqueue_admin_assets() {
 		return;
 	}
 
-	wp_enqueue_style( 'papc-admin', plugin_dir_url( dirname( __FILE__ ) ) .'assets/css/styles.css', [], '2.0.0-' . time() ); // TODO: remove time() when done testing.
+	wp_enqueue_style( 'papc-admin', plugin_dir_url( __DIR__ ) . 'assets/css/styles.css', [], '2.0.0-' . time() ); // TODO: remove time() when done testing.
 }
 
 /**
@@ -81,14 +81,14 @@ function add_max_age_setting_description() {
 		// translators: %s is the humanized max-age.
 		__( 'This value has been hardcoded to %s via a filter.', 'pantheon-advanced-page-cache' ),
 		'<strong>' . humanized_max_age() . '</strong>'
-	 ) : __( 'Value range: minimum of <strong>1 week</strong> to a maximum of <strong>1 year</strong>.', 'pantheon-advanced-page-cache' );
+	) : __( 'Value range: minimum of <strong>1 week</strong> to a maximum of <strong>1 year</strong>.', 'pantheon-advanced-page-cache' );
 
 	ob_start();
 	?>
 		<p class="pantheon-cache-default-max-age-description">
 			<?php
 			// translators: %s is a link to the Pantheon GCDN configuration page.
-			printf( '%1$s %2$s', $recommended_message, $range_message );
+			printf( '%1$s %2$s', $recommended_message, $range_message ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			?>
 		</p>
 	</div>
@@ -405,7 +405,7 @@ function test_cache_max_age() {
 				// translators: %1$s is the current max-age, %2$s is the recommended max-age.
 				__( 'The Pantheon cache max-age is currently set to %1$s. Our recommendation is %2$s or more.', 'pantheon-advanced-page-cache' ),
 				$humanized_time,
-				$humanized_reccomended_time,
+				$humanized_reccomended_time
 			),
 			sprintf(
 				// translators: %s is a link to the cache configuration guide.
