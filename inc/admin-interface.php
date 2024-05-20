@@ -425,13 +425,17 @@ function max_age_updated_admin_notice() {
 
 	// Check if the max-age was updated.
 	$max_age_updated = get_option( 'pantheon_max_age_updated', false );
-	if ( ! $max_age_updated || ( isset( $pantheon_cache['default_ttl'] ) && 600 !== get_current_max_age() ) ) {
+	if ( ! $max_age_updated ) {
 		return;
 	}
 
 	// Check user meta to see if this user has seen this notice before.
 	$dismissed = get_user_meta( $current_user_id, 'pantheon_max_age_updated_notice', true );
 	if ( $dismissed ) {
+		return;
+	}
+
+	if ( ! isset( $pantheon_cache['default_ttl'] ) || $pantheon_cache['default_ttl'] !== WEEK_IN_SECONDS ) {
 		return;
 	}
 
