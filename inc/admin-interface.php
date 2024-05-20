@@ -314,7 +314,7 @@ function test_cache_max_age() {
 				'color' => $recommend_color,
 			],
 			'description' => sprintf(
-				// translators: %1$s is the current max-age, %2$s is the recommended max-age, %3$d is the recommended max-age in seconds.
+				// translators: %1$s is the current humanized max-age, %2$s is the recommended max-age, %3$d is the admin URL to change the setting.
 				__( 'The Pantheon GCDN cache max age is currently set to %1$s. We recommend increasing to %2$s. You can increase the cache max age in the <a href="%s">Pantheon Page Cache settings</a>.', 'pantheon-advanced-page-cache' ),
 				$humanized_time,
 				$humanized_reccomended_time,
