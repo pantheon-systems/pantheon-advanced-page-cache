@@ -126,9 +126,9 @@ function admin_notice_maybe_recommend_higher_max_age() {
 		$max_age_rank === 0 ||
 		$current_max_age >= WEEK_IN_SECONDS ||
 		$current_max_age === 600
-	 ) {
+	) {
 		return;
-	 }
+	}
 
 	if ( isset( $current_screen->id ) && 'settings_page_pantheon-cache' === $current_screen->id ) {
 			// If the current max-age value has a rank of 3 or more (10 is the highest), we'll note that it's very low.
