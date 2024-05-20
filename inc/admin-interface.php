@@ -514,6 +514,10 @@ function max_age_updated_admin_notice() {
 		]
 	);
 
+	if ( ! $max_age_updated ) {
+		return;
+	}
+
 	// Update the user meta to prevent this notice from showing again after they've seen it once.
 	update_user_meta( $current_user_id, 'pantheon_max_age_updated_notice', true );
 }
