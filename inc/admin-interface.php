@@ -39,6 +39,7 @@ function bootstrap() {
 	add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\\enqueue_admin_assets' );
 	add_filter( 'pantheon_cache_max_age_field_before_html', __NAMESPACE__ . '\\add_max_age_setting_header' );
 	add_filter( 'pantheon_cache_max_age_field_after_html', __NAMESPACE__ . '\\add_max_age_setting_description' );
+	add_filter( 'pantheon_cache_max_age_input', __NAMESPACE__ . '\\update_default_ttl_input' );
 }
 
 /**
@@ -93,7 +94,39 @@ function add_max_age_setting_description() {
 	</div>
 	<?php
 	return ob_get_clean();
+}
 
+/**
+ * Update the default TTL input field.
+ *
+ * @param int $default_input The default TTL input field from the mu-plugin.
+ *
+ * @since 2.0.0
+ * @return int
+ */
+function update_default_ttl_input( $default_input ) {
+	if ( has_filter( 'pantheon_cache_default_max_age' ) ) {
+		return $default_input;
+	}
+
+	$slug = 'pantheon-cache';
+	$pantheon_cache = get_option( $slug, [] );
+	$default_ttl = isset( $pantheon_cache['default_ttl'] ) ? $pantheon_cache['default_ttl'] : WEEK_IN_SECONDS;
+
+	// Create a dropdown with options 1 week, 1 month and 1 year.
+	$options = [
+		WEEK_IN_SECONDS => esc_html__( 'Recommended (1 week)', 'pantheon-cache' ),
+		MONTH_IN_SECONDS => esc_html__( 'Extended (1 month)', 'pantheon-cache' ),
+		YEAR_IN_SECONDS => esc_html__( 'Perpetual (1 year)', 'pantheon-cache' ),
+	];
+	$input_field = '<select name="' . $slug . '[default_ttl]">';
+	foreach ( $options as $value => $label ) {
+		$selected = selected( $value, $default_ttl, false );
+		$input_field .= '<option value="' . $value . '" ' . $selected . '>' . $label . '</option>';
+	}
+	$input_field .= '</select>';
+
+	return $input_field;
 }
 
 /**
