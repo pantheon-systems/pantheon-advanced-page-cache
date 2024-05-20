@@ -122,7 +122,11 @@ function admin_notice_maybe_recommend_higher_max_age() {
 	$max_age_rank = max_age_compare();
 	$current_max_age = get_current_max_age();
 
-	if ( $max_age_rank === 0 || $current_max_age === 600 ) {
+	// Check if the max-age rank is acceptable or if current max-age is 600 seconds and we haven't yet reset it to the default.
+	if (
+		$max_age_rank === 0 ||
+		( $current_max_age === 600 && ! get_option( 'pantheon_max_age_updated', false ) )
+	) {
 		return;
 	}
 
