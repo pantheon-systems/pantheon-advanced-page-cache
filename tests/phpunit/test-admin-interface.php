@@ -259,8 +259,9 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 		delete_option( 'pantheon-cache' );
 		delete_user_meta( $current_user_id, 'pantheon_max_age_updated_notice' );
 
-		// Make sure the option says we've updated the max age. We're checking the notice, not the option.
+		// Make sure the option says we've updated the max age.
 		update_option( 'pantheon_max_age_updated', true );
+		update_option( 'pantheon-cache', [ 'default_ttl' => WEEK_IN_SECONDS ] );
 
 		ob_start();
 		max_age_updated_admin_notice();
