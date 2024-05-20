@@ -141,31 +141,51 @@ function admin_notice_old_mu_plugin() {
  */
 function admin_notice_maybe_recommend_higher_max_age() {
 	$current_screen = get_current_screen();
+	$global_warning_shown = current_user_can( 'manage_options' ) ? get_user_meta( get_current_user_id(), 'pantheon_max_age_global_warning_notice', true ) : true;
 
-	if ( apply_filters( 'pantheon_apc_disable_admin_notices', false, __FUNCTION__ ) || 'settings_page_pantheon-cache' !== $current_screen->id ) {
+	if ( apply_filters( 'pantheon_apc_disable_admin_notices', false, __FUNCTION__ ) || $global_warning_shown ) {
 		return;
 	}
 
+	$message = '';
+	$dismissable = true;
 	$max_age_rank = max_age_compare();
 	$current_max_age = get_current_max_age();
+
+	// Check if the max-age rank is acceptable or if current max-age is 600 seconds and we haven't yet reset it to the default.
 	if (
-		$max_age_rank > 0 &&
-		$current_max_age < WEEK_IN_SECONDS &&
-		$current_max_age !== 600
+		$max_age_rank === 0 ||
+		( $current_max_age === 600 && ! get_option( 'pantheon_max_age_updated', false ) )
 	) {
-		// If the current max-age value has a rank of 3 or more (10 is the highest), we'll note that it's very low.
+		return;
+	}
+
+	if ( isset( $current_screen->id ) && 'settings_page_pantheon-cache' === $current_screen->id ) {
+			// If the current max-age value has a rank of 3 or more (10 is the highest), we'll note that it's very low.
 		$very_low = $max_age_rank > 3 ? __( 'This is a very low value and may not be optimal for your site.', 'pantheon-advanced-page-cache' ) : '';
 		$message = sprintf(
 			// translators: %1$s is the current max-age, %2$d is the current max-age in seconds, %3$s is a message that displays if the value is very low, %44d is the recommended max age in seconds, %5$s is the humanized recommended max age, %6$s is debug information that is written to the HTML DOM but not displayed.
-			__( 'The cache max-age is currently set to %1$s (%2$s seconds). %3$s Consider increasing the cache max-age to at least %4$d seconds (%5$s).%6$s', 'pantheon-advanced-page-cache' ),
+			__( 'The cache max-age is currently set to %1$s. %2$s Consider increasing the cache max-age to at least %3$s.%4$s', 'pantheon-advanced-page-cache' ),
 			humanized_max_age(),
-			$current_max_age,
 			$very_low,
-			WEEK_IN_SECONDS,
 			humanized_max_age( true ),
 			sprintf( '<!-- Max Age Rank: %d -->', $max_age_rank )
 		);
+	}
 
+	// Global notice on all pages _except_ the Pantheon cache settings page.
+	if ( ! isset( $current_screen->id ) || 'settings_page_pantheon-cache' !== $current_screen->id ) {
+		$message = sprintf(
+			// translators: %s is a link to the Pantheon GCDN configuration page.
+			__( 'Your site\'s cache max-age is set below the recommendation (1 week). Visit the <a href="%1$s">Pantheon GCDN configuration page</a> to update the setting.%2$s' ),
+			admin_url( 'options-general.php?page=pantheon-cache' ),
+			sprintf( '<!-- Max Age Rank: %d -->', $max_age_rank )
+		);
+		$dismissable = false;
+		update_user_meta( get_current_user_id(), 'pantheon_max_age_global_warning_notice', true );
+	}
+
+	if ( ! empty( $message ) ) {
 		// Escalating notice types based on the max-age rank.
 		$notice_type = ( $max_age_rank === 1 ? 'info' : $max_age_rank > 3 ) ? 'error' : 'warning';
 
@@ -173,7 +193,7 @@ function admin_notice_maybe_recommend_higher_max_age() {
 			$message,
 			[
 				'type' => $notice_type,
-				'dismissible' => true,
+				'dismissible' => $dismissable,
 			]
 		);
 	}
@@ -429,6 +449,10 @@ function max_age_updated_admin_notice() {
 			'dismissible' => false,
 		]
 	);
+
+	if ( ! $max_age_updated ) {
+		return;
+	}
 
 	// Update the user meta to prevent this notice from showing again after they've seen it once.
 	update_user_meta( $current_user_id, 'pantheon_max_age_updated_notice', true );

@@ -271,4 +271,39 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 		// The user meta should have been updated in the process.
 		$this->assertEquals( 1, get_user_meta( $current_user_id, 'pantheon_max_age_updated_notice', true ) );
 	}
+
+	/**
+	 * Test that the user meta for the global admin notice is created.
+	 */
+	function test_low_max_age_admin_notice_user_meta() {
+		// Switch to admin.
+		wp_set_current_user( 1 );
+		delete_user_meta( 1, 'pantheon_max_age_global_warning_notice' );
+		ob_start();
+		admin_notice_maybe_recommend_higher_max_age();
+		$notice = ob_get_clean();
+
+		$notice_shown = get_user_meta( 1, 'pantheon_max_age_global_warning_notice', true );
+		$this->assertStringContainsString( 'notice-error', $notice );
+		$this->assertStringContainsString( 'Your site\'s cache max-age is set below the recommendation (1 week).' , $notice );
+		$this->assertEquals( 1, $notice_shown );
+	}
+
+	/**
+	 * Test that the user meta for the global admin notice is created.
+	 */
+	function test_low_max_age_admin_notice_user_meta_warning() {
+		// Switch to admin.
+		wp_set_current_user( 1 );
+		delete_user_meta( 1, 'pantheon_max_age_global_warning_notice' );
+		update_option( 'pantheon-cache', [ 'default_ttl' => 432000 ] );
+		ob_start();
+		admin_notice_maybe_recommend_higher_max_age();
+		$notice = ob_get_clean();
+
+		$notice_shown = get_user_meta( 1, 'pantheon_max_age_global_warning_notice', true );
+		$this->assertStringContainsString( 'notice-warning', $notice );
+		$this->assertStringContainsString( 'Your site\'s cache max-age is set below the recommendation (1 week).' , $notice );
+		$this->assertEquals( 1, $notice_shown );
+	}
 }
