@@ -417,21 +417,23 @@ function max_age_updated_admin_notice() {
 		return;
 	}
 
+	$pantheon_cache = get_option( 'pantheon-cache', [] );
+	$current_user_id = get_current_user_id();
+
 	// Can the user manage options? If not, don't show the notice.
 	if ( ! current_user_can( 'manage_options' ) ) {
 		return;
 	}
 
-	// Check user meta to see if this user has seen this notice before.
-	$current_user_id = get_current_user_id();
-	$dismissed = get_user_meta( $current_user_id, 'pantheon_max_age_updated_notice', true );
-	if ( $dismissed ) {
+	// Check if the max-age was updated.
+	$max_age_updated = get_option( 'pantheon_max_age_updated', false );
+	if ( ! $max_age_updated || ( isset( $pantheon_cache['default_ttl'] ) && 600 !== get_current_max_age() ) ) {
 		return;
 	}
 
-	// Check if the max-age was updated.
-	$max_age_updated = get_option( 'pantheon_max_age_updated', false );
-	if ( ! $max_age_updated ) {
+	// Check user meta to see if this user has seen this notice before.
+	$dismissed = get_user_meta( $current_user_id, 'pantheon_max_age_updated_notice', true );
+	if ( $dismissed ) {
 		return;
 	}
 
