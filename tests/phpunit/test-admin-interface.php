@@ -50,7 +50,7 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 		$test_results = test_cache_max_age();
 		$this->assertEquals( 'recommended', $test_results['status'] );
 		$this->assertEquals( 'red',$test_results['badge']['color'] );
-		$this->assertStringContainsString( '300 seconds', $test_results['description'] );
+		$this->assertStringContainsString( '5 mins', $test_results['description'] );
 		$this->assertStringContainsString( 'We recommend increasing to 1 week', $test_results['description'] );
 	}
 
