@@ -5,7 +5,7 @@
 
 	tr.cache-default-max-age {
 		display: block;
-		padding: 10px;
+		padding: $padding;
 		background: $white;
 		color: $charcoal;
 		box-shadow: $shadow;
@@ -15,17 +15,17 @@
 		}
 
 		.pantheon-cache-default-max-age {
-			padding: 0 10px 10px 0;
+			padding: 0 $padding $padding 0;
 
 			i {
-				margin-right: 5px;
+				margin-right: $padding;
 				line-height: 1.0em;
 			}
 
 			&-info-bar {
 				background: $blue;
 				color: $white;
-				padding: 5px;
+				padding: $padding;
 				text-align: left;
 				display: block;
 				width: 100%;
