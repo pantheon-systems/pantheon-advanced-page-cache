@@ -38,6 +38,7 @@ function bootstrap() {
 	add_action( 'admin_notices', __NAMESPACE__ . '\\max_age_updated_admin_notice' );
 	add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\\enqueue_admin_assets' );
 	add_filter( 'pantheon_cache_default_ttl_field_before_html', __NAMESPACE__ . '\\add_max_age_setting_header' );
+	add_filter( 'pantheon_cache_default_ttl_field_after_html', __NAMESPACE__ . '\\add_max_age_setting_description' );
 }
 
 /**
@@ -66,6 +67,33 @@ function add_max_age_setting_header() {
 		<span class="pantheon-cache-default-max-age-info-bar"><i class="dashicons dashicons-info"></i><?php esc_html_e( 'Boost site speed with a higher GCDN cache max-age.', 'pantheon-advanced-page-cache' ); ?></span>
 	<?php
 	return ob_get_clean();
+}
+
+/**
+ * Add a description to the max-age setting field.
+ */
+function add_max_age_setting_description() {
+	$filtered = has_filter( 'pantheon_cache_default_max_age' );
+	// translators: %s is the humanized max-age default.
+	$recommended_message = sprintf( __( 'Recommended setting: %s.', 'pantheon-advanced-page-cache' ), '<strong>' . humanized_max_age( true ) . '</strong>' );
+	$range_message = $filtered ? sprintf(
+		// translators: %s is the humanized max-age.
+		__( 'This value has been hardcoded to %s via a filter.', 'pantheon-advanced-page-cache' ),
+		'<strong>' . humanized_max_age() . '</strong>'
+	 ) : __( 'Value range: minimum of <strong>1 week</strong> to a maximum of <strong>1 year</strong>.', 'pantheon-advanced-page-cache' );
+
+	ob_start();
+	?>
+		<p class="pantheon-cache-default-max-age-description">
+			<?php
+			// translators: %s is a link to the Pantheon GCDN configuration page.
+			printf( '%1$s %2$s', $recommended_message, $range_message );
+			?>
+		</p>
+	</div>
+	<?php
+	return ob_get_clean();
+
 }
 
 /**
