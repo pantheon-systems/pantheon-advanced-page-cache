@@ -284,6 +284,7 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 		$notice = ob_get_clean();
 
 		$notice_shown = get_user_meta( 1, 'pantheon_max_age_global_warning_notice', true );
+		$this->assertStringContainsString( 'notice-error', $notice );
 		$this->assertStringContainsString( 'Your site\'s cache max-age is set below the recommendation (1 week).' , $notice );
 		$this->assertEquals( 1, $notice_shown );
 	}
