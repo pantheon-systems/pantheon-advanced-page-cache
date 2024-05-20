@@ -122,10 +122,7 @@ function admin_notice_maybe_recommend_higher_max_age() {
 	$max_age_rank = max_age_compare();
 	$current_max_age = get_current_max_age();
 
-	if (
-		$max_age_rank === 0 ||
-		$current_max_age === 600
-	) {
+	if ( $max_age_rank === 0 || $current_max_age === 600 ) {
 		return;
 	}
 
