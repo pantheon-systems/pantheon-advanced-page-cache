@@ -37,8 +37,8 @@ function bootstrap() {
 	add_action( 'admin_init', __NAMESPACE__ . '\\set_max_age_to_default' );
 	add_action( 'admin_notices', __NAMESPACE__ . '\\max_age_updated_admin_notice' );
 	add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\\enqueue_admin_assets' );
-	add_filter( 'pantheon_cache_default_ttl_field_before_html', __NAMESPACE__ . '\\add_max_age_setting_header' );
-	add_filter( 'pantheon_cache_default_ttl_field_after_html', __NAMESPACE__ . '\\add_max_age_setting_description' );
+	add_filter( 'pantheon_cache_max_age_field_before_html', __NAMESPACE__ . '\\add_max_age_setting_header' );
+	add_filter( 'pantheon_cache_max_age_field_after_html', __NAMESPACE__ . '\\add_max_age_setting_description' );
 }
 
 /**
