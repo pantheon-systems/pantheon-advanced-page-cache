@@ -124,7 +124,6 @@ function admin_notice_maybe_recommend_higher_max_age() {
 
 	if (
 		$max_age_rank === 0 ||
-		$current_max_age >= WEEK_IN_SECONDS ||
 		$current_max_age === 600
 	) {
 		return;
