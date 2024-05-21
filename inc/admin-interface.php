@@ -94,7 +94,7 @@ function add_max_age_setting_description() {
 	) : __( 'Value range: minimum of <strong>1 week</strong> to a maximum of <strong>1 year</strong>.', 'pantheon-advanced-page-cache' );
 	$pantheon_cache = get_option( 'pantheon-cache', [] );
 	$custom_ttl = isset( $pantheon_cache['default_ttl'] ) && ! array_key_exists( $pantheon_cache['default_ttl'], max_age_options() );
-	$range_message .= $custom_ttl ? '<br />' . __( '<strong>Warning:</strong>The current max age is not one of the recommended values. If this is not intentional, you should remove this custom value and save the settings, then select one of the options from the dropdown.', 'pantheon-advanced-page-cache' ) : '';
+	$range_message .= $custom_ttl && ! $filtered ? '<br />' . __( '<strong>Warning:</strong>The current max age is not one of the recommended values. If this is not intentional, you should remove this custom value and save the settings, then select one of the options from the dropdown.', 'pantheon-advanced-page-cache' ) : '';
 
 	ob_start();
 	?>
@@ -129,6 +129,11 @@ function update_default_ttl_input( $default_input ) {
 	// If the default_ttl value is anything other than the default options, render the old input.
 	if ( $filtered || $custom ) {
 		$output = '<p><strong>Custom:</strong> ' . $default_input . '</p>';
+	}
+
+	// If the max age has been filtered, end here.
+	if ( $filtered ) {
+		return $output;
 	}
 
 	$input_field = '<select name="' . $slug . '[default_ttl]">';
