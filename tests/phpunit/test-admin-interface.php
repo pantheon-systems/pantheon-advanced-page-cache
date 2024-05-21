@@ -309,4 +309,20 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertStringContainsString( 'Your site\'s cache max age is set below the recommendation (1 week).' , $notice );
 		$this->assertEquals( 1, $notice_shown );
 	}
+
+	/**
+	 * Test the max age setting description.
+	 */
+	public function test_add_max_age_setting_description() {
+		// Establish the baseline. This isn't really testing anything since this text is basically hardcoded.
+		$output = add_max_age_setting_description();
+		$this->assertStringContainsString( 'Value range: minimum of <strong>1 week</strong> to a maximum of <strong>1 year</strong>' , $output );
+
+		// Filter the max age and test again.
+		add_filter( 'pantheon_cache_default_max_age', function() {
+			return 3 * DAY_IN_SECONDS;
+		} );
+		$output = add_max_age_setting_description();
+		$this->assertStringContainsString( 'This value has been hardcoded to <strong>3 days</strong> via a filter', $output );
+	}
 }
