@@ -92,6 +92,9 @@ function add_max_age_setting_description() {
 		__( 'This value has been hardcoded to %s via a filter.', 'pantheon-advanced-page-cache' ),
 		'<strong>' . humanized_max_age() . '</strong>'
 	) : __( 'Value range: minimum of <strong>1 week</strong> to a maximum of <strong>1 year</strong>.', 'pantheon-advanced-page-cache' );
+	$pantheon_cache = get_option( 'pantheon-cache', [] );
+	$custom_ttl = isset( $pantheon_cache['default_ttl'] ) && ! array_key_exists( $pantheon_cache['default_ttl'], max_age_options() );
+	$range_message .= $custom_ttl ? '<br />' . __( '<strong>Warning:</strong>The current max age is not one of the recommended values. If this is not intentional, you should remove this custom value and save the settings, then select one of the options from the dropdown.', 'pantheon-advanced-page-cache' ) : '';
 
 	ob_start();
 	?>
