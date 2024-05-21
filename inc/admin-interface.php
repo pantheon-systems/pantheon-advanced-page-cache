@@ -131,7 +131,7 @@ function update_default_ttl_input( $default_input ) {
 		$output = '<p><strong>Custom:</strong> ' . $default_input . '</p>';
 	}
 
-	// If the max age has been filtered, end here.
+	// If the max age has been filtered, return here.
 	if ( $filtered ) {
 		return $output;
 	}
