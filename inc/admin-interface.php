@@ -64,6 +64,9 @@ function enqueue_admin_assets() {
 
 /**
  * Add a header to the max-age setting field.
+ *
+ * @since 2.0.0
+ * @return string
  */
 function add_max_age_setting_header() {
 	ob_start();
@@ -82,6 +85,9 @@ function add_max_age_setting_header() {
 
 /**
  * Add a description to the max-age setting field.
+ *
+ * @since 2.0.0
+ * @return string
  */
 function add_max_age_setting_description() {
 	$filtered = has_filter( 'pantheon_cache_default_max_age' );
@@ -152,6 +158,7 @@ function update_default_ttl_input( $default_input ) {
 /**
  * Filter the allowed HTML for the max-age input field.
  *
+ * @since 2.0.0
  * @param array $allowed_html The allowed HTML.
  * @return array
  */
