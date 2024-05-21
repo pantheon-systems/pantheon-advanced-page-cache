@@ -126,17 +126,19 @@ function update_default_ttl_input( $default_input ) {
 	$custom = ! array_key_exists( $default_ttl, $options ) && ! $filtered;
 	$output = '';
 
-	// If the default_ttl value is anything other than the default options, render the old input.
-	if ( $filtered || $custom ) {
-		$output = '<p><strong>Custom:</strong> ' . $default_input . '</p>';
-	}
-
 	// If the max age has been filtered, return here.
 	if ( $filtered ) {
+		$output = '<p><strong>' . __( 'Custom: ', 'pantheon-advanced-page-cache' ) . '</strong>' . $default_input . '</p>';
 		return $output;
 	}
 
 	$input_field = '<select name="' . $slug . '[default_ttl]">';
+
+	// If the max age is custom, add the option to the select field.
+	if ( $custom ) {
+		$input_field .= '<option value="' . $default_ttl . '" selected>' . sprintf( __( 'Custom (%s)', 'pantheon-advanced-page-cache' ), humanized_max_age() ) . '</option>';
+	}
+
 	foreach ( $options as $value => $label ) {
 		$selected = selected( $value, $default_ttl, false );
 		$input_field .= '<option value="' . $value . '" ' . $selected . '>' . $label . '</option>';
