@@ -106,20 +106,16 @@ function add_max_age_setting_description() {
  * @return int
  */
 function update_default_ttl_input( $default_input ) {
-	if ( has_filter( 'pantheon_cache_default_max_age' ) ) {
-		return $default_input;
-	}
-
 	$slug = 'pantheon-cache';
 	$pantheon_cache = get_option( $slug, [] );
 	$default_ttl = isset( $pantheon_cache['default_ttl'] ) ? $pantheon_cache['default_ttl'] : WEEK_IN_SECONDS;
+	$options = max_age_options();
 
-	// Create a dropdown with options 1 week, 1 month and 1 year.
-	$options = [
-		WEEK_IN_SECONDS => esc_html__( 'Recommended (1 week)', 'pantheon-cache' ),
-		MONTH_IN_SECONDS => esc_html__( 'Extended (1 month)', 'pantheon-cache' ),
-		YEAR_IN_SECONDS => esc_html__( 'Perpetual (1 year)', 'pantheon-cache' ),
-	];
+	// If the default_ttl value is anything other than the default options, render the old input.
+	if ( has_filter( 'pantheon_cache_default_max_age' ) || ! array_key_exists( $default_ttl, $options ) ) {
+		return $default_input;
+	}
+
 	$input_field = '<select name="' . $slug . '[default_ttl]">';
 	foreach ( $options as $value => $label ) {
 		$selected = selected( $value, $default_ttl, false );
