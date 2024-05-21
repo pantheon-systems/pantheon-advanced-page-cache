@@ -387,4 +387,36 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 		}
 		return ob_get_clean();
 	}
+
+	/**
+	 * Test the max_age_options method.
+	 */
+	public function test_max_age_options() {
+		$options = max_age_options();
+		foreach( $this->max_age_options_mock() as $max_age => $expected ) {
+			$this->assertArrayHasKey( $max_age, $options );
+			$this->assertEquals( $expected, $options[ $max_age ] );
+		}
+
+		// Test the filter.
+		add_filter( 'pantheon_apc_max_age_options', function() {
+			return [ 3 * DAY_IN_SECONDS => 'foo (bar)' ];
+		} );
+		$options = max_age_options();
+		$this->assertArrayHasKey( 3 * DAY_IN_SECONDS, $options );
+		$this->assertEquals( 'foo (bar)', $options[ 3 * DAY_IN_SECONDS ] );
+	}
+
+	/**
+	 * Option mock for test_max_age_options.
+	 *
+	 * @return array
+	 */
+	public function max_age_options_mock() {
+		return [
+			WEEK_IN_SECONDS => 'Recommended (1 week)',
+			MONTH_IN_SECONDS => 'Extended (1 month)',
+			YEAR_IN_SECONDS => 'Perpetual (1 year)',
+		];
+	}
 }
