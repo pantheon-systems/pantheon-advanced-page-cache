@@ -23,7 +23,6 @@ function bootstrap() {
 	if ( defined( 'PANTHEON_MU_PLUGIN_VERSION' ) ) {
 		// Only do things here if we've got the MU plugin and it's > 1.4.0.
 		if ( version_compare( PANTHEON_MU_PLUGIN_VERSION, '1.4.0', '>' ) ) {
-			// Do stuff, e.g. add_action().
 			add_action( 'admin_notices', __NAMESPACE__ . '\\admin_notice_maybe_recommend_higher_max_age' );
 		} else {
 			add_action( 'admin_notices', __NAMESPACE__ . '\\admin_notice_old_mu_plugin' );
