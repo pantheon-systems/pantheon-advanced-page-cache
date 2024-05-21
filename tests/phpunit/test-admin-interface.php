@@ -243,7 +243,7 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 	/**
 	 * Test the admin notice for the max age being updated.
 	 */
-	function test_max_age_updated_admin_notice() {
+	public function test_max_age_updated_admin_notice() {
 		// Switch to admin.
 		wp_set_current_user( 1 );
 
@@ -278,7 +278,7 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 	/**
 	 * Test that the user meta for the global admin notice is created.
 	 */
-	function test_low_max_age_admin_notice_user_meta() {
+	public function test_low_max_age_admin_notice_user_meta() {
 		// Switch to admin.
 		wp_set_current_user( 1 );
 		delete_user_meta( 1, 'pantheon_max_age_global_warning_notice' );
@@ -295,7 +295,7 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 	/**
 	 * Test that the user meta for the global admin notice is created.
 	 */
-	function test_low_max_age_admin_notice_user_meta_warning() {
+	public function test_low_max_age_admin_notice_user_meta_warning() {
 		// Switch to admin.
 		wp_set_current_user( 1 );
 		delete_user_meta( 1, 'pantheon_max_age_global_warning_notice' );
