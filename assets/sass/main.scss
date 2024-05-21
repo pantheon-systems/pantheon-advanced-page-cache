@@ -17,6 +17,10 @@
 		.pantheon-cache-default-max-age {
 			padding: 0 $padding $padding 0;
 
+			h3 {
+				margin-top: 0.5em;
+			}
+
 			i {
 				margin-right: $padding;
 				line-height: 1.0em;
@@ -29,6 +33,7 @@
 				text-align: left;
 				display: block;
 				width: 100%;
+				margin-bottom: 1em;
 
 				a {
 					color: $white;
