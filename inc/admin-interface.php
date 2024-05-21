@@ -131,6 +131,28 @@ function update_default_ttl_input( $default_input ) {
 }
 
 /**
+ * Get the default max age options. Default values are 1 week, 1 month, 1 year.
+ *
+ * @since 2.0.0
+ * @return array
+ */
+function max_age_options() {
+	$options = [
+		WEEK_IN_SECONDS => esc_html__( 'Recommended (1 week)', 'pantheon-cache' ),
+		MONTH_IN_SECONDS => esc_html__( 'Extended (1 month)', 'pantheon-cache' ),
+		YEAR_IN_SECONDS => esc_html__( 'Perpetual (1 year)', 'pantheon-cache' ),
+	];
+
+	/**
+	 * Allow the default TTL options to be filtered.
+	 *
+	 * @param array $options The default TTL options (time value => display text).
+	 * @return array
+	 */
+	return apply_filters( 'pantheon_apc_max_age_options', $options );
+}
+
+/**
  * Display an admin notice if the Pantheon MU plugin was not found.
  *
  * @since 2.0.0
