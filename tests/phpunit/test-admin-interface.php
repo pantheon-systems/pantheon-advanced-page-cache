@@ -79,7 +79,7 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertEquals( 'good', $test_results['status'] );
 		$this->assertEquals( 'blue',$test_results['badge']['color'] );
 		$this->assertStringContainsString( '1 week', $test_results['label'] );
-		$this->assertStringContainsString( 'Pantheon GCDN Cache Max-Age set to 1 week', $test_results['label'] );
+		$this->assertStringContainsString( 'Pantheon GCDN Cache Max Age set to 1 week', $test_results['label'] );
 	}
 
 	/**
@@ -270,7 +270,7 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 		$notice = ob_get_clean();
 
 		// The notice that we're catching should be the one that the max-age was updated.
-		$this->assertStringContainsString( 'The Pantheon GCDN cache max-age has been updated. The previous value was 10 minutes. The new value is 1 week.', $notice );
+		$this->assertStringContainsString( 'The Pantheon GCDN cache max age has been updated. The previous value was 10 minutes. The new value is 1 week.', $notice );
 		// The user meta should have been updated in the process.
 		$this->assertEquals( 1, get_user_meta( $current_user_id, 'pantheon_max_age_updated_notice', true ) );
 	}
@@ -288,7 +288,7 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 
 		$notice_shown = get_user_meta( 1, 'pantheon_max_age_global_warning_notice', true );
 		$this->assertStringContainsString( 'notice-error', $notice );
-		$this->assertStringContainsString( 'Your site\'s cache max-age is set below the recommendation (1 week).' , $notice );
+		$this->assertStringContainsString( 'Your site\'s cache max age is set below the recommendation (1 week).' , $notice );
 		$this->assertEquals( 1, $notice_shown );
 	}
 
@@ -306,7 +306,7 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 
 		$notice_shown = get_user_meta( 1, 'pantheon_max_age_global_warning_notice', true );
 		$this->assertStringContainsString( 'notice-warning', $notice );
-		$this->assertStringContainsString( 'Your site\'s cache max-age is set below the recommendation (1 week).' , $notice );
+		$this->assertStringContainsString( 'Your site\'s cache max age is set below the recommendation (1 week).' , $notice );
 		$this->assertEquals( 1, $notice_shown );
 	}
 }
