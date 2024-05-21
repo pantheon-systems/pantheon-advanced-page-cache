@@ -27,6 +27,8 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 		delete_option( 'pantheon-cache' );
 		delete_option( 'pantheon_max_age_updated' );
 		delete_transient( 'papc_max_age_compare' );
+		remove_all_filters( 'pantheon_cache_default_max_age' );
+		remove_all_filters( 'pantheon_apc_disable_admin_notices' );
 	}
 
 	/**
