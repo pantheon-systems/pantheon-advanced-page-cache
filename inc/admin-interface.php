@@ -66,7 +66,7 @@ function add_max_age_setting_header() {
 	ob_start();
 	?>
 	<div class="pantheon-cache-default-max-age">
-		<span class="pantheon-cache-default-max-age-info-bar"><i class="dashicons dashicons-info"></i><?php esc_html_e( 'Boost site speed with a higher GCDN cache max-age.', 'pantheon-advanced-page-cache' ); ?></span>
+		<span class="pantheon-cache-default-max-age-info-bar"><i class="dashicons dashicons-info"></i><?php echo wp_kses_post( 'Boost site speed with a higher GCDN cache max-age.', 'pantheon-advanced-page-cache' ); ?></span>
 	<?php
 	return ob_get_clean();
 }
