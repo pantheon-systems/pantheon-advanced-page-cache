@@ -29,6 +29,16 @@
 				text-align: left;
 				display: block;
 				width: 100%;
+
+				a {
+					color: $white;
+					text-decoration: underline;
+				}
+
+				a:hover, a:active {
+					color: $white;
+					text-decoration: none;
+				}
 			}
 
 			&-description {
