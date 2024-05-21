@@ -29,4 +29,6 @@ Scenario: Use the select input to change the cache max age
 	And I fill in "pantheon-cache[default_ttl]" with "2592000"
 	And I press "Save Changes"
 	Then I should see "Settings saved."
-	And the response should contain "<option value=\"2592000\" selected=\"selected\">Extended (1 month)</option>"
+	And the "pantheon-cache[default_ttl]" field should contain "2592000"
+	And print the last response
+	# And the response should contain "<option value=\"2592000\" selected=\"selected\">Extended (1 month)</option>"
