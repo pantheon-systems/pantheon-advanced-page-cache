@@ -25,7 +25,7 @@
 			&-info-bar {
 				background: $blue;
 				color: $white;
-				padding: $padding;
+				padding: $padding 0 $padding $padding;
 				text-align: left;
 				display: block;
 				width: 100%;
