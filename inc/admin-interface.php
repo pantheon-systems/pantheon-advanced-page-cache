@@ -86,7 +86,7 @@ function add_max_age_setting_header() {
 function add_max_age_setting_description() {
 	$filtered = has_filter( 'pantheon_cache_default_max_age' );
 	// translators: %s is the humanized max-age default.
-	$recommended_message = sprintf( __( 'Recommended setting: %s.', 'pantheon-advanced-page-cache' ), '<strong>' . humanized_max_age( true ) . '</strong>' );
+	$recommended_message = ! $filtered ? sprintf( __( 'Recommended setting: %s.', 'pantheon-advanced-page-cache' ), '<strong>' . humanized_max_age( true ) . '</strong>' ) : '';
 	$filtered_message = $filtered ? sprintf(
 		// translators: %s is the humanized max-age.
 		__( 'This value has been hardcoded to %s via a filter.', 'pantheon-advanced-page-cache' ),
