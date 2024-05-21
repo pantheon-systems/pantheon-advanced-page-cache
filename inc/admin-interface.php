@@ -42,6 +42,7 @@ function bootstrap() {
 	add_filter( 'pantheon_cache_max_age_field_before_html', __NAMESPACE__ . '\\add_max_age_setting_header' );
 	add_filter( 'pantheon_cache_max_age_field_after_html', __NAMESPACE__ . '\\add_max_age_setting_description' );
 	add_filter( 'pantheon_cache_max_age_input', __NAMESPACE__ . '\\update_default_ttl_input' );
+	add_filter( 'pantheon_cache_max_age_input_allowed_html', __NAMESPACE__ . '\\max_age_input_allowed_html' );
 }
 
 /**
@@ -122,10 +123,12 @@ function update_default_ttl_input( $default_input ) {
 	$pantheon_cache = get_option( $slug, [] );
 	$default_ttl = isset( $pantheon_cache['default_ttl'] ) && $pantheon_cache['default_ttl'] !== 0 ? $pantheon_cache['default_ttl'] : WEEK_IN_SECONDS;
 	$options = max_age_options();
+	$custom = ! array_key_exists( $default_ttl, $options );
+	$output = '';
 
 	// If the default_ttl value is anything other than the default options, render the old input.
-	if ( has_filter( 'pantheon_cache_default_max_age' ) || ! array_key_exists( $default_ttl, $options ) ) {
-		return $default_input;
+	if ( has_filter( 'pantheon_cache_default_max_age' ) || $custom ) {
+		$output = '<p><strong>Custom:</strong> ' . $default_input . '</p>';
 	}
 
 	$input_field = '<select name="' . $slug . '[default_ttl]">';
@@ -134,8 +137,20 @@ function update_default_ttl_input( $default_input ) {
 		$input_field .= '<option value="' . $value . '" ' . $selected . '>' . $label . '</option>';
 	}
 	$input_field .= '</select>';
+	$output .= $input_field;
+	return $output;
+}
 
-	return $input_field;
+/**
+ * Filter the allowed HTML for the max-age input field.
+ *
+ * @param array $allowed_html The allowed HTML.
+ * @return array
+ */
+function max_age_input_allowed_html( $allowed_html ) {
+	$allowed_html['p'] = [];
+	$allowed_html['strong'] = [];
+	return $allowed_html;
 }
 
 /**
