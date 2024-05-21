@@ -46,6 +46,13 @@
 				}
 			}
 
+			select {
+				background-color: $white;
+				color: $charcoal;
+				border: 1px solid $gray;
+				border-radius: 0;
+			}
+
 			&-description {
 				color: $gray;
 				margin-bottom: 0;
