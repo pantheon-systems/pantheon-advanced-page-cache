@@ -136,6 +136,7 @@ function update_default_ttl_input( $default_input ) {
 
 	// If the max age is custom, add the option to the select field.
 	if ( $custom ) {
+		// translators: %s is the humanized max-age.
 		$input_field .= '<option value="' . $default_ttl . '" selected>' . sprintf( __( 'Custom (%s)', 'pantheon-advanced-page-cache' ), humanized_max_age() ) . '</option>';
 	}
 
