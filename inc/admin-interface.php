@@ -249,7 +249,7 @@ function admin_notice_maybe_recommend_higher_max_age() {
 	$current_screen = get_current_screen();
 	$global_warning_shown = current_user_can( 'manage_options' ) ? get_user_meta( get_current_user_id(), 'pantheon_max_age_global_warning_notice', true ) : true;
 
-	if ( apply_filters( 'pantheon_apc_disable_admin_notices', false, __FUNCTION__ ) || $global_warning_shown ) {
+	if ( apply_filters( 'pantheon_apc_disable_admin_notices', false, __FUNCTION__ ) ) {
 		return;
 	}
 
@@ -280,7 +280,7 @@ function admin_notice_maybe_recommend_higher_max_age() {
 	}
 
 	// Global notice on all pages _except_ the Pantheon cache settings page.
-	if ( ! isset( $current_screen->id ) || 'settings_page_pantheon-cache' !== $current_screen->id ) {
+	if ( ! $global_warning_shown && ( ! isset( $current_screen->id ) || 'settings_page_pantheon-cache' !== $current_screen->id ) ) {
 		$message = sprintf(
 			// translators: %s is a link to the Pantheon GCDN configuration page.
 			__( 'Your site\'s cache max age is set below the recommendation (1 week). Visit the <a href="%1$s">Pantheon GCDN configuration page</a> to update the setting.%2$s' ),
