@@ -316,7 +316,7 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 	public function test_add_max_age_setting_description() {
 		// Establish the baseline. This isn't really testing anything since this text is basically hardcoded.
 		$output = add_max_age_setting_description();
-		$this->assertStringContainsString( 'Value range: minimum of <strong>1 week</strong> to a maximum of <strong>1 year</strong>' , $output );
+		$this->assertStringContainsString( 'Recommended setting: <strong>1 week</strong>' , $output );
 
 		// Filter the max age and test again.
 		add_filter( 'pantheon_cache_default_max_age', function() {
@@ -353,7 +353,7 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function update_default_ttl_input_provider() {
 		return [
-			[ 3 * DAY_IN_SECONDS, 'input type="text"' ],
+			[ 3 * DAY_IN_SECONDS, 'Custom (3 days)' ],
 			[ WEEK_IN_SECONDS, 'select' ],
 			[ 'filter', 'disabled' ],
 		];
