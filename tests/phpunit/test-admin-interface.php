@@ -325,4 +325,66 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 		$output = add_max_age_setting_description();
 		$this->assertStringContainsString( 'This value has been hardcoded to <strong>3 days</strong> via a filter', $output );
 	}
+
+	/**
+	 * Test the update_default_ttl_input function. Check the input type if the max age has been filtered.
+	 *
+	 * @dataProvider update_default_ttl_input_provider
+	 */
+	public function test_update_default_ttl_input( $max_age, $expected ) {
+		if ( $max_age === 'filter' ) {
+			// Filter the max age and test again.
+			add_filter( 'pantheon_cache_default_max_age', function() {
+				return 3 * DAY_IN_SECONDS;
+			} );
+		} else {
+			update_option( 'pantheon-cache', [ 'default_ttl' => $max_age ] );
+		}
+
+		$default_ttl_field = $this->default_ttl_field_mock();
+		$output = update_default_ttl_input( $default_ttl_field );
+		$this->assertStringContainsString( $expected , $output );
+	}
+
+	/**
+	 * Data provider for test_update_default_ttl_input.
+	 *
+	 * @return array
+	 */
+	public function update_default_ttl_input_provider() {
+		return [
+			[ 3 * DAY_IN_SECONDS, 'input type="text"' ],
+			[ WEEK_IN_SECONDS, 'select' ],
+			[ 'filter', 'disabled' ],
+		];
+	}
+
+	/**
+	 * Add the HTML for the default max-age field.
+	 *
+	 * Copy pasta from pantheon-mu-plugin with output buffering.
+	 *
+	 * @return string
+	 */
+	private function default_ttl_field_mock() {
+		$options = get_option( 'pantheon-cache' );
+		ob_start();
+		$disabled = ( has_filter( 'pantheon_cache_default_max_age' ) ) ? ' disabled' : '';
+		echo wp_kses_post( apply_filters( 'pantheon_cache_max_age_field_before_html', '<div class="pantheon-cache-default-max-age">' ) );
+		echo '<h3>' . esc_html__( 'Page Cache Max Age', 'pantheon-cache' ) . '</h3>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<p>' . wp_kses_post( sprintf(
+			// translators: %s is a link to the Pantheon Advanced Page Cache plugin page.
+			__( 'When your site content is updated, <a href="%s">Pantheon Advanced Page Cache</a> clears page cache automatically. This setting determines how long a page will be stored in the Global Content Delivery Network (GCDN) cache before GCDN retrieves the content from WordPress again.', 'pantheon-cache' ),
+			'https://wordpress.org/plugins/pantheon-advanced-page-cache/'
+		) ) . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		$input_field = '<input type="text" name="pantheon-cache[default_ttl]" value="' . $options['default_ttl'] . '" size="7" ' . $disabled . ' /> ' . esc_html__( 'seconds', 'pantheon-cache' );
+		echo apply_filters( 'pantheon_cache_max_age_input', $input_field );
+		echo wp_kses_post( apply_filters( 'pantheon_cache_max_age_field_after_html', '</div>' ) );
+
+		// Display a message if the setting is disabled.
+		if ( $disabled ) {
+			echo '<p>' . esc_html__( 'This setting is disabled because the default max-age has been filtered to the current value.', 'pantheon-cache' ) . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
+		return ob_get_clean();
+	}
 }
