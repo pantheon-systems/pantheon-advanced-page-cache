@@ -110,7 +110,7 @@ function add_max_age_setting_description() {
 function update_default_ttl_input( $default_input ) {
 	$slug = 'pantheon-cache';
 	$pantheon_cache = get_option( $slug, [] );
-	$default_ttl = isset( $pantheon_cache['default_ttl'] ) ? $pantheon_cache['default_ttl'] : WEEK_IN_SECONDS;
+	$default_ttl = isset( $pantheon_cache['default_ttl'] ) && $pantheon_cache['default_ttl'] !== 0 ? $pantheon_cache['default_ttl'] : WEEK_IN_SECONDS;
 	$options = max_age_options();
 
 	// If the default_ttl value is anything other than the default options, render the old input.
