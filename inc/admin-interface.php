@@ -66,7 +66,7 @@ function add_max_age_setting_header() {
 	ob_start();
 	?>
 	<div class="pantheon-cache-default-max-age">
-		<span class="pantheon-cache-default-max-age-info-bar"><i class="dashicons dashicons-info"></i><?php echo wp_kses_post( 'Boost site speed with a higher GCDN cache max-age.', 'pantheon-advanced-page-cache' ); ?></span>
+		<span class="pantheon-cache-default-max-age-info-bar"><i class="dashicons dashicons-info"></i><?php echo wp_kses_post( 'Boost site speed with a higher GCDN cache max age.', 'pantheon-advanced-page-cache' ); ?></span>
 	<?php
 	return ob_get_clean();
 }
@@ -245,7 +245,7 @@ function admin_notice_maybe_recommend_higher_max_age() {
 		$very_low = $max_age_rank > 3 ? __( 'This is a very low value and may not be optimal for your site.', 'pantheon-advanced-page-cache' ) : '';
 		$message = sprintf(
 			// translators: %1$s is the current max-age, %2$d is the current max-age in seconds, %3$s is a message that displays if the value is very low, %44d is the recommended max age in seconds, %5$s is the humanized recommended max age, %6$s is debug information that is written to the HTML DOM but not displayed.
-			__( 'The cache max-age is currently set to %1$s. %2$s Consider increasing the cache max-age to at least %3$s.%4$s', 'pantheon-advanced-page-cache' ),
+			__( 'The cache max age is currently set to %1$s. %2$s Consider increasing the cache max age to at least %3$s.%4$s', 'pantheon-advanced-page-cache' ),
 			humanized_max_age(),
 			$very_low,
 			humanized_max_age( true ),
@@ -257,7 +257,7 @@ function admin_notice_maybe_recommend_higher_max_age() {
 	if ( ! isset( $current_screen->id ) || 'settings_page_pantheon-cache' !== $current_screen->id ) {
 		$message = sprintf(
 			// translators: %s is a link to the Pantheon GCDN configuration page.
-			__( 'Your site\'s cache max-age is set below the recommendation (1 week). Visit the <a href="%1$s">Pantheon GCDN configuration page</a> to update the setting.%2$s' ),
+			__( 'Your site\'s cache max age is set below the recommendation (1 week). Visit the <a href="%1$s">Pantheon GCDN configuration page</a> to update the setting.%2$s' ),
 			admin_url( 'options-general.php?page=pantheon-cache' ),
 			sprintf( '<!-- Max Age Rank: %d -->', $max_age_rank )
 		);
@@ -387,7 +387,7 @@ function test_cache_max_age() {
 
 	if ( $current_max_age < $default_max_age ) {
 		$result = [
-			'label' => __( 'Pantheon GCDN Cache Max-Age', 'pantheon-advanced-page-cache' ),
+			'label' => __( 'Pantheon GCDN Cache Max Age', 'pantheon-advanced-page-cache' ),
 			'status' => 'recommended',
 			'badge' => [
 				'label' => __( 'Performance', 'pantheon-advanced-page-cache' ),
@@ -409,7 +409,7 @@ function test_cache_max_age() {
 	$result = [
 		'label' => sprintf(
 			// translators: %s is the humanized time.
-			__( 'Pantheon GCDN Cache Max-Age set to %1$s', 'pantheon-advanced-page-cache' ),
+			__( 'Pantheon GCDN Cache Max Age set to %1$s', 'pantheon-advanced-page-cache' ),
 			$humanized_time,
 			$humanized_reccomended_time
 		),
@@ -422,7 +422,7 @@ function test_cache_max_age() {
 			'%1$s<br />%2$s',
 			sprintf(
 				// translators: %1$s is the current max-age, %2$s is the recommended max-age.
-				__( 'The Pantheon cache max-age is currently set to %1$s. Our recommendation is %2$s or more.', 'pantheon-advanced-page-cache' ),
+				__( 'The Pantheon cache max age is currently set to %1$s. Our recommendation is %2$s or more.', 'pantheon-advanced-page-cache' ),
 				$humanized_time,
 				$humanized_reccomended_time
 			),
@@ -523,7 +523,7 @@ function max_age_updated_admin_notice() {
 	wp_admin_notice(
 		sprintf(
 			// translators: %1$s is the humanized max-age, %2$d is a link to the Pantheon documentation.
-			__( 'The Pantheon GCDN cache max-age has been updated. The previous value was 10 minutes. The new value is %1$s. For more information, refer to the <a href="%2$s">Pantheon documentation</a>.', 'pantheon-advanced-page-cache' ),
+			__( 'The Pantheon GCDN cache max age has been updated. The previous value was 10 minutes. The new value is %1$s. For more information, refer to the <a href="%2$s">Pantheon documentation</a>.', 'pantheon-advanced-page-cache' ),
 			humanized_max_age(),
 			'https://docs.pantheon.io/guides/wordpress-configurations/wordpress-cache-plugin'
 		),
