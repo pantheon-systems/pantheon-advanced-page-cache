@@ -57,9 +57,9 @@ function enqueue_admin_assets() {
 		return;
 	}
 
+	// If WP_DEBUG is true, append a timestamp to the end of the path so we get a fresh copy of the css.
 	$debug = defined( 'WP_DEBUG' ) && WP_DEBUG ? '-' . time() : '';
-
-	wp_enqueue_style( 'papc-admin', plugin_dir_url( __DIR__ ) . 'assets/css/styles.css', [], '2.0.0' . $debug ); // If WP_DEBUG is true, append a timestamp to the end of the path so we get a fresh copy of the css.
+	wp_enqueue_style( 'papc-admin', plugin_dir_url( __DIR__ ) . 'assets/css/styles.css', [], '2.0.0' . $debug );
 }
 
 /**
