@@ -26,8 +26,7 @@ Scenario: Change the cache max age to 1 week
 
 Scenario: Use the select input to change the cache max age
 	When I go to "/wp-admin/options-general.php?page=pantheon-cache"
-	And I select "Extended (1 month)" from the ".pantheon-cache-default-max-age select" element
-	Then the ".pantheon-cache-default-max-age select" field should contain "Extended (1 month)"
-	When I press "Save Changes"
+	And I fill in "pantheon-cache[default_ttl]" with "2592000"
+	And I press "Save Changes"
 	Then I should see "Settings saved."
-	And I the "pantheon-cache[default_ttl]" field should contain "2592000"
+	And the response should contain "<option value=\"2592000\" selected=\"selected\">Extended (1 month)</option>"
