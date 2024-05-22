@@ -348,7 +348,7 @@ Different WordPress actions cause different surrogate keys to be purged, documen
 ## Surrogate Keys for taxonomy terms ##
 Setting surrogate keys for posts with large numbers of taxonomies (such as WooCommerce products with a large number of global attributes) can suffer from slower queries. Surrogate keys can be skipped for 'product' post types' taxonomy terms (or any other criteria you see fit) with the following filter:
 
-``` php
+```php
 function custom_should_add_terms($should_add_terms, $wp_query) {
     if ( $wp_query->is_singular( 'product' ) ) {
         return false;
@@ -357,6 +357,28 @@ function custom_should_add_terms($should_add_terms, $wp_query) {
 }
 add_filter('pantheon_should_add_terms', 'custom_should_add_terms', 10, 2);
 ```
+
+## Other Filters ##
+
+### `pantheon_apc_disable_admin_notices`
+Since 2.0.0, Pantheon Advanced Page Cache displays a number of admin notices about your current cache max age value. You can disable these notices with the `pantheon_apc_disable_admin_notices` filter.
+
+```php
+add_filter( 'pantheon_apc_disable_admin_notices', '__return_true' );
+```
+
+Alternately, the function callback is passed into the `pantheon_apc_disable_admin_notices` filter, allowing you to specify precisely _which_ notice to disable, for example:
+
+```php
+add_filter( 'pantheon_apc_disable_admin_notices', function( $disable_notices, $callback ) {
+    if ( $callback === '\\Pantheon_Advanced_Page_Cache\\Admin_Interface\\admin_notice_maybe_recommend_higher_max_age' ) {
+        return true;
+    }
+    return $disable_notices;
+}, 10, 2 );
+```
+
+The above example would disable _only_ the admin notice recommending a higher cache max age.
 
 ## Plugin Integrations ##
 
