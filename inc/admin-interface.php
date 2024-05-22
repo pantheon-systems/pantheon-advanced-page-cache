@@ -91,8 +91,10 @@ function add_max_age_setting_header() {
  */
 function add_max_age_setting_description() {
 	$filtered = has_filter( 'pantheon_cache_default_max_age' );
-	// translators: %s is the humanized max-age default.
-	$recommended_message = ! $filtered ? sprintf( __( 'Recommended setting: %s.', 'pantheon-advanced-page-cache' ), '<strong>' . humanized_max_age( true ) . '</strong>' ) : '';
+	$above_recommended_message = __( 'Your current cache maximum age is currently <strong>above</strong> the recommended value.', 'pantheon-advanced-page-cache' );
+	$below_recommended_message = __( 'Your current cache maximum age is currently <strong>below</strong> the recommended value.', 'pantheon-advanced-page-cache' );
+	$recommended_message = __( 'Your current cache maximum age is currently set to the recommended value.', 'pantheon-advanced-page-cache' );
+	$recommendation_message = get_current_max_age() > WEEK_IN_SECONDS ? $above_recommended_message : ( get_current_max_age() < WEEK_IN_SECONDS ? $below_recommended_message : $recommended_message );
 	$filtered_message = $filtered ? sprintf(
 		// translators: %s is the humanized max-age.
 		__( 'This value has been hardcoded to %s via a filter.', 'pantheon-advanced-page-cache' ),
@@ -106,8 +108,7 @@ function add_max_age_setting_description() {
 	?>
 		<p class="pantheon-cache-default-max-age-description">
 			<?php
-			// translators: %s is a link to the Pantheon GCDN configuration page.
-			printf( '%1$s %2$s', $recommended_message, $filtered_message ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			printf( '%1$s %2$s', $recommendation_message, $filtered_message ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			?>
 		</p>
 	</div>
