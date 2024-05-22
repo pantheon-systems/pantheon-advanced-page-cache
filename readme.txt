@@ -152,7 +152,7 @@ This will prevent the cache from being purged if the given post type is updated.
 
 = Setting the Cache Max Age with a filter =
 
-The cache max age setting is controlled by the [Pantheon Page Cache]() admin page. As of 2.0.0, there are three cache age options by default -- 1 week, 1 month, 1 year. Pantheon Advanced Page Cache automatically purges the cache of updated and related posts and pages, but you might want to override the cache max age value and set it programmatically. In this case, you can use the `pantheon_cache_default_max_age` filter added in [Pantheon MU plugin 1.4.0+](https://docs.pantheon.io/guides/wordpress-configurations/wordpress-cache-plugin#override-the-default-max-age). For example:
+The cache max age setting is controlled by the [Pantheon Page Cache](https://docs.pantheon.io/guides/wordpress-configurations/wordpress-cache-plugin) admin page. As of 2.0.0, there are three cache age options by default -- 1 week, 1 month, 1 year. Pantheon Advanced Page Cache automatically purges the cache of updated and related posts and pages, but you might want to override the cache max age value and set it programmatically. In this case, you can use the `pantheon_cache_default_max_age` filter added in [Pantheon MU plugin 1.4.0+](https://docs.pantheon.io/guides/wordpress-configurations/wordpress-cache-plugin#override-the-default-max-age). For example:
 
 	add_filter( 'pantheon_cache_default_max_age', function() {
 		return 10 * DAY_IN_SECONDS;
