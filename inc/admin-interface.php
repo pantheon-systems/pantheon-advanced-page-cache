@@ -91,9 +91,9 @@ function add_max_age_setting_header() {
  */
 function add_max_age_setting_description() {
 	$filtered = has_filter( 'pantheon_cache_default_max_age' );
-	$above_recommended_message = __( 'Your current cache maximum age is currently <strong>above</strong> the recommended value.', 'pantheon-advanced-page-cache' );
-	$below_recommended_message = __( 'Your current cache maximum age is currently <strong>below</strong> the recommended value.', 'pantheon-advanced-page-cache' );
-	$recommended_message = __( 'Your current cache maximum age is currently set to the recommended value.', 'pantheon-advanced-page-cache' );
+	$above_recommended_message = __( 'Your cache maximum age is currently <strong>above</strong> the recommended value.', 'pantheon-advanced-page-cache' );
+	$below_recommended_message = __( 'Your cache maximum age is currently <strong>below</strong> the recommended value.', 'pantheon-advanced-page-cache' );
+	$recommended_message = __( 'Your cache maximum age is currently set to the recommended value.', 'pantheon-advanced-page-cache' );
 	$recommendation_message = get_current_max_age() > WEEK_IN_SECONDS ? $above_recommended_message : ( get_current_max_age() < WEEK_IN_SECONDS ? $below_recommended_message : $recommended_message );
 	$filtered_message = $filtered ? sprintf(
 		// translators: %s is the humanized max-age.
@@ -102,7 +102,7 @@ function add_max_age_setting_description() {
 	) : '';
 	$pantheon_cache = get_option( 'pantheon-cache', [] );
 	$custom_ttl = isset( $pantheon_cache['default_ttl'] ) && ! array_key_exists( $pantheon_cache['default_ttl'], max_age_options() );
-	$filtered_message .= $custom_ttl && ! $filtered ? '<br />' . __( '<strong>Warning:</strong>The current max age is not one of the recommended values. If this is not intentional, you should remove this custom value and save the settings, then select one of the options from the dropdown.', 'pantheon-advanced-page-cache' ) : '';
+	$filtered_message .= $custom_ttl && ! $filtered ? '<br />' . __( '<strong>Warning:</strong>The cache max age is not one of the recommended values. If this is not intentional, you should remove this custom value and save the settings, then select one of the options from the dropdown.', 'pantheon-advanced-page-cache' ) : '';
 
 	ob_start();
 	?>
