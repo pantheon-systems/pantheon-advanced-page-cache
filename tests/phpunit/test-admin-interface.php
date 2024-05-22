@@ -312,18 +312,43 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 
 	/**
 	 * Test the max age setting description.
+	 *
+	 * @dataProvider add_max_age_setting_description_provider
 	 */
-	public function test_add_max_age_setting_description() {
-		// Establish the baseline. This isn't really testing anything since this text is basically hardcoded.
-		$output = add_max_age_setting_description();
-		$this->assertStringContainsString( 'Recommended setting: <strong>1 week</strong>' , $output );
+	public function test_add_max_age_setting_description( $max_age, $expected ) {
 
-		// Filter the max age and test again.
-		add_filter( 'pantheon_cache_default_max_age', function() {
-			return 3 * DAY_IN_SECONDS;
-		} );
+		if ( $max_age === 'filter-below' ) {
+			// Filter the max age and test again.
+			add_filter( 'pantheon_cache_default_max_age', function() {
+				return 3 * DAY_IN_SECONDS;
+			} );
+		} elseif ( $max_age === 'filter-above' ) {
+			// Filter the max age and test again.
+			add_filter( 'pantheon_cache_default_max_age', function() {
+				return 10 * DAY_IN_SECONDS;
+			} );
+		} else {
+			update_option( 'pantheon-cache', [ 'default_ttl' => $max_age ] );
+		}
+
 		$output = add_max_age_setting_description();
-		$this->assertStringContainsString( 'This value has been hardcoded to <strong>3 days</strong> via a filter', $output );
+		$this->assertStringContainsString( $expected , $output );
+	}
+
+	/**
+	 * Data provider for test_add_max_age_setting_description.
+	 *
+	 * @return array
+	 */
+	public function add_max_age_setting_description_provider() {
+		return [
+			[ 'filter-below', 'Your cache maximum age is currently <strong>below</strong> the recommended value. This value has been hardcoded to <strong>3 days</strong> via a filter.' ],
+			[ 'filter-above', 'Your cache maximum age is currently <strong>above</strong> the recommended value. This value has been hardcoded to <strong>1 week</strong> via a filter.' ],
+			[ 600, 'Your cache maximum age is currently <strong>below</strong> the recommended value. <br /><strong>Warning:</strong>The cache max age is not one of the recommended values.' ],
+			[ WEEK_IN_SECONDS, 'Your cache maximum age is currently set to the recommended value.' ],
+			[ MONTH_IN_SECONDS, 'Your cache maximum age is currently <strong>above</strong> the recommended value.' ],
+			[ YEAR_IN_SECONDS, 'Your cache maximum age is currently <strong>above</strong> the recommended value.' ],
+		];
 	}
 
 	/**
