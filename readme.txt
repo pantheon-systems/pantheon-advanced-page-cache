@@ -445,5 +445,7 @@ See [CONTRIBUTING.md](https://github.com/pantheon-systems/wp-saml-auth/blob/mast
 = 2.0.0 =
 This release requires a minimum WordPress version of 6.4.0. It uses Site Health checks and the `wp_admin_notices` function to alert users to the new cache max-age default settings and recommendations. The plugin will still function with earlier versions, but you will not get the benefit of the alerts and Site Health checks.
 
-= Latest =
+This version also automatically updates the cache max age (set in the [Pantheon Page Cache settings](https://docs.pantheon.io/guides/wordpress-configurations/wordpress-cache-plugin)) to the recommended value (1 week) if it was saved at the old default value (600 seconds). If the cache max age was set to any other value (or not set at all), it will not be changed. A one-time notice will be displayed in the admin interface to inform administrators of this change.
+
+= 1.3.0 =
 Note that the Pantheon Advanced Page Cache 1.3.0 release now prefixes keys on a WordPress Multisite (WPMS) with the blog ID. For users who already have this plugin installed on a WPMS, they will need to click the Clear Cache button on the settings page to generate the prefixed keys.
