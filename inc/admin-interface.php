@@ -90,19 +90,20 @@ function add_max_age_setting_header() {
  * @return string
  */
 function add_max_age_setting_description() {
-	$filtered = has_filter( 'pantheon_cache_default_max_age' );
+	$is_filtered = has_filter( 'pantheon_cache_default_max_age' );
 	$above_recommended_message = __( 'Your cache maximum age is currently <strong>above</strong> the recommended value.', 'pantheon-advanced-page-cache' );
 	$below_recommended_message = __( 'Your cache maximum age is currently <strong>below</strong> the recommended value.', 'pantheon-advanced-page-cache' );
 	$recommended_message = __( 'Your cache maximum age is currently set to the recommended value.', 'pantheon-advanced-page-cache' );
 	$recommendation_message = get_current_max_age() > WEEK_IN_SECONDS ? $above_recommended_message : ( get_current_max_age() < WEEK_IN_SECONDS ? $below_recommended_message : $recommended_message );
-	$filtered_message = $filtered ? sprintf(
+	$filtered_message = $is_filtered ? sprintf(
+
 		// translators: %s is the humanized max-age.
 		__( 'This value has been hardcoded to %s via a filter.', 'pantheon-advanced-page-cache' ),
 		'<strong>' . humanized_max_age() . '</strong>'
 	) : '';
 	$pantheon_cache = get_option( 'pantheon-cache', [] );
-	$custom_ttl = isset( $pantheon_cache['default_ttl'] ) && ! array_key_exists( $pantheon_cache['default_ttl'], max_age_options() );
-	$filtered_message .= $custom_ttl && ! $filtered ? '<br />' . __( '<strong>Warning:</strong>The cache max age is not one of the recommended values. If this is not intentional, you should remove this custom value and save the settings, then select one of the options from the dropdown.', 'pantheon-advanced-page-cache' ) : '';
+	$has_custom_ttl = isset( $pantheon_cache['default_ttl'] ) && ! array_key_exists( $pantheon_cache['default_ttl'], max_age_options() );
+	$filtered_message .= $has_custom_ttl && ! $is_filtered ? '<br />' . __( '<strong>Warning:</strong>The cache max age is not one of the recommended values. If this is not intentional, you should remove this custom value and save the settings, then select one of the options from the dropdown.', 'pantheon-advanced-page-cache' ) : '';
 
 	ob_start();
 	?>
@@ -129,12 +130,12 @@ function update_default_ttl_input( $default_input ) {
 	$pantheon_cache = get_option( $slug, [] );
 	$default_ttl = isset( $pantheon_cache['default_ttl'] ) && $pantheon_cache['default_ttl'] !== 0 ? $pantheon_cache['default_ttl'] : WEEK_IN_SECONDS;
 	$options = max_age_options();
-	$filtered = has_filter( 'pantheon_cache_default_max_age' );
-	$custom = ! array_key_exists( $default_ttl, $options ) && ! $filtered;
+	$is_filtered = has_filter( 'pantheon_cache_default_max_age' );
+	$has_custom_ttl = ! array_key_exists( $default_ttl, $options ) && ! $is_filtered;
 	$output = '';
 
 	// If the max age has been filtered, return here.
-	if ( $filtered ) {
+	if ( $is_filtered ) {
 		$output = '<p><strong>' . __( 'Custom: ', 'pantheon-advanced-page-cache' ) . '</strong>' . $default_input . '</p>';
 		return $output;
 	}
@@ -142,7 +143,7 @@ function update_default_ttl_input( $default_input ) {
 	$input_field = '<select name="' . $slug . '[default_ttl]">';
 
 	// If the max age is custom, add the option to the select field.
-	if ( $custom ) {
+	if ( $has_custom_ttl ) {
 		// translators: %s is the humanized max-age.
 		$input_field .= '<option value="' . $default_ttl . '" selected>' . sprintf( __( 'Custom (%s)', 'pantheon-advanced-page-cache' ), humanized_max_age() ) . '</option>';
 	}
