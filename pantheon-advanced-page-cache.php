@@ -7,7 +7,7 @@
  * Author URI: https://pantheon.io
  * Text Domain: pantheon-advanced-page-cache
  * Domain Path: /languages
- * Version: 2.0.0
+ * Version: 2.0.0-dev
  * Requires at least: 6.4
  * Tested up to: 6.5.3
  *
@@ -107,7 +107,7 @@ function pantheon_wp_prefix_surrogate_keys_with_blog_id( $keys ) {
  *
  * Expects that a bootstrap() function exists in the namespaced file.
  *
- * @since 2.0.0
+ * @since 2.0.0-dev
  * @return void
  */
 function pantheon_bootstrap_namespaces() {
