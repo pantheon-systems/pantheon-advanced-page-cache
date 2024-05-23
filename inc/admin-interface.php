@@ -96,7 +96,6 @@ function add_max_age_setting_description() {
 	$recommended_message = __( 'Your cache maximum age is currently set to the recommended value.', 'pantheon-advanced-page-cache' );
 	$recommendation_message = get_current_max_age() > WEEK_IN_SECONDS ? $above_recommended_message : ( get_current_max_age() < WEEK_IN_SECONDS ? $below_recommended_message : $recommended_message );
 	$filtered_message = $is_filtered ? sprintf(
-
 		// translators: %s is the humanized max-age.
 		__( 'This value has been hardcoded to %s via a filter.', 'pantheon-advanced-page-cache' ),
 		'<strong>' . humanized_max_age() . '</strong>'
