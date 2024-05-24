@@ -43,5 +43,3 @@ jobs:
         uses: codepunkt/npm-lockfile-changes@main
         with:
           token: ${{ github.token }}
-          updateComment: true
-          path: package-lock.json
