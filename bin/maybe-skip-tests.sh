@@ -30,7 +30,7 @@ should_run_tests=true
 
 is_ignored_file(){
     for ignore in "${ignored_paths[@]}"; do
-		if [[ "${1:-}" == "$ignore" ]]; then
+		if [[ "${1:-}" == *"$ignore"* ]]; then
 			return 0
 		fi
 	done
