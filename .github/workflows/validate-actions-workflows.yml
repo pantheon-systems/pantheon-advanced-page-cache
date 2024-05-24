@@ -1,0 +1,26 @@
+name: Validate GitHub Actions workflows
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+
+jobs:
+  validate-workflows:
+    name: Validate GitHub Actions workflows
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install action-validator with NPM
+        run: |
+          npm install -g @action-validator/core @action-validator/cli --save-dev
+          action-validator --help
+      - name: Validate workflows
+        run: |
+          # Loop over all the workflows in the .github/workflows directory.
+          for file in .github/workflows/*.yml; do
+            action-validator $file
+          done
+
