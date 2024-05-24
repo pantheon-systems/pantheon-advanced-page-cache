@@ -28,5 +28,10 @@ if ( ! defined( 'REST_TESTS_IMPOSSIBLY_HIGH_NUMBER' ) ) {
 	define( 'REST_TESTS_IMPOSSIBLY_HIGH_NUMBER', 99999999 );
 }
 
+// Include WP_Screen class definition if not already included
+if ( ! class_exists( 'WP_Screen' ) ) {
+	require_once $_tests_dir . '/includes/class-wp-screen.php';
+}
+
 require __DIR__ . '/class-pantheon-advanced-page-cache-testcase.php';
 require __DIR__ . '/pantheon-edge-functions.php';
