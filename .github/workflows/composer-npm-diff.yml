@@ -43,4 +43,3 @@ jobs:
         with:
           token: ${{ github.token }}
           updateComment: true
-          path: ${{ github.workspace }}/package-lock.json
