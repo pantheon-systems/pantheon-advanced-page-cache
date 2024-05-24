@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'composer.lock'
+      - 'package-lock.json'
 permissions:
   contents: write
   pull-requests: write
