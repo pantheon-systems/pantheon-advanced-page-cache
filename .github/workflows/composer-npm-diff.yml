@@ -1,8 +1,9 @@
-name: Composer Diff
+name: Composer and NPM Package Diff
 on:
   pull_request:
     paths:
       - 'composer.lock'
+      - 'package-lock.json'
 permissions:
   contents: write
   pull-requests: write
@@ -26,3 +27,16 @@ jobs:
             <strong>Composer Changes</strong>
 
             ${{ steps.composer_diff.outputs.composer_diff }}
+  npm-diff:
+    name: NPM Lockfile Diff
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: NPM Lockfile Changes
+        uses: codepunkt/npm-lockfile-changes@main
+        with:
+          token: ${{ github.token }}
+          updateComment: true
