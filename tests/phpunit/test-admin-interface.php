@@ -29,6 +29,7 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 		delete_transient( 'papc_max_age_compare' );
 		remove_all_filters( 'pantheon_cache_default_max_age' );
 		remove_all_filters( 'pantheon_apc_disable_admin_notices' );
+		remove_all_filters( 'nonce_life' );
 	}
 
 	/**
@@ -442,6 +443,40 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 			WEEK_IN_SECONDS => 'Recommended (1 week)',
 			MONTH_IN_SECONDS => 'Extended (1 month)',
 			YEAR_IN_SECONDS => 'Perpetual (1 year)',
+		];
+	}
+
+	/**
+	 * Test filter_nonce_cache_lifetime.
+	 * Make sure that the max age is updated when creating nonces on the front-end.
+	 *
+	 * @dataProvider filter_nonce_cache_lifetime_provider
+	 */
+	public function test_filter_nonce_cache_lifetime( $screen, $expected ) {
+		global $current_screen;
+		if ( $screen === 'front-end' ) {
+			$current_screen = null;
+		} else {
+			set_current_screen( $screen );
+		}
+
+		$nonce_life = apply_filters( 'nonce_life', DAY_IN_SECONDS );
+		filter_nonce_cache_lifetime( $nonce_life );
+		$nonce_cache_lifetime = apply_filters( 'pantheon_cache_default_max_age', $nonce_life );
+
+		$this->assertEquals( $expected, $nonce_cache_lifetime, sprintf( '%s test failed to assert that %s was equal to %s', $screen, humanized_max_age( $nonce_cache_lifetime ), humanized_max_age( $expected ) ) );
+	}
+
+	/**
+	 * Data provider for test_filter_nonce_cache_lifetime.
+	 *
+	 * @return array
+	 */
+	public function filter_nonce_cache_lifetime_provider() {
+		// screen, updated max_age
+		return [
+			[ 'dashboard', DAY_IN_SECONDS ],
+			[ 'front-end', DAY_IN_SECONDS - HOUR_IN_SECONDS ],
 		];
 	}
 }
