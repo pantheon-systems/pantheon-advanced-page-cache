@@ -5,6 +5,8 @@ on:
 
 jobs:
   release:
+    # Do not run this job for prerelease versions.
+    if: ! github.event.release.prerelease
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
