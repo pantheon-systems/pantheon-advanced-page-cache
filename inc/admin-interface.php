@@ -42,6 +42,7 @@ function bootstrap() {
 	add_filter( 'pantheon_cache_max_age_field_after_html', __NAMESPACE__ . '\\add_max_age_setting_description' );
 	add_filter( 'pantheon_cache_max_age_input', __NAMESPACE__ . '\\update_default_ttl_input' );
 	add_filter( 'pantheon_cache_max_age_input_allowed_html', __NAMESPACE__ . '\\max_age_input_allowed_html' );
+	add_filter( 'nonce_life', __NAMESPACE__ . '\\filter_nonce_cache_lifetime' );
 }
 
 /**
@@ -584,4 +585,26 @@ function max_age_updated_admin_notice() {
 
 	// Update the user meta to prevent this notice from showing again after they've seen it once.
 	update_user_meta( $current_user_id, 'pantheon_max_age_updated_notice', true );
+}
+
+/**
+ * Filter the nonce cache lifetime.
+ *
+ * @param int $lifetime The lifetime of the nonce.
+ *
+ * @since 2.0.0-dev
+ * @return int
+ */
+function filter_nonce_cache_lifetime( $lifetime ) {
+	// Bail early if we're in the admin.
+	if ( is_admin() ) {
+		return $lifetime;
+	}
+
+	// Filter the cache default max age to less than the nonce lifetime when creating nonces on the front-end. This prevents the cache from keeping the nonce around longer than it should.
+	add_filter( 'pantheon_cache_default_max_age', function () use ( $lifetime ) {
+		return $lifetime - HOUR_IN_SECONDS;
+	} );
+
+	return $lifetime;
 }
