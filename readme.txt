@@ -3,7 +3,7 @@ Contributors: getpantheon, danielbachhuber, kporras07, jspellman, jazzs3quence, 
 Tags: pantheon, cdn, cache
 Requires at least: 6.4
 Tested up to: 6.5.3
-Stable tag: 2.0.0-dev
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -360,7 +360,7 @@ Pantheon Advanced Page Cache integrates with WordPress plugins, including:
 See [CONTRIBUTING.md](https://github.com/pantheon-systems/wp-saml-auth/blob/master/CONTRIBUTING.md) for information on contributing.
 
 == Changelog ==
-= 2.0.0-dev =
+= 2.0.0 (24 May 2024) =
 * Adds new admin alerts and Site Health tests about default cache max age settings and recommendations [[#268](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/268), [#271](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/271)]. The default Pantheon GCDN cache max age value has been updated to 1 week in the [Pantheon MU plugin](https://github.com/pantheon-systems/pantheon-mu-plugin). For more information, see the [release note](https://docs.pantheon.io/release-notes/2024/04/pantheon-mu-plugin-1-4-0-update).
 * Updated UI in Pantheon Page Cache admin page when used in a Pantheon environment (with the Pantheon MU plugin). [[#272](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/272)]
 * Automatically updates the cache max age to the recommended value (1 week) if it was saved at the old default value (600 seconds). [[#269](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/269)]
@@ -442,7 +442,7 @@ See [CONTRIBUTING.md](https://github.com/pantheon-systems/wp-saml-auth/blob/mast
 * Initial release.
 
 == Upgrade Notice ==
-= 2.0.0-dev =
+= 2.0.0 (24 May 2024) =
 This release requires a minimum WordPress version of 6.4.0. It uses Site Health checks and the `wp_admin_notices` function to alert users to the new cache max-age default settings and recommendations. The plugin will still function with earlier versions, but you will not get the benefit of the alerts and Site Health checks.
 
 This version also automatically updates the cache max age (set in the [Pantheon Page Cache settings](https://docs.pantheon.io/guides/wordpress-configurations/wordpress-cache-plugin)) to the recommended value (1 week) if it was saved at the old default value (600 seconds). If the cache max age was set to any other value (or not set at all), it will not be changed. A one-time notice will be displayed in the admin interface to inform administrators of this change.
