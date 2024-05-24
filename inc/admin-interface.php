@@ -59,7 +59,9 @@ function enqueue_admin_assets() {
 
 	// If WP_DEBUG is true, append a timestamp to the end of the path so we get a fresh copy of the css.
 	$debug = defined( 'WP_DEBUG' ) && WP_DEBUG ? '-' . time() : '';
-	wp_enqueue_style( 'papc-admin', plugin_dir_url( __DIR__ ) . 'assets/css/styles.css', [], '2.0.0' . $debug );
+	// Use minified css unless SCRIPT_DEBUG is true.
+	$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+	wp_enqueue_style( 'papc-admin', plugin_dir_url( __DIR__ ) . "assets/css/styles$min.css", [], '2.0.0' . $debug );
 }
 
 /**
