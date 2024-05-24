@@ -4,6 +4,7 @@ on:
     paths:
       - 'composer.lock'
       - 'package-lock.json'
+      - '.github/workflows/composer-npm-diff.yml'
 permissions:
   contents: write
   pull-requests: write
