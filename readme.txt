@@ -361,7 +361,7 @@ The above example would disable _only_ the admin notice recommending a higher ca
 
 == Other Filters ==
 
-= `pantheon_apc_disable_admin_notices` =
+= pantheon_apc_disable_admin_notices =
 Since 2.0.0, Pantheon Advanced Page Cache displays a number of admin notices about your current cache max age value. You can disable these notices with the `pantheon_apc_disable_admin_notices` filter.
 
 	add_filter( 'pantheon_apc_disable_admin_notices', '__return_true' );
