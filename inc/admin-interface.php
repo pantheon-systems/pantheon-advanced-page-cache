@@ -2,7 +2,7 @@
 /**
  * Controller for the admin interface that builds on top of the Pantheon MU plugin.
  *
- * @since 2.0.0-dev
+ * @since 2.0.0
  * @package Pantheon_Advanced_Page_Cache
  */
 
@@ -11,7 +11,7 @@ namespace Pantheon_Advanced_Page_Cache\Admin_Interface;
 /**
  * Kick off the important bits.
  *
- * @since 2.0.0-dev
+ * @since 2.0.0
  * @return void
  */
 function bootstrap() {
@@ -48,7 +48,7 @@ function bootstrap() {
 /**
  * Enqueue admin assets.
  *
- * @since 2.0.0-dev
+ * @since 2.0.0
  * @return void
  */
 function enqueue_admin_assets() {
@@ -68,7 +68,7 @@ function enqueue_admin_assets() {
 /**
  * Add a header to the max-age setting field.
  *
- * @since 2.0.0-dev
+ * @since 2.0.0
  * @return string
  */
 function add_max_age_setting_header() {
@@ -89,7 +89,7 @@ function add_max_age_setting_header() {
 /**
  * Add a description to the max-age setting field.
  *
- * @since 2.0.0-dev
+ * @since 2.0.0
  * @return string
  */
 function add_max_age_setting_description() {
@@ -124,7 +124,7 @@ function add_max_age_setting_description() {
  *
  * @param int $default_input The default TTL input field from the mu-plugin.
  *
- * @since 2.0.0-dev
+ * @since 2.0.0
  * @return int
  */
 function update_default_ttl_input( $default_input ) {
@@ -162,7 +162,7 @@ function update_default_ttl_input( $default_input ) {
 /**
  * Filter the allowed HTML for the max-age input field.
  *
- * @since 2.0.0-dev
+ * @since 2.0.0
  * @param array $allowed_html The allowed HTML.
  * @return array
  */
@@ -175,7 +175,7 @@ function max_age_input_allowed_html( $allowed_html ) {
 /**
  * Get the default max age options. Default values are 1 week, 1 month, 1 year.
  *
- * @since 2.0.0-dev
+ * @since 2.0.0
  * @return array
  */
 function max_age_options() {
@@ -197,7 +197,7 @@ function max_age_options() {
 /**
  * Display an admin notice if the Pantheon MU plugin was not found.
  *
- * @since 2.0.0-dev
+ * @since 2.0.0
  * @return void
  */
 function admin_notice_no_mu_plugin() {
@@ -224,7 +224,7 @@ function admin_notice_no_mu_plugin() {
 /**
  * Display an admin notice if the Pantheon MU plugin is out of date.
  *
- * @since 2.0.0-dev
+ * @since 2.0.0
  * @return void
  */
 function admin_notice_old_mu_plugin() {
@@ -262,7 +262,7 @@ function admin_notice_old_mu_plugin() {
 /**
  * Display an admin notice if the max-age is less than a week but not equal to 600 seconds.
  *
- * @since 2.0.0-dev
+ * @since 2.0.0
  * @return void
  */
 function admin_notice_maybe_recommend_higher_max_age() {
@@ -332,7 +332,7 @@ function admin_notice_maybe_recommend_higher_max_age() {
  *
  * If the site existed prior to 1.4.0 of the mu-plugin, the default value is 600 seconds. Otherwise, the default value is 1 week.
  *
- * @since 2.0.0-dev
+ * @since 2.0.0
  * @return int
  */
 function get_current_max_age() {
@@ -351,7 +351,7 @@ function get_current_max_age() {
  *
  * @param array $tests The Site Health tests.
  *
- * @since 2.0.0-dev
+ * @since 2.0.0
  * @return array
  */
 function default_cache_max_age_test( $tests ) {
@@ -368,7 +368,7 @@ function default_cache_max_age_test( $tests ) {
  *
  * @param bool $recommended Whether to get the recommended max-age.
  *
- * @since 2.0.0-dev
+ * @since 2.0.0
  * @return string
  */
 function humanized_max_age( $recommended = false ) {
@@ -382,7 +382,7 @@ function humanized_max_age( $recommended = false ) {
 /**
  * Get the default max-age.
  *
- * @since 2.0.0-dev
+ * @since 2.0.0
  * @return int
  */
 function get_default_max_age() {
@@ -392,7 +392,7 @@ function get_default_max_age() {
 /**
  * Compare the current max-age to the default max-age.
  *
- * @since 2.0.0-dev
+ * @since 2.0.0
  * @return int A ranked value from 0 to 10 where 0 is optimal (equal to or greater than the recommended max age) and 10 is very bad.
  */
 function max_age_compare() {
@@ -421,7 +421,7 @@ function max_age_compare() {
 /**
  * The GCDN cache max-age Site Health test.
  *
- * @since 2.0.0-dev
+ * @since 2.0.0
  * @return array
  */
 function test_cache_max_age() {
@@ -487,7 +487,7 @@ function test_cache_max_age() {
 /**
  * Clear the max-age compare cache when the max-age is updated.
  *
- * @since 2.0.0-dev
+ * @since 2.0.0
  * @return void
  */
 function clear_max_age_compare_cache() {
@@ -497,7 +497,7 @@ function clear_max_age_compare_cache() {
 /**
  * Set the default_ttl from the mu-plugin to WEEK_IN_SECONDS if it was saved as 600 seconds.
  *
- * @since 2.0.0-dev
+ * @since 2.0.0
  * @return bool
  */
 function set_max_age_to_default() {
@@ -532,7 +532,7 @@ function set_max_age_to_default() {
 /**
  * Display an admin notice if the max-age was updated.
  *
- * @since 2.0.0-dev
+ * @since 2.0.0
  * @return void
  */
 function max_age_updated_admin_notice() {
@@ -592,7 +592,7 @@ function max_age_updated_admin_notice() {
  *
  * @param int $lifetime The lifetime of the nonce.
  *
- * @since 2.0.0-dev
+ * @since 2.0.0
  * @return int
  */
 function filter_nonce_cache_lifetime( $lifetime ) {
