@@ -15,9 +15,6 @@ Automatically clear related pages from Pantheon's Edge when you update content. 
 [![Actively Maintained](https://img.shields.io/badge/Pantheon-Actively_Maintained-yellow?logo=pantheon&color=FFDC28)](https://pantheon.io/docs/oss-support-levels#actively-maintained-support)
 [![Lint and Test](https://github.com/pantheon-systems/pantheon-advanced-page-cache/actions/workflows/lint-test.yml/badge.svg)](https://github.com/pantheon-systems/pantheon-advanced-page-cache/actions/workflows/lint-test.yml)
 [![CircleCI](https://circleci.com/gh/pantheon-systems/pantheon-advanced-page-cache.svg?style=svg)](https://circleci.com/gh/pantheon-systems/pantheon-advanced-page-cache)
-[![Actively Maintained](https://img.shields.io/badge/Pantheon-Actively_Maintained-yellow?logo=pantheon&color=FFDC28)](https://pantheon.io/docs/oss-support-levels#actively-maintained-support)
-[![Lint and Test](https://github.com/pantheon-systems/pantheon-advanced-page-cache/actions/workflows/lint-test.yml/badge.svg)](https://github.com/pantheon-systems/pantheon-advanced-page-cache/actions/workflows/lint-test.yml)
-[![CircleCI](https://circleci.com/gh/pantheon-systems/pantheon-advanced-page-cache.svg?style=svg)](https://circleci.com/gh/pantheon-systems/pantheon-advanced-page-cache)
 
 For sites wanting fine-grained control over how their responses are represented in their edge cache, Pantheon Advanced Page Cache is the golden ticket. Here's a high-level overview of how the plugin works:
 
