@@ -12,6 +12,16 @@ namespace Pantheon_Advanced_Page_Cache\Admin_Interface;
  */
 class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 	/**
+	 * Get the WordPress version-compatible string for "5 minutes".
+	 */
+	private function get_five_minutes() {
+		$wp_version = get_bloginfo( 'version' );
+		// WordPress 6.7 changed the string for "5 mins" to "5 minutes".
+		$five_mins = version_compare( $wp_version, '6.7', '<' ) ? '5 mins' : '5 minutes';
+		return $five_mins;
+	}
+
+	/**
 	 * Set up tests.
 	 */
 	public function setUp(): void {
@@ -46,6 +56,7 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function test_site_health_tests_300_seconds() {
 		$tests = apply_filters( 'site_status_tests', [] );
+		$five_mins = $this->get_five_minutes();
 
 		$this->assertContains( 'pantheon_edge_cache', array_keys( $tests['direct'] ) );
 
@@ -53,7 +64,7 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 		$test_results = test_cache_max_age();
 		$this->assertEquals( 'recommended', $test_results['status'] );
 		$this->assertEquals( 'red',$test_results['badge']['color'] );
-		$five_mins = is_plugin_active( 'gutenberg/gutenberg.php' ) ? '5 minutes' : '5 mins';
+
 		$this->assertStringContainsString( $five_mins, $test_results['description'] );
 		$this->assertStringContainsString( 'We recommend increasing to 1 week', $test_results['description'] );
 	}
@@ -100,7 +111,7 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 	 * @return array
 	 */
 	public function humanized_max_age_provider() {
-		$five_mins = is_plugin_active( 'gutenberg/gutenberg.php' ) ? '5 minutes' : '5 mins';
+		$five_mins = $this->get_five_minutes();
 		return [
 			[ 300, $five_mins ], // 300 seconds is humanized to 5 mins.
 			[ 5 * DAY_IN_SECONDS, '5 days' ],
