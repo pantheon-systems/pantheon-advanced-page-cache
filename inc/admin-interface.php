@@ -87,6 +87,54 @@ function add_max_age_setting_header() {
 }
 
 /**
+ * Get the callback(s) hooked to pantheon_cache_default_max_age, if one exists.
+ *
+ * @since 2.1.0
+ * @return string
+ */
+function get_pantheon_cache_filter_callback() {
+	global $wp_filter;
+	$hook = 'pantheon_cache_default_max_age';
+	$output = '';
+
+	if ( ! has_filter( $hook ) ) {
+		return $output;
+	}
+
+	$callback_functions = [];
+	if ( isset( $wp_filter[ $hook ] ) ) {
+		foreach ( $wp_filter[ $hook ]->callbacks as $priority => $callbacks ) {
+			foreach ( $callbacks as $callback ) {
+				if ( is_string( $callback['function'] ) ) {
+					// Function name.
+					$callback_functions[] = $callback['function'];
+				} elseif ( is_array( $callback['function'] ) ) {
+					// Method call.
+					$class = is_object( $callback['function'][0] ) ? get_class( $callback['function'][0] ) : $callback['function'][0];
+					$method = $callback['function'][1];
+					$callback_functions[] = "$class::$method";
+				} else {
+					$callback_functions[] = 'anonymous';
+				}
+			}
+		}
+	}
+
+	$callbacks_count = count( $callback_functions );
+	if ( $callbacks_count === 1 ) {
+		return "<code>{$callback_functions[0]}</code>";
+	}
+
+	// If there are multiple callbacks, format the output.
+	foreach ( $callback_functions as $index => $callback ) {
+		$callback = $callback === 'anonymous' ? __( 'an anonymous function', 'pantheon-advanced-page-cache' ) : "<code>$callback</code>";
+		$output .= $index === $callbacks_count - 1 ? ' ' . __( 'and', 'pantheon-advanced-page-cache' )  . ' '. $callback : $callback . ', ';
+	}
+
+	return $output;
+}
+
+/**
  * Add a description to the max-age setting field.
  *
  * @since 2.0.0
