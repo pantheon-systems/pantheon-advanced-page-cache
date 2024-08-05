@@ -103,7 +103,7 @@ function get_pantheon_cache_filter_callback() {
 
 	$callback_functions = [];
 	if ( isset( $wp_filter[ $hook ] ) ) {
-		foreach ( $wp_filter[ $hook ]->callbacks as $priority => $callbacks ) {
+		foreach ( $wp_filter[ $hook ]->callbacks as $callbacks ) {
 			foreach ( $callbacks as $callback ) {
 				if ( is_string( $callback['function'] ) ) {
 					// Function name.
