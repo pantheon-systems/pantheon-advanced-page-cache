@@ -142,15 +142,27 @@ function get_pantheon_cache_filter_callback() {
  */
 function add_max_age_setting_description() {
 	$is_filtered = has_filter( 'pantheon_cache_default_max_age' );
+	$filter_callback = get_pantheon_cache_filter_callback();
+	$filtered_message = '';
 	$above_recommended_message = __( 'Your cache maximum age is currently <strong>above</strong> the recommended value.', 'pantheon-advanced-page-cache' );
 	$below_recommended_message = __( 'Your cache maximum age is currently <strong>below</strong> the recommended value.', 'pantheon-advanced-page-cache' );
 	$recommended_message = __( 'Your cache maximum age is currently set to the recommended value.', 'pantheon-advanced-page-cache' );
 	$recommendation_message = get_current_max_age() > WEEK_IN_SECONDS ? $above_recommended_message : ( get_current_max_age() < WEEK_IN_SECONDS ? $below_recommended_message : $recommended_message );
-	$filtered_message = $is_filtered ? sprintf(
-		// translators: %s is the humanized max-age.
-		__( 'This value has been hardcoded to %s via a filter.', 'pantheon-advanced-page-cache' ),
-		'<strong>' . humanized_max_age() . '</strong>'
-	) : '';
+
+	if ( $is_filtered ) {
+		// Set the message to name the callback(s).
+		$filtered_message = ! empty( $filter_callback ) ? sprintf(
+			// translators: %1$s is the humanized max-age, %2$s is the callback function(s).
+			__( 'This value has been hardcoded to %1$s via a filter hooked to %2$s in your code.', 'pantheon-advanced-page-cache' ),
+			'<strong>' . humanized_max_age() . '</strong>',
+			$filter_callback
+		) : sprintf(
+			// translators: %s is the humanized max-age.
+			__( 'This value has been hardcoded to %s via a filter.', 'pantheon-advanced-page-cache' ),
+			'<strong>' . humanized_max_age() . '</strong>'
+		); // If there's no callback, we'll just note that it's been hardcoded. This shouldn't ever happen.
+	}
+
 	$pantheon_cache = get_option( 'pantheon-cache', [] );
 	$has_custom_ttl = isset( $pantheon_cache['default_ttl'] ) && ! array_key_exists( $pantheon_cache['default_ttl'], max_age_options() );
 	$filtered_message .= $has_custom_ttl && ! $is_filtered ? '<br />' . __( '<strong>Warning:</strong>The cache max age is not one of the recommended values. If this is not intentional, you should remove this custom value and save the settings, then select one of the options from the dropdown.', 'pantheon-advanced-page-cache' ) : '';
