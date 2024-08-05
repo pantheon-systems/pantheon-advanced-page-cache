@@ -353,6 +353,20 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 	}
 
 	/**
+	 * Filter callback for testing pantheon_cache_default_max_age.
+	 */
+	public function reset_cache_max_age() {
+		return 0;
+	}
+
+	/**
+	 * Filter callback for testing pantheon_cache_default_max_age.
+	 */
+	public function another_function() {
+		return 42;
+	}
+
+	/**
 	 * Test the update_default_ttl_input function. Check the input type if the max age has been filtered.
 	 *
 	 * @dataProvider update_default_ttl_input_provider
