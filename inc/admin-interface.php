@@ -114,7 +114,7 @@ function get_pantheon_cache_filter_callback() {
 					$method = $callback['function'][1];
 					$callback_functions[] = "$class::$method";
 				} else {
-					$callback_functions[] = 'anonymous';
+					$callback_functions[] = __( 'an anonymous function', 'pantheon-advanced-page-cache' );
 				}
 			}
 		}
