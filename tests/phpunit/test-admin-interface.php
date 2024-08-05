@@ -53,7 +53,8 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 		$test_results = test_cache_max_age();
 		$this->assertEquals( 'recommended', $test_results['status'] );
 		$this->assertEquals( 'red',$test_results['badge']['color'] );
-		$this->assertStringContainsString( '5 mins', $test_results['description'] );
+		$five_mins = is_plugin_active( 'gutenberg/gutenberg.php' ) ? '5 minutes' : '5 mins';
+		$this->assertStringContainsString( $five_mins, $test_results['description'] );
 		$this->assertStringContainsString( 'We recommend increasing to 1 week', $test_results['description'] );
 	}
 
@@ -99,8 +100,9 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 	 * @return array
 	 */
 	public function humanized_max_age_provider() {
+		$five_mins = is_plugin_active( 'gutenberg/gutenberg.php' ) ? '5 minutes' : '5 mins';
 		return [
-			[ 300, '5 mins' ], // 300 seconds is humanized to 5 mins.
+			[ 300, $five_mins ], // 300 seconds is humanized to 5 mins.
 			[ 5 * DAY_IN_SECONDS, '5 days' ],
 			[ WEEK_IN_SECONDS, '1 week' ],
 		];
