@@ -129,7 +129,7 @@ function get_pantheon_cache_filter_callback() {
 	// If there are multiple callbacks, format the output.
 	foreach ( $callback_functions as $index => $callback ) {
 		$callback = stripos( $callback, 'anonymous' ) !== false ? $callback : "<code>$callback</code>";
-		$output .= $index === $callbacks_count - 1 ? __( 'and', 'pantheon-advanced-page-cache' )  . ' '. $callback : $callback . ', ';
+		$output .= $index === $callbacks_count - 1 ? __( 'and', 'pantheon-advanced-page-cache' ) . ' ' . $callback : $callback . ', ';
 	}
 
 	return $output;
