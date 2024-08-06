@@ -42,7 +42,7 @@ function bootstrap() {
 	add_filter( 'pantheon_cache_max_age_field_after_html', __NAMESPACE__ . '\\add_max_age_setting_description' );
 	add_filter( 'pantheon_cache_max_age_input', __NAMESPACE__ . '\\update_default_ttl_input' );
 	add_filter( 'pantheon_cache_max_age_input_allowed_html', __NAMESPACE__ . '\\max_age_input_allowed_html' );
-	add_filter( 'nonce_life', __NAMESPACE__ . '\\filter_nonce_cache_lifetime' );
+	add_action( 'pantheon_cache_nonce_lifetime', __NAMESPACE__ . '\\filter_nonce_cache_lifetime' );
 }
 
 /**
