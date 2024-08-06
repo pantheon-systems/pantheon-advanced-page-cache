@@ -80,3 +80,5 @@ terminus wp $SITE_ENV -- cache flush
 terminus wp $SITE_ENV -- plugin activate pantheon-advanced-page-cache
 terminus wp $SITE_ENV -- theme activate twentytwentythree
 terminus wp $SITE_ENV -- rewrite structure '/%year%/%monthnum%/%day%/%postname%/'
+# Set the starting default_ttl value to 600, our old default.
+wp option patch update pantheon-cache default_ttl 600
