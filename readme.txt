@@ -160,15 +160,13 @@ The cache max age setting is controlled by the [Pantheon Page Cache](https://doc
 
 When the cache max age is filtered in this way, the admin option is disabled and a notice is displayed.
 
-= Setting the Cache Max Age with a filter =
+= Updating the cache max age based on nonces =
 
-The cache max age setting is controlled by the [Pantheon Page Cache](https://docs.pantheon.io/guides/wordpress-configurations/wordpress-cache-plugin) admin page. As of 2.0.0, there are three cache age options by default — 1 week, 1 month, 1 year. Pantheon Advanced Page Cache automatically purges the cache of updated and related posts and pages, but you might want to override the cache max age value and set it programmatically. In this case, you can use the `pantheon_cache_default_max_age` filter added in [Pantheon MU plugin 1.4.0+](https://docs.pantheon.io/guides/wordpress-configurations/wordpress-cache-plugin#override-the-default-max-age). For example:
+Nonces created on the front-end, often used to secure forms and other data, have a lifetime, and if the cache max age is longer than the nonce lifetime, the nonce may expire before the cache does. To avoid this, you can use the `pantheon_cache_nonce_lifetime` action to set the `pantheon_cache_default_max_age` to less than the nonce lifetime. For example:
 
-	add_filter( 'pantheon_cache_default_max_age', function() {
-		return 10 * DAY_IN_SECONDS;
-	} );
+	do_action( 'pantheon_cache_nonce_lifetime' );
 
-When the cache max age is filtered in this way, the admin option is disabled and a notice is displayed.
+It's important to wrap your `do_action` in the appropriate conditionals to ensure that the action is only called when necessary and not filtering the cache max age in cases when it's not necessary. This might mean only running on certain pages or in certain contexts in your code.
 
 == WP-CLI Commands ==
 
