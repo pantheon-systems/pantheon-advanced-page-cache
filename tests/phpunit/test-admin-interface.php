@@ -116,7 +116,7 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function humanized_max_age_provider() {
 		$five_mins = $this->get_five_minutes();
-		var_dump( $five_mins );
+
 		return [
 			[ 300, $five_mins ], // 300 seconds is humanized to 5 mins.
 			[ 5 * DAY_IN_SECONDS, '5 days' ],
