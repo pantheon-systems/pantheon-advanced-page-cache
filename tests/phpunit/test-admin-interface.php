@@ -16,6 +16,10 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	private function get_five_minutes() {
 		$wp_version = get_bloginfo( 'version' );
+
+		// If the version contains a string like -alpha, -beta, etc., strip it.
+		$wp_version = preg_replace( '/-.*/', '', $wp_version );
+
 		// WordPress 6.7 changed the string for "5 mins" to "5 minutes".
 		$five_mins = version_compare( $wp_version, '6.7', '<' ) ? '5 mins' : '5 minutes';
 		return $five_mins;
@@ -112,6 +116,7 @@ class Admin_Interface_Functions extends \Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function humanized_max_age_provider() {
 		$five_mins = $this->get_five_minutes();
+		var_dump( $five_mins );
 		return [
 			[ 300, $five_mins ], // 300 seconds is humanized to 5 mins.
 			[ 5 * DAY_IN_SECONDS, '5 days' ],
