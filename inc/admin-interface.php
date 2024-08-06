@@ -648,24 +648,26 @@ function max_age_updated_admin_notice() {
 	update_user_meta( $current_user_id, 'pantheon_max_age_updated_notice', true );
 }
 
+
 /**
- * Filter the nonce cache lifetime.
+ * Filter the cache lifetime for nonces.
  *
- * @param int $lifetime The lifetime of the nonce.
+ * Hooked to pantheon_cache_nonce_lifetime action. Use this to filter the cache lifetime for nonces using the action, e.g.:
+ *
+ * do_action( 'pantheon_cache_nonce_lifetime' );
  *
  * @since 2.0.0
- * @return int
+ * @return void
  */
-function filter_nonce_cache_lifetime( $lifetime ) {
+function filter_nonce_cache_lifetime() {
 	// Bail early if we're in the admin.
 	if ( is_admin() ) {
-		return $lifetime;
+		return;
 	}
 
 	// Filter the cache default max age to less than the nonce lifetime when creating nonces on the front-end. This prevents the cache from keeping the nonce around longer than it should.
-	add_filter( 'pantheon_cache_default_max_age', function () use ( $lifetime ) {
+	add_filter( 'pantheon_cache_default_max_age', function () {
+		$lifetime = apply_filters( 'nonce_life', DAY_IN_SECONDS );
 		return $lifetime - HOUR_IN_SECONDS;
 	} );
-
-	return $lifetime;
 }
