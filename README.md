@@ -402,7 +402,9 @@ Pantheon Advanced Page Cache integrates with WordPress plugins, including:
 See [CONTRIBUTING.md](https://github.com/pantheon-systems/pantheon-advanced-page-cache/blob/master/CONTRIBUTING.md) for information on contributing.
 
 ## Changelog ##
-### 2.0.1-dev ###
+### 2.1.0 (8 August 2024) ###
+* Adds any callable functions hooked to the `pantheon_cache_default_max_age` filter to the message that displays in the WordPress admin when a cache max age filter is active. [[#292](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/292)] This gives some context to troubleshoot if the filter is active somewhere in the codebase. If an anonymous function is used, it is noted in the message that displays.
+* Removes the hook to `nonce_life` and replaces it with a new action (`pantheon_cache_nonce_lifetime`, see [documentation](https://github.com/pantheon-systems/pantheon-advanced-page-cache?tab=readme-ov-file#updating-the-cache-max-age-based-on-nonces)). [[#293](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/293)] This was erroneously overriding any admin settings and setting the default cache max age for some sites to always be 23 hours (the nonce lifetime minus 1 hour). This solution requires that developers add the `do_action` when they are creating nonces on the front-end, but allows the cache settings to work as designed in all other instances.
 
 ### 2.0.0 (28 May 2024) ###
 * Adds new admin alerts and Site Health tests about default cache max age settings and recommendations [[#268](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/268), [#271](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/271)]. The default Pantheon GCDN cache max age value has been updated to 1 week in the [Pantheon MU plugin](https://github.com/pantheon-systems/pantheon-mu-plugin). For more information, see the [release note](https://docs.pantheon.io/release-notes/2024/04/pantheon-mu-plugin-1-4-0-update).
