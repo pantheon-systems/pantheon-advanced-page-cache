@@ -341,24 +341,6 @@ Setting surrogate keys for posts with large numbers of taxonomies (such as WooCo
 
 == Other Filters ==
 
-= `pantheon_apc_disable_admin_notices` =
-Since 2.0.0, Pantheon Advanced Page Cache displays a number of admin notices about your current cache max age value. You can disable these notices with the `pantheon_apc_disable_admin_notices` filter.
-
-	add_filter( 'pantheon_apc_disable_admin_notices', '__return_true' );
-
-Alternately, the function callback is passed into the `pantheon_apc_disable_admin_notices` filter, allowing you to specify precisely _which_ notice to disable, for example:
-
-	add_filter( 'pantheon_apc_disable_admin_notices', function( $disable_notices, $callback ) {
-    	if ( $callback === '\\Pantheon_Advanced_Page_Cache\\Admin_Interface\\admin_notice_maybe_recommend_higher_max_age' ) {
-        	return true;
-    	}
-    	return $disable_notices;
-	}, 10, 2 );
-
-The above example would disable _only_ the admin notice recommending a higher cache max age.
-
-== Other Filters ==
-
 = pantheon_apc_disable_admin_notices =
 Since 2.0.0, Pantheon Advanced Page Cache displays a number of admin notices about your current cache max age value. You can disable these notices with the `pantheon_apc_disable_admin_notices` filter.
 
