@@ -86,6 +86,13 @@ jobs:
           restore-keys: test-dependencies-{{ checksum "composer.json" }}
       - name: Setup WP-CLI
         uses: godaddy-wordpress/setup-wp-cli@1
+      - name: Install SVN if needed
+        run: |
+          if ! command -v svn &> /dev/null; then
+            echo "SVN is not installed. Installing now..."
+            sudo apt-get update
+            sudo apt-get install -y subversion
+          fi
       - name: Install Composer dependencies
         run: |
           if [ ${{ matrix.php_version }} = "7.4" ]; then
