@@ -43,8 +43,8 @@ class Purger {
 		if ( 'publish' === $old_status ) {
 			return;
 		}
-		# Targets 404 pages that could be cached with no surrogate keys (i.e.
-		# a drafted post going live after the 404 has been cached).
+		// Targets 404 pages that could be cached with no surrogate keys (i.e.
+		// a drafted post going live after the 404 has been cached).
 		self::clear_post_path( $post );
 		error_log( sprintf(
 			'Post ID %d: ran clear_post_path.',
@@ -60,13 +60,13 @@ class Purger {
 	 * @param string  $old_status Old status for the post.
 	 * @param WP_Post $post Post object.
 	 */
-	public static function clear_post_path($post) {
-		$post_path = get_permalink($post->ID);
-		$parsed_url = parse_url($post_path);
+	public static function clear_post_path( $post ) {
+		$post_path = get_permalink( $post->ID );
+		$parsed_url = parse_url( $post_path );
 		$path = $parsed_url['path'];
-		$paths = [trailingslashit( $path ), untrailingslashit( $path )];
+		$paths = [ trailingslashit( $path ), untrailingslashit( $path ) ];
 	
-		pantheon_wp_clear_edge_paths($paths);
+		pantheon_wp_clear_edge_paths( $paths );
 		error_log( sprintf(
 			'Post ID %d: cleared edge path "%s".',
 			$post->ID, $parsed_url['path']
