@@ -36,10 +36,10 @@ class Purger {
 			return;
 		}
 		self::purge_post_with_related( $post );
-        error_log( sprintf(
-            'Post ID %d: ran purge_post_with_related.',
-            $post->ID
-        ) );
+		error_log( sprintf(
+			'Post ID %d: ran purge_post_with_related.',
+			$post->ID
+		) );
 		if ( 'publish' === $old_status ) {
 			return;
 		}
@@ -47,34 +47,30 @@ class Purger {
 		# a drafted post going live after the 404 has been cached).
 		self::clear_post_path( $post );
 		error_log( sprintf(
-            'Post ID %d: ran clear_post_path.',
-            $post->ID
-        ) );
+			'Post ID %d: ran clear_post_path.',
+			$post->ID
+		) );
 	}
 
 
 	/**
- 	 * Purge the cache for a given post's path
+	 * Purge the cache for a given post's path
 	 *
 	 * @param string  $new_status New status for the post.
 	 * @param string  $old_status Old status for the post.
 	 * @param WP_Post $post Post object.
 	 */
 	public static function clear_post_path($post) {
-	    if ($post->post_status == 'publish') {
-	        $post_path = get_permalink($post->ID);
-	        $parsed_url = parse_url($post_path);
-
-	        // Check if pantheon_clear_edge_paths is defined
-	        if (function_exists('pantheon_clear_edge_paths')) {
-	            pantheon_clear_edge_paths([$parsed_url['path']]);
-	            error_log( sprintf(
-		            'Post ID %d: cleared edge path "%s".',
-		            $post->ID, $parsed_url['path']
-		        ) );
-	        }
-
-	    }
+		$post_path = get_permalink($post->ID);
+		$parsed_url = parse_url($post_path);
+		$path = $parsed_url['path'];
+		$paths = [trailingslashit( $path ), untrailingslashit( $path )];
+	
+		pantheon_wp_clear_edge_paths($paths);
+		error_log( sprintf(
+			'Post ID %d: cleared edge path "%s".',
+			$post->ID, $parsed_url['path']
+		) );
 	}
 
 	/**
