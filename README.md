@@ -139,7 +139,7 @@ Lastly, the `pantheon_wp_rest_api_surrogate_keys` filter lets you filter surroga
 
 ### Additional purging by path
 
-When a post is published for the first time, the permalink's path is also purged above and beyond the keys. This can be further filtered with the `pantheon_clear_post_path` filter.
+When a post is published for the first time, the permalink's path is also purged even if it has no matching keys. This can be further filtered with the `pantheon_clear_post_path` filter.
 
 ```php
 add_action('pantheon_clear_post_path', function($paths) {
