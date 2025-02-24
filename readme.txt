@@ -126,6 +126,15 @@ Because Pantheon Advanced Page Cache already handles WordPress post purge events
 
 Lastly, the `pantheon_wp_rest_api_surrogate_keys` filter lets you filter surrogate keys present in a REST API response.
 
+= Additional purging by path =
+
+When a post is published for the first time, the permalink's path is also purged above and beyond the keys. This can be further filtered with the `pantheon_clear_post_path` filter.
+
+        add_action('pantheon_clear_post_path', function($paths) {
+            // Add or remove paths from $paths
+            return $paths
+        }, 10, 3);
+
 Need a bit more power? In addition to `pantheon_wp_clear_edge_keys()`, there are two additional helper functions you can use:
 
 * `pantheon_wp_clear_edge_paths( $paths = array() )` - Purge cache for one or more paths.
@@ -368,6 +377,9 @@ Pantheon Advanced Page Cache integrates with WordPress plugins, including:
 See [CONTRIBUTING.md](https://github.com/pantheon-systems/wp-saml-auth/blob/master/CONTRIBUTING.md) for information on contributing.
 
 == Changelog ==
+
+= 2.11.1-dev =
+* Fixes 404 pages remaining cached after a post has been published ([#315](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/315))
 
 = 2.1.0 (8 August 2024) =
 * Adds any callable functions hooked to the `pantheon_cache_default_max_age` filter to the message that displays in the WordPress admin when a cache max age filter is active. [[#292](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/292)] This gives some context to troubleshoot if the filter is active somewhere in the codebase. If an anonymous function is used, it is noted in the message that displays.
