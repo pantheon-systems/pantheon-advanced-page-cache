@@ -60,7 +60,6 @@ jobs:
         with:
           type: 'plugin'
   test:
-    needs: lint
     name: Test
     runs-on: ubuntu-latest
     services:
