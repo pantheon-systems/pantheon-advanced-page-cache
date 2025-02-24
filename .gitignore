@@ -10,3 +10,5 @@ bin/install-wp-tests.sh
 bin/install-local-tests.sh
 bin/phpunit-test.sh
 .*.cache
+
+.envrc

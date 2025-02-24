@@ -55,7 +55,13 @@ class Purger {
 		$parsed_url = parse_url( $post_path );
 		$path = $parsed_url['path'];
 		$paths = [ trailingslashit( $path ), untrailingslashit( $path ) ];
-	
+		
+		/**
+		 * Paths possibly without surrogate keys purges 
+		 *
+		 * @param array $paths    paths to clear.
+		 */
+		$paths = apply_filters( 'pantheon_clear_post_path', $paths );
 		pantheon_wp_clear_edge_paths( $paths );
 	}
 

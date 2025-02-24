@@ -1866,4 +1866,30 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		// Clean up after the test.
 		$this->after_filter_ignore_posts();
 	}
+
+	public function test_future_post_clears_on_published() {
+		$future_date = date('Y-m-d H:i:s', strtotime('+1 day')); // Schedules for 1 day later
+
+		$result = wp_update_post(array(
+			'ID'           => $this->post_id4,
+			'post_status'  => 'future',
+			'post_date'    => $future_date,
+			'post_date_gmt'=> get_gmt_from_date($future_date),
+		), true);
+
+		$this->assertFalse(is_wp_error($result)); # Didn't throw an error updating
+
+		# Intercept the filter added to clear_post_path
+		add_action('pantheon_clear_post_path', function($paths) use (&$clear_callback_called, &$clear_callback_args) {
+			$clear_callback_args["paths"] = $paths;
+			$clear_callback_called = true;
+        }, 10, 3);
+
+        wp_publish_post($this->post_id4);
+		
+        $this->assertTrue($clear_callback_called, 'The pantheon_clear_post_path action was not fired.');
+	
+		$expected = array( "/2025/02/25/fourth-post", "/2025/02/25/fourth-post/" );
+		$this->assertEqualsCanonicalizing($expected, $clear_callback_args["paths"], "expected paths were not cleared");
+	}
 }
