@@ -1871,26 +1871,17 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		// Set permalink structure to only use the post title for this test
 		update_option('permalink_structure', '/%postname%/');
 		flush_rewrite_rules();
-
-		$post_id    = $this->factory->post->create(
-			[
-				'post_status'   => 'draft',
-				'post_author'   => $this->user_id2,
-				'post_date'     => '2016-10-15 11:00',
-				'post_date_gmt' => '2016-10-15 11:00',
-				'post_name'     => 'future-post',
-			]
-		);
 		
 		$future_date = date('Y-m-d H:i:s', strtotime('+1 day')); // Schedules for 1 day later
-
-		$result = wp_update_post([
-			'ID'           => $post_id,
-			'post_status'  => 'future',
-			'post_date'    => $future_date,
-			'post_date_gmt'=> get_gmt_from_date($future_date),
-		], true);
-		$this->assertFalse(is_wp_error($result)); // Didn't throw an error updating
+		$post_id    = $this->factory->post->create(
+			[
+				'post_status'  => 'future',
+				'post_date'    => $future_date,
+				'post_date_gmt'=> get_gmt_from_date($future_date),
+				'post_author'   => $this->user_id2,
+				'post_name'     => 'future-post',
+			]
+		);		
 
 		// Intercept the filter added to clear_post_path
 		add_action('pantheon_clear_post_path', function($paths) use (&$clear_callback_called, &$clear_callback_args) {
