@@ -378,7 +378,7 @@ See [CONTRIBUTING.md](https://github.com/pantheon-systems/wp-saml-auth/blob/mast
 
 == Changelog ==
 
-= 2.11.1-dev =
+= 2.1.1-dev =
 * Fixes 404 pages remaining cached after a post has been published ([#315](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/315))
 
 = 2.1.0 (8 August 2024) =
