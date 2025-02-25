@@ -22,28 +22,28 @@ class Test_Functions extends Pantheon_Advanced_Page_Cache_Testcase {
 	 * Ensure Exception is caught when keys aren't supplied.
 	 */
 	public function test_clear_edge_keys_missing() {
-		$this->assertWPError( pantheon_wp_clear_edge_keys( array() ) );
+		$this->assertWPError( pantheon_wp_clear_edge_keys( [] ) );
 	}
 
 	/**
 	 * Ensure function returns true when keys are supplied.
 	 */
 	public function test_clear_edge_keys_exist() {
-		$this->assertTrue( pantheon_wp_clear_edge_keys( array( 'post-1' ) ) );
+		$this->assertTrue( pantheon_wp_clear_edge_keys( [ 'post-1' ] ) );
 	}
 
 	/**
 	 * Ensure Exception is caught when paths aren't supplied.
 	 */
 	public function test_clear_edge_paths_missing() {
-		$this->assertWPError( pantheon_wp_clear_edge_paths( array() ) );
+		$this->assertWPError( pantheon_wp_clear_edge_paths( [] ) );
 	}
 
 	/**
 	 * Ensure function returns true when paths are supplied.
 	 */
 	public function test_clear_edge_paths_exist() {
-		$this->assertTrue( pantheon_wp_clear_edge_paths( array( '/' ) ) );
+		$this->assertTrue( pantheon_wp_clear_edge_paths( [ '/' ] ) );
 	}
 
 	/**
@@ -60,5 +60,4 @@ class Test_Functions extends Pantheon_Advanced_Page_Cache_Testcase {
 	public function test_clear_edge_all_valid() {
 		$this->assertTrue( pantheon_wp_clear_edge_all() );
 	}
-
 }

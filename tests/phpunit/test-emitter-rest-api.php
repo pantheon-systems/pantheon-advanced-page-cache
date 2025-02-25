@@ -38,22 +38,22 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertCount( 3, $response->get_data() );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'rest-post-collection',
 					'rest-post-' . $this->post_id1,
 					'rest-post-' . $this->post_id2,
 					'rest-post-' . $this->post_id3,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-rest-post-collection',
 					'blog-1-rest-post-' . $this->post_id1,
 					'blog-1-rest-post-' . $this->post_id2,
 					'blog-1-rest-post-' . $this->post_id3,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		}
@@ -69,7 +69,7 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertCount( 3, $data );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'rest-post-collection',
 					'rest-post-' . $this->post_id1,
 					'rest-post-' . $this->post_id2,
@@ -83,12 +83,12 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 					'rest-term-' . $this->tag_id2,
 					'rest-user-' . $this->user_id1,
 					'rest-user-' . $this->user_id2,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-rest-post-collection',
 					'blog-1-rest-post-' . $this->post_id1,
 					'blog-1-rest-post-' . $this->post_id2,
@@ -102,7 +102,7 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 					'blog-1-rest-term-' . $this->tag_id2,
 					'blog-1-rest-user-' . $this->user_id1,
 					'blog-1-rest-user-' . $this->user_id2,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		}
@@ -118,16 +118,16 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertCount( 0, $response->get_data() );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'rest-post-collection',
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-rest-post-collection',
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		}
@@ -143,16 +143,16 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertEquals( $this->post_id2, $data['id'] );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'rest-post-' . $this->post_id2,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-rest-post-' . $this->post_id2,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		}
@@ -167,18 +167,18 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertCount( 1, $response->get_data() );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'rest-page-collection',
 					'rest-post-' . $this->page_id1,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-rest-page-collection',
 					'blog-1-rest-post-' . $this->page_id1,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		}
@@ -194,16 +194,16 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertEquals( $this->page_id1, $data['id'] );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'rest-post-' . $this->page_id1,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-rest-post-' . $this->page_id1,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		}
@@ -218,18 +218,18 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertCount( 1, $response->get_data() );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'rest-attachment-collection',
 					'rest-post-' . $this->attachment_id1,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-rest-attachment-collection',
 					'blog-1-rest-post-' . $this->attachment_id1,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		}
@@ -245,16 +245,16 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertEquals( $this->attachment_id1, $data['id'] );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'rest-post-' . $this->attachment_id1,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-rest-post-' . $this->attachment_id1,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		}
@@ -269,20 +269,20 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertCount( 2, $response->get_data() );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'rest-category-collection',
 					'rest-term-' . $this->category_id1,
 					'rest-term-' . $this->category_id2,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-rest-category-collection',
 					'blog-1-rest-term-' . $this->category_id1,
 					'blog-1-rest-term-' . $this->category_id2,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		}
@@ -298,16 +298,16 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertEquals( $this->category_id2, $data['id'] );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'rest-term-' . $this->category_id2,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-rest-term-' . $this->category_id2,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		}
@@ -322,20 +322,20 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertCount( 2, $response->get_data() );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'rest-post_tag-collection',
 					'rest-term-' . $this->tag_id1,
 					'rest-term-' . $this->tag_id2,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-rest-post_tag-collection',
 					'blog-1-rest-term-' . $this->tag_id1,
 					'blog-1-rest-term-' . $this->tag_id2,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		}
@@ -351,16 +351,16 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertEquals( $this->tag_id1, $data['id'] );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'rest-term-' . $this->tag_id1,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-rest-term-' . $this->tag_id1,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		}
@@ -376,20 +376,20 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertCount( 1, $response->get_data() );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'rest-comment-collection',
 					'rest-comment-' . $this->comment_id1,
 					'rest-comment-post-' . $comment->comment_post_ID,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-rest-comment-collection',
 					'blog-1-rest-comment-' . $this->comment_id1,
 					'blog-1-rest-comment-post-' . $comment->comment_post_ID,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		}
@@ -405,16 +405,16 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertCount( 0, $response->get_data() );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'rest-comment-collection',
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-rest-comment-collection',
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		}
@@ -431,18 +431,18 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertEquals( $this->comment_id1, $data['id'] );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'rest-comment-' . $this->comment_id1,
 					'rest-comment-post-' . $comment->comment_post_ID,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-rest-comment-' . $this->comment_id1,
 					'blog-1-rest-comment-post-' . $comment->comment_post_ID,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		}
@@ -457,20 +457,20 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertCount( 2, $response->get_data() );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'rest-user-collection',
 					'rest-user-' . $this->user_id1,
 					'rest-user-' . $this->user_id2,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-rest-user-collection',
 					'blog-1-rest-user-' . $this->user_id1,
 					'blog-1-rest-user-' . $this->user_id2,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		}
@@ -486,16 +486,16 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertEquals( $this->user_id2, $data['id'] );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'rest-user-' . $this->user_id2,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-rest-user-' . $this->user_id2,
-				),
+				],
 				Emitter::get_rest_api_surrogate_keys()
 			);
 		}
@@ -520,7 +520,7 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 			$expected_count = 16;
 		}
 		if ( ! is_multisite() ) {
-			$expected_values = array(
+			$expected_values = [
 				'rest-setting-date_format',
 				'rest-setting-default_category',
 				'rest-setting-default_comment_status',
@@ -536,9 +536,9 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 				'rest-setting-title',
 				'rest-setting-url',
 				'rest-setting-use_smilies',
-			);
+			];
 		} else {
-			$expected_values = array(
+			$expected_values = [
 				'blog-1-rest-setting-date_format',
 				'blog-1-rest-setting-default_category',
 				'blog-1-rest-setting-default_comment_status',
@@ -554,7 +554,7 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 				'blog-1-rest-setting-title',
 				'blog-1-rest-setting-url',
 				'blog-1-rest-setting-use_smilies',
-			);
+			];
 		}
 		if ( ! is_multisite() ) {
 			if ( version_compare( $GLOBALS['wp_version'], '6.0.3', '>=' ) ) {
@@ -562,46 +562,44 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 					$expected_values,
 					9,
 					0,
-					array( 'rest-setting-page_for_posts', 'rest-setting-page_on_front', 'rest-setting-show_on_front', 'rest-setting-site_icon', 'rest-setting-site_logo' )
+					[ 'rest-setting-page_for_posts', 'rest-setting-page_on_front', 'rest-setting-show_on_front', 'rest-setting-site_icon', 'rest-setting-site_logo' ]
 				);
 			} elseif ( version_compare( $GLOBALS['wp_version'], '5.9-alpha', '>=' ) ) {
 				array_splice(
 					$expected_values,
 					9,
 					0,
-					array( 'rest-setting-site_icon', 'rest-setting-site_logo' )
+					[ 'rest-setting-site_icon', 'rest-setting-site_logo' ]
 				);
 			} elseif ( version_compare( $GLOBALS['wp_version'], '5.8', '>=' ) ) {
 				array_splice(
 					$expected_values,
 					9,
 					0,
-					array( 'rest-setting-site_logo' )
+					[ 'rest-setting-site_logo' ]
 				);
 			}
-		} else {
-			if ( version_compare( $GLOBALS['wp_version'], '6.0.3', '>=' ) ) {
+		} elseif ( version_compare( $GLOBALS['wp_version'], '6.0.3', '>=' ) ) {
 				array_splice(
 					$expected_values,
 					9,
 					0,
-					array( 'blog-1-rest-setting-page_for_posts', 'blog-1-rest-setting-page_on_front', 'blog-1-rest-setting-show_on_front', 'blog-1-rest-setting-site_icon', 'blog-1-rest-setting-site_logo' )
+					[ 'blog-1-rest-setting-page_for_posts', 'blog-1-rest-setting-page_on_front', 'blog-1-rest-setting-show_on_front', 'blog-1-rest-setting-site_icon', 'blog-1-rest-setting-site_logo' ]
 				);
-			} elseif ( version_compare( $GLOBALS['wp_version'], '5.9-alpha', '>=' ) ) {
-				array_splice(
-					$expected_values,
-					9,
-					0,
-					array( 'blog-1-rest-setting-site_icon', 'blog-1-rest-setting-site_logo' )
-				);
-			} elseif ( version_compare( $GLOBALS['wp_version'], '5.8', '>=' ) ) {
-				array_splice(
-					$expected_values,
-					9,
-					0,
-					array( 'blog-1-rest-setting-site_logo' )
-				);
-			}
+		} elseif ( version_compare( $GLOBALS['wp_version'], '5.9-alpha', '>=' ) ) {
+			array_splice(
+				$expected_values,
+				9,
+				0,
+				[ 'blog-1-rest-setting-site_icon', 'blog-1-rest-setting-site_logo' ]
+			);
+		} elseif ( version_compare( $GLOBALS['wp_version'], '5.8', '>=' ) ) {
+			array_splice(
+				$expected_values,
+				9,
+				0,
+				[ 'blog-1-rest-setting-site_logo' ]
+			);
 		}
 		$this->assertCount( $expected_count, $response->get_data() );
 		$this->assertArrayValues(
@@ -611,11 +609,11 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 	}
 
 	/**
-     * Test headers set on a REST API response.
-     */
+	 * Test headers set on a REST API response.
+	 */
 	public function test_rest_api_response_headers() {
 		// Add the filter to include the test key
-		add_filter('pantheon_wp_rest_api_surrogate_keys', function ($keys) {
+		add_filter('pantheon_wp_rest_api_surrogate_keys', function ( $keys ) {
 			$keys[] = 'test-key';
 			return $keys;
 		});
@@ -637,34 +635,34 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->assertEquals( $actual_headers['Surrogate-Key'], implode( ' ', $expected_surrogate_keys ) );
 	}
 
-    /**
-     * Test headers set on a GraphQL response.
-     */
-    public function test_graphql_response_headers() {
-        // Set up the mock response array with the existing headers set by the GraphQL plugin
-        $existing_headers = [
-            'header1' => 'value1',
-            'header2' => 'value2',
-        ];
+	/**
+	 * Test headers set on a GraphQL response.
+	 */
+	public function test_graphql_response_headers() {
+		// Set up the mock response array with the existing headers set by the GraphQL plugin
+		$existing_headers = [
+			'header1' => 'value1',
+			'header2' => 'value2',
+		];
 
-        // Simulate adding a surrogate key via a filter
-        add_filter('pantheon_wp_graphql_surrogate_keys', function ($keys) {
-            $keys[] = 'test-key';
-            return $keys;
-        });
+		// Simulate adding a surrogate key via a filter
+		add_filter('pantheon_wp_graphql_surrogate_keys', function ( $keys ) {
+			$keys[] = 'test-key';
+			return $keys;
+		});
 
-        // Call the filter_graphql_response_headers_to_send() method
-        $result_headers = Emitter::filter_graphql_response_headers_to_send($existing_headers);
+		// Call the filter_graphql_response_headers_to_send() method
+		$result_headers = Emitter::filter_graphql_response_headers_to_send( $existing_headers );
 
 		$graphql_collection_key = is_multisite() ? 'blog-1-graphql-collection' : 'graphql-collection';
 		$expected_headers = array_merge( $existing_headers, [ 'Surrogate-Key' => "$graphql_collection_key test-key" ] );
-        // Verify that the existing headers are preserved
-        $this->assertEquals($expected_headers, $result_headers);
+		// Verify that the existing headers are preserved
+		$this->assertEquals( $expected_headers, $result_headers );
 
-        // Verify that the 'Surrogate-Key' header was added with the expected value
-        $expected_surrogate_keys = Emitter::get_graphql_surrogate_keys();
-        $this->assertArrayHasKey(Emitter::HEADER_KEY, $result_headers);
-        $this->assertEquals(implode(' ', $expected_surrogate_keys), $result_headers[Emitter::HEADER_KEY]);
+		// Verify that the 'Surrogate-Key' header was added with the expected value
+		$expected_surrogate_keys = Emitter::get_graphql_surrogate_keys();
+		$this->assertArrayHasKey( Emitter::HEADER_KEY, $result_headers );
+		$this->assertEquals( implode( ' ', $expected_surrogate_keys ), $result_headers[ Emitter::HEADER_KEY ] );
 		$this->assertContains( 'test-key', $expected_surrogate_keys );
-    }
+	}
 }

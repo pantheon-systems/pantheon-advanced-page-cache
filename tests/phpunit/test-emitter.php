@@ -19,24 +19,24 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->go_to( home_url( '/' ) );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'front',
 					'home',
 					'post-' . $this->post_id1,
 					'post-' . $this->post_id2,
 					'post-' . $this->post_id3,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-front',
 					'blog-1-home',
 					'blog-1-post-' . $this->post_id1,
 					'blog-1-post-' . $this->post_id2,
 					'blog-1-post-' . $this->post_id3,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		}
@@ -49,24 +49,24 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->go_to( get_post_type_archive_link( 'product' ) );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'archive',
 					'post-type-archive',
 					'product-archive',
 					'post-' . $this->product_id1,
 					'post-' . $this->product_id2,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-archive',
 					'blog-1-post-type-archive',
 					'blog-1-product-archive',
 					'blog-1-post-' . $this->product_id1,
 					'blog-1-post-' . $this->product_id2,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		}
@@ -79,22 +79,22 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->go_to( get_permalink( $this->post_id2 ) );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'single',
 					'post-' . $this->post_id2,
 					'post-user-' . $this->user_id2,
 					'post-term-' . $this->category_id1,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-single',
 					'blog-1-post-' . $this->post_id2,
 					'blog-1-post-user-' . $this->user_id2,
 					'blog-1-post-term-' . $this->category_id1,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		}
@@ -107,20 +107,20 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->go_to( get_permalink( $this->page_id1 ) );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'single',
 					'post-' . $this->page_id1,
 					'post-user-' . $this->user_id1,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-single',
 					'blog-1-post-' . $this->page_id1,
 					'blog-1-post-user-' . $this->user_id1,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		}
@@ -133,20 +133,20 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->go_to( get_permalink( $this->product_id1 ) );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'single',
 					'post-' . $this->product_id1,
 					'post-term-' . $this->product_category_id2,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-single',
 					'blog-1-post-' . $this->product_id1,
 					'blog-1-post-term-' . $this->product_category_id2,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		}
@@ -159,20 +159,20 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->go_to( get_author_posts_url( $this->user_id1 ) );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'archive',
 					'user-' . $this->user_id1,
 					'post-' . $this->post_id1,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-archive',
 					'blog-1-user-' . $this->user_id1,
 					'blog-1-post-' . $this->post_id1,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		}
@@ -185,18 +185,18 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->go_to( get_author_posts_url( $this->user_id3 ) );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'archive',
 					'user-' . $this->user_id3,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-archive',
 					'blog-1-user-' . $this->user_id3,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		}
@@ -209,20 +209,20 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->go_to( get_term_link( $this->tag_id2 ) );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'archive',
 					'term-' . $this->tag_id2,
 					'post-' . $this->post_id1,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-archive',
 					'blog-1-term-' . $this->tag_id2,
 					'blog-1-post-' . $this->post_id1,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		}
@@ -235,18 +235,18 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->go_to( get_term_link( $this->tag_id1 ) );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'archive',
 					'term-' . $this->tag_id1,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-archive',
 					'blog-1-term-' . $this->tag_id1,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		}
@@ -259,20 +259,20 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->go_to( get_term_link( $this->product_category_id1 ) );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'archive',
 					'term-' . $this->product_category_id1,
 					'post-' . $this->product_id2,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-archive',
 					'blog-1-term-' . $this->product_category_id1,
 					'blog-1-post-' . $this->product_id2,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		}
@@ -285,18 +285,18 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->go_to( get_term_link( $this->product_category_id3 ) );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'archive',
 					'term-' . $this->product_category_id3,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-archive',
 					'blog-1-term-' . $this->product_category_id3,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		}
@@ -309,24 +309,24 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->go_to( home_url( 'products/' ) );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'archive',
 					'post-type-archive',
 					'product-archive',
 					'post-' . $this->product_id1,
 					'post-' . $this->product_id2,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-archive',
 					'blog-1-post-type-archive',
 					'blog-1-product-archive',
 					'blog-1-post-' . $this->product_id1,
 					'blog-1-post-' . $this->product_id2,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		}
@@ -339,24 +339,24 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->go_to( home_url( '2016/' ) );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'archive',
 					'date',
 					'post-' . $this->post_id1,
 					'post-' . $this->post_id2,
 					'post-' . $this->post_id3,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-archive',
 					'blog-1-date',
 					'blog-1-post-' . $this->post_id1,
 					'blog-1-post-' . $this->post_id2,
 					'blog-1-post-' . $this->post_id3,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		}
@@ -369,16 +369,16 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->go_to( home_url( '2015/' ) );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'404',
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-404',
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		}
@@ -391,24 +391,24 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->go_to( home_url( '2016/10/' ) );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'archive',
 					'date',
 					'post-' . $this->post_id1,
 					'post-' . $this->post_id2,
 					'post-' . $this->post_id3,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-archive',
 					'blog-1-date',
 					'blog-1-post-' . $this->post_id1,
 					'blog-1-post-' . $this->post_id2,
 					'blog-1-post-' . $this->post_id3,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		}
@@ -421,16 +421,16 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->go_to( home_url( '2015/10/' ) );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'404',
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-404',
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		}
@@ -443,20 +443,20 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->go_to( home_url( '2016/10/15/' ) );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'archive',
 					'date',
 					'post-' . $this->post_id3,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-archive',
 					'blog-1-date',
 					'blog-1-post-' . $this->post_id3,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		}
@@ -469,16 +469,16 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->go_to( home_url( '2015/10/15/' ) );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'404',
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-404',
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		}
@@ -491,7 +491,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->go_to( home_url( '/?s=post' ) );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'search',
 					'search-results',
 					'post-' . $this->post_id1,
@@ -500,12 +500,12 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 					'post-' . $this->page_id1,
 					'post-' . $this->product_id1,
 					'post-' . $this->product_id2,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-search',
 					'blog-1-search-results',
 					'blog-1-post-' . $this->post_id1,
@@ -514,7 +514,7 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 					'blog-1-post-' . $this->page_id1,
 					'blog-1-post-' . $this->product_id1,
 					'blog-1-post-' . $this->product_id2,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		}
@@ -527,18 +527,18 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		$this->go_to( home_url( '/?s=foo' ) );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'search',
 					'search-no-results',
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-search',
 					'blog-1-search-no-results',
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		}
@@ -549,20 +549,20 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function test_filter_huge_surrogate_keys_list_smalllist() {
 		if ( ! is_multisite() ) {
-			$keys = array(
+			$keys = [
 				'post',
 				'post-term-1',
 				'post-term-5',
-			);
+			];
 			for ( $i = 1000; $i < 25; $i++ ) {
 				$keys[] = 'post-' . $i;
 			}
 		} else {
-			$keys = array(
+			$keys = [
 				'blog-1-post',
 				'blog-1-post-term-1',
 				'blog-1-post-term-5',
-			);
+			];
 			for ( $i = 1000; $i < 25; $i++ ) {
 				$keys[] = 'blog-1-post-' . $i;
 			}
@@ -575,25 +575,25 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 	 */
 	public function test_filter_huge_surrogate_keys_list_largelist() {
 		if ( ! is_multisite() ) {
-			$keys = array(
+			$keys = [
 				'post',
 				'post-term-1',
 				'post-term-5',
-			);
+			];
 			for ( $i = 1; $i < ( Pantheon_Advanced_Page_Cache\Emitter::HEADER_MAX_LENGTH / 6 ); $i++ ) {
 				$keys[] = 'post-' . $i;
 			}
-			$this->assertArrayValues( array( 'post-huge', 'post-term-1', 'post-term-5', 'post' ), Pantheon_Advanced_Page_Cache\Emitter::filter_huge_surrogate_keys_list( $keys ) );
+			$this->assertArrayValues( [ 'post-huge', 'post-term-1', 'post-term-5', 'post' ], Pantheon_Advanced_Page_Cache\Emitter::filter_huge_surrogate_keys_list( $keys ) );
 		} else {
-			$keys = array(
+			$keys = [
 				'blog-1-post',
 				'blog-1-post-term-1',
 				'blog-1-post-term-5',
-			);
+			];
 			for ( $i = 1; $i < ( Pantheon_Advanced_Page_Cache\Emitter::HEADER_MAX_LENGTH / 6 ); $i++ ) {
 				$keys[] = 'blog-1-post-' . $i;
 			}
-			$this->assertArrayValues( array( 'blog-1-post-huge', 'blog-1-post-term-1', 'blog-1-post-term-5', 'blog-1-post' ), Pantheon_Advanced_Page_Cache\Emitter::filter_huge_surrogate_keys_list( $keys ) );
+			$this->assertArrayValues( [ 'blog-1-post-huge', 'blog-1-post-term-1', 'blog-1-post-term-5', 'blog-1-post' ], Pantheon_Advanced_Page_Cache\Emitter::filter_huge_surrogate_keys_list( $keys ) );
 		}
 	}
 
@@ -601,26 +601,26 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 	 * Assert no surrogate keys for a single product when filter is overriden to skip them.
 	 */
 	public function test_surrogate_keys_with_filter_override() {
-		add_filter( 'pantheon_should_add_terms',"__return_false", 10, 2);
+		add_filter( 'pantheon_should_add_terms', '__return_false', 10, 2 );
 		$this->go_to( get_permalink( $this->product_id1 ) );
 		if ( ! is_multisite() ) {
 			$this->assertArrayValues(
-				array(
+				[
 					'single',
 					'post-' . $this->product_id1,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		} else {
 			$this->assertArrayValues(
-				array(
+				[
 					'blog-1-single',
 					'blog-1-post-' . $this->product_id1,
-				),
+				],
 				Emitter::get_main_query_surrogate_keys()
 			);
 		}
-		remove_all_filters("pantheon_should_add_terms");
+		remove_all_filters( 'pantheon_should_add_terms' );
 	}
 
 	/**
@@ -634,11 +634,11 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 		// Set up posts of different post types.
 		$product_id = $this->factory->post->create( [
 			'post_type' => 'product',
-			'post_title' => 'test product'
+			'post_title' => 'test product',
 		] );
 		$post_id = $this->factory->post->create( [
 			'post_type' => 'post',
-			'post_title' => 'test post'
+			'post_title' => 'test post',
 		] );
 
 		// Query the posts we just created.
@@ -677,6 +677,6 @@ class Test_Emitter extends Pantheon_Advanced_Page_Cache_Testcase {
 			$wpms_prefix . "post-$product_id",
 			Emitter::get_main_query_surrogate_keys()
 		);
-		wp_reset_query( $wp_query );
+		wp_reset_postdata( $wp_query );
 	}
 }

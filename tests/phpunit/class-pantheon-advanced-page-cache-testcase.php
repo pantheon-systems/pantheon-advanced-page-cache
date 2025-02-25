@@ -1,4 +1,7 @@
 <?php
+
+require_once __DIR__ . '/class-pantheon-wp-unittest-factory.php';
+
 /**
  * Common testcase abstractions.
  *
@@ -6,18 +9,6 @@
  */
 
 use Pantheon_Advanced_Page_Cache\Emitter;
-
-/**
- * Declare our own factory class to avoid a PHP 8.0 deprecation warning.
- */
-class Pantheon_WP_UnitTest_Factory extends WP_UnitTest_Factory {
-    public $product_category;
-
-    public function __construct() {
-        parent::__construct();
-        $this->product_category = new WP_UnitTest_Factory_For_Term($this, 'product_category');
-    }
-}
 
 /**
  * Class from which all tests inherit.
@@ -225,7 +216,8 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 
 		create_initial_taxonomies();
 		$this->register_custom_types();
-
+		
+		// phpcs:disable WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rules_flush_rules
 		$wp_rewrite->flush_rules();
 	}
 
@@ -256,7 +248,9 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 			'/feed/', // Basic RSS feed.
 		];
 		$rest_api_routes = [];
-		$posts           = get_posts(
+		
+		// phpcs:disable WordPressVIPMinimum.Functions.RestrictedFunctions.get_posts_get_posts
+		$posts = get_posts(
 			[
 				'post_type'      => 'any',
 				'post_status'    => 'any',
@@ -282,6 +276,9 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 			$rest_api_routes[] = '/wp/v2/users';
 			$rest_api_routes[] = '/wp/v2/users/' . $user_id;
 		}
+		
+		// TODO(pwt): PHP CS flags this 'hide_empty' as deprecated but removing it breaks at least one test. Shelving the fix for now.
+		// phpcs:disable WordPress.WP.DeprecatedParameters.Get_termsParam2Found
 		$terms = get_terms(
 			[ 'post_tag', 'category', 'product_category' ],
 			[
@@ -442,12 +439,11 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 	/**
 	 * Tear down behaviors after the tests have completed.
 	 */
-	public function tearDown() : void {
+	public function tearDown(): void {
 		$this->cleared_keys = [];
 		remove_action( 'pantheon_wp_clear_edge_keys', [ $this, 'action_pantheon_wp_clear_edge_keys' ] );
 		_unregister_post_type( 'product' );
 		_unregister_taxonomy( 'product_category' );
 		parent::tearDown();
 	}
-
 }
