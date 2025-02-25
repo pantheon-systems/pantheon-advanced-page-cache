@@ -1868,15 +1868,29 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 	}
 
 	public function test_future_post_clears_on_published() {
+		// Set permalink structure to only use the post title for this test
+		update_option('permalink_structure', '/%postname%/');
+		flush_rewrite_rules();
+
+		// Create a new post
+		$post_id    = $this->factory->post->create(
+			[
+				'post_status'   => 'draft',
+				'post_author'   => $this->user_id2,
+				'post_date'     => '2016-10-15 11:00',
+				'post_date_gmt' => '2016-10-15 11:00',
+				'post_name'     => 'future-post',
+			]
+		);
+		
 		$future_date = date('Y-m-d H:i:s', strtotime('+1 day')); // Schedules for 1 day later
 
-		$result = wp_update_post(array(
-			'ID'           => $this->post_id4,
+		$result = wp_update_post([
+			'ID'           => $post_id,
 			'post_status'  => 'future',
 			'post_date'    => $future_date,
 			'post_date_gmt'=> get_gmt_from_date($future_date),
-		), true);
-
+		], true);
 		$this->assertFalse(is_wp_error($result)); // Didn't throw an error updating
 
 		// Intercept the filter added to clear_post_path
@@ -1885,16 +1899,19 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			$clear_callback_called = true;
         }, 10, 3);
 
-        wp_publish_post($this->post_id4);
+        wp_publish_post($post_id);
 		
         $this->assertTrue($clear_callback_called, 'The pantheon_clear_post_path action was not fired.');
 	
-		$expected = array( "/2025/02/25/fourth-post", "/2025/02/25/fourth-post/" );
-		$this->assertEqualsCanonicalizing($expected, $clear_callback_args["paths"], "expected paths were not cleared");
+		$this->assertEqualsCanonicalizing(
+			[ "/future-post", "/future-post/" ],
+			$clear_callback_args["paths"],
+			"expected paths were not cleared",
+		);
 
 		// Paths aren't cleared again if the post was already published
 		$clear_callback_called = false;
-		wp_publish_post($this->post_id4);
+		wp_publish_post($post_id);
 		$this->assertFalse($clear_callback_called);
 	}
 }
