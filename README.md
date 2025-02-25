@@ -4,7 +4,7 @@
 **Tags:** pantheon, cdn, cache  
 **Requires at least:** 6.4  
 **Tested up to:** 6.7.2  
-**Stable tag:** 2.1.1-dev  
+**Stable tag:** 2.1.1  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -414,7 +414,7 @@ See [CONTRIBUTING.md](https://github.com/pantheon-systems/pantheon-advanced-page
 
 ## Changelog ##
 
-### 2.1.1-dev ###
+### 2.1.1 (25 February 2025) ###
 * Fixes 404 pages remaining cached after a post has been published ([#315](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/315))
 
 ### 2.1.0 (8 August 2024) ###
