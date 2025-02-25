@@ -1877,7 +1877,7 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 			[
 				'post_status'  => 'future',
 				'post_date'    => $future_date,
-				'post_date_gmt'=> get_gmt_from_date($future_date),
+				'post_date_gmt' => get_gmt_from_date($future_date),
 				'post_author'   => $this->user_id2,
 				'post_name'     => 'future-post',
 			]
