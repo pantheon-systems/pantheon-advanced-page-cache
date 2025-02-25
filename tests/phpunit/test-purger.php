@@ -1872,7 +1872,6 @@ class Test_Purger extends Pantheon_Advanced_Page_Cache_Testcase {
 		update_option('permalink_structure', '/%postname%/');
 		flush_rewrite_rules();
 
-		// Create a new post
 		$post_id    = $this->factory->post->create(
 			[
 				'post_status'   => 'draft',
