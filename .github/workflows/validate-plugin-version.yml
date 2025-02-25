@@ -6,7 +6,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
-  
+
 jobs:
   validate:
     runs-on: ubuntu-latest
@@ -17,4 +17,4 @@ jobs:
       - name: Validate Plugin Version
         uses: jazzsequence/action-validate-plugin-version@v1
         with:
-          branch: 'release'
+          branch: 'develop'

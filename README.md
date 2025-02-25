@@ -3,8 +3,8 @@
 **Contributors:** [getpantheon](https://profiles.wordpress.org/getpantheon), [danielbachhuber](https://profiles.wordpress.org/danielbachhuber), [kporras07](https://profiles.wordpress.org/kporras07), [jspellman](https://profiles.wordpress.org/jspellman/), [jazzs3quence](https://profiles.wordpress.org/jazzs3quence/), [ryanshoover](https://profiles.wordpress.org/ryanshoover/), [rwagner00](https://profiles.wordpress.org/rwagner00/), [pwtyler](https://profiles.wordpress.org/pwtyler)  
 **Tags:** pantheon, cdn, cache  
 **Requires at least:** 6.4  
-**Tested up to:** 6.7.1  
-**Stable tag:** 2.1.0  
+**Tested up to:** 6.7.2  
+**Stable tag:** 2.1.1  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -136,6 +136,17 @@ Similarly, to include surrogate keys for posts queried on the homepage, you can 
 Because Pantheon Advanced Page Cache already handles WordPress post purge events, there's no additional call to `pantheon_wp_clear_edge_keys()`.
 
 Lastly, the `pantheon_wp_rest_api_surrogate_keys` filter lets you filter surrogate keys present in a REST API response.
+
+### Additional purging by path
+
+When a post is published for the first time, the permalink's path is also purged even if it has no matching keys. This can be further filtered with the `pantheon_clear_post_path` filter.
+
+```php
+add_action('pantheon_clear_post_path', function($paths) {
+    // Add or remove paths from $paths
+    return $paths
+}, 10, 3);
+```
 
 Need a bit more power? In addition to `pantheon_wp_clear_edge_keys()`, there are two additional helper functions you can use:
 
@@ -402,6 +413,9 @@ Pantheon Advanced Page Cache integrates with WordPress plugins, including:
 See [CONTRIBUTING.md](https://github.com/pantheon-systems/pantheon-advanced-page-cache/blob/master/CONTRIBUTING.md) for information on contributing.
 
 ## Changelog ##
+
+### 2.1.1 (25 February 2025) ###
+* Fixes 404 pages remaining cached after a post has been published ([#315](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/315))
 
 ### 2.1.0 (8 August 2024) ###
 * Adds any callable functions hooked to the `pantheon_cache_default_max_age` filter to the message that displays in the WordPress admin when a cache max age filter is active. [[#292](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/292)] This gives some context to troubleshoot if the filter is active somewhere in the codebase. If an anonymous function is used, it is noted in the message that displays.

@@ -36,6 +36,35 @@ class Purger {
 			return;
 		}
 		self::purge_post_with_related( $post );
+		if ( 'publish' === $old_status ) {
+			return;
+		}
+		// Targets 404 pages that could be cached with no surrogate keys (i.e.
+		// a drafted post going live after the 404 has been cached).
+		self::clear_post_path( $post );
+	}
+
+
+	/**
+	 * Purge the cache for a given post's path
+	 *
+	 * @param WP_Post $post Post object.
+	 * 
+	 * @since 2.1.1-dev
+	 */
+	public static function clear_post_path( $post ) {
+		$post_path = get_permalink( $post->ID );
+		$parsed_url = parse_url( $post_path );
+		$path = $parsed_url['path'];
+		$paths = [ trailingslashit( $path ), untrailingslashit( $path ) ];
+		
+		/**
+		 * Paths possibly without surrogate keys purges 
+		 *
+		 * @param array $paths    paths to clear.
+		 */
+		$paths = apply_filters( 'pantheon_clear_post_path', $paths );
+		pantheon_wp_clear_edge_paths( $paths );
 	}
 
 	/**
