@@ -49,6 +49,8 @@ class Purger {
 	 * Purge the cache for a given post's path
 	 *
 	 * @param WP_Post $post Post object.
+	 * 
+	 * @since 2.1.1-dev
 	 */
 	public static function clear_post_path( $post ) {
 		$post_path = get_permalink( $post->ID );
