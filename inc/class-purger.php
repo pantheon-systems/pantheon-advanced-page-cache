@@ -50,7 +50,7 @@ class Purger {
 	 *
 	 * @param WP_Post $post Post object.
 	 * 
-	 * @since 2.1.1-dev
+	 * @since 2.1.1
 	 */
 	public static function clear_post_path( $post ) {
 		$post_path = get_permalink( $post->ID );
