@@ -2,7 +2,7 @@
 Contributors: getpantheon, danielbachhuber, kporras07, jspellman, jazzs3quence, ryanshoover, rwagner00, pwtyler
 Tags: pantheon, cdn, cache
 Requires at least: 6.4
-Tested up to: 6.7.2
+Tested up to: 6.8
 Stable tag: 2.1.2-dev
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
