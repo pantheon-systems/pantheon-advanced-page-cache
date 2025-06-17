@@ -9,7 +9,7 @@
  * Domain Path: /languages
  * Version: 2.1.2-dev
  * Requires at least: 6.4
- * Tested up to: 6.7.2
+ * Tested up to: 6.8.1
  *
  * @package         Pantheon_Advanced_Page_Cache
  */
