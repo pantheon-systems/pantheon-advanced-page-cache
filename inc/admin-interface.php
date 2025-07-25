@@ -497,7 +497,7 @@ function test_cache_max_age() {
 			'label' => __( 'Pantheon GCDN Cache Max Age', 'pantheon-advanced-page-cache' ),
 			'status' => 'recommended',
 			'badge' => [
-				'label' => __( 'Performance', 'pantheon-advanced-page-cache' ),
+				'label' => __( 'Pantheon', 'pantheon-advanced-page-cache' ),
 				'color' => $recommend_color,
 			],
 			'description' => sprintf(
@@ -522,7 +522,7 @@ function test_cache_max_age() {
 		),
 		'status' => 'good',
 		'badge' => [
-			'label' => __( 'Performance', 'pantheon-advanced-page-cache' ),
+			'label' => __( 'Pantheon', 'pantheon-advanced-page-cache' ),
 			'color' => 'blue',
 		],
 		'description' => sprintf(
