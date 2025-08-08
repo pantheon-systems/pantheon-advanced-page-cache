@@ -39,8 +39,10 @@ class Purger {
 		if ( 'publish' === $old_status ) {
 			return;
 		}
-		// Targets 404 pages that could be cached with no surrogate keys (i.e.
-		// a drafted post going live after the 404 has been cached).
+		/**
+		 * Targets 404 pages that could be cached with no surrogate keys (i.e.
+		 * a drafted post going live after the 404 has been cached).
+		 */
 		self::clear_post_path( $post );
 	}
 
@@ -49,7 +51,7 @@ class Purger {
 	 * Purge the cache for a given post's path
 	 *
 	 * @param WP_Post $post Post object.
-	 * 
+	 *
 	 * @since 2.1.1
 	 */
 	public static function clear_post_path( $post ) {
@@ -57,9 +59,9 @@ class Purger {
 		$parsed_url = parse_url( $post_path );
 		$path = $parsed_url['path'];
 		$paths = [ trailingslashit( $path ), untrailingslashit( $path ) ];
-		
+
 		/**
-		 * Paths possibly without surrogate keys purges 
+		 * Paths possibly without surrogate keys purges
 		 *
 		 * @param array $paths    paths to clear.
 		 */
