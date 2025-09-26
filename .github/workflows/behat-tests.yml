@@ -1,0 +1,110 @@
+name: Test Behat
+
+on:
+  pull_request:
+  workflow_dispatch:
+  # Nightly at 00:00 UTC (CircleCI: "0 0 * * *")
+  schedule:
+    - cron: "0 0 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  test-behat:
+    # Skip scheduled runs unless the workflow file is on branch 'master'
+    if: github.event_name != 'schedule' || github.ref_name == 'master'
+    runs-on: ubuntu-latest
+
+    # Run all steps inside the CircleCI-equivalent container
+    container:
+      image: quay.io/pantheon-public/build-tools-ci:8.x-php8.2
+      options: --user root
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check if we need to run Behat
+        run: ./bin/maybe-skip-tests.sh
+
+      - name: Restore composer vendor cache
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: test-behat-dependencies-${{ hashFiles('composer.json') }}
+          restore-keys: |
+            test-behat-dependencies-
+
+      - name: Install PHP deps
+        run: composer install -n --prefer-dist
+
+      - name: Save composer vendor cache
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: vendor
+          key: test-behat-dependencies-${{ hashFiles('composer.json') }}
+
+      - name: Create Random Password
+        run: echo "$(openssl rand -hex 8)" > /tmp/WORDPRESS_ADMIN_PASSWORD
+
+      - name: Set Environment Variables
+        run: |
+          {
+            echo "TERMINUS_ENV=ci-${GITHUB_RUN_NUMBER}"
+            echo "TERMINUS_SITE=pantheon-advanced-page-cache"
+            echo "SITE_ENV=pantheon-advanced-page-cache.ci-${GITHUB_RUN_NUMBER}"
+            echo "WORDPRESS_ADMIN_USERNAME=pantheon"
+            echo "WORDPRESS_ADMIN_EMAIL=no-reply@getpantheon.com"
+            echo "WORDPRESS_ADMIN_PASSWORD=$(cat /tmp/WORDPRESS_ADMIN_PASSWORD)"
+          } >> "$GITHUB_ENV"
+
+      - name: Update SSH Config (disable host key checking for drush.in)
+        run: |
+          install -m 700 -d "$HOME/.ssh"
+          {
+            echo "Host *"
+            echo "  StrictHostKeyChecking no"
+          } >> "$HOME/.ssh/config"
+
+      - name: Set Composer GitHub OAuth Token (optional)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -z "${GITHUB_TOKEN:-}" ]; then
+            echo "GITHUB_TOKEN missing; assuming unauthenticated build"
+            exit 0
+          fi
+          echo "Setting GitHub OAuth token (output suppressed)"
+          { composer config -g github-oauth.github.com "$GITHUB_TOKEN"; } &>/dev/null
+
+      - name: Authenticate Terminus (optional)
+        env:
+          TERMINUS_TOKEN: ${{ secrets.TERMINUS_TOKEN }}
+        run: |
+          if [ -z "${TERMINUS_TOKEN:-}" ]; then
+            echo "TERMINUS_TOKEN missing; assuming unauthenticated build"
+            exit 0
+          fi
+          terminus auth:login --machine-token="$TERMINUS_TOKEN"
+
+      - name: Validate Fixture Version
+        run: |
+          wget -q https://gist.githubusercontent.com/jazzsequence/13f2493785ee8760323deae9ca96d09a/raw/19056fe59fd2dc2e2fb62051e96fb2d5bb63bfe3/validate-fixture-version.sh -O ./bin/validate-fixture-version.sh
+          chmod +x ./bin/validate-fixture-version.sh
+          ./bin/validate-fixture-version.sh
+
+      - name: Prepare Behat
+        run: ./bin/behat-prepare.sh
+
+      - name: Run Behat Tests
+        run: ./bin/behat-test.sh --strict
+
+      - name: Cleanup Behat
+        if: always()
+        run: ./bin/behat-cleanup.sh
