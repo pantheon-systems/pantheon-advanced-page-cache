@@ -64,13 +64,14 @@ jobs:
             echo "WORDPRESS_ADMIN_PASSWORD=$(cat /tmp/WORDPRESS_ADMIN_PASSWORD)"
           } >> "$GITHUB_ENV"
 
-      - name: Update SSH Config (disable host key checking for drush.in)
-        run: |
-          install -m 700 -d "$HOME/.ssh"
-          {
-            echo "Host *"
-            echo "  StrictHostKeyChecking no"
-          } >> "$HOME/.ssh/config"
+      # Configures SSH to automatically accept new host keys.
+      - name: Force SSH to ignore host keys
+        run: echo "GIT_SSH_COMMAND=ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" >> $GITHUB_ENV
+
+      - name: Install SSH key
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SITE_OWNER_SSH_PRIVATE_KEY }}
 
       - name: Set Composer GitHub OAuth Token (optional)
         env:
