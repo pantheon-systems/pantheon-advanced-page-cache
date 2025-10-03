@@ -97,8 +97,13 @@ jobs:
       - name: Validate Fixture Version
         run: |
           wget -q https://gist.githubusercontent.com/jazzsequence/13f2493785ee8760323deae9ca96d09a/raw/19056fe59fd2dc2e2fb62051e96fb2d5bb63bfe3/validate-fixture-version.sh -O ./bin/validate-fixture-version.sh
-          # Fix the version_compare calls to echo the result instead of exiting with it
+
+          # Fix 1: Change PHP exit code behavior (from previous answer)
           sed -i "s/exit(version_compare/echo version_compare/g" ./bin/validate-fixture-version.sh
+
+          # Fix 2: Add --accept-upstream flag to the terminus update command to auto-confirm
+          sed -i 's/terminus upstream:updates:apply/terminus upstream:updates:apply --accept-upstream/g' ./bin/validate-fixture-version.sh
+
           chmod +x ./bin/validate-fixture-version.sh
           ./bin/validate-fixture-version.sh
 
