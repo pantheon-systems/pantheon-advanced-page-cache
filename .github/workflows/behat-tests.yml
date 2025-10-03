@@ -96,16 +96,16 @@ jobs:
 
       - name: Validate Fixture Version
         run: |
-          wget -q https://gist.githubusercontent.com/jazzsequence/13f2493785ee8760323deae9ca96d09a/raw/19056fe59fd2dc2e2fb62051e96fb2d5bb63bfe3/validate-fixture-version.sh -O ./bin/validate-fixture-version.sh
-
+          wget -q https://gist.githubusercontent.com/jazzsequence/13f2493d09a/raw/19056fe59fd2dc2e2fb62051e96fb2d5bb63bfe3/validate-fixture-version.sh -O ./bin/validate-fixture-version.sh
+          
           # Fix 1: Change PHP exit code behavior
           sed -i "s/exit(version_compare/echo version_compare/g" ./bin/validate-fixture-version.sh
 
-          # Fix 2: Add missing argument and flag to the terminus update command
-          sed -i 's/terminus upstream:updates:apply/terminus upstream:updates:apply --accept-upstream "${TERMINUS_SITE}".dev/g' ./bin/validate-fixture-version.sh
+          # Fix 2: Add flags/args to upstream:updates:apply and add --verbose for debugging
+          sed -i 's/terminus upstream:updates:apply/terminus upstream:updates:apply --verbose --accept-upstream "${TERMINUS_SITE}".dev/g' ./bin/validate-fixture-version.sh
 
-          # Fix 3: Ensure the environment is in Git mode before applying updates
-          sed -i '/echo "Applying upstream updates on/a \\ \ \ \ \ terminus connection:set "${TERMINUS_SITE}".dev git' ./bin/validate-fixture-version.sh
+          # Fix 3: Add connection:set to ensure Git mode and add --verbose for debugging
+          sed -i '/echo "Applying upstream updates on/a \\ \ \ \ \ terminus connection:set --verbose "${TERMINUS_SITE}".dev git' ./bin/validate-fixture-version.sh
 
           chmod +x ./bin/validate-fixture-version.sh
           ./bin/validate-fixture-version.sh
