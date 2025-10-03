@@ -146,6 +146,11 @@ jobs:
                   terminus connection:set "${TERMINUS_SITE}".dev git
                   echo "Applying upstream updates on ${TERMINUS_SITE}.dev"
                   terminus upstream:updates:apply --accept-upstream "${TERMINUS_SITE}".dev
+
+                  # Re-check the version after the update
+                  echo "Re-checking fixture version after update..."
+                  FIXTURE_VERSION=$(terminus wp "${TERMINUS_SITE}.dev" -- core version)
+                  echo "New Fixture Version is: ${FIXTURE_VERSION}"
               fi
 
               local VERSION_COMPARE
