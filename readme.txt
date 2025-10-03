@@ -2,7 +2,7 @@
 Contributors: getpantheon, danielbachhuber, kporras07, jspellman, jazzs3quence, ryanshoover, rwagner00, pwtyler
 Tags: pantheon, cdn, cache
 Requires at least: 6.4
-Tested up to: 6.8.2
+Tested up to: 6.8.3
 Requires PHP: 7.4
 Stable tag: 2.1.2-dev
 License: GPLv2 or later
