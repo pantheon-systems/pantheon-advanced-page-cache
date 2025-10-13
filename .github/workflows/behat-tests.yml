@@ -83,11 +83,6 @@ jobs:
           echo "Setting GitHub OAuth token (output suppressed)"
           { composer config -g github-oauth.github.com "$GITHUB_TOKEN"; } &>/dev/null
 
-      - name: Install terminus
-        uses: pantheon-systems/terminus-github-actions@v1
-        with:
-          pantheon-machine-token: ${{ secrets.TERMINUS_TOKEN }}
-
       - name: Validate plugin version
         uses: jazzsequence/action-validate-plugin-version@v1
         with:
