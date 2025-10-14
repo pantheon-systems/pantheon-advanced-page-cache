@@ -6,7 +6,7 @@
 **Tested up to:** 6.8.3
 **Requires PHP:** 7.4
 **Stable tag:** 2.1.2-dev
-**License:** GPLv2 or later 
+**License:** GPLv2 or later
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
 Automatically clear related pages from Pantheon's Edge when you update content. High TTL. Fresh content. Visitors never wait.
