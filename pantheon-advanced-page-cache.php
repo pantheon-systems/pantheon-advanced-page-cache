@@ -154,11 +154,6 @@ spl_autoload_register(
 add_action( 'plugins_loaded', 'pantheon_bootstrap_namespaces' );
 
 /**
- * Init namespaced files.
- */
-add_action( 'plugins_loaded', 'pantheon_bootstrap_namespaces' );
-
-/**
  * Registers relevant UI
  */
 add_action( 'admin_bar_menu', [ 'Pantheon_Advanced_Page_Cache\User_Interface', 'action_admin_bar_menu' ], 99 ); // End of the stack.
