@@ -318,11 +318,8 @@ class Purger {
 			if ( $terms ) {
 				foreach ( $terms as $term ) {
 					$keys[] = 'term-' . $term->term_id;
-					// Add REST API surrogate key for term to ensure REST endpoints are purged.
-					$keys[] = 'rest-term-' . $term->term_id;
 				}
 				$keys[] = 'term-huge';
-				$keys[] = 'rest-term-huge';
 			}
 		}
 
