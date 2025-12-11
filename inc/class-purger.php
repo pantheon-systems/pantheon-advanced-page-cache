@@ -326,6 +326,8 @@ class Purger {
 			'404',
 			'feed',
 			'post-huge',
+			'rest-post-' . $post->ID,
+			'rest-post-huge',
 		];
 
 		if ( post_type_supports( $post->post_type, 'author' ) ) {
@@ -348,8 +350,10 @@ class Purger {
 			if ( $terms ) {
 				foreach ( $terms as $term ) {
 					$keys[] = 'term-' . $term->term_id;
+					$keys[] = 'rest-term-' . $term->term_id;
 				}
 				$keys[] = 'term-huge';
+				$keys[] = 'rest-term-huge';
 			}
 		}
 
