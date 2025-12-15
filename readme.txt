@@ -380,6 +380,8 @@ See [CONTRIBUTING.md](https://github.com/pantheon-systems/wp-saml-auth/blob/mast
 == Changelog ==
 
 = 2.1.2-dev =
+* Confirmed PHP 8.4 compatibility [[#333](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/333)]
+* Confirmed WordPress 6.9 compatibility [[#355](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/355)]
 * Adding rest-term-* keys to purge_post_with_related() for published and draft posts. ([357](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/357)) 
 
 = 2.1.1 (25 February 2025) =
