@@ -415,9 +415,10 @@ See [CONTRIBUTING.md](https://github.com/pantheon-systems/pantheon-advanced-page
 
 ## Changelog ##
 
-### 2.1.2 (December 10, 2025) ###
+### 2.1.2 (December 16, 2025) ###
 * Confirmed PHP 8.4 compatibility [[#333](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/333)]
 * Confirmed WordPress 6.9 compatibility [[#355](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/355)]
+* Adding rest-term-* keys to purge_post_with_related() for published and draft posts. ([#357](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/357)) 
 
 ### 2.1.1 (25 February 2025) ###
 * Fixes 404 pages remaining cached after a post has been published ([#315](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/315))
