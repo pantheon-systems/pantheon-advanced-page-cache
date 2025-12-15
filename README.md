@@ -3,7 +3,7 @@
 **Contributors:** [getpantheon](https://profiles.wordpress.org/getpantheon), [danielbachhuber](https://profiles.wordpress.org/danielbachhuber), [kporras07](https://profiles.wordpress.org/kporras07), [jspellman](https://profiles.wordpress.org/jspellman/), [jazzs3quence](https://profiles.wordpress.org/jazzs3quence/), [ryanshoover](https://profiles.wordpress.org/ryanshoover/), [rwagner00](https://profiles.wordpress.org/rwagner00/), [pwtyler](https://profiles.wordpress.org/pwtyler)  
 **Tags:** pantheon, cdn, cache  
 **Requires at least:** 6.4  
-**Tested up to:** 6.8.2  
+**Tested up to:** 6.9  
 **Requires PHP:** 7.4  
 **Stable tag:** 2.1.2-dev  
 **License:** GPLv2 or later  
@@ -415,7 +415,10 @@ See [CONTRIBUTING.md](https://github.com/pantheon-systems/pantheon-advanced-page
 
 ## Changelog ##
 
-### 2.1.2-dev
+### 2.1.2-dev ###
+* Confirmed PHP 8.4 compatibility [[#333](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/333)]
+* Confirmed WordPress 6.9 compatibility [[#355](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/355)]
+* Adding rest-term-* keys to purge_post_with_related() for published and draft posts. ([357](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/357)) 
 
 ### 2.1.1 (25 February 2025) ###
 * Fixes 404 pages remaining cached after a post has been published ([#315](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/315))
