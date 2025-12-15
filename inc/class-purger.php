@@ -46,12 +46,13 @@ class Purger {
 			}
 		}
 
-		if ( $has_terms ) {
-			$keys[] = 'term-huge';
-			$keys[] = 'rest-term-huge';
-			$keys = pantheon_wp_prefix_surrogate_keys_with_blog_id( $keys );
-			pantheon_wp_clear_edge_keys( $keys );
+		if ( ! $has_terms ) {
+			return;
 		}
+		$keys[] = 'term-huge';
+		$keys[] = 'rest-term-huge';
+		$keys = pantheon_wp_prefix_surrogate_keys_with_blog_id( $keys );
+		pantheon_wp_clear_edge_keys( $keys );
 	}
 
 	/**
