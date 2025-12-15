@@ -415,7 +415,8 @@ See [CONTRIBUTING.md](https://github.com/pantheon-systems/pantheon-advanced-page
 
 ## Changelog ##
 
-### 2.1.2-dev
+### 2.1.2-dev ###
+* Adding rest-term-* keys to purge_post_with_related() for published and draft posts. ([357](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/357)) 
 
 ### 2.1.1 (25 February 2025) ###
 * Fixes 404 pages remaining cached after a post has been published ([#315](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/315))
