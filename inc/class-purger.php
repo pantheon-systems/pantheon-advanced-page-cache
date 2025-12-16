@@ -18,10 +18,41 @@ class Purger {
 	 * @param object  $post    The post object.
 	 */
 	public static function action_wp_insert_post( $post_id, $post ) {
-		if ( 'publish' !== $post->post_status ) {
+		if ( 'publish' === $post->post_status ) {
+			self::purge_post_with_related( $post );
 			return;
 		}
-		self::purge_post_with_related( $post );
+
+		// For non-published posts, still purge term keys if the post has taxonomies.
+		$taxonomies = wp_list_filter(
+			get_object_taxonomies( $post->post_type, 'objects' ),
+			[ 'public' => true ]
+		);
+
+		if ( empty( $taxonomies ) ) {
+			return;
+		}
+
+		$keys = [];
+		$has_terms = false;
+		foreach ( $taxonomies as $taxonomy ) {
+			$terms = get_the_terms( $post, $taxonomy->name );
+			if ( $terms ) {
+				$has_terms = true;
+				foreach ( $terms as $term ) {
+					$keys[] = 'term-' . $term->term_id;
+					$keys[] = 'rest-term-' . $term->term_id;
+				}
+			}
+		}
+
+		if ( ! $has_terms ) {
+			return;
+		}
+		$keys[] = 'term-huge';
+		$keys[] = 'rest-term-huge';
+		$keys = pantheon_wp_prefix_surrogate_keys_with_blog_id( $keys );
+		pantheon_wp_clear_edge_keys( $keys );
 	}
 
 	/**
@@ -39,8 +70,10 @@ class Purger {
 		if ( 'publish' === $old_status ) {
 			return;
 		}
-		// Targets 404 pages that could be cached with no surrogate keys (i.e.
-		// a drafted post going live after the 404 has been cached).
+		/**
+		 * Targets 404 pages that could be cached with no surrogate keys (i.e.
+		 * a drafted post going live after the 404 has been cached).
+		 */
 		self::clear_post_path( $post );
 	}
 
@@ -49,17 +82,17 @@ class Purger {
 	 * Purge the cache for a given post's path
 	 *
 	 * @param WP_Post $post Post object.
-	 * 
-	 * @since 2.1.1-dev
+	 *
+	 * @since 2.1.1
 	 */
 	public static function clear_post_path( $post ) {
 		$post_path = get_permalink( $post->ID );
 		$parsed_url = parse_url( $post_path );
 		$path = $parsed_url['path'];
 		$paths = [ trailingslashit( $path ), untrailingslashit( $path ) ];
-		
+
 		/**
-		 * Paths possibly without surrogate keys purges 
+		 * Paths possibly without surrogate keys purges
 		 *
 		 * @param array $paths    paths to clear.
 		 */
@@ -294,6 +327,8 @@ class Purger {
 			'404',
 			'feed',
 			'post-huge',
+			'rest-post-' . $post->ID,
+			'rest-post-huge',
 		];
 
 		if ( post_type_supports( $post->post_type, 'author' ) ) {
@@ -316,8 +351,10 @@ class Purger {
 			if ( $terms ) {
 				foreach ( $terms as $term ) {
 					$keys[] = 'term-' . $term->term_id;
+					$keys[] = 'rest-term-' . $term->term_id;
 				}
 				$keys[] = 'term-huge';
+				$keys[] = 'rest-term-huge';
 			}
 		}
 
