@@ -5,7 +5,7 @@
 **Requires at least:** 6.4  
 **Tested up to:** 6.9  
 **Requires PHP:** 7.4  
-**Stable tag:** 2.1.2  
+**Stable tag:** 2.1.3-dev  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -414,6 +414,8 @@ Pantheon Advanced Page Cache integrates with WordPress plugins, including:
 See [CONTRIBUTING.md](https://github.com/pantheon-systems/pantheon-advanced-page-cache/blob/master/CONTRIBUTING.md) for information on contributing.
 
 ## Changelog ##
+
+### 2.1.3-dev ###
 
 ### 2.1.2 (December 16, 2025) ###
 * Confirmed PHP 8.4 compatibility [[#333](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/333)]
