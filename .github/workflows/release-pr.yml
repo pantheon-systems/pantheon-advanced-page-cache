@@ -2,6 +2,7 @@ name: Draft Release PR
 on:
   push:
     branches:
+      # Only run on develop branch
       - develop
 
 permissions:
@@ -12,10 +13,12 @@ jobs:
   draft-release:
     name: Draft Release PR
     runs-on: ubuntu-latest
+    # Additional safety check: only run on develop branch
+    if: github.ref == 'refs/heads/develop'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
       - name: Create Draft Release PR
-        uses: pantheon-systems/plugin-release-actions/release-pr@main
+        uses: pantheon-systems/plugin-release-actions/release-pr@a3839d25efa9d0d4270c088702c2072a2e49edde # main
         with:
           gh_token: ${{ github.token }}
           readme_md: README.md

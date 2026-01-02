@@ -2,7 +2,9 @@ name: Build, Tag and Release
 on:
   push:
     branches:
+      # Only run on production branches
       - release
+      - main
 
 permissions:
   pull-requests: write
@@ -12,10 +14,12 @@ jobs:
   tag:
     name: Create Tag and Draft Release
     runs-on: ubuntu-latest
+    # Additional safety check: only run on production branches
+    if: github.ref == 'refs/heads/release' || github.ref == 'refs/heads/main'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
       - name: Build, Tag & Release
-        uses: pantheon-systems/plugin-release-actions/build-tag-release@main
+        uses: pantheon-systems/plugin-release-actions/build-tag-release@a3839d25efa9d0d4270c088702c2072a2e49edde # main
         with:
           gh_token: ${{ github.token }}
           readme_md: README.md

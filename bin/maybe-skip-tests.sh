@@ -12,14 +12,20 @@ ignored_paths=(
   phpunit.xml.dist
   README.md
   readme.txt
-  .circleci/config.yml
+  .github/workflows/behat-test.yml
+  .github/workflows/lint-test.yml
+  .github/workflows/build-tag-release.yml
+  .github/workflows/release-pr.yml
+  .github/workflows/wordpress-plugin-deploy.yml
+  .github/workflows/composer-npm-diff.yml
+  .github/workflows/validate-actions-workflows.yml
+  .github/workflows/validate-plugin-version.yml
   bin/maybe-skip-tests.sh
   bin/helpers.sh
   bin/install-local-tests.sh
   bin/install-wp-tests.sh
   bin/phpunit-test.sh
   .wordpress-org/*
-  .github/*
   tests/phpunit/*
 )
 
@@ -48,5 +54,7 @@ done
 
 if [ "$should_run_tests" = false ]; then
   echo "Only ignored files modified. Skipping Behat tests."
-  circleci-agent step halt
+  # Exit with failure to skip tests in GitHub Actions
+  # The workflow will handle this with continue-on-error
+  exit 1
 fi
