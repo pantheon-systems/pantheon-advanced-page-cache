@@ -94,20 +94,3 @@ jobs:
           composer install
       - name: Run PHPUnit
         run: bash ./bin/phpunit-test.sh
-  build-assets:
-    name: Build Node Assets
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 'lts/*'
-          cache: 'npm'
-      - name: Install dependencies
-        run: npm ci
-      - name: Build assets
-        run: npm run build
