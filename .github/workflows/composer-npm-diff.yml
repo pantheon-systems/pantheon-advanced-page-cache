@@ -3,7 +3,7 @@ on:
   pull_request:
     paths:
       - 'composer.lock' # Triggers when PHP dependencies change
-      - 'package-lock.json'  # Triggers when JS/CSS dependencies change
+      # - 'package-lock.json'  will be removed in #362
 permissions:
   contents: write
   pull-requests: write
