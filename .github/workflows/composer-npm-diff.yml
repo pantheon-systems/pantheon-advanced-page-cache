@@ -2,8 +2,8 @@ name: Composer and NPM Package Diff
 on:
   pull_request:
     paths:
-      - 'composer.lock'
-    #  - 'package-lock.json'
+      - 'composer.lock' # Triggers when PHP dependencies change
+      - 'package-lock.json'  # Triggers when JS/CSS dependencies change
 permissions:
   contents: write
   pull-requests: write
@@ -30,15 +30,22 @@ jobs:
   npm-diff:
     name: NPM Lockfile Diff
     runs-on: ubuntu-latest
-    continue-on-error: true
+    continue-on-error: true #if this job fails, won't block the PRs, just won't post the NPM diff comment.
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
       - name: Compile NPM packages
         run: npm ci
-      - name: NPM Lockfile Changes
-        uses: codepunkt/npm-lockfile-changes@main
+      - name: NPM Lockfile Changes (thin-edge)
+        uses: thin-edge/action-npm-lockfile-changes@v2
         with:
           token: ${{ github.token }}
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v4
