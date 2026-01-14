@@ -21,7 +21,7 @@ The `release` branch matches the latest stable release deployed to [wp.org](wp.o
 1. Merge your feature branch into `main` with a PR. This PR should include any necessary updates to the changelog in readme.txt and README.md. Features should be squash merged. 
 1. From main, checkout a new branch `release_X.Y.Z`.
 1. Make a release commit: 
-    * In `package.json`, `README.md`, `readme.txt`, and `pantheon-hud.php`, remove the `-dev`  from the version number. 
+    * In `package.json`, `README.md`, `readme.txt`, and `pantheon-advanced-page-cache.php`, remove the `-dev`  from the version number. 
     * For the README files, the version number must be updated both at the top of the document as well as the changelog. 
     * Add the date to the  `** X.Y.Z **` heading in the changelogs in `README.md`, `readme.txt`, and any other appropriate location. 
     * Commit these changes with the message `Release X.Y.Z`
