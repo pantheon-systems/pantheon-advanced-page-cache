@@ -16,6 +16,7 @@ We prefer to squash commits (i.e. avoid merge PRs) from a feature branch into `m
 
 The `release` branch matches the latest stable release deployed to [wp.org](wp.org).
 
+
 ## Release Process
 
 1. Merge your feature branch into `main` with a PR. This PR should include any necessary updates to the changelog in readme.txt and README.md. Features should be squash merged. 
