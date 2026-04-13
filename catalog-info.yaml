@@ -1,0 +1,12 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: pantheon-advanced-page-cache
+  description: Plugin to make the most of Pantheon's Global CDN with advanced page caching options.
+  annotations:
+    github.com/project-slug: pantheon-systems/pantheon-advanced-page-cache
+spec:
+  type: service
+  lifecycle: production
+  owner: site-experience
