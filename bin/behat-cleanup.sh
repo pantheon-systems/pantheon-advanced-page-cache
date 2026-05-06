@@ -25,4 +25,8 @@ set -ex
 ###
 # Delete the environment used for this test run.
 ###
-terminus multidev:delete $SITE_ENV --delete-branch --yes
+if terminus env:info $SITE_ENV > /dev/null 2>&1; then
+	terminus multidev:delete $SITE_ENV --delete-branch --yes
+else
+	echo "Environment $SITE_ENV does not exist; nothing to clean up."
+fi

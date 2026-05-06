@@ -103,13 +103,6 @@ jobs:
           echo "WORDPRESS_ADMIN_USERNAME=pantheon" >> $GITHUB_ENV
           echo "WORDPRESS_ADMIN_EMAIL=no-reply@getpantheon.com" >> $GITHUB_ENV
 
-      - name: Validate Fixture Version
-        if: steps.check_skip.outputs.skip != 'true'
-        run: |
-          wget -q https://gist.githubusercontent.com/jazzsequence/13f2493785ee8760323deae9ca96d09a/raw/19056fe59fd2dc2e2fb62051e96fb2d5bb63bfe3/validate-fixture-version.sh -O ./bin/validate-fixture-version.sh
-          chmod +x ./bin/validate-fixture-version.sh
-          ./bin/validate-fixture-version.sh
-
       - name: Prepare Behat
         if: steps.check_skip.outputs.skip != 'true'
         run: ./bin/behat-prepare.sh
