@@ -67,8 +67,7 @@ git commit -m "Include Pantheon Advanced Page Cache and its configuration files"
 git push
 
 # Wait for Pantheon to process the git push and initialize the environment
-sleep 10
-terminus workflow:wait "$SITE_ENV" --max=5 || true
+terminus workflow:wait "$SITE_ENV" --max=300
 
 ###
 # Set up WordPress, theme, and plugins for the test run
