@@ -36,7 +36,7 @@ jobs:
         key: test-lint-dependencies-{{ checksum "composer.json" }}
         restore-keys: test-lint-dependencies-{{ checksum "composer.json" }}
     - name: Setup PHP
-      uses: shivammathur/setup-php@d59004228537ca90c8dca680592a08a675bf52b6 # v2
+      uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1 # v2
       with:
         php-version: 8.3
     - name: Install dependencies
@@ -74,7 +74,7 @@ jobs:
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
       - name: Setup PHP
-        uses: shivammathur/setup-php@d59004228537ca90c8dca680592a08a675bf52b6 # v2
+        uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1 # v2
         with:
           php-version: ${{ matrix.php_version }}
           extensions: mysqli, zip, imagick
