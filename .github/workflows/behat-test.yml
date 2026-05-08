@@ -1,6 +1,9 @@
 name: Behat Tests
 
 on:
+  push:
+    branches:
+      - main
   schedule:
     # Run nightly at midnight UTC
     - cron: '0 0 * * *'
@@ -12,6 +15,7 @@ on:
       - ready_for_review
     branches:
       - '**'
+  workflow_dispatch:
 
 jobs:
   test-behat:
@@ -80,15 +84,14 @@ jobs:
 
       - name: Set GitHub OAuth Token
         if: steps.check_skip.outputs.skip != 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if [ -z "${{ secrets.GITHUB_TOKEN }}" ]; then
+          if [ -z "${GITHUB_TOKEN}" ]; then
             echo "GITHUB_TOKEN not available; assuming unauthenticated build"
             exit 0
           fi
-          echo "Setting GitHub OAuth token with suppressed output"
-          {
-            composer config -g github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
-          } &> /dev/null
+          { composer config -g github-oauth.github.com "${GITHUB_TOKEN}"; } &>/dev/null
 
       - name: Create Random Password
         if: steps.check_skip.outputs.skip != 'true'

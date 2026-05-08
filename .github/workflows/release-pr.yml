@@ -2,8 +2,7 @@ name: Draft Release PR
 on:
   push:
     branches:
-      # Only run on develop branch
-      - develop
+      - main
 
 permissions:
   pull-requests: write
@@ -13,8 +12,6 @@ jobs:
   draft-release:
     name: Draft Release PR
     runs-on: ubuntu-latest
-    # Additional safety check: only run on develop branch
-    if: github.ref == 'refs/heads/develop'
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
       - name: Create Draft Release PR
