@@ -20,13 +20,15 @@ if [ -z "$WORDPRESS_ADMIN_USERNAME" ] || [ -z "$WORDPRESS_ADMIN_PASSWORD" ]; the
 	exit 1
 fi
 
-set -ex
+set -x
 
 ###
 # Delete the environment used for this test run.
 ###
 if terminus env:info $SITE_ENV > /dev/null 2>&1; then
-	terminus multidev:delete $SITE_ENV --delete-branch --yes
+	if ! terminus multidev:delete $SITE_ENV --delete-branch --yes; then
+		echo "::warning::Failed to delete multidev $SITE_ENV. Check the environment in the Pantheon dashboard: https://dashboard.pantheon.io/sites/${TERMINUS_SITE}#${TERMINUS_ENV}/code"
+	fi
 else
 	echo "Environment $SITE_ENV does not exist; nothing to clean up."
 fi
