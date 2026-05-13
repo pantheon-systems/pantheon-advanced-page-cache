@@ -106,20 +106,11 @@ jobs:
           echo "WORDPRESS_ADMIN_USERNAME=pantheon" >> $GITHUB_ENV
           echo "WORDPRESS_ADMIN_EMAIL=no-reply@getpantheon.com" >> $GITHUB_ENV
 
-      # TODO: Centralize this check across all WP plugin repos (solr-power, wp-saml-auth, etc.)
-      - name: Update Fixture Site if Behind
+      - name: Validate Fixture Version
         if: steps.check_skip.outputs.skip != 'true'
-        run: |
-          FIXTURE_VERSION=$(terminus wp "${TERMINUS_SITE}.dev" -- core version)
-          CURRENT_WP_VERSION=$(curl -s https://api.wordpress.org/core/version-check/1.7/ | jq -r '.offers[0].current')
-          echo "Fixture Version: ${FIXTURE_VERSION}"
-          echo "Current WordPress Version: ${CURRENT_WP_VERSION}"
-          if php -r "exit(version_compare('${FIXTURE_VERSION}', '${CURRENT_WP_VERSION}', '<') ? 0 : 1);"; then
-            echo "Fixture is behind, applying upstream updates..."
-            terminus upstream:updates:apply "${TERMINUS_SITE}.dev"
-          else
-            echo "Fixture is up to date."
-          fi
+        uses: pantheon-systems/plugin-release-actions/validate-fixture-version@0a7c5c2805e2874ae5265bc05ea1a3bc0e5e912c # main
+        with:
+          terminus_site: ${{ env.TERMINUS_SITE }}
 
       - name: Prepare Behat
         if: steps.check_skip.outputs.skip != 'true'
