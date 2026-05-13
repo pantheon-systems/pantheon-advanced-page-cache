@@ -27,7 +27,7 @@ jobs:
     if: (github.event.pull_request.head.repo.full_name == github.repository || github.event_name == 'schedule') && (github.event.pull_request.draft == false || github.event_name == 'schedule')
     steps:
       - name: Checkout
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
         with:
           fetch-depth: 2
 
@@ -52,7 +52,7 @@ jobs:
 
       - name: Install Terminus
         if: steps.check_skip.outputs.skip != 'true'
-        uses: pantheon-systems/terminus-github-actions@8e024bd89ff46ed2aa4e0663c6b54c87a94344f8 # v1
+        uses: pantheon-systems/terminus-github-actions@8e024bd89ff46ed2aa4e0663c6b54c87a94344f8 # v1.2.7
         with:
           pantheon-machine-token: ${{ secrets.TERMINUS_TOKEN }}
 
@@ -71,7 +71,7 @@ jobs:
 
       - name: Cache Composer dependencies
         if: steps.check_skip.outputs.skip != 'true'
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
           path: vendor
           key: test-behat-dependencies-${{ hashFiles('composer.json') }}

@@ -15,7 +15,7 @@ jobs:
     # Additional safety check: only run on production branches
     if: github.ref == 'refs/heads/release'
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Build, Tag & Release
         uses: pantheon-systems/plugin-release-actions/build-tag-release@a3839d25efa9d0d4270c088702c2072a2e49edde # main
         with:
