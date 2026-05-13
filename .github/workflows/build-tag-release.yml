@@ -2,9 +2,7 @@ name: Build, Tag and Release
 on:
   push:
     branches:
-      # Only run on production branches
       - release
-      - main
 
 permissions:
   pull-requests: write
@@ -15,7 +13,7 @@ jobs:
     name: Create Tag and Draft Release
     runs-on: ubuntu-latest
     # Additional safety check: only run on production branches
-    if: github.ref == 'refs/heads/release' || github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/release'
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
       - name: Build, Tag & Release
