@@ -512,9 +512,7 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 		$request        = new WP_REST_Request( 'GET', '/wp/v2/settings' );
 		$response       = $this->server->dispatch( $request );
 		$expected_count = 15;
-		if ( version_compare( $GLOBALS['wp_version'], '7.0-alpha', '>=' ) ) {
-			$expected_count = 21;
-		} elseif ( version_compare( $GLOBALS['wp_version'], '6.0.3', '>=' ) ) {
+		if ( version_compare( $GLOBALS['wp_version'], '6.0.3', '>=' ) ) {
 			$expected_count = 20;
 		} elseif ( version_compare( $GLOBALS['wp_version'], '5.9-alpha', '>=' ) ) {
 			$expected_count = 17;
@@ -559,9 +557,6 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 			];
 		}
 		if ( ! is_multisite() ) {
-			if ( version_compare( $GLOBALS['wp_version'], '7.0-alpha', '>=' ) ) {
-				$expected_values[] = 'rest-setting-wp_collaboration_enabled';
-			}
 			if ( version_compare( $GLOBALS['wp_version'], '6.0.3', '>=' ) ) {
 				array_splice(
 					$expected_values,
@@ -585,9 +580,6 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 				);
 			}
 		} else {
-			if ( version_compare( $GLOBALS['wp_version'], '7.0-alpha', '>=' ) ) {
-				$expected_values[] = 'blog-1-rest-setting-wp_collaboration_enabled';
-			}
 			if ( version_compare( $GLOBALS['wp_version'], '6.0.3', '>=' ) ) {
 				array_splice(
 					$expected_values,
