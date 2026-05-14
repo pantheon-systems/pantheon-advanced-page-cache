@@ -1,11 +1,10 @@
-name: Composer and NPM Package Diff
+name: Composer Package Diff
 on:
   pull_request:
     paths:
       - 'composer.lock'
-    #  - 'package-lock.json'
 permissions:
-  contents: write
+  contents: read
   pull-requests: write
 jobs:
   composer-diff:
@@ -27,20 +26,3 @@ jobs:
             <strong>Composer Changes</strong>
 
             ${{ steps.composer_diff.outputs.composer_diff }}
-  # Removing because the workflow fails for some unknown reason, see https://github.com/pantheon-systems/pantheon-advanced-page-cache/actions/runs/9228002744/job/25391128483
-  # There's no support for this action, so we might need to build something new.
-            # npm-diff:
-  #   name: NPM Lockfile Diff
-  #   runs-on: ubuntu-latest
-  #   continue-on-error: true
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
-  #       with:
-  #         fetch-depth: 0
-  #     - name: Compile NPM packages
-  #       run: npm ci
-  #     - name: NPM Lockfile Changes
-  #       uses: codepunkt/npm-lockfile-changes@b40543471c36394409466fdb277a73a0856d7891 # main 2022-05-11T20:40:19Z
-  #       with:
-  #         token: ${{ github.token }}

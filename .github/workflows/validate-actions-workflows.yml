@@ -7,6 +7,9 @@ on:
       - synchronize
       - ready_for_review
 
+permissions:
+  contents: read
+
 jobs:
   validate-workflows:
     name: Validate GitHub Actions workflows

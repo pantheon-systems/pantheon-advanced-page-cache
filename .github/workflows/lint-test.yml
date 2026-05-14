@@ -12,6 +12,9 @@ on:
     branches:
       - '**'
 
+permissions:
+  contents: read
+
 jobs:
   validate-readme-spacing:
     name: Validate README Spacing
@@ -46,7 +49,7 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
-    - uses: pantheon-systems/phpcompatibility-action@bd72eb001d4fb9817c9d6e1a157a71e287f3ff80 # dev 2023-10-04T16:54:18Z
+    - uses: pantheon-systems/phpcompatibility-action@bd72eb001d4fb9817c9d6e1a157a71e287f3ff80 # dev
       with:
         paths: ${{ github.workspace }}/*.php ${{ github.workspace }}/inc/*.php
         test-versions: 8.0-
@@ -84,7 +87,7 @@ jobs:
           key: test-dependencies-{{ checksum "composer.json" }}
           restore-keys: test-dependencies-{{ checksum "composer.json" }}
       - name: Setup WP-CLI
-        uses: godaddy-wordpress/setup-wp-cli@80c9a89bd347082429795c0f12acf567e2c390d4 # 1 2022-10-04T19:52:20Z
+        uses: godaddy-wordpress/setup-wp-cli@714a71f1679c00f5e66cb96bbe55b5bc14ef514c # 1
       - name: Install Composer dependencies
         run: |
           if [ ${{ matrix.php_version }} = "7.4" ]; then
