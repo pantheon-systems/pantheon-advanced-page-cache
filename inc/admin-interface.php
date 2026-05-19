@@ -123,7 +123,7 @@ function get_pantheon_cache_filter_callback() {
 	// Count the callbacks and if there's only one, return the name (if able).
 	$callbacks_count = count( $callback_functions );
 	if ( $callbacks_count === 1 ) {
-		return stripos( $callback_functions[0], 'an anonymous function' ) === false ? "<code>{$callback_functions[0]}<code>" : $callback_functions[0];
+		return stripos( $callback_functions[0], 'an anonymous function' ) === false ? "<code>{$callback_functions[0]}</code>" : $callback_functions[0];
 	}
 
 	// If there are multiple callbacks, format the output.
