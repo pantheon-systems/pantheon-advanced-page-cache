@@ -416,6 +416,7 @@ See [CONTRIBUTING.md](https://github.com/pantheon-systems/pantheon-advanced-page
 ## Changelog ##
 
 ### 2.1.3-dev ###
+* Compatibility: Supports PHP 8.5
 
 ### 2.1.2 (December 16, 2025) ###
 * Confirmed PHP 8.4 compatibility [[#333](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/333)]
