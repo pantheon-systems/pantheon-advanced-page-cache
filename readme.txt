@@ -1,5 +1,5 @@
 === Pantheon Advanced Page Cache ===
-Contributors: getpantheon, danielbachhuber, kporras07, jspellman, jazzs3quence, ryanshoover, rwagner00, pwtyler
+Contributors: getpantheon, danielbachhuber, kporras07, jspellman, jazzs3quence, ryanshoover, rwagner00, pwtyler, metasim
 Tags: pantheon, cdn, cache
 Requires at least: 6.4
 Tested up to: 6.9
