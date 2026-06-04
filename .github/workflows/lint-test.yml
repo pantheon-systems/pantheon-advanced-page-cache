@@ -91,7 +91,7 @@ jobs:
       - name: Install Composer dependencies
         run: |
           if [ ${{ matrix.php_version }} = "7.4" ]; then
-            composer require pantheon-systems/pantheon-wp-coding-standards:^2.0 --no-update
+            composer require pantheon-systems/pantheon-wp-coding-standards:^2.0 --dev --no-update
             composer update
           fi
           composer install
