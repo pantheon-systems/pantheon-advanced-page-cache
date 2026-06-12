@@ -60,7 +60,7 @@ jobs:
         if: steps.check_skip.outputs.skip != 'true'
         uses: webfactory/ssh-agent@dc588b651fe13675774614f8e6a936a468676387 # v0.9.0
         with:
-          ssh-private-key: ${{ secrets.SITE_OWNER_SSH_PRIVATE_KEY }}
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           log-public-key: true
 
       - name: Configure SSH (no strict host key checking)
