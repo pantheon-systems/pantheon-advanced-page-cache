@@ -42,6 +42,20 @@
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true,
       "pantheon-systems/wpunit-helpers": true
+    },
+    "audit": {
+      "ignore": {
+        "PKSA-93qv-9n9h-6k6p": "Dev-only: guzzlehttp/guzzle via behat test deps. No prod exposure.",
+        "PKSA-k22t-f949-t9g6": "Dev-only: guzzlehttp/guzzle via behat test deps. No prod exposure.",
+        "PKSA-7qs6-zvnz-h66r": "Dev-only: guzzlehttp/psr7 via behat test deps. No prod exposure.",
+        "PKSA-gm5x-j3mz-71n9": "Dev-only: guzzlehttp/psr7 via behat test deps. No prod exposure.",
+        "PKSA-jj5t-2zs1-dcfm": "Dev-only: guzzlehttp/psr7 via behat test deps. No prod exposure.",
+        "PKSA-5r1g-c7b7-y1zg": "Dev-only: symfony/dom-crawler via behat test deps. No prod exposure.",
+        "PKSA-dwsq-ppd2-mb1x": "Dev-only: symfony/polyfill-intl-idn via behat test deps. No prod exposure.",
+        "PKSA-v5yj-8nmz-sk2q": "Dev-only: symfony/yaml via behat test deps. No prod exposure.",
+        "PKSA-ft77-7h5f-p3r6": "Dev-only: symfony/yaml via behat test deps. No prod exposure.",
+        "PKSA-b14r-zh1d-vdrc": "Dev-only: symfony/yaml via behat test deps. No prod exposure."
+      }
     }
   }
 }
