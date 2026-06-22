@@ -37,7 +37,12 @@ jobs:
       run: composer install --no-dev --no-interaction --no-progress --prefer-dist --no-scripts --no-ansi
 
     - name: Create Dist Archive for wp.org validation
+      env:
+        # Block wp-cli from injecting GITHUB_TOKEN into Composer (ghs_ tokens fail OAuth validation).
+        # rm clears what setup-php writes to auth.json, which has the same bad token.
+        COMPOSER_AUTH: '{"github-oauth": {}}'
       run: |
+        rm -f ~/.composer/auth.json
         wp package install wp-cli/dist-archive-command:v3.1.0
         wp dist-archive . --plugin-dirname=pantheon-advanced-page-cache --filename-format=pantheon-advanced-page-cache-dist
         unzip ../pantheon-advanced-page-cache-dist.zip
