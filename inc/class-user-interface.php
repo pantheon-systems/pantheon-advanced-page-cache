@@ -5,11 +5,11 @@
  * @package Pantheon_Advanced_Page_Cache
  */
 
+namespace Pantheon_Advanced_Page_Cache;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-namespace Pantheon_Advanced_Page_Cache;
 
 /**
  * Controller for a variety of admin UI.

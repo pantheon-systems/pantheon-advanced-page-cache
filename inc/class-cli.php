@@ -11,11 +11,11 @@
  * @phpcs:disable Squiz.Commenting.FunctionComment.MissingParamTag
  */
 
+namespace Pantheon_Advanced_Page_Cache;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-namespace Pantheon_Advanced_Page_Cache;
 
 use WP_CLI;
 

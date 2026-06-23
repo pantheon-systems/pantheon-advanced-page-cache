@@ -20,11 +20,11 @@
  * @phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
  */
 
+namespace Pantheon_Advanced_Page_Cache;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-namespace Pantheon_Advanced_Page_Cache;
 
 /**
  * Generates and emits surrogate keys based on the current request.
