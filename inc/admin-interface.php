@@ -8,6 +8,10 @@
 
 namespace Pantheon_Advanced_Page_Cache\Admin_Interface;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Kick off the important bits.
  *

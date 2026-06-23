@@ -7,6 +7,10 @@
 
 namespace Pantheon_Advanced_Page_Cache;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Purges the appropriate surrogate key based on the event.
  */
