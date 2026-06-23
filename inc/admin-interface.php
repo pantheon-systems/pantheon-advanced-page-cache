@@ -6,6 +6,10 @@
  * @package Pantheon_Advanced_Page_Cache
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 namespace Pantheon_Advanced_Page_Cache\Admin_Interface;
 
 /**

@@ -20,6 +20,10 @@
  * @phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 namespace Pantheon_Advanced_Page_Cache;
 
 /**
