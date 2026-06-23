@@ -61,7 +61,7 @@ jobs:
         image: mariadb:10.5
     strategy:
       matrix:
-        php_version: [7.4, 8.3, 8.4]
+        php_version: [7.4, 8.3, 8.4, 8.5]
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Setup PHP
@@ -82,7 +82,7 @@ jobs:
       - name: Install Composer dependencies
         run: |
           if [ ${{ matrix.php_version }} = "7.4" ]; then
-            composer require pantheon-systems/pantheon-wp-coding-standards:^2.0 --no-update
+            composer require pantheon-systems/pantheon-wp-coding-standards:^2.0 --dev --no-update
             composer update
           fi
           composer install
