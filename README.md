@@ -1,6 +1,6 @@
 # Pantheon Advanced Page Cache #
 
-**Contributors:** [getpantheon](https://profiles.wordpress.org/getpantheon), [danielbachhuber](https://profiles.wordpress.org/danielbachhuber), [kporras07](https://profiles.wordpress.org/kporras07), [jspellman](https://profiles.wordpress.org/jspellman/), [jazzs3quence](https://profiles.wordpress.org/jazzs3quence/), [ryanshoover](https://profiles.wordpress.org/ryanshoover/), [rwagner00](https://profiles.wordpress.org/rwagner00/), [pwtyler](https://profiles.wordpress.org/pwtyler)  
+**Contributors:** [getpantheon](https://profiles.wordpress.org/getpantheon), [danielbachhuber](https://profiles.wordpress.org/danielbachhuber), [kporras07](https://profiles.wordpress.org/kporras07), [jspellman](https://profiles.wordpress.org/jspellman/), [jazzs3quence](https://profiles.wordpress.org/jazzs3quence/), [ryanshoover](https://profiles.wordpress.org/ryanshoover/), [rwagner00](https://profiles.wordpress.org/rwagner00/), [pwtyler](https://profiles.wordpress.org/pwtyler), [metasim](https://profiles.wordpress.org/metasim/)  
 **Tags:** pantheon, cdn, cache  
 **Requires at least:** 6.4  
 **Tested up to:** 6.9  
@@ -416,6 +416,7 @@ See [CONTRIBUTING.md](https://github.com/pantheon-systems/pantheon-advanced-page
 ## Changelog ##
 
 ### 2.1.3-dev ###
+* Compatibility: Supports PHP 8.5
 
 ### 2.1.2 (December 16, 2025) ###
 * Confirmed PHP 8.4 compatibility [[#333](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/333)]
