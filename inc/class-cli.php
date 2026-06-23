@@ -13,10 +13,6 @@
 
 namespace Pantheon_Advanced_Page_Cache;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-
 use WP_CLI;
 
 /**

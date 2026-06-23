@@ -8,10 +8,6 @@
 
 namespace Pantheon_Advanced_Page_Cache\Admin_Interface;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-
 /**
  * Kick off the important bits.
  *
@@ -245,9 +241,9 @@ function max_age_input_allowed_html( $allowed_html ) {
  */
 function max_age_options() {
 	$options = [
-		WEEK_IN_SECONDS => esc_html__( 'Recommended (1 week)', 'pantheon-advanced-page-cache' ),
-		MONTH_IN_SECONDS => esc_html__( 'Extended (1 month)', 'pantheon-advanced-page-cache' ),
-		YEAR_IN_SECONDS => esc_html__( 'Perpetual (1 year)', 'pantheon-advanced-page-cache' ),
+		WEEK_IN_SECONDS => esc_html__( 'Recommended (1 week)', 'pantheon-cache' ),
+		MONTH_IN_SECONDS => esc_html__( 'Extended (1 month)', 'pantheon-cache' ),
+		YEAR_IN_SECONDS => esc_html__( 'Perpetual (1 year)', 'pantheon-cache' ),
 	];
 
 	/**
@@ -368,7 +364,7 @@ function admin_notice_maybe_recommend_higher_max_age() {
 	if ( ! $global_warning_shown && ( ! isset( $current_screen->id ) || 'settings_page_pantheon-cache' !== $current_screen->id ) ) {
 		$message = sprintf(
 			// translators: %s is a link to the Pantheon GCDN configuration page.
-			__( 'Your site\'s cache max age is set below the recommendation (1 week). Visit the <a href="%1$s">Pantheon GCDN configuration page</a> to update the setting.%2$s', 'pantheon-advanced-page-cache' ),
+			__( 'Your site\'s cache max age is set below the recommendation (1 week). Visit the <a href="%1$s">Pantheon GCDN configuration page</a> to update the setting.%2$s' ),
 			admin_url( 'options-general.php?page=pantheon-cache' ),
 			sprintf( '<!-- Max Age Rank: %d -->', $max_age_rank )
 		);
@@ -506,7 +502,7 @@ function test_cache_max_age() {
 			],
 			'description' => sprintf(
 				// translators: %1$s is the current humanized max-age, %2$s is the recommended max-age, %3$d is the admin URL to change the setting.
-				__( 'The Pantheon GCDN cache max age is currently set to %1$s. We recommend increasing to %2$s. You can increase the cache max age in the <a href="%3$s">Pantheon Page Cache settings</a>.', 'pantheon-advanced-page-cache' ),
+				__( 'The Pantheon GCDN cache max age is currently set to %1$s. We recommend increasing to %2$s. You can increase the cache max age in the <a href="%s">Pantheon Page Cache settings</a>.', 'pantheon-advanced-page-cache' ),
 				$humanized_time,
 				$humanized_reccomended_time,
 				admin_url( 'options-general.php?page=pantheon-cache' )
