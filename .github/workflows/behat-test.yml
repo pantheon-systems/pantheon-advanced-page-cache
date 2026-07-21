@@ -60,7 +60,7 @@ jobs:
         if: steps.check_skip.outputs.skip != 'true'
         uses: webfactory/ssh-agent@dc588b651fe13675774614f8e6a936a468676387 # v0.9.0
         with:
-          ssh-private-key: ${{ secrets.SITE_OWNER_SSH_PRIVATE_KEY }}
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           log-public-key: true
 
       - name: Configure SSH (no strict host key checking)
@@ -108,7 +108,7 @@ jobs:
 
       - name: Validate Fixture Version
         if: steps.check_skip.outputs.skip != 'true'
-        uses: pantheon-systems/plugin-release-actions/validate-fixture-version@0a7c5c2805e2874ae5265bc05ea1a3bc0e5e912c # main
+        uses: pantheon-systems/plugin-release-actions/validate-fixture-version@c4a1a8aac520bf6682efee843cd0f8fda8442793 # main
         with:
           terminus_site: ${{ env.TERMINUS_SITE }}
 

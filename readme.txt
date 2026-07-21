@@ -1,5 +1,5 @@
 === Pantheon Advanced Page Cache ===
-Contributors: getpantheon, danielbachhuber, kporras07, jspellman, jazzs3quence, ryanshoover, rwagner00, pwtyler
+Contributors: getpantheon, danielbachhuber, kporras07, jspellman, jazzs3quence, ryanshoover, rwagner00, pwtyler, metasim
 Tags: pantheon, cdn, cache
 Requires at least: 6.4
 Tested up to: 7.0
@@ -380,6 +380,7 @@ See [CONTRIBUTING.md](https://github.com/pantheon-systems/wp-saml-auth/blob/mast
 == Changelog ==
 
 = 2.1.3-dev =
+* Compatibility: Supports PHP 8.5
 
 = 2.1.2 (December 16, 2025) =
 * Confirmed PHP 8.4 compatibility [[#333](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/333)]
