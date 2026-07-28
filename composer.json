@@ -58,7 +58,9 @@
         "PKSA-93qv-9n9h-6k6p": "Dev-only: guzzlehttp/guzzle via behat test deps. No prod exposure. SITE-5199.",
         "PKSA-k22t-f949-t9g6": "Dev-only: guzzlehttp/guzzle via behat test deps. No prod exposure. SITE-5199.",
         "PKSA-rkkf-636k-qjb3": "Dev-only: symfony/process via fabpot/goutte behat test deps. No prod exposure. SITE-5995.",
-        "PKSA-wws7-mr54-jsny": "Dev-only: symfony/process via fabpot/goutte behat test deps. No prod exposure. SITE-5995."
+        "PKSA-wws7-mr54-jsny": "Dev-only: symfony/process via fabpot/goutte behat test deps. No prod exposure. SITE-5995.",
+        "PKSA-bcdd-5xc7-gwfb": "Dev-only: guzzlehttp/guzzle via behat test deps (fabpot/goutte pins ^6, no 6.x patch exists). No prod exposure. VUL-24499.",
+        "PKSA-vznr-tgp9-fd7d": "Dev-only: guzzlehttp/psr7 via behat test deps (guzzle 6 pins psr7 ^1.9, no 1.x patch exists). No prod exposure. VUL-25211."
       }
     }
   }
