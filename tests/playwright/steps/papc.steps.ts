@@ -3,7 +3,7 @@ import { test, expect } from 'cms-bdd';
 
 const { Given, When, Then } = createBdd(test);
 
-When('I log in to the WordPress site', async ({ wpLoginPage }) => {
+Given('I am logged in to the WordPress site', async ({ wpLoginPage }) => {
   await wpLoginPage.login();
 });
 
