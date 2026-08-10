@@ -10,7 +10,7 @@ on:
 
 jobs:
   playwright-bdd:
-    runs-on: ubuntu-latest
+    runs-on: sbx-pan-qa-ui-01
     defaults:
       run:
         working-directory: tests/playwright
