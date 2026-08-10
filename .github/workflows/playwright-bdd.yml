@@ -1,0 +1,65 @@
+name: Playwright BDD Tests
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'tests/playwright/**'
+      - '.github/workflows/playwright-bdd.yml'
+  workflow_dispatch:
+
+jobs:
+  playwright-bdd:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tests/playwright
+    env:
+      HEADLESS: 'true'
+      WP_URL: https://live-wp-test-august.pantheonsite.io
+      WP_USER: ${{ vars.WP_USER || 'pantheon' }}
+      WP_PASSWORD: ${{ secrets.WP_PASSWORD }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch framework repo
+        uses: pantheon-systems/action-fetch-dependency@3deb6f872492dd088f30442c971237e79e881450
+        with:
+          repository: pantheon-systems/qa-e2e-automation
+          destination: /tmp/qa-e2e-automation
+          validate-checksum: false
+
+      - name: Install dependencies
+        run: |
+          npm pkg set dependencies.qa-e2e-automation-framework="file:/tmp/qa-e2e-automation"
+          npm install
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Generate BDD test specs
+        run: npx bddgen
+
+      - name: Run Playwright BDD tests
+        run: npx playwright test --grep @papc
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-test-results
+          path: tests/playwright/test-results/
+
+      - name: Upload HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: tests/playwright/playwright-report/

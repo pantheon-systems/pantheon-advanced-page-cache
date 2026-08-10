@@ -1,0 +1,24 @@
+{
+  "name": "papc-playwright-bdd-poc",
+  "version": "1.0.0",
+  "description": "Playwright BDD PoC for PAPC plugin testing (SITE-5879)",
+  "private": true,
+  "scripts": {
+    "test": "bddgen && playwright test",
+    "test:headed": "bddgen && HEADLESS=false playwright test",
+    "test:debug": "bddgen && playwright test --debug",
+    "test:ui": "bddgen && playwright test --ui",
+    "test:report": "playwright show-report",
+    "bddgen": "bddgen"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.0",
+    "qa-e2e-automation-framework": "file:../../../qa-e2e-automation"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.60.0",
+    "playwright": "1.60.0",
+    "playwright-bdd": "8.5.1",
+    "typescript": "^5.9.0"
+  }
+}
