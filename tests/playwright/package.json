@@ -12,7 +12,7 @@
     "bddgen": "bddgen"
   },
   "dependencies": {
-    "cms-bdd": "file:../../../cms-bdd"
+    "cms-bdd": "github:pantheon-systems/cms-bdd"
   },
   "devDependencies": {
     "@playwright/test": "1.60.0",
