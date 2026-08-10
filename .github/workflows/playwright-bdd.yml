@@ -16,9 +16,8 @@ jobs:
         working-directory: tests/playwright
     env:
       HEADLESS: 'true'
-      WP_URL: https://live-wp-test-august.pantheonsite.io
-      WP_USER: ${{ vars.WP_USER || 'pantheon' }}
-      WP_PASSWORD: ${{ secrets.WP_PASSWORD }}
+      TERMINUS_SITE: pantheon-advanced-page-cache
+      WORDPRESS_ADMIN_USERNAME: pantheon
 
     steps:
       - name: Checkout code
@@ -28,6 +27,44 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Install Terminus
+        uses: pantheon-systems/terminus-github-actions@v1
+        with:
+          pantheon-machine-token: ${{ secrets.TERMINUS_TOKEN }}
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -p 2222 codeserver.dev.*.drush.in appserver.dev.*.drush.in >> ~/.ssh/known_hosts 2>/dev/null || true
+          echo "StrictHostKeyChecking no" >> ~/.ssh/config
+
+      - name: Generate credentials
+        run: |
+          echo "WORDPRESS_ADMIN_PASSWORD=$(openssl rand -hex 8)" >> $GITHUB_ENV
+          TERMINUS_ENV="ci-pw-${{ github.run_number }}"
+          echo "TERMINUS_ENV=${TERMINUS_ENV}" >> $GITHUB_ENV
+          echo "WP_URL=https://${TERMINUS_ENV}-${TERMINUS_SITE}.pantheonsite.io" >> $GITHUB_ENV
+          echo "WP_USER=${WORDPRESS_ADMIN_USERNAME}" >> $GITHUB_ENV
+
+      - name: Create multidev
+        working-directory: .
+        run: |
+          terminus multidev:create ${TERMINUS_SITE}.dev ${TERMINUS_ENV} || true
+          terminus wp ${TERMINUS_SITE}.${TERMINUS_ENV} -- core install \
+            --title="${TERMINUS_ENV}" \
+            --url="https://${TERMINUS_ENV}-${TERMINUS_SITE}.pantheonsite.io" \
+            --admin_user=${WORDPRESS_ADMIN_USERNAME} \
+            --admin_email=papc-test@getpantheon.com \
+            --admin_password=${WORDPRESS_ADMIN_PASSWORD}
+          echo "WP_PASSWORD=${WORDPRESS_ADMIN_PASSWORD}" >> $GITHUB_ENV
 
       - name: Install dependencies
         run: |
@@ -56,3 +93,8 @@ jobs:
         with:
           name: playwright-report
           path: tests/playwright/playwright-report/
+
+      - name: Cleanup multidev
+        if: always()
+        working-directory: .
+        run: terminus multidev:delete ${TERMINUS_SITE}.${TERMINUS_ENV} --delete-branch -y || true
