@@ -7,9 +7,8 @@ dotenv.config();
 const testDir = defineBddConfig({
   features: 'features/**/*.feature',
   steps: [
-    'node_modules/qa-e2e-automation-framework/dist/steps/ui/**/*.js',
-    'node_modules/qa-e2e-automation-framework/dist/steps/backend/**/*.js',
-    'node_modules/qa-e2e-automation-framework/dist/fixtures/customFixtures.js',
+    'steps/**/*.ts',
+    'node_modules/cms-bdd/dist/fixtures/customFixtures.js',
   ],
 });
 

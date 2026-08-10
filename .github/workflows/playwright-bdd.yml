@@ -11,6 +11,9 @@ on:
 jobs:
   playwright-bdd:
     runs-on: sbx-pan-qa-ui-01
+    permissions:
+      contents: write
+      id-token: write
     defaults:
       run:
         working-directory: tests/playwright
@@ -24,21 +27,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Fetch framework repo
+      - name: Fetch cms-bdd framework
         uses: pantheon-systems/action-fetch-dependency@3deb6f872492dd088f30442c971237e79e881450
         with:
-          repository: pantheon-systems/qa-e2e-automation
-          destination: /tmp/qa-e2e-automation
+          repository: pantheon-systems/cms-bdd
+          destination: /tmp/cms-bdd
           validate-checksum: false
 
       - name: Install dependencies
         run: |
-          npm pkg set dependencies.qa-e2e-automation-framework="file:/tmp/qa-e2e-automation"
+          npm pkg set dependencies.cms-bdd="file:/tmp/cms-bdd"
           npm install
 
       - name: Install Chromium
