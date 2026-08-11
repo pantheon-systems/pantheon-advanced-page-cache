@@ -1,100 +1,124 @@
 name: Playwright BDD Tests
 
 on:
-  pull_request:
+  push:
     branches: [main]
-    paths:
-      - 'tests/playwright/**'
-      - '.github/workflows/playwright-bdd.yml'
+  schedule:
+    - cron: '0 0 * * *'
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+    branches: ['**']
   workflow_dispatch:
 
 jobs:
   playwright-bdd:
+    name: Playwright BDD Tests
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: tests/playwright
+    permissions:
+      contents: read
+    if: >
+      (github.event.pull_request.head.repo.full_name == github.repository || github.event_name != 'pull_request')
+      && (github.event.pull_request.draft == false || github.event_name != 'pull_request')
+
     env:
-      HEADLESS: 'true'
       TERMINUS_SITE: pantheon-advanced-page-cache
       WORDPRESS_ADMIN_USERNAME: pantheon
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          fetch-depth: 2
+
+      - name: Check if we need to run tests
+        id: check_skip
+        run: |
+          if ! ./bin/maybe-skip-tests.sh; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+            echo "Only ignored files modified. Skipping tests."
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+        continue-on-error: true
 
       - name: Setup Node.js
+        if: steps.check_skip.outputs.skip != 'true'
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+        if: steps.check_skip.outputs.skip != 'true'
+        uses: shivammathur/setup-php@d59004228537ca90c8dca680592a08a675bf52b6 # v2
         with:
           php-version: '8.2'
 
       - name: Install Terminus
-        uses: pantheon-systems/terminus-github-actions@v1
+        if: steps.check_skip.outputs.skip != 'true'
+        uses: pantheon-systems/terminus-github-actions@8e024bd89ff46ed2aa4e0663c6b54c87a94344f8 # v1.2.7
         with:
           pantheon-machine-token: ${{ secrets.TERMINUS_TOKEN }}
 
       - name: Setup SSH
+        if: steps.check_skip.outputs.skip != 'true'
+        uses: webfactory/ssh-agent@dc588b651fe13675774614f8e6a936a468676387 # v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          log-public-key: true
+
+      - name: Configure SSH
+        if: steps.check_skip.outputs.skip != 'true'
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -p 2222 codeserver.dev.*.drush.in appserver.dev.*.drush.in >> ~/.ssh/known_hosts 2>/dev/null || true
-          echo "StrictHostKeyChecking no" >> ~/.ssh/config
+          printf "Host *\n  StrictHostKeyChecking no\n  UserKnownHostsFile=/dev/null\n" > ~/.ssh/config
 
-      - name: Generate credentials
+      - name: Set Environment Variables
+        if: steps.check_skip.outputs.skip != 'true'
         run: |
           echo "WORDPRESS_ADMIN_PASSWORD=$(openssl rand -hex 8)" >> $GITHUB_ENV
-          TERMINUS_ENV="ci-pw-${{ github.run_number }}"
-          echo "TERMINUS_ENV=${TERMINUS_ENV}" >> $GITHUB_ENV
-          echo "WP_URL=https://${TERMINUS_ENV}-${TERMINUS_SITE}.pantheonsite.io" >> $GITHUB_ENV
-          echo "WP_USER=${WORDPRESS_ADMIN_USERNAME}" >> $GITHUB_ENV
+          echo "TERMINUS_ENV=ci-${{ github.run_number }}" >> $GITHUB_ENV
+          echo "SITE_ENV=pantheon-advanced-page-cache.ci-${{ github.run_number }}" >> $GITHUB_ENV
+          echo "WORDPRESS_ADMIN_EMAIL=no-reply@getpantheon.com" >> $GITHUB_ENV
 
-      - name: Create multidev
-        working-directory: .
-        run: |
-          terminus multidev:create ${TERMINUS_SITE}.dev ${TERMINUS_ENV} || true
-          terminus wp ${TERMINUS_SITE}.${TERMINUS_ENV} -- core install \
-            --title="${TERMINUS_ENV}" \
-            --url="https://${TERMINUS_ENV}-${TERMINUS_SITE}.pantheonsite.io" \
-            --admin_user=${WORDPRESS_ADMIN_USERNAME} \
-            --admin_email=papc-test@getpantheon.com \
-            --admin_password=${WORDPRESS_ADMIN_PASSWORD}
-          echo "WP_PASSWORD=${WORDPRESS_ADMIN_PASSWORD}" >> $GITHUB_ENV
+      - name: Validate Fixture Version
+        if: steps.check_skip.outputs.skip != 'true'
+        uses: pantheon-systems/plugin-release-actions/validate-fixture-version@c4a1a8aac520bf6682efee843cd0f8fda8442793 # main
+        with:
+          terminus_site: ${{ env.TERMINUS_SITE }}
 
-      - name: Install dependencies
-        run: |
-          npm pkg set dependencies.cms-bdd="github:pantheon-systems/cms-bdd"
-          npm install
+      - name: Prepare Test Environment
+        if: steps.check_skip.outputs.skip != 'true'
+        run: ./bin/behat-prepare.sh
+
+      - name: Install Node dependencies
+        if: steps.check_skip.outputs.skip != 'true'
+        working-directory: tests/playwright
+        run: npm ci
 
       - name: Install Chromium
+        if: steps.check_skip.outputs.skip != 'true'
+        working-directory: tests/playwright
         run: npx playwright install --with-deps chromium
 
-      - name: Generate BDD test specs
-        run: npx bddgen
-
       - name: Run Playwright BDD tests
-        run: npx playwright test --grep @papc
+        if: steps.check_skip.outputs.skip != 'true'
+        working-directory: tests/playwright
+        env:
+          WP_URL: https://ci-${{ github.run_number }}-pantheon-advanced-page-cache.pantheonsite.io
+          WP_USER: ${{ env.WORDPRESS_ADMIN_USERNAME }}
+          WP_PASSWORD: ${{ env.WORDPRESS_ADMIN_PASSWORD }}
+          HEADLESS: 'true'
+        run: npm test
 
       - name: Upload test results
-        if: always()
+        if: always() && steps.check_skip.outputs.skip != 'true'
         uses: actions/upload-artifact@v4
         with:
           name: playwright-test-results
-          path: tests/playwright/test-results/
+          path: |
+            tests/playwright/test-results/
+            tests/playwright/playwright-report/
 
-      - name: Upload HTML report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report
-          path: tests/playwright/playwright-report/
-
-      - name: Cleanup multidev
-        if: always()
-        working-directory: .
-        run: terminus multidev:delete ${TERMINUS_SITE}.${TERMINUS_ENV} --delete-branch -y || true
+      - name: Cleanup Test Environment
+        if: always() && steps.check_skip.outputs.skip != 'true'
+        run: ./bin/behat-cleanup.sh

@@ -12,7 +12,8 @@
     "bddgen": "bddgen"
   },
   "dependencies": {
-    "cms-bdd": "github:pantheon-systems/cms-bdd"
+    "cms-bdd": "github:pantheon-systems/cms-bdd",
+    "dotenv": "^16.4.0"
   },
   "devDependencies": {
     "@playwright/test": "1.60.0",

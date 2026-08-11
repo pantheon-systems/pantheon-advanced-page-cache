@@ -4,10 +4,16 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
+if (!process.env.WP_URL) {
+  throw new Error('WP_URL environment variable is required. Set it in .env or as an environment variable.');
+}
+
 const testDir = defineBddConfig({
-  features: 'features/**/*.feature',
+  featuresRoot: '../',
+  features: '../behat/**/*.feature',
   steps: [
     'steps/**/*.ts',
+    'fixtures/**/*.ts',
     'node_modules/cms-bdd/dist/fixtures/customFixtures.js',
   ],
 });
@@ -27,7 +33,7 @@ export default defineConfig({
   ],
   timeout: 300000,
   use: {
-    baseURL: process.env.WP_URL || 'https://live-wp-test-august.pantheonsite.io',
+    baseURL: process.env.WP_URL,
     headless,
     launchOptions: {
       slowMo,

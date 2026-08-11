@@ -1,20 +1,54 @@
 import { createBdd } from 'playwright-bdd';
-import { test, expect } from 'cms-bdd';
+import { test, expect } from '../fixtures/papc-fixtures';
+import type { APIResponse } from '@playwright/test';
 
-const { Given, When, Then } = createBdd(test);
+const { Given, When, Then, Before } = createBdd(test);
 
-Given('I am logged in to the WordPress site', async ({ wpLoginPage }) => {
-  await wpLoginPage.login();
+let lastResponse: APIResponse;
+let loggedIn = false;
+
+Before(async () => {
+  loggedIn = false;
 });
 
-When('I navigate to {string}', async ({ page }, url: string) => {
-  await page.goto(url, { waitUntil: 'load', timeout: 30000 });
+Given('I log in as an admin', async ({ wpLoginPage }) => {
+  await wpLoginPage.login();
+  loggedIn = true;
+});
+
+// Surrogate key features use this without login (API request with Pantheon-Debug header).
+// Admin features use this after login (browser navigation).
+Given('I go to {string}', async ({ pantheonAPI, page }, url: string) => {
+  if (loggedIn) {
+    await page.goto(url, { waitUntil: 'load', timeout: 30000 });
+  } else {
+    lastResponse = await pantheonAPI.get(url);
+  }
+});
+
+When('I fill in {string} with {string}', async ({ page }, fieldName: string, value: string) => {
+  await page.locator(`[name="${fieldName}"]`).fill(value);
+});
+
+When('I press {string}', async ({ page }, buttonText: string) => {
+  await page.getByRole('button', { name: buttonText }).click();
+  await page.waitForLoadState('load');
 });
 
 Then('I should see {string}', async ({ page }, text: string) => {
   await expect(page.locator('body')).toContainText(text);
 });
 
-Then('the URL should contain {string}', async ({ page }, text: string) => {
-  expect(page.url()).toContain(text);
+Then('the {string} field should contain {string}', async ({ page }, fieldName: string, expectedValue: string) => {
+  await expect(page.locator(`[name="${fieldName}"]`)).toHaveValue(expectedValue);
+});
+
+Then('the response header {string} should be {string}', async ({}, headerName: string, expectedValue: string) => {
+  const actual = lastResponse.headers()[headerName.toLowerCase()];
+  expect(actual).toBe(expectedValue);
+});
+
+Then('the response header {string} should not be {string}', async ({}, headerName: string, unexpectedValue: string) => {
+  const actual = lastResponse.headers()[headerName.toLowerCase()];
+  expect(actual).not.toBe(unexpectedValue);
 });
