@@ -20,7 +20,7 @@ default:
   extensions:
     Behat\MinkExtension:
       # base_url set by ENV
-      goutte:
-        guzzle_parameters:
+      browserkit_http:
+        http_client_parameters:
           headers:
             Pantheon-Debug: 1
