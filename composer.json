@@ -52,6 +52,9 @@
                 "PKSA-ft77-7h5f-p3r6": "Dev-only: symfony/yaml via behat test deps. No prod exposure. SITE-5199.",
                 "PKSA-b14r-zh1d-vdrc": "Dev-only: symfony/yaml via behat test deps. No prod exposure. SITE-5199."
             }
+        },
+        "platform": {
+            "php": "8.1.0"
         }
     }
 }
