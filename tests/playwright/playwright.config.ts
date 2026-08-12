@@ -40,8 +40,11 @@ export default defineConfig({
     },
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
-    // Always record, not just on failure -- the spike's acceptance criterion is
-    // "test execution is recorded as a video", not "on failure only".
+    // 'on' is for this SITE-5879 spike/PoC only, to prove the capability exists --
+    // the acceptance criterion is "test execution is recorded as a video". Once
+    // this is permanent CI (not evaluation), switch back to 'retain-on-failure':
+    // recording every passing run forever, across every repo, is artifact storage
+    // cost with no ongoing debugging benefit.
     video: 'on',
     actionTimeout: 10000,
     navigationTimeout: 30000,
