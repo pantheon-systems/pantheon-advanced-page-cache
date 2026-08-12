@@ -40,7 +40,9 @@ export default defineConfig({
     },
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
-    video: 'retain-on-failure',
+    // Always record, not just on failure -- the spike's acceptance criterion is
+    // "test execution is recorded as a video", not "on failure only".
+    video: 'on',
     actionTimeout: 10000,
     navigationTimeout: 30000,
   },
