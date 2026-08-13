@@ -35,6 +35,14 @@ export default defineConfig({
   use: {
     baseURL: process.env.WP_URL,
     headless,
+    // Headless Chromium's default User-Agent gets served a Cloudflare "Just a
+    // moment..." challenge page on wp-login.php instead of the login form.
+    // A normal desktop Chrome UA string is enough to avoid it -- confirmed
+    // locally against the live site (EDRT-9550): default UA -> challenge page,
+    // this UA -> real login page. Matches Conor Bauer's diagnosis for Behat's
+    // Goutte driver, which is flagged the same way for the same reason.
+    userAgent:
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
     launchOptions: {
       slowMo,
     },
