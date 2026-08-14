@@ -35,24 +35,15 @@ export default defineConfig({
   use: {
     baseURL: process.env.WP_URL,
     headless,
-    // Headless Chromium's default User-Agent gets served a Cloudflare "Just a
-    // moment..." challenge page on wp-login.php instead of the login form.
-    // A normal desktop Chrome UA string is enough to avoid it -- confirmed
-    // locally against the live site (EDRT-9550): default UA -> challenge page,
-    // this UA -> real login page. Matches Conor Bauer's diagnosis for Behat's
-    // Goutte driver, which is flagged the same way for the same reason.
-    userAgent:
-      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    // Browser-like UAs still fail Cloudflare's bot check on fresh multidevs (EDRT-9550).
+    // Dedicated UA for this test suite, allowlisted by Edge Routing on request.
+    userAgent: 'Pantheon-CI-Playwright/1.0',
     launchOptions: {
       slowMo,
     },
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
-    // 'on' is for this SITE-5879 spike/PoC only, to prove the capability exists --
-    // the acceptance criterion is "test execution is recorded as a video". Once
-    // this is permanent CI (not evaluation), switch back to 'retain-on-failure':
-    // recording every passing run forever, across every repo, is artifact storage
-    // cost with no ongoing debugging benefit.
+    // PoC-only, to prove the capability. Revert to 'retain-on-failure' for permanent CI.
     video: 'on',
     actionTimeout: 10000,
     navigationTimeout: 30000,
