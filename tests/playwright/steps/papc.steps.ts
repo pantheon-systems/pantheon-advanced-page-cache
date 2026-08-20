@@ -50,5 +50,7 @@ Then('the response header {string} should be {string}', async ({}, headerName: s
 
 Then('the response header {string} should not be {string}', async ({}, headerName: string, unexpectedValue: string) => {
   const actual = lastResponse.headers()[headerName.toLowerCase()];
+  // A missing header is undefined, not '', so check it exists first.
+  expect(actual, `response header "${headerName}" is missing`).toBeDefined();
   expect(actual).not.toBe(unexpectedValue);
 });
