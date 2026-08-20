@@ -88,7 +88,7 @@ jobs:
 
       - name: Prepare Test Environment
         if: steps.check_skip.outputs.skip != 'true'
-        run: ./bin/behat-prepare.sh
+        run: ./bin/e2e-prepare.sh
 
       - name: Install Node dependencies
         if: steps.check_skip.outputs.skip != 'true'
@@ -121,4 +121,4 @@ jobs:
 
       - name: Cleanup Test Environment
         if: always() && steps.check_skip.outputs.skip != 'true'
-        run: ./bin/behat-cleanup.sh
+        run: ./bin/e2e-cleanup.sh

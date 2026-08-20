@@ -12,7 +12,7 @@ ignored_paths=(
   phpunit.xml.dist
   README.md
   readme.txt
-  .github/workflows/behat-test.yml
+  .github/workflows/playwright-bdd.yml
   .github/workflows/lint-test.yml
   .github/workflows/build-tag-release.yml
   .github/workflows/release-pr.yml
