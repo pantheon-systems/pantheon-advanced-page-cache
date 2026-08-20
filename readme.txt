@@ -12,8 +12,6 @@ Automatically clear related pages from Pantheon's Edge when you update content. 
 
 == Description ==
 
-[![CircleCI](https://circleci.com/gh/pantheon-systems/pantheon-advanced-page-cache.svg?style=svg)](https://circleci.com/gh/pantheon-systems/pantheon-advanced-page-cache)
-
 For sites wanting fine-grained control over how their responses are represented in their edge cache, Pantheon Advanced Page Cache is the golden ticket. Here's a high-level overview of how the plugin works:
 
 1. When a response is generated, the plugin uses surrogate keys based on WordPress' main `WP_Query` object to "tag" the response with identifers for the data used in the response. See the "Adding Custom Keys" section for including your own surrogate keys.
