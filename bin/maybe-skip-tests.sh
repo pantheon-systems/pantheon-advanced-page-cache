@@ -12,7 +12,7 @@ ignored_paths=(
   phpunit.xml.dist
   README.md
   readme.txt
-  .github/workflows/playwright-bdd.yml
+  # TEMPORARY: playwright-bdd.yml removed from this list so workflow changes trigger a run. REVERT BEFORE MERGE.
   .github/workflows/lint-test.yml
   .github/workflows/build-tag-release.yml
   .github/workflows/release-pr.yml
@@ -29,9 +29,17 @@ ignored_paths=(
   tests/phpunit/*
 )
 
-# Fetch list of changed files from the last commit
-changed_files=$(git diff-tree --no-commit-id --name-only -r HEAD)
-should_run_tests=true
+# Fetch the list of changed files across the whole PR, falling back to the last
+# commit when there is no base to compare against (push, schedule, dispatch).
+if [ -n "${GITHUB_BASE_REF:-}" ] && git rev-parse --verify "origin/${GITHUB_BASE_REF}" >/dev/null 2>&1; then
+  changed_files=$(git diff --name-only "origin/${GITHUB_BASE_REF}...HEAD")
+else
+  changed_files=$(git diff-tree --no-commit-id --name-only -r HEAD)
+fi
+# Default to running: if the diff came back empty, something is off and skipping
+# would silently hide a real change.
+should_run_tests=false
+[ -z "$changed_files" ] && should_run_tests=true
 
 
 is_ignored_file(){
@@ -46,9 +54,9 @@ is_ignored_file(){
 for file in $changed_files; do
     if ! is_ignored_file "$file"; then
 		echo "Running tests because $file was changed."
+		should_run_tests=true
 		break
     fi
-    should_run_tests=false
     echo "Skipping $file..."
 done
 
