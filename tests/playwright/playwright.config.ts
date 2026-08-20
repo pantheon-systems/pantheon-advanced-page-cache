@@ -9,8 +9,8 @@ if (!process.env.WP_URL) {
 }
 
 const testDir = defineBddConfig({
-  featuresRoot: '../',
-  features: '../behat/**/*.feature',
+  featuresRoot: '.',
+  features: 'features/**/*.feature',
   steps: [
     'steps/**/*.ts',
     'fixtures/**/*.ts',

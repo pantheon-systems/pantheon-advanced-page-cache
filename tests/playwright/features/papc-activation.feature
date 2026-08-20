@@ -2,19 +2,19 @@
 Feature: PAPC plugin activation and admin page
 
   Background:
-    Given I am logged in to the WordPress site
+    Given I log in as an admin
 
   @activation
   Scenario: PAPC plugin is listed and active
-    When I navigate to "/wp-admin/plugins.php"
+    When I go to "/wp-admin/plugins.php"
     Then I should see "Pantheon Advanced Page Cache"
 
   @admin
   Scenario: Pantheon Cache settings page loads
-    When I navigate to "/wp-admin/options-general.php?page=pantheon-cache"
+    When I go to "/wp-admin/options-general.php?page=pantheon-cache"
     Then I should see "Pantheon Cache"
 
   @dashboard
   Scenario: WordPress dashboard loads correctly
-    When I navigate to "/wp-admin/"
+    When I go to "/wp-admin/"
     Then I should see "Dashboard"
