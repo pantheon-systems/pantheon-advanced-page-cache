@@ -35,9 +35,6 @@ export default defineConfig({
   use: {
     baseURL: process.env.WP_URL,
     headless,
-    // Browser-like UAs still fail Cloudflare's bot check on fresh multidevs (EDRT-9550).
-    // Dedicated UA for this test suite, allowlisted by Edge Routing on request.
-    userAgent: 'Pantheon-CI-Playwright/1.0',
     launchOptions: {
       slowMo,
     },
