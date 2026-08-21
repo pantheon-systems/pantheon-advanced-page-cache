@@ -27,7 +27,14 @@ Given('I go to {string}', async ({ pantheonAPI, page }, url: string) => {
 });
 
 When('I fill in {string} with {string}', async ({ page }, fieldName: string, value: string) => {
-  await page.locator(`[name="${fieldName}"]`).fill(value);
+  const field = page.locator(`[name="${fieldName}"]`);
+  // fill() rejects <select>, which Behat's Mink handled transparently.
+  const tag = await field.evaluate((el) => el.tagName.toLowerCase());
+  if (tag === 'select') {
+    await field.selectOption(value);
+  } else {
+    await field.fill(value);
+  }
 });
 
 When('I press {string}', async ({ page }, buttonText: string) => {
