@@ -12,7 +12,9 @@ export const test = cmsBddTest.extend<PAPCFixtures>({
     const ctx = await request.newContext({
       baseURL,
       extraHTTPHeaders: {
+        // Cloudflare requires Pantheon-Debug exactly "1"; Fastly accepts either header.
         'Pantheon-Debug': '1',
+        'Pantheon-SKey': '1',
       },
     });
     await use(ctx);
