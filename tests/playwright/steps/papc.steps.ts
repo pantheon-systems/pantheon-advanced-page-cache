@@ -57,6 +57,11 @@ Then('the response header {string} should be {string}', async ({}, headerName: s
 
 Then('the response header {string} should not be {string}', async ({}, headerName: string, unexpectedValue: string) => {
   const actual = lastResponse.headers()[headerName.toLowerCase()];
+  // TEMPORARY diagnostic for the missing surrogate-key headers. REVERT BEFORE MERGE.
+  if (actual === undefined) {
+    console.log(`[diag] ${lastResponse.url()} -> ${lastResponse.status()} ${lastResponse.statusText()}`);
+    console.log(`[diag] headers: ${JSON.stringify(lastResponse.headers(), null, 2)}`);
+  }
   // A missing header is undefined, not '', so check it exists first.
   expect(actual, `response header "${headerName}" is missing`).toBeDefined();
   expect(actual).not.toBe(unexpectedValue);
