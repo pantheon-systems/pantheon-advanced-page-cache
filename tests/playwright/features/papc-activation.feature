@@ -10,9 +10,9 @@ Feature: PAPC plugin activation and admin page
     Then I should see "Pantheon Advanced Page Cache"
 
   @admin
-  Scenario: Pantheon Cache settings page loads
+  Scenario: Pantheon Page Cache settings page loads
     When I go to "/wp-admin/options-general.php?page=pantheon-cache"
-    Then I should see "Pantheon Cache"
+    Then I should see "Pantheon Page Cache"
 
   @dashboard
   Scenario: WordPress dashboard loads correctly
