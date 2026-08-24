@@ -51,6 +51,8 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         viewport: { width: 1920, height: 1080 },
+        // Must come after the devices spread, which sets its own userAgent.
+        ...(process.env.CI_UA ? { userAgent: process.env.CI_UA } : {}),
       },
     },
   ],

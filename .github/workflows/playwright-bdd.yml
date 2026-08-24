@@ -108,7 +108,71 @@ jobs:
           WP_USER: ${{ env.WORDPRESS_ADMIN_USERNAME }}
           WP_PASSWORD: ${{ env.WORDPRESS_ADMIN_PASSWORD }}
           HEADLESS: 'true'
+          CI_UA: ${{ secrets.CI_UA }}
         run: npm test
+
+      - name: Redact the allowlisted User-Agent from artifacts
+        if: always() && steps.check_skip.outputs.skip != 'true'
+        working-directory: tests/playwright
+        env:
+          CI_UA: ${{ secrets.CI_UA }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [ -z "${CI_UA:-}" ]; then
+            echo "CI_UA not set, nothing to redact."
+            exit 0
+          fi
+
+          DIRS="test-results playwright-report"
+
+          # A User-Agent is sent in plaintext, so it lands in traces and reports.
+          # Zips are handled separately; rewriting bytes inside an archive corrupts it.
+          redact_plain() {
+            grep -rlF -- "$CI_UA" "$1" 2>/dev/null | grep -v '\.zip$' || true
+          }
+
+          contains_ua() {
+            local found=0
+            for d in $DIRS; do
+              [ -d "$d" ] || continue
+              if [ -n "$(redact_plain "$d")" ]; then found=1; fi
+              while IFS= read -r -d '' z; do
+                if unzip -p "$z" 2>/dev/null | grep -qF -- "$CI_UA"; then found=1; fi
+              done < <(find "$d" -name '*.zip' -print0)
+            done
+            return $((1 - found))
+          }
+
+          for d in $DIRS; do
+            [ -d "$d" ] || continue
+
+            redact_plain "$d" | while IFS= read -r f; do
+              [ -n "$f" ] || continue
+              perl -pi -e 's/\Q$ENV{CI_UA}\E/REDACTED-CI-UA/g' "$f"
+              echo "redacted: $f"
+            done
+
+            while IFS= read -r -d '' z; do
+              unzip -p "$z" 2>/dev/null | grep -qF -- "$CI_UA" || continue
+              tmp=$(mktemp -d)
+              unzip -q "$z" -d "$tmp"
+              grep -rlF -- "$CI_UA" "$tmp" 2>/dev/null | while IFS= read -r f; do
+                perl -pi -e 's/\Q$ENV{CI_UA}\E/REDACTED-CI-UA/g' "$f"
+              done
+              rm -f "$z"
+              (cd "$tmp" && zip -qr "$OLDPWD/$z" .)
+              rm -rf "$tmp"
+              echo "redacted inside: $z"
+            done < <(find "$d" -name '*.zip' -print0)
+          done
+
+          if contains_ua; then
+            echo "::error::CI_UA still present in artifacts after redaction. Refusing to upload."
+            exit 1
+          fi
+          echo "Redaction complete."
 
       - name: Upload test results
         if: always() && steps.check_skip.outputs.skip != 'true'
