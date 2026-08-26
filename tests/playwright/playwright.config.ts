@@ -25,9 +25,7 @@ export default defineConfig({
   testDir,
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
-  // TEMPORARY: 0 to measure whether the suite fits under Cloudflare's 50 req/min
-  // rate limit unaided. Retries triple request volume. REVERT BEFORE MERGE.
-  retries: 0,
+  retries: process.env.CI ? 2 : 0,
   workers: 1,
   reporter: [
     ['html'],
