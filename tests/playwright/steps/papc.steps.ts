@@ -1,25 +1,11 @@
 import { createBdd } from 'playwright-bdd';
 import { test, expect } from '../fixtures/papc-fixtures';
-import type { APIResponse, Page } from '@playwright/test';
+import type { APIResponse } from '@playwright/test';
 
 const { Given, When, Then, Before } = createBdd(test);
 
 let lastResponse: APIResponse;
 let loggedIn = false;
-
-// Cloudflare serves a JS challenge on these hostnames. Chrome solves it, but the
-// handoff back to the origin outlasts the default assertion timeout.
-async function settleChallenge(page: Page) {
-  try {
-    await page.waitForFunction(
-      () => !document.body?.textContent?.includes('Performing security verification'),
-      undefined,
-      { timeout: 60000 },
-    );
-  } catch {
-    // Left for the assertion to report, so the failure names the real problem.
-  }
-}
 
 Before(async () => {
   loggedIn = false;
@@ -35,7 +21,6 @@ Given('I log in as an admin', async ({ wpLoginPage }) => {
 Given('I go to {string}', async ({ pantheonAPI, page }, url: string) => {
   if (loggedIn) {
     await page.goto(url, { waitUntil: 'load', timeout: 30000 });
-    await settleChallenge(page);
   } else {
     lastResponse = await pantheonAPI.get(url);
   }
@@ -55,7 +40,6 @@ When('I fill in {string} with {string}', async ({ page }, fieldName: string, val
 When('I press {string}', async ({ page }, buttonText: string) => {
   await page.getByRole('button', { name: buttonText }).click();
   await page.waitForLoadState('load');
-  await settleChallenge(page);
 });
 
 Then('I should see {string}', async ({ page }, text: string) => {
