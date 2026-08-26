@@ -47,7 +47,7 @@ export default defineConfig({
   },
   projects: [
     {
-      name: 'chromium',
+      name: 'chrome',
       use: {
         ...devices['Desktop Chrome'],
         // Real Chrome, not bundled Chromium: different TLS fingerprint and build signature.
