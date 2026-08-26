@@ -50,6 +50,8 @@ export default defineConfig({
       name: 'chromium',
       use: {
         ...devices['Desktop Chrome'],
+        // Real Chrome, not bundled Chromium: different TLS fingerprint and build signature.
+        channel: 'chrome',
         viewport: { width: 1920, height: 1080 },
         // Must come after the devices spread, which sets its own userAgent.
         ...(process.env.CI_UA ? { userAgent: process.env.CI_UA } : {}),

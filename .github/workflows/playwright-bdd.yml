@@ -95,10 +95,10 @@ jobs:
         working-directory: tests/playwright
         run: npm ci
 
-      - name: Install Chromium
+      - name: Install Chrome
         if: steps.check_skip.outputs.skip != 'true'
         working-directory: tests/playwright
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install --with-deps chrome
 
       - name: Run Playwright BDD tests
         if: steps.check_skip.outputs.skip != 'true'
@@ -108,7 +108,6 @@ jobs:
           WP_USER: ${{ env.WORDPRESS_ADMIN_USERNAME }}
           WP_PASSWORD: ${{ env.WORDPRESS_ADMIN_PASSWORD }}
           HEADLESS: 'true'
-          CI_UA: ${{ secrets.CI_UA }}
         run: npm test
 
       - name: Redact the allowlisted User-Agent from artifacts
