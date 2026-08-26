@@ -11,9 +11,9 @@ export const test = cmsBddTest.extend<PAPCFixtures>({
     if (!baseURL) throw new Error('WP_URL not set');
     const ctx = await request.newContext({
       baseURL,
-      // newContext does not inherit the project's use block, so the CI User-Agent
-      // has to be set here too or these requests go out unidentified.
-      ...(process.env.CI_UA ? { userAgent: process.env.CI_UA } : {}),
+      // Deliberately no userAgent here. newContext does not inherit the project's
+      // use block, and the default Node agent puts these /wp-json/ requests in a
+      // more permissive Cloudflare rate-limit tier than the CI UA would.
       extraHTTPHeaders: {
         // Cloudflare requires Pantheon-Debug exactly "1"; Fastly accepts either header.
         'Pantheon-Debug': '1',
