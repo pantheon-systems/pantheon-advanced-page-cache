@@ -40,8 +40,7 @@ export default defineConfig({
     },
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
-    // PoC-only, to prove the capability. Revert to 'retain-on-failure' for permanent CI.
-    video: 'on',
+    video: 'retain-on-failure',
     actionTimeout: 10000,
     navigationTimeout: 30000,
   },
