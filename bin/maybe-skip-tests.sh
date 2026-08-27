@@ -20,13 +20,10 @@ ignored_paths=(
   .github/workflows/composer-npm-diff.yml
   .github/workflows/validate-actions-workflows.yml
   .github/workflows/validate-plugin-version.yml
+  .github/workflows/wporg-validator.yml
   bin/maybe-skip-tests.sh
-  bin/helpers.sh
-  bin/install-local-tests.sh
-  bin/install-wp-tests.sh
-  bin/phpunit-test.sh
-  .wordpress-org/*
-  tests/phpunit/*
+  .wordpress-org/
+  tests/phpunit/
 )
 
 # Fetch the list of changed files across the whole PR, falling back to the last
@@ -61,7 +58,7 @@ for file in $changed_files; do
 done
 
 if [ "$should_run_tests" = false ]; then
-  echo "Only ignored files modified. Skipping Behat tests."
+  echo "Only ignored files modified. Skipping tests."
   # Exit with failure to skip tests in GitHub Actions
   # The workflow will handle this with continue-on-error
   exit 1

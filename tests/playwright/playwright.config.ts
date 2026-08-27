@@ -19,7 +19,7 @@ const testDir = defineBddConfig({
 });
 
 const headless = process.env.HEADLESS !== 'false';
-const slowMo = parseInt(process.env.SLOW_MO || '0');
+const slowMo = parseInt(process.env.SLOW_MO || '0', 10);
 
 const AUTH_FILE = '.auth/admin.json';
 process.env.AUTH_FILE = AUTH_FILE;
@@ -37,7 +37,7 @@ export default defineConfig({
     ['html'],
     ['list'],
   ],
-  timeout: 300000,
+  timeout: 120000,
   use: {
     baseURL: process.env.WP_URL,
     headless,

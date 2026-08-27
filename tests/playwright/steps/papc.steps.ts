@@ -2,7 +2,7 @@ import { createBdd } from 'playwright-bdd';
 import { test, expect } from '../fixtures/papc-fixtures';
 const { Given, When, Then, Before } = createBdd(test);
 
-const PACE_MS = parseInt(process.env.SCENARIO_PACE_MS || '0');
+const PACE_MS = parseInt(process.env.SCENARIO_PACE_MS || '0', 10);
 let firstScenario = true;
 
 Before(async () => {

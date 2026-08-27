@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ###
-# Prepare a Pantheon site environment for the Behat test suite, by installing
+# Prepare a Pantheon site environment for the end-to-end test suite, by installing
 # and configuring the plugin for the environment. This script is architected
 # such that it can be run a second time if a step fails.
 ###

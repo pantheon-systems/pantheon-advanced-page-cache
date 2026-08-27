@@ -1,15 +1,14 @@
 {
-  "name": "papc-playwright-bdd-poc",
+  "name": "papc-e2e",
   "version": "1.0.0",
-  "description": "Playwright BDD PoC for PAPC plugin testing (SITE-5879)",
+  "description": "End-to-end tests for the Pantheon Advanced Page Cache plugin",
   "private": true,
   "scripts": {
     "test": "bddgen && playwright test",
     "test:headed": "bddgen && HEADLESS=false playwright test",
     "test:debug": "bddgen && playwright test --debug",
     "test:ui": "bddgen && playwright test --ui",
-    "test:report": "playwright show-report",
-    "bddgen": "bddgen"
+    "test:report": "playwright show-report"
   },
   "dependencies": {
     "cms-bdd": "github:pantheon-systems/cms-bdd",

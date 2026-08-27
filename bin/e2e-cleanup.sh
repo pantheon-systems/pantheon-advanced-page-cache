@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ###
-# Delete the Pantheon site environment after the Behat test suite has run.
+# Delete the Pantheon site environment after the end-to-end test suite has run.
 ###
 
 terminus whoami > /dev/null
