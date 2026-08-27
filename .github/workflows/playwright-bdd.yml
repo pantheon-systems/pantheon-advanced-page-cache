@@ -75,7 +75,9 @@ jobs:
       - name: Set Environment Variables
         if: steps.check_skip.outputs.skip != 'true'
         run: |
-          echo "WORDPRESS_ADMIN_PASSWORD=$(openssl rand -hex 8)" >> $GITHUB_ENV
+          PASSWORD=$(openssl rand -hex 8)
+          echo "::add-mask::$PASSWORD"
+          echo "WORDPRESS_ADMIN_PASSWORD=$PASSWORD" >> $GITHUB_ENV
           echo "TERMINUS_ENV=ci-${{ github.run_number }}" >> $GITHUB_ENV
           echo "SITE_ENV=pantheon-advanced-page-cache.ci-${{ github.run_number }}" >> $GITHUB_ENV
           echo "WORDPRESS_ADMIN_EMAIL=no-reply@getpantheon.com" >> $GITHUB_ENV
