@@ -1,7 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 import { defineBddConfig } from 'playwright-bdd';
 import * as dotenv from 'dotenv';
-import { AUTH_FILE } from './auth-file';
 
 dotenv.config();
 
@@ -22,11 +21,15 @@ const testDir = defineBddConfig({
 const headless = process.env.HEADLESS !== 'false';
 const slowMo = parseInt(process.env.SLOW_MO || '0');
 
+const AUTH_FILE = '.auth/admin.json';
+process.env.AUTH_FILE = AUTH_FILE;
+
+process.env.SCENARIO_PACE_MS ??= '3000';
+
 export default defineConfig({
   testDir,
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
-  // One retry, not two: retries add load the edge counts against us.
   retries: process.env.CI ? 1 : 0,
   workers: 1,
   reporter: [
@@ -62,10 +65,8 @@ export default defineConfig({
       dependencies: ['setup'],
       use: {
         ...devices['Desktop Chrome'],
-        // Real Chrome, not bundled Chromium: different fingerprint at the edge.
         channel: 'chrome',
         viewport: { width: 1920, height: 1080 },
-        // Reuse the session from the setup project instead of logging in per scenario.
         storageState: AUTH_FILE,
         // Must come after the devices spread, which sets its own userAgent.
         ...(process.env.CI_UA ? { userAgent: process.env.CI_UA } : {}),

@@ -1,11 +1,16 @@
 import { test as cmsBddTest, expect } from 'cms-bdd';
-import { APIRequestContext, request } from '@playwright/test';
+import { APIRequestContext, APIResponse, request } from '@playwright/test';
 
 type PAPCFixtures = {
   pantheonAPI: APIRequestContext;
+  scenario: { loggedIn: boolean; lastResponse?: APIResponse };
 };
 
 export const test = cmsBddTest.extend<PAPCFixtures>({
+  // Per-test state. Module-level variables would leak across workers.
+  scenario: async ({}, use) => {
+    await use({ loggedIn: false });
+  },
   pantheonAPI: async ({}, use) => {
     const baseURL = process.env.WP_URL;
     if (!baseURL) throw new Error('WP_URL not set');
