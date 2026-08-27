@@ -112,6 +112,7 @@ jobs:
         run: npm test
 
       - name: Redact the allowlisted User-Agent from artifacts
+        id: redact
         if: always() && steps.check_skip.outputs.skip != 'true'
         working-directory: tests/playwright
         env:
@@ -119,7 +120,7 @@ jobs:
         run: "$GITHUB_WORKSPACE/bin/redact-artifacts.sh"
 
       - name: Upload test results
-        if: always() && steps.check_skip.outputs.skip != 'true'
+        if: always() && steps.check_skip.outputs.skip != 'true' && steps.redact.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
           name: playwright-test-results

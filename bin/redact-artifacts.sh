@@ -28,7 +28,7 @@ contains_ua() {
     [ -d "$d" ] || continue
     if [ -n "$(redact_plain "$d")" ]; then found=1; fi
     while IFS= read -r -d '' z; do
-      if unzip -p "$z" 2>/dev/null | grep -qaF -- "$CI_UA"; then found=1; fi
+      if zip_has_ua "$z"; then found=1; fi
     done < <(find "$d" -name '*.zip' -print0)
   done
   return $((1 - found))
