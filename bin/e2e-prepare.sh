@@ -83,15 +83,3 @@ terminus wp $SITE_ENV -- rewrite structure '/%year%/%monthnum%/%day%/%postname%/
 # Add the pantheon-cache option. We're assuming it doesn't already exist.
 terminus wp $SITE_ENV -- option add pantheon-cache '{"default_ttl":600,"maintenance_mode":"disabled"}' --format=json
 
-# Multidevs do not reliably inherit the site's CDN, and results differ per CDN.
-echo "=== CDN serving https://$PANTHEON_SITE_URL ==="
-CDN_HEADERS=$(curl -sI "https://$PANTHEON_SITE_URL" || true)
-echo "$CDN_HEADERS" | grep -iE "^(HTTP/|server|cf-ray|cf-mitigated|x-served-by|via):" || echo "no CDN headers returned"
-if echo "$CDN_HEADERS" | grep -qi "^server: cloudflare"; then
-  echo "CDN: Cloudflare"
-elif echo "$CDN_HEADERS" | grep -qi "varnish"; then
-  echo "CDN: Fastly"
-else
-  echo "CDN: unknown"
-fi
-
