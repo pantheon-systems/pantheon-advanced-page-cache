@@ -1,6 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 import { defineBddConfig } from 'playwright-bdd';
 import * as dotenv from 'dotenv';
+import { AUTH_FILE, BROWSER_UA } from './constants';
 
 dotenv.config();
 
@@ -20,11 +21,6 @@ const testDir = defineBddConfig({
 
 const headless = process.env.HEADLESS !== 'false';
 const slowMo = parseInt(process.env.SLOW_MO || '0', 10);
-
-const AUTH_FILE = '.auth/admin.json';
-process.env.AUTH_FILE = AUTH_FILE;
-
-process.env.SCENARIO_PACE_MS ??= '3000';
 
 export default defineConfig({
   testDir,
@@ -58,7 +54,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         channel: 'chrome',
-        ...(process.env.CI_UA ? { userAgent: process.env.CI_UA } : {}),
+        ...BROWSER_UA,
       },
     },
     {
@@ -69,8 +65,7 @@ export default defineConfig({
         channel: 'chrome',
         viewport: { width: 1920, height: 1080 },
         storageState: AUTH_FILE,
-        // Must come after the devices spread, which sets its own userAgent.
-        ...(process.env.CI_UA ? { userAgent: process.env.CI_UA } : {}),
+        ...BROWSER_UA,
       },
     },
   ],

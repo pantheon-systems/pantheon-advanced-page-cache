@@ -1,5 +1,6 @@
 import { test as cmsBddTest, expect } from 'cms-bdd';
 import { APIRequestContext, APIResponse, request } from '@playwright/test';
+import { API_UA } from '../constants';
 
 type PAPCFixtures = {
   pantheonAPI: APIRequestContext;
@@ -17,8 +18,7 @@ export const test = cmsBddTest.extend<PAPCFixtures>({
     if (!baseURL) throw new Error('WP_URL not set');
     const ctx = await request.newContext({
       baseURL,
-      // A node-prefixed agent keeps these calls in a more permissive edge tier.
-      ...(process.env.CI_UA ? { userAgent: `node ${process.env.CI_UA}` } : {}),
+      ...API_UA,
       extraHTTPHeaders: {
         // Both debug triggers are sent so the surrogate header survives either CDN.
         'Pantheon-Debug': '1',

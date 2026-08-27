@@ -1,13 +1,13 @@
 import { createBdd } from 'playwright-bdd';
 import { test, expect } from '../fixtures/papc-fixtures';
+import { SCENARIO_PACE_MS } from '../constants';
 const { Given, When, Then, Before } = createBdd(test);
 
-const PACE_MS = parseInt(process.env.SCENARIO_PACE_MS || '0', 10);
 let firstScenario = true;
 
 Before(async () => {
   // Space scenarios apart, but not before the first, which has nothing to follow.
-  if (PACE_MS > 0 && !firstScenario) await new Promise((r) => setTimeout(r, PACE_MS));
+  if (SCENARIO_PACE_MS > 0 && !firstScenario) await new Promise((r) => setTimeout(r, SCENARIO_PACE_MS));
   firstScenario = false;
 });
 
