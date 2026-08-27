@@ -14,10 +14,8 @@ export const test = cmsBddTest.extend<PAPCFixtures>({
     await use({});
   },
   pantheonAPI: async ({}, use) => {
-    const baseURL = process.env.WP_URL;
-    if (!baseURL) throw new Error('WP_URL not set');
     const ctx = await request.newContext({
-      baseURL,
+      baseURL: process.env.WP_URL,
       ...API_UA,
       extraHTTPHeaders: {
         // Both debug triggers are sent so the surrogate header survives either CDN.

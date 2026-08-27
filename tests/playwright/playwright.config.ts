@@ -6,7 +6,7 @@ import { AUTH_FILE, BROWSER_UA } from './constants';
 dotenv.config();
 
 if (!process.env.WP_URL) {
-  throw new Error('WP_URL environment variable is required. Set it in .env or as an environment variable.');
+  throw new Error('WP_URL is not set. In CI bin/e2e-prepare.sh writes it; locally, set it in tests/playwright/.env.');
 }
 
 const testDir = defineBddConfig({
@@ -54,6 +54,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         channel: 'chrome',
+        viewport: { width: 1920, height: 1080 },
         ...BROWSER_UA,
       },
     },

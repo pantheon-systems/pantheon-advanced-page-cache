@@ -12,6 +12,11 @@ else
   DIRS=(test-results playwright-report)
 fi
 
+# Same byte length as the value, so rewriting a binary cannot shift its offsets.
+REDACT_WITH=$(printf '%s%*s' 'REDACTED-CI-UA' "${#CI_UA}" '' | tr ' ' 'X')
+REDACT_WITH=${REDACT_WITH:0:${#CI_UA}}
+export REDACT_WITH
+
 # A User-Agent is sent in plaintext, so it lands in traces and reports.
 # Zips are handled separately; rewriting bytes inside an archive corrupts it.
 redact_plain() {
@@ -43,7 +48,7 @@ for d in "${DIRS[@]}"; do
 
   redact_plain "$d" | while IFS= read -r f; do
     [ -n "$f" ] || continue
-    perl -pi -e 's/\Q$ENV{CI_UA}\E/REDACTED-CI-UA/g' "$f"
+    perl -pi -e 's/\Q$ENV{CI_UA}\E/$ENV{REDACT_WITH}/g' "$f"
     echo "redacted: $f"
   done
 
@@ -52,7 +57,7 @@ for d in "${DIRS[@]}"; do
     tmp=$(mktemp -d)
     unzip -q "$z" -d "$tmp"
     grep -rlaF -- "$CI_UA" "$tmp" 2>/dev/null | while IFS= read -r f; do
-      perl -pi -e 's/\Q$ENV{CI_UA}\E/REDACTED-CI-UA/g' "$f"
+      perl -pi -e 's/\Q$ENV{CI_UA}\E/$ENV{REDACT_WITH}/g' "$f"
     done
     rm -f "$z"
     (cd "$tmp" && zip -qr "$OLDPWD/$z" .)
