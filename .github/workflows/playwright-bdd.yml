@@ -40,7 +40,6 @@ jobs:
           else
             echo "skip=false" >> $GITHUB_OUTPUT
           fi
-        continue-on-error: true
 
       - name: Setup Node.js
         if: steps.check_skip.outputs.skip != 'true'
@@ -105,7 +104,7 @@ jobs:
         if: steps.check_skip.outputs.skip != 'true'
         working-directory: tests/playwright
         env:
-          WP_URL: https://ci-${{ github.run_number }}-pantheon-advanced-page-cache.pantheonsite.io
+          WP_URL: ${{ env.WP_URL }}
           WP_USER: ${{ env.WORDPRESS_ADMIN_USERNAME }}
           WP_PASSWORD: ${{ env.WORDPRESS_ADMIN_PASSWORD }}
           HEADLESS: 'true'

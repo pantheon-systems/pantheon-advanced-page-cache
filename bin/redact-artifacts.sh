@@ -6,7 +6,11 @@ if [ -z "${CI_UA:-}" ]; then
   exit 0
 fi
 
-DIRS="${*:-test-results playwright-report}"
+if [ "$#" -gt 0 ]; then
+  DIRS=("$@")
+else
+  DIRS=(test-results playwright-report)
+fi
 
 # A User-Agent is sent in plaintext, so it lands in traces and reports.
 # Zips are handled separately; rewriting bytes inside an archive corrupts it.
@@ -24,17 +28,17 @@ zip_has_ua() {
 
 contains_ua() {
   local found=0
-  for d in $DIRS; do
+  for d in "${DIRS[@]}"; do
     [ -d "$d" ] || continue
     if [ -n "$(redact_plain "$d")" ]; then found=1; fi
     while IFS= read -r -d '' z; do
       if zip_has_ua "$z"; then found=1; fi
     done < <(find "$d" -name '*.zip' -print0)
   done
-  return $((1 - found))
+  [ "$found" -eq 1 ]
 }
 
-for d in $DIRS; do
+for d in "${DIRS[@]}"; do
   [ -d "$d" ] || continue
 
   redact_plain "$d" | while IFS= read -r f; do
