@@ -1,8 +1,7 @@
 import { test as setup, expect } from '@playwright/test';
 import { AUTH_FILE } from './auth-file';
 
-// Authenticate once and save the session. Every scenario used to log in through a
-// Gherkin Background, which is per-scenario, so the suite paid for 7 logins.
+// Authenticate once. A Gherkin Background runs per scenario, so a login step there costs one login each.
 setup('authenticate as admin', async ({ page }) => {
   const user = process.env.WP_USER;
   const password = process.env.WP_PASSWORD;

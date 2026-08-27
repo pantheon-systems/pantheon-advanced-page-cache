@@ -7,18 +7,20 @@ const { Given, When, Then, Before } = createBdd(test);
 let lastResponse: APIResponse;
 let loggedIn = false;
 
+// Pacing keeps the suite under the edge's per-IP request ceiling.
+const PACE_MS = parseInt(process.env.SCENARIO_PACE_MS || '3000');
+
 Before(async () => {
   loggedIn = false;
+  if (PACE_MS > 0) await new Promise((r) => setTimeout(r, PACE_MS));
 });
 
-// The session is loaded from storageState by the setup project, so this only flips
-// the flag that routes `I go to` down the browser path instead of the API path.
+// Session comes from storageState; this only flips the browser-vs-API routing flag.
 Given('I log in as an admin', async () => {
   loggedIn = true;
 });
 
-// Surrogate key features use this without login (API request with Pantheon-Debug header).
-// Admin features use this after login (browser navigation).
+// Without login this is an API request; after login it is a browser navigation.
 Given('I go to {string}', async ({ pantheonAPI, page }, url: string) => {
   if (loggedIn) {
     await page.goto(url, { waitUntil: 'load', timeout: 30000 });
@@ -53,18 +55,7 @@ Then('the {string} field should contain {string}', async ({ page }, fieldName: s
 
 Then('the response header {string} should be {string}', async ({}, headerName: string, expectedValue: string) => {
   const actual = lastResponse.headers()[headerName.toLowerCase()];
-  // TEMPORARY diagnostic while the surrogate-key headers are under investigation. REVERT BEFORE MERGE.
-  if (actual === undefined) {
-    console.log(`[diag] ${lastResponse.url()} -> ${lastResponse.status()} ${lastResponse.statusText()}`);
-    console.log(`[diag] headers: ${JSON.stringify(lastResponse.headers(), null, 2)}`);
-  }
   // A missing header is undefined, so report that rather than a value mismatch.
   expect(actual, `response header "${headerName}" is missing`).toBeDefined();
   expect(actual).toBe(expectedValue);
-});
-
-Then('the response header {string} should not be {string}', async ({}, headerName: string, unexpectedValue: string) => {
-  const actual = lastResponse.headers()[headerName.toLowerCase()];
-  expect(actual, `response header "${headerName}" is missing`).toBeDefined();
-  expect(actual).not.toBe(unexpectedValue);
 });

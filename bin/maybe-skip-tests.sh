@@ -12,7 +12,7 @@ ignored_paths=(
   phpunit.xml.dist
   README.md
   readme.txt
-  # TEMPORARY: playwright-bdd.yml removed from this list so workflow changes trigger a run. REVERT BEFORE MERGE.
+  .github/workflows/playwright-bdd.yml
   .github/workflows/lint-test.yml
   .github/workflows/build-tag-release.yml
   .github/workflows/release-pr.yml

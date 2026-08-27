@@ -26,7 +26,8 @@ export default defineConfig({
   testDir,
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
+  // One retry, not two: retries add load the edge counts against us.
+  retries: process.env.CI ? 1 : 0,
   workers: 1,
   reporter: [
     ['html'],
@@ -61,7 +62,7 @@ export default defineConfig({
       dependencies: ['setup'],
       use: {
         ...devices['Desktop Chrome'],
-        // Real Chrome, not bundled Chromium: different TLS fingerprint and build signature.
+        // Real Chrome, not bundled Chromium: different fingerprint at the edge.
         channel: 'chrome',
         viewport: { width: 1920, height: 1080 },
         // Reuse the session from the setup project instead of logging in per scenario.
