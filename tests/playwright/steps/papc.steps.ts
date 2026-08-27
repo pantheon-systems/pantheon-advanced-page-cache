@@ -11,17 +11,18 @@ Before(async () => {
   firstScenario = false;
 });
 
-// Session comes from storageState; this only flips the browser-vs-API routing flag.
-Given('I log in as an admin', async ({ scenario }) => {
-  scenario.loggedIn = true;
+// The admin session comes from storageState, set up once by the setup project.
+// This step documents the precondition in Gherkin; it has nothing to do.
+Given('I log in as an admin', async () => {});
+
+// Drives a real browser. Use "I request" for scenarios asserting on headers.
+Given('I go to {string}', async ({ page }, url: string) => {
+  await page.goto(url, { waitUntil: 'load' });
 });
 
-Given('I go to {string}', async ({ pantheonAPI, page, scenario }, url: string) => {
-  if (scenario.loggedIn) {
-    await page.goto(url, { waitUntil: 'load', timeout: 30000 });
-  } else {
-    scenario.lastResponse = await pantheonAPI.get(url);
-  }
+// Plain HTTP, no browser. Carries the debug headers the surrogate-key tests need.
+Given('I request {string}', async ({ pantheonAPI, scenario }, url: string) => {
+  scenario.lastResponse = await pantheonAPI.get(url);
 });
 
 When('I fill in {string} with {string}', async ({ page }, fieldName: string, value: string) => {
@@ -49,8 +50,9 @@ Then('the {string} field should contain {string}', async ({ page }, fieldName: s
 });
 
 Then('the response header {string} should be {string}', async ({ scenario }, headerName: string, expectedValue: string) => {
-  const actual = scenario.lastResponse!.headers()[headerName.toLowerCase()];
-  // A missing header is undefined, so report that rather than a value mismatch.
-  expect(actual, `response header "${headerName}" is missing`).toBeDefined();
-  expect(actual).toBe(expectedValue);
+  const response = scenario.lastResponse;
+  if (!response) throw new Error('No response recorded. This scenario needs an "I request" step.');
+  // A missing header reads as undefined, which names the real problem.
+  const actual = response.headers()[headerName.toLowerCase()];
+  expect(actual, `response header "${headerName}"`).toBe(expectedValue);
 });

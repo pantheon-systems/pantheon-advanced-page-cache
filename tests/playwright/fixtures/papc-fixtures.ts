@@ -3,13 +3,14 @@ import { APIRequestContext, APIResponse, request } from '@playwright/test';
 
 type PAPCFixtures = {
   pantheonAPI: APIRequestContext;
-  scenario: { loggedIn: boolean; lastResponse?: APIResponse };
+  scenario: { lastResponse?: APIResponse };
 };
 
 export const test = cmsBddTest.extend<PAPCFixtures>({
-  // Per-test state. Module-level variables would leak across workers.
+  // Per-test state. A module-level variable would persist between scenarios in
+  // the same worker; a fixture is rebuilt for each one.
   scenario: async ({}, use) => {
-    await use({ loggedIn: false });
+    await use({});
   },
   pantheonAPI: async ({}, use) => {
     const baseURL = process.env.WP_URL;
