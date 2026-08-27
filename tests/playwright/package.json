@@ -1,0 +1,25 @@
+{
+  "name": "papc-e2e",
+  "version": "1.0.0",
+  "description": "End-to-end tests for the Pantheon Advanced Page Cache plugin",
+  "private": true,
+  "scripts": {
+    "test": "bddgen && playwright test",
+    "test:headed": "bddgen && HEADLESS=false playwright test",
+    "test:debug": "bddgen && playwright test --debug",
+    "test:ui": "bddgen && playwright test --ui",
+    "test:report": "playwright show-report"
+  },
+  "dependencies": {
+    "cms-bdd": "github:pantheon-systems/cms-bdd#8a2139346b48d15d2306ea1d2c49ade20ef22c28",
+    "dotenv": "^16.4.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.60.0",
+    "@types/node": "^20.19.39",
+    "allure-playwright": "^3.0.0",
+    "playwright": "1.60.0",
+    "playwright-bdd": "8.5.1",
+    "typescript": "^5.9.0"
+  }
+}
