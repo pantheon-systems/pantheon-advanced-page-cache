@@ -1,6 +1,5 @@
 import { test as setup, expect } from '@playwright/test';
-
-export const AUTH_FILE = '.auth/admin.json';
+import { AUTH_FILE } from './auth-file';
 
 // Authenticate once and save the session. Every scenario used to log in through a
 // Gherkin Background, which is per-scenario, so the suite paid for 7 logins.

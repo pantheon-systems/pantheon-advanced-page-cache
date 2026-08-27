@@ -1,7 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 import { defineBddConfig } from 'playwright-bdd';
 import * as dotenv from 'dotenv';
-import { AUTH_FILE } from './auth.setup';
+import { AUTH_FILE } from './auth-file';
 
 dotenv.config();
 
