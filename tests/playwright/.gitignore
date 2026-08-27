@@ -4,3 +4,4 @@ playwright-report/
 .test-state.json
 .env
 .features-gen/
+.auth/

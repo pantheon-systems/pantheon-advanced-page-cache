@@ -1,6 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 import { defineBddConfig } from 'playwright-bdd';
 import * as dotenv from 'dotenv';
+import { AUTH_FILE } from './auth.setup';
 
 dotenv.config();
 
@@ -46,12 +47,25 @@ export default defineConfig({
   },
   projects: [
     {
+      name: 'setup',
+      testDir: __dirname,
+      testMatch: /auth\.setup\.ts/,
+      use: {
+        ...devices['Desktop Chrome'],
+        channel: 'chrome',
+        ...(process.env.CI_UA ? { userAgent: process.env.CI_UA } : {}),
+      },
+    },
+    {
       name: 'chrome',
+      dependencies: ['setup'],
       use: {
         ...devices['Desktop Chrome'],
         // Real Chrome, not bundled Chromium: different TLS fingerprint and build signature.
         channel: 'chrome',
         viewport: { width: 1920, height: 1080 },
+        // Reuse the session from the setup project instead of logging in per scenario.
+        storageState: AUTH_FILE,
         // Must come after the devices spread, which sets its own userAgent.
         ...(process.env.CI_UA ? { userAgent: process.env.CI_UA } : {}),
       },

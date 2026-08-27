@@ -11,8 +11,9 @@ Before(async () => {
   loggedIn = false;
 });
 
-Given('I log in as an admin', async ({ wpLoginPage }) => {
-  await wpLoginPage.login();
+// The session is loaded from storageState by the setup project, so this only flips
+// the flag that routes `I go to` down the browser path instead of the API path.
+Given('I log in as an admin', async () => {
   loggedIn = true;
 });
 
