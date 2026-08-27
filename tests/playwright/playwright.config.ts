@@ -31,6 +31,7 @@ export default defineConfig({
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
+  // Not a default: the rate limit is per IP and pacing is per worker.
   workers: 1,
   reporter: [
     ['html'],
