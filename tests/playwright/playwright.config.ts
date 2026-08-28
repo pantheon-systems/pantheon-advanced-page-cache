@@ -1,9 +1,7 @@
+import 'dotenv/config';
 import { defineConfig, devices } from '@playwright/test';
 import { defineBddConfig } from 'playwright-bdd';
-import * as dotenv from 'dotenv';
 import { AUTH_FILE, BROWSER_UA } from './constants';
-
-dotenv.config();
 
 if (!process.env.WP_URL) {
   throw new Error('WP_URL is not set. In CI bin/e2e-prepare.sh writes it; locally, set it in tests/playwright/.env.');

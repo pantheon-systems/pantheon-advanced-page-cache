@@ -45,6 +45,12 @@ Then('I should see {string}', async ({ page }, text: string) => {
   await expect(page.locator('body')).toContainText(text);
 });
 
+// The plugins screen lists installed plugins whether active or not; only the
+// row's class distinguishes the two.
+Then('the {string} plugin should be active', async ({ page }, pluginFile: string) => {
+  await expect(page.locator(`tr[data-plugin="${pluginFile}"]`)).toHaveClass(/(^|\s)active(\s|$)/);
+});
+
 Then('the {string} field should contain {string}', async ({ page }, fieldName: string, expectedValue: string) => {
   await expect(page.locator(`[name="${fieldName}"]`)).toHaveValue(expectedValue);
 });
