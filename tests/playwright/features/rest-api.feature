@@ -1,25 +1,14 @@
 Feature: Verify CDN behavior as it pertains to the REST API
 
-  Scenario: Fetching an individual post emits correct surrogate keys
-    Given I request "/wp-json/wp/v2/posts/1"
-    Then the response header "Surrogate-Key-Raw" should be "rest-post-1"
+  Scenario Outline: Fetching <resource> emits correct surrogate keys
+    Given I request "<endpoint>"
+    Then the response header "Surrogate-Key-Raw" should be "<keys>"
 
-  Scenario: Fetching a post collection emits correct surrogate keys
-    Given I request "/wp-json/wp/v2/posts"
-    Then the response header "Surrogate-Key-Raw" should be "rest-post-collection rest-post-1"
-
-  Scenario: Fetching an individual page emits correct surrogate keys
-    Given I request "/wp-json/wp/v2/pages/2"
-    Then the response header "Surrogate-Key-Raw" should be "rest-post-2"
-
-  Scenario: Fetching an individual category emits correct surrogate keys
-    Given I request "/wp-json/wp/v2/categories/1"
-    Then the response header "Surrogate-Key-Raw" should be "rest-term-1"
-
-  Scenario: Fetching a category collection emits correct surrogate keys
-    Given I request "/wp-json/wp/v2/categories"
-    Then the response header "Surrogate-Key-Raw" should be "rest-category-collection rest-term-1"
-
-  Scenario: Fetching an individual user emits correct surrogate keys
-    Given I request "/wp-json/wp/v2/users/1"
-    Then the response header "Surrogate-Key-Raw" should be "rest-user-1"
+    Examples:
+      | resource                | endpoint                     | keys                                     |
+      | an individual post      | /wp-json/wp/v2/posts/1       | rest-post-1                              |
+      | a post collection       | /wp-json/wp/v2/posts         | rest-post-collection rest-post-1         |
+      | an individual page      | /wp-json/wp/v2/pages/2       | rest-post-2                              |
+      | an individual category  | /wp-json/wp/v2/categories/1  | rest-term-1                              |
+      | a category collection   | /wp-json/wp/v2/categories    | rest-category-collection rest-term-1     |
+      | an individual user      | /wp-json/wp/v2/users/1       | rest-user-1                              |

@@ -3,11 +3,53 @@ name: Playwright BDD Tests
 on:
   push:
     branches: [main]
+    # Keep in sync with the pull_request list below; Actions does not expand YAML anchors.
+    paths-ignore:
+      - '.editorconfig'
+      - '.gitattributes'
+      - '.gitignore'
+      - 'CODEOWNERS'
+      - 'CONTRIBUTING.md'
+      - 'LICENSE'
+      - 'phpcs.xml.dist'
+      - 'phpunit.xml.dist'
+      - 'README.md'
+      - 'readme.txt'
+      - '.github/workflows/lint-test.yml'
+      - '.github/workflows/build-tag-release.yml'
+      - '.github/workflows/release-pr.yml'
+      - '.github/workflows/wordpress-plugin-deploy.yml'
+      - '.github/workflows/composer-npm-diff.yml'
+      - '.github/workflows/validate-actions-workflows.yml'
+      - '.github/workflows/validate-plugin-version.yml'
+      - '.github/workflows/wporg-validator.yml'
+      - '.wordpress-org/**'
+      - 'tests/phpunit/**'
   schedule:
     - cron: '0 0 * * *'
   pull_request:
-    types: [opened, reopened, synchronize, ready_for_review]
-    branches: ['**']
+    # Keep in sync with the push list above; Actions does not expand YAML anchors.
+    paths-ignore:
+      - '.editorconfig'
+      - '.gitattributes'
+      - '.gitignore'
+      - 'CODEOWNERS'
+      - 'CONTRIBUTING.md'
+      - 'LICENSE'
+      - 'phpcs.xml.dist'
+      - 'phpunit.xml.dist'
+      - 'README.md'
+      - 'readme.txt'
+      - '.github/workflows/lint-test.yml'
+      - '.github/workflows/build-tag-release.yml'
+      - '.github/workflows/release-pr.yml'
+      - '.github/workflows/wordpress-plugin-deploy.yml'
+      - '.github/workflows/composer-npm-diff.yml'
+      - '.github/workflows/validate-actions-workflows.yml'
+      - '.github/workflows/validate-plugin-version.yml'
+      - '.github/workflows/wporg-validator.yml'
+      - '.wordpress-org/**'
+      - 'tests/phpunit/**'
   workflow_dispatch:
 
 permissions:
@@ -17,93 +59,69 @@ jobs:
   playwright-bdd:
     name: Playwright BDD Tests
     runs-on: ubuntu-latest
-    if: >
-      (github.event.pull_request.head.repo.full_name == github.repository || github.event_name != 'pull_request')
-      && (github.event.pull_request.draft == false || github.event_name != 'pull_request')
+    # Forks cannot reach the Terminus and SSH secrets this suite needs.
+    if: github.event.pull_request.head.repo.full_name == github.repository || github.event_name != 'pull_request'
 
     env:
-      TERMINUS_SITE: pantheon-advanced-page-cache
-      WORDPRESS_ADMIN_USERNAME: pantheon
+      TERMINUS_SITE: ${{ vars.TERMINUS_SITE }}
+      WORDPRESS_ADMIN_USERNAME: ${{ vars.WORDPRESS_ADMIN_USERNAME }}
 
     steps:
       - name: Checkout
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
-        with:
-          fetch-depth: 0
-
-      - name: Check if we need to run tests
-        id: check_skip
-        run: |
-          if ! ./bin/maybe-skip-tests.sh; then
-            echo "skip=true" >> $GITHUB_OUTPUT
-            echo "Only ignored files modified. Skipping tests."
-          else
-            echo "skip=false" >> $GITHUB_OUTPUT
-          fi
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup Node.js
-        if: steps.check_skip.outputs.skip != 'true'
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: '20'
 
       - name: Setup PHP
-        if: steps.check_skip.outputs.skip != 'true'
-        uses: shivammathur/setup-php@d59004228537ca90c8dca680592a08a675bf52b6 # v2
+        uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
         with:
           php-version: '8.2'
 
       - name: Install Terminus
-        if: steps.check_skip.outputs.skip != 'true'
-        uses: pantheon-systems/terminus-github-actions@8e024bd89ff46ed2aa4e0663c6b54c87a94344f8 # v1.2.7
+        uses: pantheon-systems/terminus-github-actions@409451ede17f75acac08f42edc823fee6c435057 # v1.2.8
         with:
           pantheon-machine-token: ${{ secrets.TERMINUS_TOKEN }}
 
       - name: Setup SSH
-        if: steps.check_skip.outputs.skip != 'true'
-        uses: webfactory/ssh-agent@dc588b651fe13675774614f8e6a936a468676387 # v0.9.0
+        uses: webfactory/ssh-agent@e83874834305fe9a4a2997156cb26c5de65a8555 # v0.10.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           log-public-key: true
 
       - name: Configure SSH
-        if: steps.check_skip.outputs.skip != 'true'
         run: |
           mkdir -p ~/.ssh
           printf "Host *\n  StrictHostKeyChecking no\n  UserKnownHostsFile=/dev/null\n" > ~/.ssh/config
 
       - name: Set Environment Variables
-        if: steps.check_skip.outputs.skip != 'true'
         run: |
           PASSWORD=$(openssl rand -hex 8)
           echo "::add-mask::$PASSWORD"
           echo "WORDPRESS_ADMIN_PASSWORD=$PASSWORD" >> $GITHUB_ENV
           echo "TERMINUS_ENV=ci-${{ github.run_number }}" >> $GITHUB_ENV
-          echo "SITE_ENV=pantheon-advanced-page-cache.ci-${{ github.run_number }}" >> $GITHUB_ENV
+          echo "SITE_ENV=$TERMINUS_SITE.ci-${{ github.run_number }}" >> $GITHUB_ENV
           echo "WORDPRESS_ADMIN_EMAIL=no-reply@getpantheon.com" >> $GITHUB_ENV
 
       - name: Validate Fixture Version
-        if: steps.check_skip.outputs.skip != 'true'
         uses: pantheon-systems/plugin-release-actions/validate-fixture-version@c4a1a8aac520bf6682efee843cd0f8fda8442793 # main
         with:
           terminus_site: ${{ env.TERMINUS_SITE }}
 
       - name: Prepare Test Environment
-        if: steps.check_skip.outputs.skip != 'true'
         run: ./bin/e2e-prepare.sh
 
       - name: Install Node dependencies
-        if: steps.check_skip.outputs.skip != 'true'
         working-directory: tests/playwright
         run: npm ci
 
       - name: Install Chrome
-        if: steps.check_skip.outputs.skip != 'true'
         working-directory: tests/playwright
         run: npx playwright install --with-deps chrome
 
       - name: Run Playwright BDD tests
-        if: steps.check_skip.outputs.skip != 'true'
         working-directory: tests/playwright
         env:
           WP_URL: ${{ env.WP_URL }}
@@ -115,15 +133,15 @@ jobs:
 
       - name: Redact the allowlisted User-Agent from artifacts
         id: redact
-        if: always() && steps.check_skip.outputs.skip != 'true'
+        if: always()
         working-directory: tests/playwright
         env:
           CI_UA: ${{ secrets.CI_UA }}
         run: "$GITHUB_WORKSPACE/bin/redact-artifacts.sh"
 
       - name: Upload test results
-        if: always() && steps.check_skip.outputs.skip != 'true' && steps.redact.outcome == 'success'
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always() && steps.redact.outcome == 'success'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: playwright-test-results
           path: |
@@ -131,5 +149,5 @@ jobs:
             tests/playwright/playwright-report/
 
       - name: Cleanup Test Environment
-        if: always() && steps.check_skip.outputs.skip != 'true'
+        if: always()
         run: ./bin/e2e-cleanup.sh
