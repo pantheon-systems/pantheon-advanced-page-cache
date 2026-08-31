@@ -49,7 +49,7 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-    - uses: pantheon-systems/phpcompatibility-action@bd72eb001d4fb9817c9d6e1a157a71e287f3ff80 # dev
+    - uses: pantheon-systems/phpcompatibility-action@6bcfb79e78f644a471e856a1e92e14148a8e4017 # v1.1.4
       with:
         paths: ${{ github.workspace }}/*.php ${{ github.workspace }}/inc/*.php
         test-versions: 8.0-
