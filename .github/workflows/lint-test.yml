@@ -21,22 +21,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: pantheon-systems/validate-readme-spacing@229ea162621009cf8e09bf2beba405017150130e # v1.0.5
   lint:
     name: PHPCS Linting
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
     - name: Cache dependencies
-      uses: actions/cache@6f8efc29b200d32929f49075959781ed54ec270c # v3.5.0
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
       with:
         path: ~/vendor
         key: test-lint-dependencies-{{ checksum "composer.json" }}
         restore-keys: test-lint-dependencies-{{ checksum "composer.json" }}
     - name: Setup PHP
-      uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1 # v2
+      uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
       with:
         php-version: 8.3
     - name: Install dependencies
@@ -48,8 +48,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
-    - uses: pantheon-systems/phpcompatibility-action@bd72eb001d4fb9817c9d6e1a157a71e287f3ff80 # dev
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+    - uses: pantheon-systems/phpcompatibility-action@6bcfb79e78f644a471e856a1e92e14148a8e4017 # v1.1.4
       with:
         paths: ${{ github.workspace }}/*.php ${{ github.workspace }}/inc/*.php
         test-versions: 8.0-
@@ -63,16 +63,16 @@ jobs:
       matrix:
         php_version: [7.4, 8.3, 8.4, 8.5]
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Setup PHP
-        uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1 # v2
+        uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
         with:
           php-version: ${{ matrix.php_version }}
           extensions: mysqli, zip, imagick
       - name: Start MySQL Service
         run: sudo systemctl start mysql
       - name: Cache dependencies
-        uses: actions/cache@6f8efc29b200d32929f49075959781ed54ec270c # v3.5.0
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/vendor
           key: test-dependencies-{{ checksum "composer.json" }}
