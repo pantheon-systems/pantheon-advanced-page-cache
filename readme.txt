@@ -4,7 +4,7 @@ Tags: pantheon, cdn, cache
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 2.1.3-dev
+Stable tag: 2.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -377,7 +377,7 @@ See [CONTRIBUTING.md](https://github.com/pantheon-systems/wp-saml-auth/blob/mast
 
 == Changelog ==
 
-= 2.1.3-dev =
+= 2.1.3 (2 September 2026) =
 * Compatibility: Supports PHP 8.5
 
 = 2.1.2 (December 16, 2025) =

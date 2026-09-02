@@ -8,7 +8,7 @@
  * License: GPL-2.0-or-later
  * Text Domain: pantheon-advanced-page-cache
  * Domain Path: /languages
- * Version: 2.1.3-dev
+ * Version: 2.1.3
  * Requires at least: 6.4
  * Tested up to: 7.0
  *
