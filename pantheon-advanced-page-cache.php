@@ -5,14 +5,19 @@
  * Description: Automatically clear related pages from Pantheon's Edge when you update content. High TTL. Fresh content. Visitors never wait.
  * Author: Pantheon
  * Author URI: https://pantheon.io
+ * License: GPL-2.0-or-later
  * Text Domain: pantheon-advanced-page-cache
  * Domain Path: /languages
- * Version: 2.1.2
+ * Version: 2.1.3
  * Requires at least: 6.4
- * Tested up to: 6.9
+ * Tested up to: 7.0
  *
  * @package         Pantheon_Advanced_Page_Cache
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Purge the cache for specific surrogate keys.
