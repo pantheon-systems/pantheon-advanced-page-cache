@@ -37,8 +37,12 @@ scenarios may mean retuning them. See SITE-5879 before changing any of them.
 this is manual:
 
 ```bash
-npm install cms-bdd@github:pantheon-systems/cms-bdd#<sha>
+npm install "cms-bdd@git+https://github.com/pantheon-systems/cms-bdd.git#<sha>"
 ```
+
+Use that explicit URL, not the `github:owner/repo` shorthand. npm rewrites the shorthand to
+`git+ssh://` in the lockfile, which makes every install authenticate over SSH even though
+cms-bdd is public.
 
 Commit `package.json` and `package-lock.json` together. Keep `@playwright/test`, `playwright`
 and `playwright-bdd` on their exact pinned versions and move them together.
