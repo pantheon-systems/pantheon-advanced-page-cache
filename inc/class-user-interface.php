@@ -25,9 +25,13 @@ class User_Interface {
 			return;
 		}
 
-		// Todo: Maybe add nonce check here.
-		if ( ! empty( $_GET['message'] ) && 'pantheon-cleared-url-cache' === $_GET['message'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		// Nonce verification using WordPress transients instead of URL
+		// parameters for displaying messages.
+		$transient_key = 'pantheon_cache_cleared_' . get_current_user_id();
+		$cache_cleared = get_transient( $transient_key );
+		if ( $cache_cleared ) {
 			$title = esc_html__( 'URL Cache Cleared', 'pantheon-advanced-page-cache' );
+			delete_transient( $transient_key );
 		} else {
 			$title = esc_html__( 'Clear URL Cache', 'pantheon-advanced-page-cache' );
 		}
@@ -60,7 +64,10 @@ class User_Interface {
 		if ( is_wp_error( $ret ) ) {
 			wp_die( wp_kses_post( $ret->get_error_message() ) );
 		}
-		wp_safe_redirect( add_query_arg( 'message', 'pantheon-cleared-url-cache', preg_replace( '/[ <>\'\"\r\n\t\(\)]/', '', $path ) ) );
+		// Set a transient to show success message (expires in 30 seconds).
+		$transient_key = 'pantheon_cache_cleared_' . get_current_user_id();
+		set_transient( $transient_key, true, 30 );
+		wp_safe_redirect( preg_replace( '/[ <>\'\"\r\n\t\(\)]/', '', $path ) );
 		exit;
 	}
 }
