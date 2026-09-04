@@ -13,6 +13,8 @@
  * Tested up to: 7.0
  *
  * @package         Pantheon_Advanced_Page_Cache
+ *
+ * Verified compatible with Cloudflare-based GCDN (SITE-5429).
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
