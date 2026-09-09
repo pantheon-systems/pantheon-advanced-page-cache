@@ -509,8 +509,18 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 			$this->markTestSkipped( 'Test only applicable on single site.' );
 		}
 		wp_set_current_user( $this->admin_id1 );
-		$request = new WP_REST_Request( 'GET', '/wp/v2/settings' );
-		$this->server->dispatch( $request );
+		$request        = new WP_REST_Request( 'GET', '/wp/v2/settings' );
+		$response       = $this->server->dispatch( $request );
+		$expected_count = 15;
+		if ( version_compare( $GLOBALS['wp_version'], '7.2-alpha', '>=' ) ) {
+			$expected_count = 21;
+		} elseif ( version_compare( $GLOBALS['wp_version'], '6.0.3', '>=' ) ) {
+			$expected_count = 20;
+		} elseif ( version_compare( $GLOBALS['wp_version'], '5.9-alpha', '>=' ) ) {
+			$expected_count = 17;
+		} elseif ( version_compare( $GLOBALS['wp_version'], '5.8', '>=' ) ) {
+			$expected_count = 16;
+		}
 		if ( ! is_multisite() ) {
 			$expected_values = [
 				'rest-setting-date_format',
@@ -600,6 +610,7 @@ class Test_Emitter_REST_API extends Pantheon_Advanced_Page_Cache_Testcase {
 				[ 'blog-1-rest-setting-site_logo' ]
 			);
 		}
+		$this->assertCount( $expected_count, $response->get_data() );
 		$this->assertArrayValues(
 			$expected_values,
 			Emitter::get_rest_api_surrogate_keys()
