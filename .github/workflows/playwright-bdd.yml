@@ -29,12 +29,13 @@ jobs:
       - name: Decide whether the suite needs to run
         id: filter
         env:
-          IGNORED: '^(\.editorconfig|\.gitattributes|\.gitignore|CODEOWNERS|CONTRIBUTING\.md|LICENSE|phpcs\.xml\.dist|phpunit\.xml\.dist|README\.md|readme\.txt|\.wordpress-org/.*|tests/phpunit/.*|\.github/workflows/(lint-test|build-tag-release|release-pr|wordpress-plugin-deploy|composer-npm-diff|validate-actions-workflows|validate-plugin-version|wporg-validator)\.yml)$'
+          IGNORE_FILE: .github/playwright-ignore.txt
         run: |
           if [ "${{ github.event_name }}" != 'pull_request' ]; then
             echo 'run=true' >> "$GITHUB_OUTPUT"
             exit 0
           fi
+          IGNORED="^($(grep -vE '^\s*(#|$)' "$IGNORE_FILE" | paste -sd '|' -))$"
           changed=$(git diff --name-only "origin/${{ github.base_ref }}...HEAD")
           # No diff means something is off; run rather than hide a real change.
           if [ -z "$changed" ] || printf '%s\n' "$changed" | grep -qvE "$IGNORED"; then
