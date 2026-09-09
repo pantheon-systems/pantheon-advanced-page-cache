@@ -14,6 +14,9 @@ if [ -z "$WORDPRESS_ADMIN_USERNAME" ] || [ -z "$WORDPRESS_ADMIN_PASSWORD" ]; the
 	exit 1
 fi
 
+# Derived rather than passed in, so the two checks above cover every terminus call below.
+SITE_ENV="${TERMINUS_SITE}.${TERMINUS_ENV}"
+
 set -x
 
 ###

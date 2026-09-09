@@ -46,3 +46,8 @@ cms-bdd is public.
 
 Commit `package.json` and `package-lock.json` together. Keep `@playwright/test`, `playwright`
 and `playwright-bdd` on their exact pinned versions and move them together.
+
+`@playwright/test`, `playwright`, `playwright-bdd` and `allure-playwright` are peer dependencies
+of cms-bdd, so they are declared here rather than coming in with it. Playwright's runner has to
+resolve a single copy: nested copies mean the fixtures register against a different instance
+than the one running the tests, and `bddgen` runs from this repo.
