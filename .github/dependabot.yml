@@ -3,13 +3,20 @@ updates:
 - package-ecosystem: composer
   directory: "/"
   schedule:
-    interval: weekly
+    interval: daily
     timezone: America/Los_Angeles
-    day: tuesday
   target-branch: "main"
   open-pull-requests-limit: 99
+  commit-message:
+    prefix: deps(composer)
   groups:
+    composer-security:
+      applies-to: security-updates
+      update-types:
+      - minor
+      - patch
     composer-minor-patch:
+      applies-to: version-updates
       update-types:
       - minor
       - patch
@@ -25,24 +32,32 @@ updates:
 - package-ecosystem: npm
   directory: "/"
   schedule:
-    interval: weekly
+    interval: daily
     timezone: America/Los_Angeles
-    day: tuesday
   target-branch: "main"
   open-pull-requests-limit: 99
+  commit-message:
+    prefix: deps(npm)
   groups:
+    npm-security:
+      applies-to: security-updates
+      update-types:
+      - minor
+      - patch
     npm-minor-patch:
+      applies-to: version-updates
       update-types:
       - minor
       - patch
 - package-ecosystem: npm
   directory: "/tests/playwright"
   schedule:
-    interval: weekly
+    interval: daily
     timezone: America/Los_Angeles
-    day: tuesday
   target-branch: "main"
   open-pull-requests-limit: 99
+  commit-message:
+    prefix: deps(e2e)
   groups:
     # These three must move together; a version mismatch breaks playwright-bdd's loader.
     playwright:
@@ -50,7 +65,13 @@ updates:
       - "@playwright/test"
       - playwright
       - playwright-bdd
+    e2e-security:
+      applies-to: security-updates
+      update-types:
+      - minor
+      - patch
     e2e-minor-patch:
+      applies-to: version-updates
       update-types:
       - minor
       - patch
