@@ -59,8 +59,7 @@ updates:
   commit-message:
     prefix: deps(e2e)
   groups:
-    # These three must move together; a version mismatch breaks playwright-bdd's loader.
-    # The e2e groups exclude them so they cannot also arrive in a second PR.
+    # These three must move together; a mismatch breaks playwright-bdd's loader.
     playwright:
       applies-to: version-updates
       patterns:
