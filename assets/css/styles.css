@@ -1,0 +1,76 @@
+/**
+ * Pantheon Advanced Page Cache - Admin Styles
+ * Modern CSS with custom properties and native nesting
+ */
+
+.pantheon-page-cache {
+	/* CSS Custom Properties (Variables) */
+	--papc-color-blue: #1d7afc;
+	--papc-color-white: #ffffff;
+	--papc-color-gray: #757575;
+	--papc-color-charcoal: #1e1e1e;
+	--papc-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
+	--papc-padding: 10px;
+
+	& hr {
+		display: none;
+	}
+
+	& tr.cache-default-max-age {
+		display: block;
+		padding: var(--papc-padding);
+		background: var(--papc-color-white);
+		color: var(--papc-color-charcoal);
+		box-shadow: var(--papc-shadow);
+
+		& td {
+			padding: 0;
+		}
+
+		& .pantheon-cache-default-max-age {
+			padding: 0 var(--papc-padding) var(--papc-padding) 0;
+
+			& h3 {
+				margin-top: 0.5em;
+			}
+
+			& i {
+				margin-right: var(--papc-padding);
+				line-height: 1.0em;
+			}
+
+			&-info-bar {
+				background: var(--papc-color-blue);
+				color: var(--papc-color-white);
+				padding: var(--papc-padding) 0 var(--papc-padding) var(--papc-padding);
+				text-align: left;
+				display: block;
+				width: 100%;
+				margin-bottom: 1em;
+
+				& a {
+					color: var(--papc-color-white);
+					text-decoration: underline;
+				}
+
+				& a:hover,
+				& a:active {
+					color: var(--papc-color-white);
+					text-decoration: none;
+				}
+			}
+
+			& select {
+				background-color: var(--papc-color-white);
+				color: var(--papc-color-charcoal);
+				border: 1px solid var(--papc-color-gray);
+				border-radius: 0;
+			}
+
+			&-description {
+				color: var(--papc-color-gray);
+				margin: var(--papc-padding) 0 0 0;
+			}
+		}
+	}
+}
