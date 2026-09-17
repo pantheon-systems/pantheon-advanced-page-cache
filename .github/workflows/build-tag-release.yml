@@ -12,10 +12,12 @@ jobs:
   tag:
     name: Create Tag and Draft Release
     runs-on: ubuntu-latest
+    # Additional safety check: only run on production branches
+    if: github.ref == 'refs/heads/release'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Build, Tag & Release
-        uses: pantheon-systems/plugin-release-actions/build-tag-release@main
+        uses: pantheon-systems/plugin-release-actions/build-tag-release@8c76f0613b094d9812da9257030e534c4d8eeb6c # v0.5.6
         with:
           gh_token: ${{ github.token }}
           readme_md: README.md

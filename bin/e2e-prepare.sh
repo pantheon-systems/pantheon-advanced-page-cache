@@ -1,16 +1,10 @@
 #!/bin/bash
 
 ###
-# Prepare a Pantheon site environment for the Behat test suite, by installing
+# Prepare a Pantheon site environment for the end-to-end test suite, by installing
 # and configuring the plugin for the environment. This script is architected
 # such that it can be run a second time if a step fails.
 ###
-
-terminus whoami > /dev/null
-if [ $? -ne 0 ]; then
-	echo "Terminus unauthenticated; assuming unauthenticated build"
-	exit 0
-fi
 
 if [ -z "$TERMINUS_SITE" ] || [ -z "$TERMINUS_ENV" ]; then
 	echo "TERMINUS_SITE and TERMINUS_ENV environment variables must be set"
@@ -21,6 +15,9 @@ if [ -z "$WORDPRESS_ADMIN_USERNAME" ] || [ -z "$WORDPRESS_ADMIN_PASSWORD" ]; the
 	echo "WORDPRESS_ADMIN_USERNAME and WORDPRESS_ADMIN_PASSWORD environment variables must be set"
 	exit 1
 fi
+
+# Derived rather than passed in, so the two checks above cover every terminus call below.
+SITE_ENV="${TERMINUS_SITE}.${TERMINUS_ENV}"
 
 set -ex
 
@@ -35,6 +32,9 @@ terminus env:wipe $SITE_ENV --yes
 ###
 PANTHEON_GIT_URL=$(terminus connection:info $SITE_ENV --field=git_url)
 PANTHEON_SITE_URL="$TERMINUS_ENV-$TERMINUS_SITE.pantheonsite.io"
+if [ -n "${GITHUB_ENV:-}" ]; then
+	echo "WP_URL=https://$PANTHEON_SITE_URL" >> "$GITHUB_ENV"
+fi
 PREPARE_DIR="/tmp/$TERMINUS_ENV-$TERMINUS_SITE"
 BASH_DIR="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -66,8 +66,8 @@ git config user.name "Pantheon"
 git commit -m "Include Pantheon Advanced Page Cache and its configuration files"
 git push
 
-# Sometimes Pantheon takes a little time to refresh the filesystem
-terminus build:workflow:wait $TERMINUS_SITE.$TERMINUS_ENV
+# Wait for Pantheon to process the git push and initialize the environment
+terminus workflow:wait "$SITE_ENV" --max=300
 
 ###
 # Set up WordPress, theme, and plugins for the test run
