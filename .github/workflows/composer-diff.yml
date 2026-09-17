@@ -4,7 +4,7 @@ on:
     paths:
       - 'composer.lock'
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
 jobs:
   composer-diff:
@@ -12,13 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Generate composer diff
         id: composer_diff
-        uses: IonBazan/composer-diff-action@3140157575f6a67799cc80248ae35f5fb303ab15 # v1.2.0
-      - uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # v3.0.5
+        uses: IonBazan/composer-diff-action@v1
+      - uses: marocchino/sticky-pull-request-comment@v2
         if: ${{ steps.composer_diff.outputs.composer_diff_exit_code != 0 }}
         with:
           header: composer-diff
