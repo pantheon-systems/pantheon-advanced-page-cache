@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "cms-bdd": "git+https://github.com/pantheon-systems/cms-bdd.git#8a2139346b48d15d2306ea1d2c49ade20ef22c28",
-    "dotenv": "^16.4.0"
+    "dotenv": "^17.4.2"
   },
   "devDependencies": {
     "@playwright/test": "1.60.0",
