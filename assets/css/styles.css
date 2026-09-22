@@ -39,38 +39,38 @@
 				line-height: 1.0em;
 			}
 
-			&-info-bar {
-				background: var(--papc-color-blue);
-				color: var(--papc-color-white);
-				padding: var(--papc-padding) 0 var(--papc-padding) var(--papc-padding);
-				text-align: left;
-				display: block;
-				width: 100%;
-				margin-bottom: 1em;
-
-				& a {
-					color: var(--papc-color-white);
-					text-decoration: underline;
-				}
-
-				& a:hover,
-				& a:active {
-					color: var(--papc-color-white);
-					text-decoration: none;
-				}
-			}
-
 			& select {
 				background-color: var(--papc-color-white);
 				color: var(--papc-color-charcoal);
 				border: 1px solid var(--papc-color-gray);
 				border-radius: 0;
 			}
+		}
 
-			&-description {
-				color: var(--papc-color-gray);
-				margin: var(--papc-padding) 0 0 0;
+		& .pantheon-cache-default-max-age-info-bar {
+			background: var(--papc-color-blue);
+			color: var(--papc-color-white);
+			padding: var(--papc-padding) 0 var(--papc-padding) var(--papc-padding);
+			text-align: left;
+			display: block;
+			width: 100%;
+			margin-bottom: 1em;
+
+			& a {
+				color: var(--papc-color-white);
+				text-decoration: underline;
 			}
+
+			& a:hover,
+			& a:active {
+				color: var(--papc-color-white);
+				text-decoration: none;
+			}
+		}
+
+		& .pantheon-cache-default-max-age-description {
+			color: var(--papc-color-gray);
+			margin: var(--papc-padding) 0 0 0;
 		}
 	}
 }
