@@ -423,7 +423,7 @@ If you need to modify the admin styles:
    ```
 3. Commit both files in your pull request
 
-Note: As of version 2.1.3, this plugin no longer uses npm build dependencies (previously used Gulp/Sass). The CSS is now maintained as vanilla CSS with modern browser features, and minification is done with a simple one-off npx command.
+Note: As of version 2.1.4, this plugin no longer uses npm build dependencies (previously used Gulp/Sass). The CSS is now maintained as vanilla CSS with modern browser features, and minification is done with a simple one-off npx command.
 
 ## Contributing ##
 
