@@ -18,7 +18,7 @@ tests/phpunit/.*
 \.github/workflows/build-tag-release\.yml
 \.github/workflows/release-pr\.yml
 \.github/workflows/wordpress-plugin-deploy\.yml
-\.github/workflows/composer-npm-diff\.yml
+\.github/workflows/composer-diff\.yml
 \.github/workflows/validate-actions-workflows\.yml
 \.github/workflows/validate-plugin-version\.yml
 \.github/workflows/wporg-validator\.yml
