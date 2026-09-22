@@ -419,11 +419,12 @@ If you need to modify the admin styles:
 1. Edit the source file: `assets/css/styles.css`
 2. Run the minify command from the project root:
    ```bash
-   npx minify assets/css/styles.css > assets/css/styles.min.css
+   npx lightningcss-cli --minify --targets '>= 0.25%' assets/css/styles.css -o assets/css/styles.min.css
    ```
+   The minified file is what the plugin loads for everyone except developers running `SCRIPT_DEBUG`. `lightningcss-cli` flattens the nesting in the source for older browsers, which a plain minifier does not do.
 3. Commit both files in your pull request
 
-Note: As of version 2.1.4, this plugin no longer uses npm build dependencies (previously used Gulp/Sass). The CSS is now maintained as vanilla CSS with modern browser features, and minification is done with a simple one-off npx command.
+Note: this plugin no longer uses npm build dependencies (previously used Gulp/Sass). The CSS is maintained as vanilla CSS with modern browser features, and minification is a one-off npx command.
 
 ## Contributing ##
 
