@@ -18,9 +18,6 @@ CODEOWNERS
 composer.json
 composer.lock
 CONTRIBUTING.md
-gulpfile.mjs
-package-lock.json
-package.json
 phpcs.xml.dist
 phpunit.xml.dist
 README.md
