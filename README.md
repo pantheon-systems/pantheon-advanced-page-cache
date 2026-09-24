@@ -1,11 +1,11 @@
 # Pantheon Advanced Page Cache #
 
-**Contributors:** [getpantheon](https://profiles.wordpress.org/getpantheon), [danielbachhuber](https://profiles.wordpress.org/danielbachhuber), [kporras07](https://profiles.wordpress.org/kporras07), [jspellman](https://profiles.wordpress.org/jspellman/), [jazzs3quence](https://profiles.wordpress.org/jazzs3quence/), [ryanshoover](https://profiles.wordpress.org/ryanshoover/), [rwagner00](https://profiles.wordpress.org/rwagner00/), [pwtyler](https://profiles.wordpress.org/pwtyler)  
+**Contributors:** [getpantheon](https://profiles.wordpress.org/getpantheon), [danielbachhuber](https://profiles.wordpress.org/danielbachhuber), [kporras07](https://profiles.wordpress.org/kporras07), [jspellman](https://profiles.wordpress.org/jspellman/), [jazzs3quence](https://profiles.wordpress.org/jazzs3quence/), [ryanshoover](https://profiles.wordpress.org/ryanshoover/), [rwagner00](https://profiles.wordpress.org/rwagner00/), [pwtyler](https://profiles.wordpress.org/pwtyler), [metasim](https://profiles.wordpress.org/metasim/)  
 **Tags:** pantheon, cdn, cache  
 **Requires at least:** 6.4  
-**Tested up to:** 6.9  
+**Tested up to:** 7.1  
 **Requires PHP:** 7.4  
-**Stable tag:** 2.1.2  
+**Stable tag:** 2.1.3  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,7 +15,6 @@ Automatically clear related pages from Pantheon's Edge when you update content. 
 
 [![Actively Maintained](https://img.shields.io/badge/Pantheon-Actively_Maintained-yellow?logo=pantheon&color=FFDC28)](https://pantheon.io/docs/oss-support-levels#actively-maintained-support)
 [![Lint and Test](https://github.com/pantheon-systems/pantheon-advanced-page-cache/actions/workflows/lint-test.yml/badge.svg)](https://github.com/pantheon-systems/pantheon-advanced-page-cache/actions/workflows/lint-test.yml)
-[![CircleCI](https://circleci.com/gh/pantheon-systems/pantheon-advanced-page-cache.svg?style=svg)](https://circleci.com/gh/pantheon-systems/pantheon-advanced-page-cache)
 
 For sites wanting fine-grained control over how their responses are represented in their edge cache, Pantheon Advanced Page Cache is the golden ticket. Here's a high-level overview of how the plugin works:
 
@@ -409,11 +408,32 @@ Pantheon Advanced Page Cache integrates with WordPress plugins, including:
 
 * [WPGraphQL](https://wordpress.org/plugins/wp-graphql/)
 
+## Modifying CSS ##
+
+The plugin uses modern vanilla CSS (no preprocessor required) located in `assets/css/styles.css`. The CSS uses modern features including CSS custom properties (variables) and native nesting.
+
+### Making CSS Changes ###
+
+If you need to modify the admin styles:
+
+1. Edit the source file: `assets/css/styles.css`
+2. Run the minify command from the project root:
+   ```bash
+   npx lightningcss-cli --minify --targets '>= 0.25%' assets/css/styles.css -o assets/css/styles.min.css
+   ```
+   The minified file is what the plugin loads for everyone except developers running `SCRIPT_DEBUG`. `lightningcss-cli` flattens the nesting in the source for older browsers, which a plain minifier does not do.
+3. Commit both files in your pull request
+
+Note: this plugin no longer uses npm build dependencies (previously used Gulp/Sass). The CSS is maintained as vanilla CSS with modern browser features, and minification is a one-off npx command.
+
 ## Contributing ##
 
 See [CONTRIBUTING.md](https://github.com/pantheon-systems/pantheon-advanced-page-cache/blob/master/CONTRIBUTING.md) for information on contributing.
 
 ## Changelog ##
+
+### 2.1.3 (24 September 2026) ###
+* Compatibility: Supports PHP 8.5
 
 ### 2.1.2 (December 16, 2025) ###
 * Confirmed PHP 8.4 compatibility [[#333](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/333)]
