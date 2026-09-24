@@ -15,11 +15,11 @@
     "dotenv": "^17.4.2"
   },
   "devDependencies": {
-    "@playwright/test": "1.60.0",
+    "@playwright/test": "1.63.0",
     "@types/node": "^20.19.39",
     "allure-playwright": "^3.0.0",
-    "playwright": "1.60.0",
-    "playwright-bdd": "8.5.1",
+    "playwright": "1.63.0",
+    "playwright-bdd": "9.2.1",
     "typescript": "^5.9.0"
   },
   "overrides": {
