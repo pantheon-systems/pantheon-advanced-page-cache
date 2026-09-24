@@ -408,6 +408,24 @@ Pantheon Advanced Page Cache integrates with WordPress plugins, including:
 
 * [WPGraphQL](https://wordpress.org/plugins/wp-graphql/)
 
+## Modifying CSS ##
+
+The plugin uses modern vanilla CSS (no preprocessor required) located in `assets/css/styles.css`. The CSS uses modern features including CSS custom properties (variables) and native nesting.
+
+### Making CSS Changes ###
+
+If you need to modify the admin styles:
+
+1. Edit the source file: `assets/css/styles.css`
+2. Run the minify command from the project root:
+   ```bash
+   npx lightningcss-cli --minify --targets '>= 0.25%' assets/css/styles.css -o assets/css/styles.min.css
+   ```
+   The minified file is what the plugin loads for everyone except developers running `SCRIPT_DEBUG`. `lightningcss-cli` flattens the nesting in the source for older browsers, which a plain minifier does not do.
+3. Commit both files in your pull request
+
+Note: this plugin no longer uses npm build dependencies (previously used Gulp/Sass). The CSS is maintained as vanilla CSS with modern browser features, and minification is a one-off npx command.
+
 ## Contributing ##
 
 See [CONTRIBUTING.md](https://github.com/pantheon-systems/pantheon-advanced-page-cache/blob/master/CONTRIBUTING.md) for information on contributing.
