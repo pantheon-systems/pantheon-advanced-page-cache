@@ -1,0 +1,13 @@
+# Managed by github-terraform — do not edit manually
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: "pantheon-advanced-page-cache"
+  description: "Plugin to make the most of Pantheon's Global CDN with advanced page caching options."
+  annotations:
+    "backstage.io/techdocs-ref": "dir:docs/"
+spec:
+  type: "unknown"
+  lifecycle: "experimental"
+  owner: "site-experience"
