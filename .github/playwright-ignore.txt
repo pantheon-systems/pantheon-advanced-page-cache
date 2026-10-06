@@ -14,6 +14,7 @@ readme\.txt
 \.wordpress-org/.*
 tests/phpunit/.*
 \.github/dependabot\.yml
+\.github/workflows/dependabot-pr\.yml
 \.github/workflows/lint-test\.yml
 \.github/workflows/build-tag-release\.yml
 \.github/workflows/release-pr\.yml
