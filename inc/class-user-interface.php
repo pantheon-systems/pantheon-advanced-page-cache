@@ -7,6 +7,10 @@
 
 namespace Pantheon_Advanced_Page_Cache;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Controller for a variety of admin UI.
  */

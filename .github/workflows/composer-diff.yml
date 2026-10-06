@@ -1,0 +1,28 @@
+name: Composer Package Diff
+on:
+  pull_request:
+    paths:
+      - 'composer.lock'
+permissions:
+  contents: read
+  pull-requests: write
+jobs:
+  composer-diff:
+    name: Composer Diff
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Generate composer diff
+        id: composer_diff
+        uses: IonBazan/composer-diff-action@3140157575f6a67799cc80248ae35f5fb303ab15 # v1.2.0
+      - uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # v3.0.5
+        if: ${{ steps.composer_diff.outputs.composer_diff_exit_code != 0 }}
+        with:
+          header: composer-diff
+          message: |
+            <strong>Composer Changes</strong>
+
+            ${{ steps.composer_diff.outputs.composer_diff }}

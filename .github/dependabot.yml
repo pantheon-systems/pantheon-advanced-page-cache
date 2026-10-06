@@ -3,11 +3,23 @@ updates:
 - package-ecosystem: composer
   directory: "/"
   schedule:
-    interval: weekly
+    interval: daily
     timezone: America/Los_Angeles
-    day: tuesday
-  target-branch: "develop"
+  target-branch: "main"
   open-pull-requests-limit: 99
+  commit-message:
+    prefix: deps(composer)
+  groups:
+    composer-security:
+      applies-to: security-updates
+      update-types:
+      - minor
+      - patch
+    composer-minor-patch:
+      applies-to: version-updates
+      update-types:
+      - minor
+      - patch
   ignore:
   - dependency-name: phpunit/phpunit
     versions:
@@ -18,10 +30,43 @@ updates:
     - ">= 9.a"
     - "< 10"
 - package-ecosystem: npm
-  directory: "/"
+  directory: "/tests/playwright"
   schedule:
-    interval: weekly
+    interval: daily
     timezone: America/Los_Angeles
-    day: tuesday
-  target-branch: "develop"
+  target-branch: "main"
   open-pull-requests-limit: 99
+  commit-message:
+    prefix: deps(e2e)
+  groups:
+    # These three must move together; a mismatch breaks playwright-bdd's loader.
+    playwright:
+      applies-to: version-updates
+      patterns:
+      - "@playwright/test"
+      - playwright
+      - playwright-bdd
+    playwright-security:
+      applies-to: security-updates
+      patterns:
+      - "@playwright/test"
+      - playwright
+      - playwright-bdd
+    e2e-security:
+      applies-to: security-updates
+      exclude-patterns:
+      - "@playwright/test"
+      - playwright
+      - playwright-bdd
+      update-types:
+      - minor
+      - patch
+    e2e-minor-patch:
+      applies-to: version-updates
+      exclude-patterns:
+      - "@playwright/test"
+      - playwright
+      - playwright-bdd
+      update-types:
+      - minor
+      - patch

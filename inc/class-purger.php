@@ -7,6 +7,10 @@
 
 namespace Pantheon_Advanced_Page_Cache;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Purges the appropriate surrogate key based on the event.
  */
@@ -87,7 +91,7 @@ class Purger {
 	 */
 	public static function clear_post_path( $post ) {
 		$post_path = get_permalink( $post->ID );
-		$parsed_url = parse_url( $post_path );
+		$parsed_url = wp_parse_url( $post_path );
 		$path = $parsed_url['path'];
 		$paths = [ trailingslashit( $path ), untrailingslashit( $path ) ];
 

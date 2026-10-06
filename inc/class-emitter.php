@@ -22,6 +22,10 @@
 
 namespace Pantheon_Advanced_Page_Cache;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Generates and emits surrogate keys based on the current request.
  */
