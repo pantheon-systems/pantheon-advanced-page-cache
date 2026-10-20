@@ -13,6 +13,7 @@ const testDir = defineBddConfig({
   steps: [
     'steps/**/*.ts',
     'fixtures/**/*.ts',
+    'node_modules/cms-bdd/dist/steps/**/*.js',
     'node_modules/cms-bdd/dist/fixtures/customFixtures.js',
   ],
 });

@@ -11,15 +11,15 @@
     "test:report": "playwright show-report"
   },
   "dependencies": {
-    "cms-bdd": "git+https://github.com/pantheon-systems/cms-bdd.git#8a2139346b48d15d2306ea1d2c49ade20ef22c28",
+    "cms-bdd": "git+https://github.com/pantheon-systems/cms-bdd.git#253735e393105a2afd428c851a2a97938b7bd149",
     "dotenv": "^17.4.2"
   },
   "devDependencies": {
     "@playwright/test": "1.60.0",
     "@types/node": "^20.19.39",
-    "allure-playwright": "^3.0.0",
+    "allure-playwright": "3.10.2",
     "playwright": "1.60.0",
-    "playwright-bdd": "8.5.1",
+    "playwright-bdd": "9.2.1",
     "typescript": "^5.9.0"
   },
   "overrides": {

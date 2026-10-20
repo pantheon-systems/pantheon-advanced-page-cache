@@ -4,11 +4,11 @@ Background:
   Given I log in as an admin
 
 Scenario Outline: Change the cache max age to <label>
-  When I go to "/wp-admin/options-general.php?page=pantheon-cache"
-  And I fill in "pantheon-cache[default_ttl]" with "<ttl>"
+  When I visit "/wp-admin/options-general.php?page=pantheon-cache"
+  And I fill in the field named "pantheon-cache[default_ttl]" with "<ttl>"
   And I press "Save Changes"
   Then I should see "Settings saved."
-  And the "pantheon-cache[default_ttl]" field should contain "<ttl>"
+  And the field named "pantheon-cache[default_ttl]" should contain "<ttl>"
 
   Examples:
     | label   | ttl      |

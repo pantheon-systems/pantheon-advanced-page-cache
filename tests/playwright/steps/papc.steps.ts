@@ -15,19 +15,14 @@ Before(async () => {
 // This step documents the precondition in Gherkin; it has nothing to do.
 Given('I log in as an admin', async () => {});
 
-// Drives a real browser. Use "I request" for scenarios asserting on headers.
-Given('I go to {string}', async ({ page }, url: string) => {
-  await page.goto(url, { waitUntil: 'load' });
-});
-
-// Plain HTTP, no browser. Carries the debug headers the surrogate-key tests need.
+// Plain HTTP, no browser ("I visit" drives the browser). Carries the debug headers the surrogate-key tests need.
 Given('I request {string}', async ({ pantheonAPI, scenario }, url: string) => {
   scenario.lastResponse = await pantheonAPI.get(url);
 });
 
-When('I fill in {string} with {string}', async ({ page }, fieldName: string, value: string) => {
+When('I fill in the field named {string} with {string}', async ({ page }, fieldName: string, value: string) => {
   const field = page.locator(`[name="${fieldName}"]`);
-  // fill() rejects <select>, which Behat's Mink handled transparently.
+  // Shared "I fill in" matches by label, and this select has none. fill() rejects <select>, which Behat's Mink handled transparently.
   const tag = await field.evaluate((el) => el.tagName.toLowerCase());
   if (tag === 'select') {
     await field.selectOption(value);
@@ -36,22 +31,13 @@ When('I fill in {string} with {string}', async ({ page }, fieldName: string, val
   }
 });
 
-When('I press {string}', async ({ page }, buttonText: string) => {
-  await page.getByRole('button', { name: buttonText }).click();
-  await page.waitForLoadState('load');
-});
-
-Then('I should see {string}', async ({ page }, text: string) => {
-  await expect(page.locator('body')).toContainText(text);
-});
-
 // The plugins screen lists installed plugins whether active or not; only the
 // row's class distinguishes the two.
 Then('the {string} plugin should be active', async ({ page }, pluginFile: string) => {
   await expect(page.locator(`tr[data-plugin="${pluginFile}"]`)).toHaveClass(/(^|\s)active(\s|$)/);
 });
 
-Then('the {string} field should contain {string}', async ({ page }, fieldName: string, expectedValue: string) => {
+Then('the field named {string} should contain {string}', async ({ page }, fieldName: string, expectedValue: string) => {
   await expect(page.locator(`[name="${fieldName}"]`)).toHaveValue(expectedValue);
 });
 
