@@ -6,12 +6,21 @@ against a Pantheon multidev with the plugin deployed, not a local WordPress.
 | Path | What it holds |
 |---|---|
 | `features/` | Gherkin scenarios |
-| `steps/` | Step definitions |
+| `steps/` | PAPC-specific step definitions. Generic browser steps come from cms-bdd |
 | `fixtures/` | `pantheonAPI` for header assertions, `scenario` for per-test state |
 | `auth.setup.ts` | Logs in once and saves the session |
 
-Two navigation steps: `I go to` drives a browser, `I request` issues plain HTTP. Scenarios
-asserting on response headers need `I request`.
+Two navigation steps: `I visit` (from cms-bdd) drives a browser, `I request` issues plain HTTP.
+Scenarios asserting on response headers need `I request`.
+
+`I visit`, `I press` and `I should see` also come from cms-bdd, which `playwright.config.ts` loads from
+`node_modules/cms-bdd/dist/steps`. `I should see` needs the text to be *visible*, so a result inside
+a collapsed panel has to be expanded first. Define a step here only if cms-bdd lacks it, and
+never with the same text as a shared step: playwright-bdd fails on duplicates.
+
+The settings screen's Max Age `<select>` has no label, so `I fill in the field named` and
+`the field named ... should contain` locate it by `name` and stay local until cms-bdd's
+name fallback is released (pantheon-systems/cms-bdd#20).
 
 ## Running it
 
@@ -48,6 +57,6 @@ Commit `package.json` and `package-lock.json` together. Keep `@playwright/test`,
 and `playwright-bdd` on their exact pinned versions and move them together.
 
 `@playwright/test`, `playwright`, `playwright-bdd` and `allure-playwright` are peer dependencies
-of cms-bdd, so they are declared here rather than coming in with it. Playwright's runner has to
+of cms-bdd (1.0.x needs playwright-bdd 9; `allure-playwright` is held at 3.10.2 because 3.14 needs Playwright 1.62), so they are declared here rather than coming in with it. Playwright's runner has to
 resolve a single copy: nested copies mean the fixtures register against a different instance
 than the one running the tests, and `bddgen` runs from this repo.
