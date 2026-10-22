@@ -12,3 +12,5 @@ bin/phpunit-test.sh
 .*.cache
 
 .envrc
+.idea
+.codacy

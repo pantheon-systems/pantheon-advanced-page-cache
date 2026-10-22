@@ -254,7 +254,7 @@ class Pantheon_Advanced_Page_Cache_Testcase extends WP_UnitTestCase {
 			[
 				'post_type'      => 'any',
 				'post_status'    => 'any',
-				'posts_per_page' => -1,
+				'posts_per_page' => 50,
 			]
 		);
 		foreach ( $posts as $post ) {
