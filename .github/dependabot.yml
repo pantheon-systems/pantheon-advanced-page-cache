@@ -73,3 +73,25 @@ updates:
       update-types:
       - minor
       - patch
+- package-ecosystem: "github-actions"
+  directory: "/"
+  schedule:
+    interval: "weekly"
+    day: "sunday"
+    time: "06:00"
+    timezone: "UTC"
+  cooldown:
+    default-days: 3
+  open-pull-requests-limit: 5
+  groups:
+    actions:
+      applies-to: version-updates
+      patterns: ["*"]
+      update-types: ["minor", "patch"]
+    actions-security:
+      applies-to: security-updates
+      patterns: ["*"]
+  commit-message:
+    prefix: "chore"
+    include: "scope"
+  rebase-strategy: "auto"
