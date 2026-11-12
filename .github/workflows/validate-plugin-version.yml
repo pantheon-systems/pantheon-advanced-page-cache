@@ -15,6 +15,6 @@ jobs:
         with:
           fetch-depth: 0
       - name: Validate Plugin Version
-        uses: jazzsequence/action-validate-plugin-version@9cb142a9e858cac795ce7ca32f07f49a2874dba2 # v1.2.8
+        uses: jazzsequence/action-validate-plugin-version@399a44121bf9c1a3cd75c8b34f1a6e610d1a1225 # v2.0.3
         with:
           branch: 'main'
